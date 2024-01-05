@@ -1,6 +1,6 @@
 ﻿namespace DO;
 /// <summary>
-/// 
+/// record of dependency with the following parameters:
 /// </summary>
 /// <param name="Id">the id of the dependency</param>
 /// //A cannot happan until B is done.

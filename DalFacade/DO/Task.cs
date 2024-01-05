@@ -19,11 +19,10 @@
 public record Task
 (
    int Id,
-   int EngineerId,
+   DateTime CreatedAtDate,
    bool IsMilestone = false,
-   string? Alias = null,
-   string? Description = null, 
-   DateTime? CreatedAtDate = null,
+   string Alias = "",
+   string Description ="", 
    DateTime? ScheduledDate = null,
    DateTime? StartDate = null, 
    DateTime? RequiredEffortTime = null, 
@@ -31,8 +30,9 @@ public record Task
    DateTime? CompleteDate = null,
    string? Deliverables = null, 
    string? Remarks = null, 
-   DO.EngineerExperience? Complexity = null 
+   DO.EngineerExperience? Complexity = null,
+   int? EngineerId=null
 )
 {
-    public Task() : this (0,0) { }
+    public Task() : this(0,DateTime.Now,false) { }
 }
