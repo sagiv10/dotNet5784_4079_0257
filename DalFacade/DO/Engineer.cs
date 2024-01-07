@@ -7,13 +7,15 @@
 /// <param name="Email"> Email of the engineer </param>
 /// <param name="Name"> name of the engineer  </param>
 /// <param name="Level"> skill level of the engineer  </param>
+/// /// <param name="IsActive"> shows if the engineer is active or 'deleted'  </param>
 public record Engineer
 (
     int Id,
     double Cost, 
     string Email = "",
     string Name="",
-    DO.EngineerExperience Level=
+    DO.EngineerExperience Level=,
+    bool IsActive=true
 )
 {
     public Engineer() : this(0,0) { }

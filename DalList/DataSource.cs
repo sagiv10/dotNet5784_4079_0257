@@ -1,4 +1,6 @@
-﻿namespace Dal;
+﻿using DO;
+
+namespace Dal;
 
 internal static class DataSource
 {
@@ -15,6 +17,56 @@ internal static class DataSource
         internal const int startDependencyId = 1;
         private static int nextDependencyId = startDependencyId;
         internal static int NextDependencyId { get => nextDependencyId++; }
+        
+        internal static DO.Dependency? FindDependency(int wantedId)
+        {
+            foreach (Dependency? temp in DataSource.Dependencies)
+            {
+                if (temp!=null && temp.Id == wantedId)
+                {
+                    return temp;
+                }
+            }
+            return null;
+        }
+
+        internal static DO.Engineer? FindEngineer(int wantedId)
+        {
+            foreach (Engineer? temp in DataSource.Engineers)
+            {
+                if (temp!=null && temp.Id == wantedId)
+                {
+                    return temp;
+                }
+            }
+            return null;
+        }
+
+        internal static int FindIndexDependency(int id)
+        {
+            int counter = 0;
+            foreach(var temp in DataSource.Dependencies)
+            {
+                if(temp!=null && temp.Id == id)
+                {
+                    return counter;
+                }
+            }
+            return -1;
+        }
+
+        internal static int FindIndexEngineer(int id)
+        {
+            int counter = 0;
+            foreach (var temp in DataSource.Engineers)
+            {
+                if (temp != null && temp.Id == id)
+                {
+                    return counter;
+                }
+            }
+            return -1;
+        }
     }
 }
 
