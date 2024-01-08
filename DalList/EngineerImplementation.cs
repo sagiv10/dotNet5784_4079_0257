@@ -12,7 +12,7 @@ internal class EngineerImplementation : IEngineer
         {
             if (ifExists.IsActive == false)
             {
-                Engineer updatedEngineer = ifExists with { IsActive = true };
+                Engineer updatedEngineer = item with { IsActive = true };
                 int theIndex = DataSource.Config.FindIndexEngineer(ifExists.Id);
                 DataSource.Engineers.RemoveAt(theIndex);
                 DataSource.Engineers.Add(updatedEngineer);
