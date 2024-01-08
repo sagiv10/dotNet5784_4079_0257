@@ -19,7 +19,7 @@ public class TaskImplementation : ITask
         if(idxOfDeleted ==-1) {
             throw new Exception($"Task with ID={id} does Not exist");
         }
-        Task? NotActiveOne = DataSource.Tasks[idxOfDeleted] with { isActive = false };
+        Task? NotActiveOne = DataSource.Tasks[idxOfDeleted]! with { isActive = false };
         DataSource.Tasks.RemoveAt(idxOfDeleted);
         DataSource.Tasks.Add(NotActiveOne);
     }
