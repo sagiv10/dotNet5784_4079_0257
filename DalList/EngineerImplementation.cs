@@ -20,7 +20,7 @@ internal class EngineerImplementation : IEngineer
             }
             if(ifExists.IsActive ==true ) 
             {
-                throw new NotImplementedException("אובייקט מסוג T עם ID כזה כבר קיים");
+                throw new Exception($"Engineer with ID={ifExists.Id} already exists");
             }
         }
         Engineer newEngineer = item;
@@ -39,7 +39,7 @@ internal class EngineerImplementation : IEngineer
             DataSource.Engineers.Add(updatedEngineer);
             return;
         }
-        throw new NotImplementedException("אובייקט מסוג T עם ID כזה לא קיים");
+        throw new Exception($"Engineer with ID={id} does Not exist");
     }
 
     public Engineer? Read(int id)
@@ -73,7 +73,7 @@ internal class EngineerImplementation : IEngineer
         Engineer? oldValue = DataSource.Config.FindEngineer(item.Id);
         if(oldValue==null || oldValue.IsActive==false)
         {
-            throw new NotImplementedException("אובייקט מסוג T עם ID כזה לא קיים");
+            throw new Exception($"Engineer with ID={item.Id} does Not exist");
         }
         int theIndex = DataSource.Config.FindIndexEngineer(item.Id);
         DataSource.Engineers[theIndex] = item;

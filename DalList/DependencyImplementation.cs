@@ -21,7 +21,7 @@ public class DependencyImplementation : IDependency
             DataSource.Dependencies.RemoveAt(theIndex);
             return;
         }
-        throw new NotImplementedException("אובייקט מסוג T עם ID כזה לא קיים");
+        throw new Exception($"Dependency with ID={id} does Not exist");
     }
 
     public Dependency? Read(int id)
@@ -46,7 +46,7 @@ public class DependencyImplementation : IDependency
         int theIndex = DataSource.Config.FindIndexDependency(item.Id);
         if (theIndex == -1)
         {
-            throw new NotImplementedException("אובייקט מסוג T עם ID כזה לא קיים");
+            throw new Exception($"Dependency with ID={item.Id} does Not exist");
         }
         DataSource.Dependencies[theIndex] = item;
     }
