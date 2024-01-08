@@ -30,7 +30,7 @@ public record Task
    DateTime? CompleteDate = null,
    string? Deliverables = null, 
    string? Remarks = null, 
-   DO.EngineerExperience? Complexity = null,
+   DO.ComplexityLvls Complexity = DO.ComplexityLvls.Beginner,
    int? EngineerId=null,
    bool isActive=false
 )
