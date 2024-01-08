@@ -41,6 +41,17 @@ internal static class DataSource
             }
             return null;
         }
+        internal static DO.Task? FindTask(int wantedId)
+        {
+            foreach (var temp in DataSource.Tasks)
+            {
+                if (temp != null && temp.Id == wantedId)
+                {
+                    return temp;
+                }
+            }
+            return null;
+        }
 
         internal static int FindIndexDependency(int id)
         {
@@ -67,6 +78,20 @@ internal static class DataSource
             }
             return -1;
         }
+
+        internal static int FindIndexTasks(int id)
+        {
+            int counter = 0;
+            foreach (var temp in DataSource.Engineers)
+            {
+                if (temp != null && temp.Id == id)
+                {
+                    return counter;
+                }
+            }
+            return -1;
+        }
+
     }
 }
 

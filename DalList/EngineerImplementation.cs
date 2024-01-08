@@ -62,8 +62,8 @@ internal class EngineerImplementation : IEngineer
         List<Engineer?> newList = new List<Engineer?>();
         foreach (var item in DataSource.Engineers)
         {
-            temp=new Engineer(item!.Id, item!.Cost, item!.Email, item!.Name, item!.Level)?? null;
-            newList.Add((Engineer?)item);
+            temp=new Engineer(item!.Id, item!.Cost, item!.Email, item!.Name, item!.Level);
+            newList.Add(temp);
         }
         return newList;
     }
