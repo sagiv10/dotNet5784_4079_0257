@@ -7,9 +7,21 @@ internal class EngineerImplementation : IEngineer
 {
     public int Create(Engineer item)
     {
-        if (DataSource.Config.FindEngineer(item.Id) == null)
+        Engineer? ifExists = DataSource.Config.FindEngineer(item.Id);
+        if (ifExists!= null)
         {
-            throw new NotImplementedException("אובייקט מסוג T עם ID כזה כבר קיים");
+            if (ifExists.IsActive == false)
+            {
+                Engineer updatedEngineer = ifExists with { IsActive = true };
+                int theIndex = DataSource.Config.FindIndexEngineer(ifExists.Id);
+                DataSource.Engineers.RemoveAt(theIndex);
+                DataSource.Engineers.Add(updatedEngineer);
+                return item.Id;
+            }
+            if(ifExists.IsActive ==true ) 
+            {
+                throw new NotImplementedException("אובייקט מסוג T עם ID כזה כבר קיים");
+            }
         }
         Engineer newEngineer = item;
         DataSource.Engineers.Add(newEngineer);
@@ -18,11 +30,11 @@ internal class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
-        int theIndex = DataSource.Config.FindIndexEngineer(id);
-        if (theIndex != -1)
+        Engineer? oldEngineer = DataSource.Config.FindEngineer(id);
+        if (oldEngineer != null && oldEngineer.IsActive==true)
         {
-            Engineer oldEngineer = Read(id)!;
             Engineer updatedEngineer = oldEngineer! with { IsActive = false};
+            int theIndex=DataSource.Config.FindIndexEngineer(id);
             DataSource.Engineers.RemoveAt(theIndex);
             DataSource.Engineers.Add(updatedEngineer);
             return;
@@ -32,28 +44,38 @@ internal class EngineerImplementation : IEngineer
 
     public Engineer? Read(int id)
     {
-        return DataSource.Config.FindEngineer(id);
+        Engineer? returnedValue = DataSource.Config.FindEngineer(id);
+        if(returnedValue != null && returnedValue.IsActive == true)
+        {
+            return returnedValue;
+        }
+        else
+        {
+            return null;
+        }
+
     }
 
-    public List<Engineer> ReadAll()
+    public List<Engineer?> ReadAll()
     {
-        Engineer temp;
-        List<Engineer> newList = new List<Engineer>();
+        Engineer? temp;
+        List<Engineer?> newList = new List<Engineer?>();
         foreach (var item in DataSource.Engineers)
         {
-            temp=new Engineer(item!.Id, item!.Cost, item!.Email, item!.Name, item!.Level);
-            newList.Add((Engineer)item);
+            temp=new Engineer(item!.Id, item!.Cost, item!.Email, item!.Name, item!.Level)?? null;
+            newList.Add((Engineer?)item);
         }
         return newList;
     }
 
     public void Update(Engineer item)
     {
-        int theIndex=DataSource.Config.FindIndexEngineer(item.Id);
-        if(theIndex==-1)
+        Engineer? oldValue = DataSource.Config.FindEngineer(item.Id);
+        if(oldValue==null || oldValue.IsActive==false)
         {
             throw new NotImplementedException("אובייקט מסוג T עם ID כזה לא קיים");
         }
+        int theIndex = DataSource.Config.FindIndexEngineer(item.Id);
         DataSource.Engineers[theIndex] = item;
     }
 }

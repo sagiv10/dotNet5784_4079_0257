@@ -29,14 +29,14 @@ public class DependencyImplementation : IDependency
         return DataSource.Config.FindDependency(id);
     }
 
-    public List<Dependency> ReadAll()
+    public List<Dependency?> ReadAll()
     {
-        Dependency temp;
-        List<Dependency> newList = new List<Dependency>();
+        Dependency? temp;
+        List<Dependency?> newList = new List<Dependency?>();
         foreach (var item in DataSource.Dependencies)
         {
-            temp = new Dependency(item!.Id, item!.DependentTask,item!.DependsOnTask);
-            newList.Add((Dependency)item);
+            temp = new Dependency(item!.Id, item!.DependentTask,item!.DependsOnTask)??null;
+            newList.Add((Dependency?)item);
         }
         return newList;
     }
