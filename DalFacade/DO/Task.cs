@@ -31,7 +31,8 @@ public record Task
    string? Deliverables = null, 
    string? Remarks = null, 
    DO.EngineerExperience? Complexity = null,
-   int? EngineerId=null
+   int? EngineerId=null,
+   bool isActive=false
 )
 {
     public Task() : this(0,DateTime.Now,false) { }
