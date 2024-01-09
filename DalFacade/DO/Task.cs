@@ -25,7 +25,7 @@ public record Task
    string Description ="", 
    DateTime? ScheduledDate = null,
    DateTime? StartDate = null, 
-   DateTime? RequiredEffortTime = null, 
+   TimeSpan? RequiredEffortTime = null, 
    DateTime? DeadlineDate = null, 
    DateTime? CompleteDate = null,
    string? Deliverables = null, 
