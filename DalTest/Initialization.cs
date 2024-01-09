@@ -10,6 +10,9 @@ public static class Initialization
     private static ITask? dalTask;
     private static IEngineer? dalEngineer;
     private static IDependency? dalDependency;
+    private static int[] idEngineers = new int[5];
+
+    private static DO.ComplexityLvls[] arrOfCmplx = new DO.ComplexityLvls[] { ComplexityLvls.Beginner, ComplexityLvls.BetterBeginner, ComplexityLvls.Advanced, ComplexityLvls.Expert, ComplexityLvls.Master };
 
     private static void createTask()
     {
@@ -63,13 +66,11 @@ public static class Initialization
             "Verifying the rocket's systems and components under realistic conditions, often involving the use of actual propellants in a controlled environment.",
             "Launching the rocket into its intended trajectory or mission, marking the conclusion of the manufacturing and preparation phases."
         };
-
-        DO.ComplexityLvls[] arrOfCmplx=new DO.ComplexityLvls[] {ComplexityLvls.Beginner, ComplexityLvls.BetterBeginner, ComplexityLvls.Advanced, ComplexityLvls.Expert, ComplexityLvls.Master };
         for (int i=0;i<AliasOfTasks.Length;i++)
         {
             DateTime scheduleTime = DateTime.Now.AddMonths(s_rand.Next());
             DateTime current = DateTime.Now;
-            Task? newTask = new Task(0, DateTime.Now, false,AliasOfTasks[i], DescriptionOfTasks[i], scheduleTime, null, scheduleTime - current, scheduleTime.AddDays(14) , null, null, null,arrOfCmplx[i%5] ,EngineerId, true) ;
+            Task? newTask = new Task(0, DateTime.Now, false,AliasOfTasks[i], DescriptionOfTasks[i], scheduleTime, null, scheduleTime - current, scheduleTime.AddDays(14) , null, null, null,arrOfCmplx[i%5], idEngineers[i%5], true) ;
             s_dalTask!.Create(newTask);
         }
     }
@@ -86,6 +87,19 @@ public static class Initialization
             "Yehuda",
             "Yisachar"
         };
+        for (int i = 0; i < NamesOfEngineers.Length; i++)
+        {
+            Engineer newEngineer = new Engineer(s_rand.Next(200000000, 400000001), s_rand.Next(10000, 40001) + (((double)s_rand.Next(100)) / 100), NamesOfEngineers[i]+"@gmail.com", NamesOfEngineers[i], arrOfCmplx[i], true);
+            try
+            {
+                s_dalEngineer!.Create(newEngineer);
+                idEngineers[i]= newEngineer.Id;
+            }
+            catch(Exception problem)
+            {
+                i--;
+            }
+        }
     }
 
 
