@@ -7,12 +7,35 @@ public static class Initialization
     private static IEngineer? s_dalEngineer; 
     private static IDependency? s_dalDependency;
     private static readonly Random s_rand = new(DateTime.Now.Millisecond);
-    private static ITask? dalTask;
-    private static IEngineer? dalEngineer;
-    private static IDependency? dalDependency;
     private static int[] idEngineers = new int[5];
 
     private static DO.ComplexityLvls[] arrOfCmplx = new DO.ComplexityLvls[] { ComplexityLvls.Beginner, ComplexityLvls.BetterBeginner, ComplexityLvls.Advanced, ComplexityLvls.Expert, ComplexityLvls.Master };
+
+
+    private static void createEngineer()
+    {
+        string[] NamesOfEngineers = new string[]
+        {
+            "Reuven",
+            "Shimon",
+            "Levi",
+            "Yehuda",
+            "Yisachar"
+        };
+        for (int i = 0; i < NamesOfEngineers.Length; i++)
+        {
+            Engineer newEngineer = new Engineer(s_rand.Next(200000000, 400000001), s_rand.Next(10000, 40001) + (((double)s_rand.Next(100)) / 100), NamesOfEngineers[i] + "@gmail.com", NamesOfEngineers[i], arrOfCmplx[i], true);
+            try
+            {
+                s_dalEngineer!.Create(newEngineer);
+                idEngineers[i] = newEngineer.Id;
+            }
+            catch (Exception problem)
+            {
+                i--;
+            }
+        }
+    }
 
     private static void createTask()
     {
@@ -76,33 +99,6 @@ public static class Initialization
     }
 
 
-
-    private static void createEngineer()
-    {
-        string[] NamesOfEngineers = new string[]
-        {
-            "Reuven",
-            "Shimon",
-            "Levi",
-            "Yehuda",
-            "Yisachar"
-        };
-        for (int i = 0; i < NamesOfEngineers.Length; i++)
-        {
-            Engineer newEngineer = new Engineer(s_rand.Next(200000000, 400000001), s_rand.Next(10000, 40001) + (((double)s_rand.Next(100)) / 100), NamesOfEngineers[i]+"@gmail.com", NamesOfEngineers[i], arrOfCmplx[i], true);
-            try
-            {
-                s_dalEngineer!.Create(newEngineer);
-                idEngineers[i]= newEngineer.Id;
-            }
-            catch(Exception problem)
-            {
-                i--;
-            }
-        }
-    }
-
-
     private static void createDependency()
     {
         int[] arrOfDependencies = new int[]
@@ -155,10 +151,13 @@ public static class Initialization
         }
     }
 
-    public static void Do()
+    public static void Do(ITask? dalTask, IEngineer? dalEngineer, IDependency? dalDependency)
     {
         s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
         s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
         s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+        createEngineer();
+        createTask();
+        createDependency();
     }
 }
