@@ -7,9 +7,6 @@ public static class Initialization
     private static IEngineer? s_dalEngineer; 
     private static IDependency? s_dalDependency;
     private static readonly Random s_rand = new(DateTime.Now.Millisecond);
-    private static ITask? dalTask;
-    private static IEngineer? dalEngineer;
-    private static IDependency? dalDependency;
     private static int[] idEngineers = new int[5];
 
     private static DO.ComplexityLvls[] arrOfCmplx = new DO.ComplexityLvls[] { ComplexityLvls.Beginner, ComplexityLvls.BetterBeginner, ComplexityLvls.Advanced, ComplexityLvls.Expert, ComplexityLvls.Master };
@@ -155,7 +152,7 @@ public static class Initialization
         }
     }
 
-    public static void Do()
+    public static void Do(ITask dalTask, IEngineer dalEngineer, IDependency dalDependency)
     {
         s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
         s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
