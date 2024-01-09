@@ -63,16 +63,19 @@ public static class Initialization
             "Verifying the rocket's systems and components under realistic conditions, often involving the use of actual propellants in a controlled environment.",
             "Launching the rocket into its intended trajectory or mission, marking the conclusion of the manufacturing and preparation phases."
         };
+
         DO.ComplexityLvls[] arrOfCmplx=new DO.ComplexityLvls[] {ComplexityLvls.Beginner, ComplexityLvls.BetterBeginner, ComplexityLvls.Advanced, ComplexityLvls.Expert, ComplexityLvls.Master };
         for (int i=0;i<AliasOfTasks.Length;i++)
         {
             DateTime scheduleTime = DateTime.Now.AddMonths(s_rand.Next());
             DateTime current = DateTime.Now;
-            Task? newTask = new Task(0, DateTime.Now, false,AliasOfTasks[i], DescriptionOfTasks[i], scheduleTime, null, scheduleTime - current, scheduleTime.AddDays(14) , null, null, null,arrOfCmplx[i] ENGINERRID, true) ;
-            
+            Task? newTask = new Task(0, DateTime.Now, false,AliasOfTasks[i], DescriptionOfTasks[i], scheduleTime, null, scheduleTime - current, scheduleTime.AddDays(14) , null, null, null,arrOfCmplx[i%5] ,ENGINERRID, true) ;
+            s_dalTask!.Create(newTask);
         }
-        if()//if task isnt already exist.
     }
+
+
+
     private static void createEngineer()
     {
         string[] NamesOfEngineers = new string[]
@@ -84,7 +87,59 @@ public static class Initialization
             "Yisachar"
         };
     }
-    private static void createDependency();
+
+
+    private static void createDependency()
+    {
+        int[] arrOfDependencies = new int[]
+        {
+            1,4,
+            1,5,
+            2,5,
+            3,5,
+            5,6,
+            1,6,
+            2,6,
+            3,6,
+            6,7,
+            7,8,
+            8,9,
+            2,9,
+            5,9,
+            8,10,
+            5,10,
+            8,11,
+            5,11,
+            4,11,
+            3,13,
+            2,13,
+            1,13,
+            8,12,
+            2,12,
+            5,12,
+            8,15,
+            13,14,
+            14,15,
+            14,16,
+            16,17,
+            17,18,
+            18,19,
+            15,19,
+            9,19,
+            12,19,
+            10,19,
+            11,19,
+            19,20,
+            19,21,
+            20,22,
+            21,22
+        };
+        for(int i=0; i<arrOfDependencies.Length;i=i+2)
+        {
+            Dependency? newDependency = new Dependency(0, arrOfDependencies[i], arrOfDependencies[i + 1]);
+            s_dalDependency!.Create(newDependency);
+        }
+    }
 
     public static void Do()
     {
