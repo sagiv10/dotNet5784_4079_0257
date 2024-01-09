@@ -7,6 +7,7 @@
     using System.Reflection.Metadata;
     using System.Reflection.Metadata.Ecma335;
     using System.Runtime.CompilerServices;
+    using System.Threading.Tasks;
 
     internal class Program
     {
@@ -88,7 +89,7 @@
             {
                 Console.WriteLine("write the id of the task you want to update:");
                 int idToUpdate = int.Parse(Console.ReadLine());
-                Task? updatedTask = GenerateTask();
+                Task? updatedTask = GenerateTask(idToUpdate);
                 s_dalTask.Update(updatedTask);
             }
             catch (Exception e)
@@ -103,7 +104,7 @@
             {
                 Console.WriteLine("write the id of the Engineer you want to update:");
                 int idToUpdate = int.Parse(Console.ReadLine());
-                Engineer updatedEngineer = GenerateEngineer();
+                Engineer? updatedEngineer = GenerateEngineer();
                 s_dalEngineer.Update(updatedEngineer);
             }
             catch (Exception e)
@@ -118,7 +119,7 @@
             {
                 Console.WriteLine("write the id of the Dependency you want to update:");
                 int idToUpdate = int.Parse(Console.ReadLine());
-                Dependency? updatedDependency = GenerateDependency();
+                Dependency? updatedDependency = GenerateDependency(idToUpdate);
                 s_dalDependency.Update(updatedDependency);
             }
             catch (Exception e)
@@ -283,7 +284,7 @@
             return tempInput;
         }
 
-        public static Engineer GenerateEngineer()
+        public static DO.Engineer GenerateEngineer()
         {
             Console.WriteLine("Enter the following parameters: id, email address, salary, name and the complexity level:");
             int newId;
@@ -294,8 +295,8 @@
             string newName = Console.ReadLine() ?? "";
             int newComplexityLevel;
             newComplexityLevel = IntInputCheck(int.TryParse(Console.ReadLine(), out newComplexityLevel), newComplexityLevel);
-            newComplexityLevel = ComplexityLevelInputCheck((newComplexityLevel >= 0 && newComplexityLevel < 5), newComplexityLevel);
-            Engineer newEngineer = new Engineer(newId, newCost, newEmail, newName, (DO.ComplexityLvls)newComplexityLevel, true);
+            newId = ComplexityLevelInputCheck((newComplexityLevel >= 0 && newComplexityLevel < 5), newComplexityLevel);
+            DO.Engineer newEngineer = new DO.Engineer(newId, newCost, newEmail, newName, (DO.ComplexityLvls)newComplexityLevel, true);
             return newEngineer;
         }
 
@@ -326,9 +327,35 @@
             return newTask;
         }
 
-        public static Dependency GenerateDependency()
+        public static DO.Dependency GenerateDependency(int newId)
         {
-
+            Console.WriteLine("Enter the following parameters: DependentTask and DependsOnTask");
+            int _DependentTask = int.Parse(Console.ReadLine());
+            int _DependsOnTask = int.Parse(Console.ReadLine());
+            DO.Dependency newDependency = new DO.Dependency(_DependentTask, _DependsOnTask);
+            return newDependency;
+        }
+        public static void CreateNewEngineer()
+        {
+            try
+            {
+                Engineer engToAdd = GenerateEngineer();
+                s_dalEngineer.Create(engToAdd);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+        public static void CreateNewTask()
+        {
+            Task taskToAdd = GenerateTask(0);
+            s_dalTask.Create(taskToAdd);
+        }
+        public static void CreateNewDependency()
+        {
+            Dependency dependencyToAdd = GenerateDependency(0);
+            s_dalDependency.Create(dependencyToAdd);
         }
     }
 }
