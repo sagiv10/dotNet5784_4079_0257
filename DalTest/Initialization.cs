@@ -69,7 +69,7 @@ public static class Initialization
         {
             DateTime scheduleTime = DateTime.Now.AddMonths(s_rand.Next());
             DateTime current = DateTime.Now;
-            Task? newTask = new Task(0, DateTime.Now, false,AliasOfTasks[i], DescriptionOfTasks[i], scheduleTime, null, scheduleTime - current, scheduleTime.AddDays(14) , null, null, null,arrOfCmplx[i%5] ,ENGINERRID, true) ;
+            Task? newTask = new Task(0, DateTime.Now, false,AliasOfTasks[i], DescriptionOfTasks[i], scheduleTime, null, scheduleTime - current, scheduleTime.AddDays(14) , null, null, null,arrOfCmplx[i%5] ,EngineerId, true) ;
             s_dalTask!.Create(newTask);
         }
     }
