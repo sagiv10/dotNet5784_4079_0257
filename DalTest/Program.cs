@@ -22,7 +22,7 @@
                 int choice = 1;
                 while (!(choice == 0))
                 {
-                    Console.WriteLine("Select an entity you want to check:\n 0. exit from the menu.\n1. Engineer.\n2. Dependency.\n3.Task");
+                    Console.WriteLine("Select an entity you want to check:\n0. exit from the menu.\n1. Engineer.\n2. Dependency.\n3. Task");
                     choice = IntInputCheck(int.TryParse(Console.ReadLine(), out choice), choice);
                     switch (choice)
                     {
@@ -47,7 +47,7 @@
         }
         public static void EntityMenu(string typeChoice)
         {
-            Console.WriteLine("Choose method:/n1.Create./n2.Read./n3.ReadAll./n4.Update./n5.Delete.");
+            Console.WriteLine("Choose method:\n1.Create.\n2.Read.\n3.ReadAll.\n4.Update.\n5.Delete.");
             int choice = IntInputCheck(int.TryParse(Console.ReadLine(), out choice), choice);
             switch (typeChoice)
             {
@@ -106,7 +106,7 @@
                 Console.WriteLine("write the id of the Engineer you want to update:");
                 int idToUpdate;
                 idToUpdate = IntInputCheck(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);
-                Engineer? updatedEngineer = GenerateEngineer();
+                Engineer? updatedEngineer = GenerateEngineer(idToUpdate);
                 s_dalEngineer!.Update(updatedEngineer);
             }
             catch (Exception e)
@@ -183,7 +183,11 @@
         {
             foreach (var item in s_dalEngineer!.ReadAll())
             {
-                Console.WriteLine(item);
+                if (item.IsActive == true)
+                {
+                    Console.WriteLine(item);
+
+                }
             }
         }
         public static void ReadAllNewDependency()
@@ -292,18 +296,16 @@
             return tempInput;
         }
 
-        public static DO.Engineer GenerateEngineer()
+        public static DO.Engineer GenerateEngineer(int newId)
         {
-            Console.WriteLine("Enter the following parameters: id, email address, salary, name and the complexity level:");
-            int newId;
-            newId = IntInputCheck(int.TryParse(Console.ReadLine(), out newId), newId);
+            Console.WriteLine("Enter the following parameters: email address, salary, name and the complexity level:");
             string newEmail = Console.ReadLine() ?? "";
             double newCost;
             newCost = DoubleInputCheck(double.TryParse(Console.ReadLine(), out newCost), newCost);
             string newName = Console.ReadLine() ?? "";
             int newComplexityLevel;
             newComplexityLevel = IntInputCheck(int.TryParse(Console.ReadLine(), out newComplexityLevel), newComplexityLevel);
-            newId = ComplexityLevelInputCheck((newComplexityLevel >= 0 && newComplexityLevel < 5), newComplexityLevel);
+            newComplexityLevel = ComplexityLevelInputCheck((newComplexityLevel >= 0 && newComplexityLevel < 5), newComplexityLevel);
             DO.Engineer newEngineer = new DO.Engineer(newId, newCost, newEmail, newName, (DO.ComplexityLvls)newComplexityLevel, true);
             return newEngineer;
         }
@@ -349,7 +351,10 @@
         {
             try
             {
-                Engineer engToAdd = GenerateEngineer();
+                Console.WriteLine("enter the new id of the engineer:");
+                int newId;
+                newId = IntInputCheck(int.TryParse(Console.ReadLine(), out newId), newId);
+                Engineer engToAdd = GenerateEngineer(newId);
                 s_dalEngineer!.Create(engToAdd);
             }
             catch (Exception e)

@@ -1,4 +1,4 @@
-﻿namespace DalTest;
+﻿ namespace DalTest;
 using DalApi;
 using DO;
 public static class Initialization
@@ -91,7 +91,7 @@ public static class Initialization
         };
         for (int i=0;i<AliasOfTasks.Length;i++)
         {
-            DateTime scheduleTime = DateTime.Now.AddMonths(s_rand.Next());
+            DateTime scheduleTime = DateTime.Now.AddMonths(s_rand.Next(30));
             DateTime current = DateTime.Now;
             Task? newTask = new Task(0, DateTime.Now, false,AliasOfTasks[i], DescriptionOfTasks[i], scheduleTime, null, scheduleTime - current, scheduleTime.AddDays(14) , null, null, null,arrOfCmplx[i%5], idEngineers[i%5], true) ;
             s_dalTask!.Create(newTask);
