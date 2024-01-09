@@ -103,7 +103,7 @@
             {
                 Console.WriteLine("write the id of the Engineer you want to update:");
                 int idToUpdate = int.Parse(Console.ReadLine());
-                Engineer? updatedEngineer = generatedEngineer;
+                Engineer? updatedEngineer = GenerateEngineer();
                 s_dalEngineer.Update(updatedEngineer);
             }
             catch (Exception e)
@@ -118,7 +118,7 @@
             {
                 Console.WriteLine("write the id of the Dependency you want to update:");
                 int idToUpdate = int.Parse(Console.ReadLine());
-                Dependency? updatedDependency = GenerateDependency();
+                Dependency? updatedDependency = GenerateDependency(idToUpdate);
                 s_dalDependency.Update(updatedDependency);
             }
             catch (Exception e)
@@ -236,86 +236,109 @@
             }
         }
 
-            public static int IntInputCheck(bool isConvertible, int input)
+        public static int IntInputCheck(bool isConvertible, int input)
+        {
+            int newInput = input;
+            while (isConvertible == false)
             {
-                int newInput = input;
-                while (isConvertible == false)
-                {
-                    Console.WriteLine("wrong input, please insert another number:");
-                    isConvertible = int.TryParse(Console.ReadLine(), out newInput);
-                }
-                return newInput;
+                Console.WriteLine("wrong input, please insert another number:");
+                isConvertible = int.TryParse(Console.ReadLine(), out newInput);
+            }
+            return newInput;
+        }
+
+        public static double DoubleInputCheck(bool isConvertible, double input)
+        {
+            double newInput = input;
+            while (isConvertible == false)
+            {
+                Console.WriteLine("wrong input, please insert another number:");
+                isConvertible = double.TryParse(Console.ReadLine(), out newInput);
+            }
+            return newInput;
+        }
+
+        public static int ComplexityLevelInputCheck(bool isConvertible, int input)
+        {
+            int newInput = input;
+            while (isConvertible == false)
+            {
+                Console.WriteLine("wrong input, please insert another number:");
+                isConvertible = int.TryParse(Console.ReadLine(), out newInput);
+                newInput = IntInputCheck(isConvertible, newInput);
+                isConvertible = (newInput >= 0 && newInput < 5);
+            }
+            return newInput;
+        }
+
+        //this program gets a bool variable if the input is string or DateTime and the input.
+        // the program returns a correct input. 
+        public static DateTime inputCheck(bool isConvertible, DateTime input)
+        {
+            DateTime tempInput = input;
+            while (isConvertible == false)
+            {
+                Console.WriteLine("invalid time format");
+                isConvertible = DateTime.TryParse(Console.ReadLine(), out tempInput);
+            }
+            return tempInput;
+        }
+
+        public static DO.Engineer GenerateEngineer()
+        {
+            Console.WriteLine("Enter the following parameters: id, email address, salary, name and the complexity level:");
+            int newId;
+            newId = IntInputCheck(int.TryParse(Console.ReadLine(), out newId), newId);
+            string newEmail = Console.ReadLine() ?? "";
+            double newCost;
+            newCost = DoubleInputCheck(double.TryParse(Console.ReadLine(), out newCost), newCost);
+            string newName = Console.ReadLine() ?? "";
+            int newComplexityLevel;
+            newComplexityLevel = IntInputCheck(int.TryParse(Console.ReadLine(), out newComplexityLevel), newComplexityLevel);
+            newId = ComplexityLevelInputCheck((newComplexityLevel >= 0 && newComplexityLevel < 5), newComplexityLevel);
+            DO.Engineer newEngineer = new DO.Engineer(newId, newCost, newEmail, newName, (DO.ComplexityLvls)newComplexityLevel, true);
+            return newEngineer;
+        }
+
+        public static DO.Task GenerateTask(int newId)
+        {
+            Console.WriteLine("Enter the following parameters: nickname, description, if it's milestone ('Y' or 'N'), when it created, the scheduled Date to beginning, when it started, the required effort of time, deadline date, complete date, deliveables, notes and the level of complexity, and the engineer's id:");
+            string newName = Console.ReadLine() ?? "";
+            string newDescription = Console.ReadLine() ?? "";
+            bool newIsMilestone = ((char)Console.Read() == 'Y' ? true : false);
+            DateTime newCreatedAtDate =
             }
 
-            public static double DoubleInputCheck(bool isConvertible, double input)
+        public static DO.Dependency GenerateDependency(int newId)
+        {
+            Console.WriteLine("Enter the following parameters: DependentTask and DependsOnTask");
+            int _DependentTask = int.Parse(Console.ReadLine());
+            int _DependsOnTask = int.Parse(Console.ReadLine());
+            DO.Dependency newDependency = new DO.Dependency(_DependentTask, _DependsOnTask);
+            return newDependency;
+        }
+        public static void CreateNewEngineer()
+        {
+            try
             {
-                double newInput = input;
-                while (isConvertible == false)
-                {
-                    Console.WriteLine("wrong input, please insert another number:");
-                    isConvertible = double.TryParse(Console.ReadLine(), out newInput);
-                }
-                return newInput;
+                Engineer engToAdd = GenerateEngineer();
+                s_dalEngineer.Create(engToAdd);
             }
-
-            public static int ComplexityLevelInputCheck(bool isConvertible, int input)
+            catch (Exception e)
             {
-                int newInput = input;
-                while (isConvertible == false)
-                {
-                    Console.WriteLine("wrong input, please insert another number:");
-                    isConvertible = int.TryParse(Console.ReadLine(), out newInput);
-                    newInput = IntInputCheck(isConvertible, newInput);
-                    isConvertible = (newInput >= 0 && newInput < 5);
-                }
-                return newInput;
+                Console.WriteLine(e);
             }
-
-            //this program gets a bool variable if the input is string or DateTime and the input.
-            // the program returns a correct input. 
-            public static DateTime inputCheck(bool isConvertible, DateTime input)
-            {
-                DateTime tempInput = input;
-                while (isConvertible == false)
-                {
-                    Console.WriteLine("invalid time format");
-                    isConvertible = DateTime.TryParse(Console.ReadLine(), out tempInput);
-                }
-                return tempInput;
-            }
-
-            public static DO.Engineer GenerateEngineer()
-            {
-                Console.WriteLine("Enter the following parameters: id, email address, salary, name and the complexity level:");
-                int newId;
-                newId = IntInputCheck(int.TryParse(Console.ReadLine(), out newId), newId);
-                string newEmail = Console.ReadLine() ?? "";
-                double newCost;
-                newCost = DoubleInputCheck(double.TryParse(Console.ReadLine(), out newCost), newCost);
-                string newName = Console.ReadLine() ?? "";
-                int newComplexityLevel;
-                newComplexityLevel = IntInputCheck(int.TryParse(Console.ReadLine(), out newComplexityLevel), newComplexityLevel);
-                newId = ComplexityLevelInputCheck((newComplexityLevel >= 0 && newComplexityLevel < 5), newComplexityLevel);
-                DO.Engineer newEngineer = new DO.Engineer(newId, newCost, newEmail, newName, (DO.ComplexityLvls)newComplexityLevel, true);
-                return newEngineer;
-            }
-
-            public static DO.Task GenerateTask(int newId)
-            {
-                Console.WriteLine("Enter the following parameters: nickname, description, if it's milestone ('Y' or 'N'), when it created, the scheduled Date to beginning, when it started, the required effort of time, deadline date, complete date, deliveables, notes and the level of complexity, and the engineer's id:");
-                string newName = Console.ReadLine() ?? "";
-                string newDescription = Console.ReadLine() ?? "";
-                bool newIsMilestone = ((char)Console.Read() == 'Y' ? true : false);
-                DateTime newCreatedAtDate =
-    
-
-
-            }
-
-            public static DO.Dependency GenerateDependency()
-            {
-
-            }
+        }
+        public static void CreateNewTask()
+        {
+            Task taskToAdd = GenerateTask(0);
+            s_dalTask.Create(taskToAdd);
+        }
+        public static void CreateNewDependency()
+        {
+            Dependency dependencyToAdd = GenerateDependency(0);
+            s_dalDependency.Create(dependencyToAdd);
+        }
     }
 }
 
