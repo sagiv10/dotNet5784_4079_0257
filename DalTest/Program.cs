@@ -88,7 +88,7 @@
             {
                 Console.WriteLine("write the id of the task you want to update:");
                 int idToUpdate = int.Parse(Console.ReadLine());
-                Task? updatedTask = GenerateTask();
+                Task? updatedTask = GenerateTask(idToUpdate);
                 s_dalTask.Update(updatedTask);
             }
             catch (Exception e)
