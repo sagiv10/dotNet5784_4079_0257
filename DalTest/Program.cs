@@ -4,6 +4,7 @@
     using DalApi;
     using DO;
     using System.Reflection.Metadata;
+    using System.Reflection.Metadata.Ecma335;
     using System.Runtime.CompilerServices;
 
     internal class Program
@@ -230,10 +231,17 @@
                 Console.WriteLine(e);
             }
         }
-        //this program returns 
-        public static DateTime inputCheck(bool isConvertible,DateTime inputCheck)
+        //this program gets a bool variable if the input is string or DateTime and the input.
+        // the program returns a correct input. 
+        public static DateTime inputCheck(bool isConvertible,DateTime input)
         {
-
+            DateTime tempInput = input;
+            while (isConvertible == false)
+            {
+                Console.WriteLine("invalid time format");
+                isConvertible = DateTime.TryParse(Console.ReadLine(), out tempInput);
+            }
+            return tempInput;
         }
     }
 }
