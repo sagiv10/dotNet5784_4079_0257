@@ -25,12 +25,12 @@ public record Task
    string Description ="", 
    DateTime? ScheduledDate = null,
    DateTime? StartDate = null, 
-   DateTime? RequiredEffortTime = null, 
+   TimeSpan? RequiredEffortTime = null, 
    DateTime? DeadlineDate = null, 
    DateTime? CompleteDate = null,
    string? Deliverables = null, 
    string? Remarks = null, 
-   DO.EngineerExperience? Complexity = null,
+   DO.ComplexityLvls Complexity = DO.ComplexityLvls.Beginner,
    int? EngineerId=null,
    bool isActive=false
 )

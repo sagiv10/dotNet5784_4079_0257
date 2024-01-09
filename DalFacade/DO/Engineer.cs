@@ -1,4 +1,6 @@
-﻿namespace DO;
+﻿using System.Reflection.Emit;
+
+namespace DO;
 /// <summary>
 /// the record of engineer containing the folloing paraneters:
 /// </summary>
@@ -14,8 +16,8 @@ public record Engineer
     double Cost, 
     string Email = "",
     string Name="",
-    DO.EngineerExperience Level=,
-    bool IsActive=true
+    DO.ComplexityLvls? Level=null,
+    bool IsActive = true
 )
 {
     public Engineer() : this(0,0) { }
