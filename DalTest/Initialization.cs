@@ -10,6 +10,7 @@ public static class Initialization
     private static ITask? dalTask;
     private static IEngineer? dalEngineer;
     private static IDependency? dalDependency;
+    private static int[] idEngineers = new int[5];
 
     private static DO.ComplexityLvls[] arrOfCmplx = new DO.ComplexityLvls[] { ComplexityLvls.Beginner, ComplexityLvls.BetterBeginner, ComplexityLvls.Advanced, ComplexityLvls.Expert, ComplexityLvls.Master };
 
@@ -69,10 +70,13 @@ public static class Initialization
         {
             DateTime scheduleTime = DateTime.Now.AddMonths(s_rand.Next());
             DateTime current = DateTime.Now;
-            Task? newTask = new Task(0, DateTime.Now, false,AliasOfTasks[i], DescriptionOfTasks[i], scheduleTime, null, scheduleTime - current, scheduleTime.AddDays(14) , null, null, null,arrOfCmplx[i] ENGINERRID, true) ;
-            
+            Task? newTask = new Task(0, DateTime.Now, false,AliasOfTasks[i], DescriptionOfTasks[i], scheduleTime, null, scheduleTime - current, scheduleTime.AddDays(14) , null, null, null,arrOfCmplx[i%5], idEngineers[i%5], true) ;
+            s_dalTask!.Create(newTask);
         }
     }
+
+
+
     private static void createEngineer()
     {
         string[] NamesOfEngineers = new string[]
@@ -85,10 +89,71 @@ public static class Initialization
         };
         for (int i = 0; i < NamesOfEngineers.Length; i++)
         {
-            Engineer newEngineew = new Engineer(s_rand.Next(200000000, 400000001), s_rand.Next(10000, 40001) + (((double)s_rand.Next(100)) / 100), NamesOfEngineers[i]+"@gmail.com", NamesOfEngineers[i], arrOfCmplx[i], true);
+            Engineer newEngineer = new Engineer(s_rand.Next(200000000, 400000001), s_rand.Next(10000, 40001) + (((double)s_rand.Next(100)) / 100), NamesOfEngineers[i]+"@gmail.com", NamesOfEngineers[i], arrOfCmplx[i], true);
+            try
+            {
+                s_dalEngineer!.Create(newEngineer);
+                idEngineers[i]= newEngineer.Id;
+            }
+            catch(Exception problem)
+            {
+                i--;
+            }
         }
     }
-    private static void createDependency();
+
+
+    private static void createDependency()
+    {
+        int[] arrOfDependencies = new int[]
+        {
+            1,4,
+            1,5,
+            2,5,
+            3,5,
+            5,6,
+            1,6,
+            2,6,
+            3,6,
+            6,7,
+            7,8,
+            8,9,
+            2,9,
+            5,9,
+            8,10,
+            5,10,
+            8,11,
+            5,11,
+            4,11,
+            3,13,
+            2,13,
+            1,13,
+            8,12,
+            2,12,
+            5,12,
+            8,15,
+            13,14,
+            14,15,
+            14,16,
+            16,17,
+            17,18,
+            18,19,
+            15,19,
+            9,19,
+            12,19,
+            10,19,
+            11,19,
+            19,20,
+            19,21,
+            20,22,
+            21,22
+        };
+        for(int i=0; i<arrOfDependencies.Length;i=i+2)
+        {
+            Dependency? newDependency = new Dependency(0, arrOfDependencies[i], arrOfDependencies[i + 1]);
+            s_dalDependency!.Create(newDependency);
+        }
+    }
 
     public static void Do()
     {
