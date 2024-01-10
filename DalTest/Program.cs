@@ -61,9 +61,9 @@
                     {
                         case 1: CreateNewEngineer(); break;
                         case 2: ReadEngineer(); break;
-                        case 3: ReadAllNewEngineer(); break;
-                        case 4: UpdateNewEngineer(); break;
-                        case 5: DeleteNewEngineer(); break;
+                        case 3: ReadAllEngineer(); break;
+                        case 4: UpdateEngineer(); break;
+                        case 5: DeleteEngineer(); break;
                     }
                     break;
                 case "Dependency":
@@ -71,9 +71,9 @@
                     {
                         case 1: CreateNewDependency(); break;
                         case 2: ReadDependency(); break;
-                        case 3: ReadAllNewDependency(); break;
-                        case 4: UpdateNewDependency(); break;
-                        case 5: DeleteNewDependency(); break;
+                        case 3: ReadAllDependency(); break;
+                        case 4: UpdateDependency(); break;
+                        case 5: DeleteDependency(); break;
                     }
                     break;
                 case "Task":
@@ -81,14 +81,14 @@
                     {
                         case 1: CreateNewTask(); break;
                         case 2: ReadTask(); break;
-                        case 3: ReadAllNewTask(); break;
-                        case 4: UpdateNewTask(); break;
-                        case 5: DeleteNewTask(); break;
+                        case 3: ReadAllTask(); break;
+                        case 4: UpdateTask(); break;
+                        case 5: DeleteTask(); break;
                     }
                     break;
             }
         }
-        public static void UpdateNewTask()
+        public static void UpdateTask()
         {
             try
             {
@@ -109,7 +109,7 @@
             }
             
         }
-        public static void UpdateNewEngineer()
+        public static void UpdateEngineer()
         {
             try
             {
@@ -130,7 +130,7 @@
             }
 
         }
-        public static void UpdateNewDependency()
+        public static void UpdateDependency()
         {
             try
             {
@@ -151,7 +151,7 @@
             }
 
         }
-        public static void DeleteNewTask()
+        public static void DeleteTask()
         {
             try
             {
@@ -167,7 +167,7 @@
                 Console.WriteLine(e);
             }
         }
-        public static void DeleteNewEngineer()
+        public static void DeleteEngineer()
         {
             try
             {
@@ -183,7 +183,7 @@
                 Console.WriteLine(e);
             }
         }
-        public static void DeleteNewDependency()
+        public static void DeleteDependency()
         {
             try
             {
@@ -199,14 +199,14 @@
                 Console.WriteLine(e);
             }
         }
-        public static void ReadAllNewTask()
+        public static void ReadAllTask()
         {
             foreach (var item in s_dalTask!.ReadAll())
             {
                 Console.WriteLine(item);
             }
         }
-        public static void ReadAllNewEngineer()
+        public static void ReadAllEngineer()
         {
             foreach (var item in s_dalEngineer!.ReadAll())
             {
@@ -217,7 +217,7 @@
                 }
             }
         }
-        public static void ReadAllNewDependency()
+        public static void ReadAllDependency()
         {
             foreach (var item in s_dalDependency!.ReadAll())
             {
@@ -295,6 +295,8 @@
                 Console.WriteLine(e);
             }
         }
+
+        //METHODS THAT HELP US TO CREATE THE CRUD METHODS: 
         public static int CheckIntInput(bool isConvertible, int input)
         {
             int newInput = input;
@@ -377,9 +379,10 @@
             
             string newDescription = Console.ReadLine() ?? "";
             
-            bool newIsMilestone = ((char)Console.Read() == 'Y' ? true : false);
+            bool newIsMilestone = Console.ReadLine() == "Y" ? true : false;
             
             DateTime newCreatedTime;
+            
             newCreatedTime = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newCreatedTime), newCreatedTime);
             
             DateTime newScheduledDate;
