@@ -43,9 +43,9 @@
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception problem)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine(problem.Message);
             }
         }
         public static void EntityMenu(string typeChoice)
@@ -61,9 +61,9 @@
                     {
                         case 1: CreateNewEngineer(); break;
                         case 2: ReadEngineer(); break;
-                        case 3: ReadAllNewEngineer(); break;
-                        case 4: UpdateNewEngineer(); break;
-                        case 5: DeleteNewEngineer(); break;
+                        case 3: ReadAllEngineer(); break;
+                        case 4: UpdateEngineer(); break;
+                        case 5: DeleteEngineer(); break;
                     }
                     break;
                 case "Dependency":
@@ -71,9 +71,9 @@
                     {
                         case 1: CreateNewDependency(); break;
                         case 2: ReadDependency(); break;
-                        case 3: ReadAllNewDependency(); break;
-                        case 4: UpdateNewDependency(); break;
-                        case 5: DeleteNewDependency(); break;
+                        case 3: ReadAllDependency(); break;
+                        case 4: UpdateDependency(); break;
+                        case 5: DeleteDependency(); break;
                     }
                     break;
                 case "Task":
@@ -81,14 +81,14 @@
                     {
                         case 1: CreateNewTask(); break;
                         case 2: ReadTask(); break;
-                        case 3: ReadAllNewTask(); break;
-                        case 4: UpdateNewTask(); break;
-                        case 5: DeleteNewTask(); break;
+                        case 3: ReadAllTask(); break;
+                        case 4: UpdateTask(); break;
+                        case 5: DeleteTask(); break;
                     }
                     break;
             }
         }
-        public static void UpdateNewTask()
+        public static void UpdateTask()
         {
             try
             {
@@ -97,19 +97,65 @@
                 int idToUpdate;
                 idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);
 
-                Console.WriteLine(s_dalTask!.Read(idToUpdate));
+                DO.Task? oldTask = s_dalTask!.Read(idToUpdate);
+                if(oldTask != null)
+                {
+                    Console.WriteLine(oldTask);
 
-                DO.Task? updatedTask = GenerateTask(idToUpdate);
+                    Console.WriteLine("Enter the following parameters: nickname, description, if it's milestone ('1' for yes and '0' to no), when it created, the scheduled Date to beginning, when it started, deadline date, complete date, deliverables, notes and the level of complexity, and the engineer's id:");
 
-                s_dalTask!.Update(updatedTask);
+                    string newName = Console.ReadLine() ?? oldTask._alias;
+
+                    string newDescription = Console.ReadLine() ?? oldTask._description;
+
+                    int intIsMilestone;
+
+                    intIsMilestone = (int.TryParse(Console.ReadLine(), out intIsMilestone)) ? intIsMilestone : ((oldTask._isMilestone!) ? 1 : 0);
+
+                    bool newIsMilestone = intIsMilestone == 1 ? true : false;
+
+                    DateTime newCreatedTime;
+                    newCreatedTime = DateTime.TryParse(Console.ReadLine(), out newCreatedTime) ? newCreatedTime : (DateTime)oldTask._createdAtDate!;
+
+                    DateTime newScheduledDate;
+                    newScheduledDate = DateTime.TryParse(Console.ReadLine(), out newScheduledDate) ? newScheduledDate : (DateTime)oldTask._scheduledDate!;
+
+                    DateTime newStartedDate;
+                    newStartedDate = DateTime.TryParse(Console.ReadLine(), out newStartedDate) ? newStartedDate : (DateTime)oldTask._startDate!;
+
+                    DateTime newDeadlineTime;
+                    newDeadlineTime = DateTime.TryParse(Console.ReadLine(), out newDeadlineTime) ? newDeadlineTime : (DateTime)oldTask._deadlineDate!;
+
+                    DateTime newCompletedDate;
+                    newCompletedDate = DateTime.TryParse(Console.ReadLine(), out newCompletedDate) ? newCompletedDate : (DateTime)oldTask._completeDate!;
+
+                    string newDeliverables = Console.ReadLine() ?? oldTask._deliverables!;
+
+                    string newRemarks = Console.ReadLine() ?? oldTask._remarks!;
+
+                    int newComplexityLevel;
+                    newComplexityLevel = (int.TryParse(Console.ReadLine(), out newComplexityLevel) && newComplexityLevel >= 0 && newComplexityLevel < 5) ? newComplexityLevel : (int)oldTask._complexity;
+
+                    int newEngineerId;
+                    newEngineerId = (int.TryParse(Console.ReadLine(), out newEngineerId)) ? newEngineerId : (int)oldTask._engineerId!;
+
+                    DO.Task updatedTask = new DO.Task(idToUpdate, newCreatedTime, newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, newScheduledDate - newCreatedTime, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);
+
+                    s_dalTask!.Update(updatedTask);
+                }
+                else
+                {
+                    throw new Exception("id is not in the system");
+
+                }
             }
             catch (Exception problem)
             {
-                Console.WriteLine(problem);
+                Console.WriteLine(problem.Message);
             }
             
         }
-        public static void UpdateNewEngineer()
+        public static void UpdateEngineer()
         {
             try
             {
@@ -118,19 +164,41 @@
                 int idToUpdate;
                 idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);
 
-                Console.WriteLine(s_dalEngineer!.Read(idToUpdate));
+                DO.Engineer? oldEngineer = s_dalEngineer!.Read(idToUpdate);
 
-                Engineer? updatedEngineer = GenerateEngineer(idToUpdate);
+                if(oldEngineer != null )
+                {
+                    Console.WriteLine(oldEngineer);
 
-                s_dalEngineer!.Update(updatedEngineer);
+                    Console.WriteLine("Enter the following parameters: email address, salary, name and the complexity level:");
+
+                    string newEmail = Console.ReadLine() ?? oldEngineer._email!;
+
+                    double newCost;
+                    newCost = double.TryParse(Console.ReadLine(), out newCost) ? newCost : oldEngineer._cost;
+
+                    string newName = Console.ReadLine() ?? oldEngineer._name;
+
+                    int newComplexityLevel=-1;
+                    newComplexityLevel = (int.TryParse(Console.ReadLine(), out newComplexityLevel) && newComplexityLevel>=0 && newComplexityLevel<5) ? newComplexityLevel : (int)oldEngineer._level!;
+
+                    DO.Engineer updatedEngineer = new DO.Engineer(idToUpdate, newCost, newEmail, newName, (DO.ComplexityLvls)newComplexityLevel, true);
+
+                    s_dalEngineer!.Update(updatedEngineer);
+                }
+                else
+                {
+                    throw new Exception("id is not in the system");
+                }
+
             }
             catch (Exception problem)
             {
-                Console.WriteLine(problem);
+                Console.WriteLine(problem.Message);
             }
 
         }
-        public static void UpdateNewDependency()
+        public static void UpdateDependency()
         {
             try
             {
@@ -139,19 +207,39 @@
                 int idToUpdate;
                 idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);
 
-                Console.WriteLine(s_dalDependency!.Read(idToUpdate)); 
-                
-                Dependency? updatedDependency = GenerateDependency(idToUpdate);
+                Dependency? oldDependency = s_dalDependency!.Read(idToUpdate);
 
-                s_dalDependency!.Update(updatedDependency);
+                if (oldDependency != null)
+                {
+                    Console.WriteLine(oldDependency);
+
+                    Console.WriteLine("Enter the following parameters: DependentTask and DependsOnTask");
+
+                    int dependentTask;
+
+                    dependentTask = (int.TryParse(Console.ReadLine(), out dependentTask)) ? dependentTask : (int)oldDependency._dependentTask!;
+
+                    int dependsOnTask;
+
+                    dependsOnTask = (int.TryParse(Console.ReadLine(), out dependsOnTask)) ? dependsOnTask : (int)oldDependency._dependsOnTask!;
+
+                    DO.Dependency updatedDependency = new DO.Dependency(idToUpdate, dependentTask, dependsOnTask);
+
+                    s_dalDependency!.Update(updatedDependency);
+                }
+                else
+                {
+                    throw new Exception("id is not in the system");
+
+                }
             }
             catch (Exception problem)
             {
-                Console.WriteLine(problem);
+                Console.WriteLine(problem.Message);
             }
 
         }
-        public static void DeleteNewTask()
+        public static void DeleteTask()
         {
             try
             {
@@ -162,12 +250,12 @@
 
                 s_dalTask!.Delete(idToDelete);
             }
-            catch (Exception e)
+            catch (Exception problem)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(problem.Message);
             }
         }
-        public static void DeleteNewEngineer()
+        public static void DeleteEngineer()
         {
             try
             {
@@ -178,12 +266,12 @@
 
                 s_dalEngineer!.Delete(idToDelete);
             }
-            catch (Exception e)
+            catch (Exception problem)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(problem.Message);
             }
         }
-        public static void DeleteNewDependency()
+        public static void DeleteDependency()
         {
             try
             {
@@ -194,19 +282,19 @@
 
                 s_dalDependency!.Delete(idToDelete);
             }
-            catch (Exception e)
+            catch (Exception problem)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(problem.Message);
             }
         }
-        public static void ReadAllNewTask()
+        public static void ReadAllTask()
         {
             foreach (var item in s_dalTask!.ReadAll())
             {
                 Console.WriteLine(item);
             }
         }
-        public static void ReadAllNewEngineer()
+        public static void ReadAllEngineer()
         {
             foreach (var item in s_dalEngineer!.ReadAll())
             {
@@ -217,7 +305,7 @@
                 }
             }
         }
-        public static void ReadAllNewDependency()
+        public static void ReadAllDependency()
         {
             foreach (var item in s_dalDependency!.ReadAll())
             {
@@ -243,9 +331,9 @@
 
                 Console.WriteLine(newEngineer);
             }
-            catch (Exception e)
+            catch (Exception problem)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(problem.Message);
             }
         }
         public static void ReadTask()
@@ -266,9 +354,9 @@
 
                 Console.WriteLine(newTask);
             }
-            catch (Exception e)
+            catch (Exception problem)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(problem.Message);
             }
         }
         public static void ReadDependency()
@@ -290,11 +378,13 @@
 
                 Console.WriteLine(newDependency);
             }
-            catch (Exception e)
+            catch (Exception problem)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(problem.Message);
             }
         }
+
+        //METHODS THAT HELP US TO CREATE THE CRUD METHODS: 
         public static int CheckIntInput(bool isConvertible, int input)
         {
             int newInput = input;
@@ -377,9 +467,10 @@
             
             string newDescription = Console.ReadLine() ?? "";
             
-            bool newIsMilestone = (Console.ReadLine() == "Y" ? true : false);
+            bool newIsMilestone = Console.ReadLine() == "Y" ? true : false;
             
             DateTime newCreatedTime;
+            
             newCreatedTime = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newCreatedTime), newCreatedTime);
             
             DateTime newScheduledDate;
@@ -409,7 +500,7 @@
             return newTask;
         }
 
-        public static DO.Dependency GenerateDependency(int newId)
+        public static DO.Dependency GenerateDependencyCreate(int newId)
         {
             Console.WriteLine("Enter the following parameters: DependentTask and DependsOnTask");
             
@@ -422,6 +513,7 @@
             DO.Dependency newDependency = new DO.Dependency(newId,dependentTask, dependsOnTask);
             return newDependency;
         }
+
         public static void CreateNewEngineer()
         {
             try
@@ -435,9 +527,9 @@
 
                 s_dalEngineer!.Create(engToAdd);
             }
-            catch (Exception e)
+            catch (Exception problem)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(problem.Message);
             }
         }
 
@@ -450,7 +542,7 @@
 
         public static void CreateNewDependency()
         {
-            Dependency dependencyToAdd = GenerateDependency(0);
+            Dependency dependencyToAdd = GenerateDependencyCreate(0);
 
             s_dalDependency!.Create(dependencyToAdd);
 
