@@ -1,6 +1,8 @@
-﻿ namespace DalTest;
+﻿
+namespace DalTest;
 using DalApi;
 using DO;
+
 public static class Initialization
 {
     private static ITask? s_dalTask; 
@@ -9,8 +11,9 @@ public static class Initialization
     private static readonly Random s_rand = new(DateTime.Now.Millisecond);
     private static int[] _idEngineers = new int[5];
     private static DO.ComplexityLvls[] _arrOfCmplx = new DO.ComplexityLvls[] { ComplexityLvls.Beginner, ComplexityLvls.BetterBeginner, ComplexityLvls.Advanced, ComplexityLvls.Expert, ComplexityLvls.Master };
-
-
+    /// <summary>
+    /// this method sets a new engineer with names we wrote and rand numbers for the id of each one and more details like email and his complexity lvl. create the new engineer and add him to the engineer list.
+    /// </summary>
     private static void createEngineer()
     {
         string[] NamesOfEngineers = new string[]
@@ -26,16 +29,18 @@ public static class Initialization
             Engineer newEngineer = new Engineer(s_rand.Next(200000000, 400000001), s_rand.Next(10000, 40001) + (((double)s_rand.Next(100)) / 100), NamesOfEngineers[i] + "@gmail.com", NamesOfEngineers[i], _arrOfCmplx[i], true);
             try
             {
-                s_dalEngineer!.Create(newEngineer);
+                s_dalEngineer!.Create(newEngineer);//throw if id we wrote in the create method already exist.
                 _idEngineers[i] = newEngineer._id;
             }
             catch (Exception problem)
             {
-                i--;
+                i--; //if the id already exist so ask for all the info again.
             }
         }
     }
-
+    /// <summary>
+    /// this method sets a tasks we made, create a new task, and add every each taks to a task list
+    /// </summary>
     private static void createTask()
     {
         string [] AliasOfTasks=new string[]
@@ -90,14 +95,16 @@ public static class Initialization
         };
         for (int i=0;i<AliasOfTasks.Length;i++)
         {
-            DateTime scheduleTime = DateTime.Now.AddMonths(s_rand.Next(30));
+            DateTime scheduleTime = DateTime.Now.AddMonths(s_rand.Next(30));//sets the scheduled time to be a rand number not bigger then 30 days after the current time.
             DateTime current = DateTime.Now;
             Task? newTask = new Task(0, DateTime.Now, false,AliasOfTasks[i], DescriptionOfTasks[i], scheduleTime, null, scheduleTime - current, scheduleTime.AddDays(14) , null, null, null,_arrOfCmplx[i%5], _idEngineers[i%5], true) ;
             s_dalTask!.Create(newTask);
         }
     }
 
-
+    /// <summary>
+    /// this method sets a dependencies we made, create a new dependency and add every each dependency to a dependency list
+    /// </summary>
     private static void createDependency()
     {
         int[] arrOfDependencies = new int[]
@@ -149,7 +156,13 @@ public static class Initialization
             s_dalDependency!.Create(newDependency);
         }
     }
-
+    /// <summary>
+    /// this program initalize the program with data we wrote and creates 3 variables that helps us to use the crud functions in program.cs.
+    /// </summary>
+    /// <param name="dalTask"> the implementation of the entity task that helps us reach to the interface of task </param>
+    /// <param name="dalEngineer">the implementation of the entity engineer that helps us reach to the interface of engineer</param>
+    /// <param name="dalDependency">the implementation of the entity dependency that helps us reach to the interface of dependency</param>
+    /// <exception cref="NullReferenceException"></exception>
     public static void Do(ITask? dalTask, IEngineer? dalEngineer, IDependency? dalDependency)
     {
         s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");

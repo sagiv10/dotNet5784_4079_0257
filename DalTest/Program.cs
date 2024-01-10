@@ -88,6 +88,7 @@
                     break;
             }
         }
+
         public static void UpdateTask()
         {
             try
