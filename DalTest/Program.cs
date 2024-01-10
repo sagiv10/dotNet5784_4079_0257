@@ -97,13 +97,15 @@
                 int idToUpdate;
                 idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);
 
+                Console.WriteLine(s_dalTask!.Read(idToUpdate));
+
                 DO.Task? updatedTask = GenerateTask(idToUpdate);
 
                 s_dalTask!.Update(updatedTask);
             }
-            catch (Exception e)
+            catch (Exception problem)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(problem);
             }
             
         }
@@ -116,13 +118,15 @@
                 int idToUpdate;
                 idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);
 
+                Console.WriteLine(s_dalEngineer!.Read(idToUpdate));
+
                 Engineer? updatedEngineer = GenerateEngineer(idToUpdate);
 
                 s_dalEngineer!.Update(updatedEngineer);
             }
-            catch (Exception e)
+            catch (Exception problem)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(problem);
             }
 
         }
@@ -134,14 +138,16 @@
 
                 int idToUpdate;
                 idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);
+
+                Console.WriteLine(s_dalDependency!.Read(idToUpdate)); 
                 
                 Dependency? updatedDependency = GenerateDependency(idToUpdate);
 
                 s_dalDependency!.Update(updatedDependency);
             }
-            catch (Exception e)
+            catch (Exception problem)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(problem);
             }
 
         }
