@@ -84,7 +84,7 @@ internal static class DataSource
         internal static int FindIndexTasks(int id)
         {
             int counter = 0;
-            foreach (var temp in DataSource.Engineers)
+            foreach (var temp in DataSource.Tasks)
             {
                 if (temp != null && temp._id == id)
                 {

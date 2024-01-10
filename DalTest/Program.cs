@@ -377,7 +377,7 @@
             
             string newDescription = Console.ReadLine() ?? "";
             
-            bool newIsMilestone = ((char)Console.Read() == 'Y' ? true : false);
+            bool newIsMilestone = (Console.ReadLine() == "Y" ? true : false);
             
             DateTime newCreatedTime;
             newCreatedTime = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newCreatedTime), newCreatedTime);
@@ -419,7 +419,7 @@
             int dependsOnTask;
             dependsOnTask = CheckIntInput(int.TryParse(Console.ReadLine(), out dependsOnTask), dependsOnTask);
             
-            DO.Dependency newDependency = new DO.Dependency(dependentTask, dependsOnTask);
+            DO.Dependency newDependency = new DO.Dependency(newId,dependentTask, dependsOnTask);
             return newDependency;
         }
         public static void CreateNewEngineer()
