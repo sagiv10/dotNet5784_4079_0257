@@ -7,34 +7,34 @@ public class EngineerImplementation : IEngineer
 {
     public int Create(Engineer item)
     {
-        Engineer? ifExists = DataSource.Config.FindEngineer(item.Id);
+        Engineer? ifExists = DataSource.Config.FindEngineer(item._id);
         if (ifExists!= null)
         {
-            if (ifExists.IsActive == false)
+            if (ifExists._isActive == false)
             {
-                Engineer updatedEngineer = item with { IsActive = true };
-                int theIndex = DataSource.Config.FindIndexEngineer(ifExists.Id);
+                Engineer updatedEngineer = item with { _isActive = true };
+                int theIndex = DataSource.Config.FindIndexEngineer(ifExists._id);
                 DataSource.Engineers.RemoveAt(theIndex);
                 DataSource.Engineers.Add(updatedEngineer);
-                return item.Id;
+                return item._id;
             }
-            if(ifExists.IsActive ==true ) 
+            if(ifExists._isActive ==true ) 
             {
-                throw new Exception($"Engineer with ID={ifExists.Id} already exists");
+                throw new Exception($"Engineer with ID={ifExists._id} already exists");
             }
 
         }
         Engineer newEngineer = item;
         DataSource.Engineers.Add(newEngineer);
-        return item.Id;
+        return item._id;
     }
 
     public void Delete(int id)
     {
         Engineer? oldEngineer = DataSource.Config.FindEngineer(id);
-        if (oldEngineer != null && oldEngineer.IsActive==true)
+        if (oldEngineer != null && oldEngineer._isActive==true)
         {
-            Engineer updatedEngineer = oldEngineer! with { IsActive = false};
+            Engineer updatedEngineer = oldEngineer! with { _isActive = false};
             int theIndex=DataSource.Config.FindIndexEngineer(id);
             DataSource.Engineers.RemoveAt(theIndex);
             DataSource.Engineers.Add(updatedEngineer);
@@ -46,7 +46,7 @@ public class EngineerImplementation : IEngineer
     public Engineer? Read(int id)
     {
         Engineer? returnedValue = DataSource.Config.FindEngineer(id);
-        if(returnedValue != null && returnedValue.IsActive == true)
+        if(returnedValue != null && returnedValue._isActive == true)
         {
             return returnedValue;
         }
@@ -63,7 +63,7 @@ public class EngineerImplementation : IEngineer
         List<Engineer?> newList = new List<Engineer?>();
         foreach (var item in DataSource.Engineers)
         {
-            temp=new Engineer(item!.Id, item!.Cost, item!.Email, item!.Name, item!.Level,item!.IsActive);
+            temp=new Engineer(item!._id, item!._cost, item!._email, item!._name, item!._level,item!._isActive);
             newList.Add(temp);
         }
         return newList;
@@ -71,12 +71,12 @@ public class EngineerImplementation : IEngineer
 
     public void Update(Engineer item)
     {
-        Engineer? oldValue = DataSource.Config.FindEngineer(item.Id);
-        if(oldValue==null || oldValue.IsActive==false)
+        Engineer? oldValue = DataSource.Config.FindEngineer(item._id);
+        if(oldValue==null || oldValue._isActive==false)
         {
-            throw new Exception($"Engineer with ID={item.Id} does Not exist");
+            throw new Exception($"Engineer with ID={item._id} does Not exist");
         }
-        int theIndex = DataSource.Config.FindIndexEngineer(item.Id);
+        int theIndex = DataSource.Config.FindIndexEngineer(item._id);
         DataSource.Engineers[theIndex] = item;
     }
 }

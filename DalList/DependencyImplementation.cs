@@ -8,7 +8,7 @@ public class DependencyImplementation : IDependency
     public int Create(Dependency item)
     {
         int newId = DataSource.Config.NextDependencyId;
-        Dependency newDependency=item with { Id = newId };
+        Dependency newDependency=item with { _id = newId };
         DataSource.Dependencies.Add(newDependency);
         return newId;
     }
@@ -35,7 +35,7 @@ public class DependencyImplementation : IDependency
         List<Dependency?> newList = new List<Dependency?>();
         foreach (var item in DataSource.Dependencies)
         {
-            temp = new Dependency(item!.Id, item!.DependentTask,item!.DependsOnTask)??null;
+            temp = new Dependency(item!._id, item!._dependentTask,item!._dependsOnTask)??null;
             newList.Add((Dependency?)item);
         }
         return newList;
@@ -43,10 +43,10 @@ public class DependencyImplementation : IDependency
 
     public void Update(Dependency item)
     {
-        int theIndex = DataSource.Config.FindIndexDependency(item.Id);
+        int theIndex = DataSource.Config.FindIndexDependency(item._id);
         if (theIndex == -1)
         {
-            throw new Exception($"Dependency with ID={item.Id} does Not exist");
+            throw new Exception($"Dependency with ID={item._id} does Not exist");
         }
         DataSource.Dependencies[theIndex] = item;
     }

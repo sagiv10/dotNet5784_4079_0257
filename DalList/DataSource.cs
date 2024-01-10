@@ -22,7 +22,7 @@ internal static class DataSource
         {
             foreach (Dependency? temp in DataSource.Dependencies)
             {
-                if (temp!=null && temp.Id == wantedId)
+                if (temp!=null && temp._id == wantedId)
                 {
                     return temp;
                 }
@@ -34,7 +34,7 @@ internal static class DataSource
         {
             foreach (Engineer? temp in DataSource.Engineers)
             {
-                if (temp!=null && temp.Id == wantedId)
+                if (temp!=null && temp._id == wantedId)
                 {
                     return temp;
                 }
@@ -45,7 +45,7 @@ internal static class DataSource
         {
             foreach (var temp in DataSource.Tasks)
             {
-                if (temp != null && temp.Id == wantedId)
+                if (temp != null && temp._id == wantedId)
                 {
                     return temp;
                 }
@@ -58,7 +58,7 @@ internal static class DataSource
             int counter = 0;
             foreach(var temp in DataSource.Dependencies)
             {
-                if(temp!=null && temp.Id == id)
+                if(temp!=null && temp._id == id)
                 {
                     return counter;
                 }
@@ -72,7 +72,7 @@ internal static class DataSource
             int counter = 0;
             foreach (var temp in DataSource.Engineers)
             {
-                if (temp != null && temp.Id == id)
+                if (temp != null && temp._id == id)
                 {
                     return counter;
                 }
@@ -86,7 +86,7 @@ internal static class DataSource
             int counter = 0;
             foreach (var temp in DataSource.Engineers)
             {
-                if (temp != null && temp.Id == id)
+                if (temp != null && temp._id == id)
                 {
                     return counter;
                 }

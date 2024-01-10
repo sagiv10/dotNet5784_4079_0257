@@ -19,11 +19,14 @@
             try
             {
                 Initialization.Do(s_dalTask!, s_dalEngineer!, s_dalDependency!);
+
                 int choice = 1;
                 while (!(choice == 0))
                 {
                     Console.WriteLine("Select an entity you want to check:\n0. exit from the menu.\n1. Engineer.\n2. Dependency.\n3. Task");
-                    choice = IntInputCheck(int.TryParse(Console.ReadLine(), out choice), choice);
+                    
+                    choice = CheckIntInput(int.TryParse(Console.ReadLine(), out choice), choice);
+
                     switch (choice)
                     {
                         case 1:
@@ -48,7 +51,9 @@
         public static void EntityMenu(string typeChoice)
         {
             Console.WriteLine("Choose method:\n1.Create.\n2.Read.\n3.ReadAll.\n4.Update.\n5.Delete.");
-            int choice = IntInputCheck(int.TryParse(Console.ReadLine(), out choice), choice);
+
+            int choice = CheckIntInput(int.TryParse(Console.ReadLine(), out choice), choice);
+
             switch (typeChoice)
             {
                 case "Engineer":
@@ -88,9 +93,12 @@
             try
             {
                 Console.WriteLine("write the id of the task you want to update:");
+
                 int idToUpdate;
-                idToUpdate = IntInputCheck(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);
+                idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);
+
                 DO.Task? updatedTask = GenerateTask(idToUpdate);
+
                 s_dalTask!.Update(updatedTask);
             }
             catch (Exception e)
@@ -104,9 +112,12 @@
             try
             {
                 Console.WriteLine("write the id of the Engineer you want to update:");
+
                 int idToUpdate;
-                idToUpdate = IntInputCheck(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);
+                idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);
+
                 Engineer? updatedEngineer = GenerateEngineer(idToUpdate);
+
                 s_dalEngineer!.Update(updatedEngineer);
             }
             catch (Exception e)
@@ -120,8 +131,12 @@
             try
             {
                 Console.WriteLine("write the id of the Dependency you want to update:");
+
                 int idToUpdate;
-                idToUpdate = IntInputCheck(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate); Dependency? updatedDependency = GenerateDependency(idToUpdate);
+                idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);
+                
+                Dependency? updatedDependency = GenerateDependency(idToUpdate);
+
                 s_dalDependency!.Update(updatedDependency);
             }
             catch (Exception e)
@@ -135,8 +150,10 @@
             try
             {
                 Console.WriteLine("write the id of the task you want to delete:");
+
                 int idToDelete;
-                idToDelete = IntInputCheck(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete);
+                idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete);
+
                 s_dalTask!.Delete(idToDelete);
             }
             catch (Exception e)
@@ -149,8 +166,10 @@
             try
             {
                 Console.WriteLine("write the id of the Engineer you want to delete:");
+
                 int idToDelete;
-                idToDelete = IntInputCheck(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete);
+                idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete);
+
                 s_dalEngineer!.Delete(idToDelete);
             }
             catch (Exception e)
@@ -163,8 +182,10 @@
             try
             {
                 Console.WriteLine("write the id of the Dependency you want to delete:");
+
                 int idToDelete;
-                idToDelete = IntInputCheck(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete);
+                idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete);
+
                 s_dalDependency!.Delete(idToDelete);
             }
             catch (Exception e)
@@ -183,7 +204,7 @@
         {
             foreach (var item in s_dalEngineer!.ReadAll())
             {
-                if (item.IsActive == true)
+                if (item!._isActive == true)
                 {
                     Console.WriteLine(item);
 
@@ -202,11 +223,18 @@
             try
             {
                 Console.WriteLine("Write the id of the engineer you want to see:");
+
                 int inputId;
-                inputId = IntInputCheck(int.TryParse(Console.ReadLine(), out inputId), inputId);
+                inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId);
+
                 Engineer newEngineer = s_dalEngineer!.Read(inputId)!;
+
                 if (newEngineer == null)
+                {
                     throw new Exception("id is not in the system");
+
+                }
+
                 Console.WriteLine(newEngineer);
             }
             catch (Exception e)
@@ -219,11 +247,17 @@
             try
             {
                 Console.WriteLine("Write the id of the Task you want to see:");
+
                 int inputId;
-                inputId = IntInputCheck(int.TryParse(Console.ReadLine(), out inputId), inputId);
+                inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId);
+
                 DO.Task newTask = s_dalTask!.Read(inputId)!;
+
                 if (newTask == null)
+                {
                     throw new Exception("id is not in the system");
+                }
+
                 Console.WriteLine(newTask);
             }
             catch (Exception e)
@@ -236,11 +270,18 @@
             try
             {
                 Console.WriteLine("Write the id of the Dependency you want to see:");
+
                 int inputId;
-                inputId = IntInputCheck(int.TryParse(Console.ReadLine(), out inputId), inputId);
+                inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId);
+
                 Dependency newDependency = s_dalDependency!.Read(inputId)!;
+
                 if (newDependency == null)
+                {
                     throw new Exception("id is not in the system");
+
+                }
+
                 Console.WriteLine(newDependency);
             }
             catch (Exception e)
@@ -248,36 +289,41 @@
                 Console.WriteLine(e);
             }
         }
-        public static int IntInputCheck(bool isConvertible, int input)
+        public static int CheckIntInput(bool isConvertible, int input)
         {
             int newInput = input;
             while (isConvertible == false)
             {
                 Console.WriteLine("wrong input, please insert another number:");
+
                 isConvertible = int.TryParse(Console.ReadLine(), out newInput);
             }
             return newInput;
         }
 
-        public static double DoubleInputCheck(bool isConvertible, double input)
+        public static double CheckDoubleInput(bool isConvertible, double input)
         {
             double newInput = input;
             while (isConvertible == false)
             {
                 Console.WriteLine("wrong input, please insert another number:");
+
                 isConvertible = double.TryParse(Console.ReadLine(), out newInput);
             }
             return newInput;
         }
 
-        public static int ComplexityLevelInputCheck(bool isConvertible, int input)
+        public static int CheckComplexityLevelInput(bool isConvertible, int input)
         {
             int newInput = input;
             while (isConvertible == false)
             {
                 Console.WriteLine("wrong input, please insert another number:");
+
                 isConvertible = int.TryParse(Console.ReadLine(), out newInput);
-                newInput = IntInputCheck(isConvertible, newInput);
+
+                newInput = CheckIntInput(isConvertible, newInput);
+
                 isConvertible = (newInput >= 0 && newInput < 5);
             }
             return newInput;
@@ -285,12 +331,13 @@
 
         //this program gets a bool variable if the input is string or DateTime and the input.
         // the program returns a correct input. 
-        public static DateTime DateTimeInputCheck(bool isConvertible, DateTime input)
+        public static DateTime CheckDateTimeInput(bool isConvertible, DateTime input)
         {
             DateTime tempInput = input;
             while (isConvertible == false)
             {
                 Console.WriteLine("invalid time format");
+
                 isConvertible = DateTime.TryParse(Console.ReadLine(), out tempInput);
             }
             return tempInput;
@@ -299,40 +346,59 @@
         public static DO.Engineer GenerateEngineer(int newId)
         {
             Console.WriteLine("Enter the following parameters: email address, salary, name and the complexity level:");
+
             string newEmail = Console.ReadLine() ?? "";
+
             double newCost;
-            newCost = DoubleInputCheck(double.TryParse(Console.ReadLine(), out newCost), newCost);
+            newCost = CheckDoubleInput(double.TryParse(Console.ReadLine(), out newCost), newCost);
+
             string newName = Console.ReadLine() ?? "";
+
             int newComplexityLevel;
-            newComplexityLevel = IntInputCheck(int.TryParse(Console.ReadLine(), out newComplexityLevel), newComplexityLevel);
-            newComplexityLevel = ComplexityLevelInputCheck((newComplexityLevel >= 0 && newComplexityLevel < 5), newComplexityLevel);
+            newComplexityLevel = CheckIntInput(int.TryParse(Console.ReadLine(), out newComplexityLevel), newComplexityLevel);
+            newComplexityLevel = CheckComplexityLevelInput((newComplexityLevel >= 0 && newComplexityLevel < 5), newComplexityLevel);
+
             DO.Engineer newEngineer = new DO.Engineer(newId, newCost, newEmail, newName, (DO.ComplexityLvls)newComplexityLevel, true);
+
             return newEngineer;
         }
 
         public static DO.Task GenerateTask(int newId)
         {
             Console.WriteLine("Enter the following parameters: nickname, description, if it's milestone ('Y' or 'N'), when it created, the scheduled Date to beginning, when it started, deadline date, complete date, deliverables, notes and the level of complexity, and the engineer's id:");
+            
             string newName = Console.ReadLine() ?? "";
+            
             string newDescription = Console.ReadLine() ?? "";
+            
             bool newIsMilestone = ((char)Console.Read() == 'Y' ? true : false);
+            
             DateTime newCreatedTime;
-            newCreatedTime = DateTimeInputCheck(DateTime.TryParse(Console.ReadLine(), out newCreatedTime), newCreatedTime);
+            newCreatedTime = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newCreatedTime), newCreatedTime);
+            
             DateTime newScheduledDate;
-            newScheduledDate = DateTimeInputCheck(DateTime.TryParse(Console.ReadLine(), out newScheduledDate), newScheduledDate);
+            newScheduledDate = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newScheduledDate), newScheduledDate);
+            
             DateTime newStartedDate;
-            newStartedDate = DateTimeInputCheck(DateTime.TryParse(Console.ReadLine(), out newStartedDate), newStartedDate);
+            newStartedDate = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newStartedDate), newStartedDate);
+            
             DateTime newDeadlineTime;
-            newDeadlineTime = DateTimeInputCheck(DateTime.TryParse(Console.ReadLine(), out newDeadlineTime), newDeadlineTime);
+            newDeadlineTime = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newDeadlineTime), newDeadlineTime);
+            
             DateTime newCompletedDate;
-            newCompletedDate = DateTimeInputCheck(DateTime.TryParse(Console.ReadLine(), out newCompletedDate), newCompletedDate);
+            newCompletedDate = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newCompletedDate), newCompletedDate);
+            
             string newDeliverables = Console.ReadLine() ?? "";
+            
             string newRemarks = Console.ReadLine() ?? "";
+            
             int newComplexityLevel;
-            newComplexityLevel = IntInputCheck(int.TryParse(Console.ReadLine(), out newComplexityLevel), newComplexityLevel);
-            newComplexityLevel = ComplexityLevelInputCheck((newComplexityLevel >= 0 && newComplexityLevel < 5), newComplexityLevel);
+            newComplexityLevel = CheckIntInput(int.TryParse(Console.ReadLine(), out newComplexityLevel), newComplexityLevel);
+            newComplexityLevel = CheckComplexityLevelInput((newComplexityLevel >= 0 && newComplexityLevel < 5), newComplexityLevel);
+            
             int newEngineerId;
-            newEngineerId = IntInputCheck(int.TryParse(Console.ReadLine(), out newEngineerId), newEngineerId);
+            newEngineerId = CheckIntInput(int.TryParse(Console.ReadLine(), out newEngineerId), newEngineerId);
+            
             DO.Task newTask = new DO.Task(newId, newCreatedTime, newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, newScheduledDate - newCreatedTime, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);
             return newTask;
         }
@@ -340,11 +406,14 @@
         public static DO.Dependency GenerateDependency(int newId)
         {
             Console.WriteLine("Enter the following parameters: DependentTask and DependsOnTask");
-            int _DependentTask;
-            _DependentTask = IntInputCheck(int.TryParse(Console.ReadLine(), out _DependentTask), _DependentTask);
-            int _DependsOnTask;
-            _DependsOnTask = IntInputCheck(int.TryParse(Console.ReadLine(), out _DependsOnTask), _DependsOnTask);
-            DO.Dependency newDependency = new DO.Dependency(_DependentTask, _DependsOnTask);
+            
+            int dependentTask;
+            dependentTask = CheckIntInput(int.TryParse(Console.ReadLine(), out dependentTask), dependentTask);
+            
+            int dependsOnTask;
+            dependsOnTask = CheckIntInput(int.TryParse(Console.ReadLine(), out dependsOnTask), dependsOnTask);
+            
+            DO.Dependency newDependency = new DO.Dependency(dependentTask, dependsOnTask);
             return newDependency;
         }
         public static void CreateNewEngineer()
@@ -352,9 +421,12 @@
             try
             {
                 Console.WriteLine("enter the new id of the engineer:");
+
                 int newId;
-                newId = IntInputCheck(int.TryParse(Console.ReadLine(), out newId), newId);
+                newId = CheckIntInput(int.TryParse(Console.ReadLine(), out newId), newId);
+
                 Engineer engToAdd = GenerateEngineer(newId);
+
                 s_dalEngineer!.Create(engToAdd);
             }
             catch (Exception e)
@@ -362,14 +434,18 @@
                 Console.WriteLine(e);
             }
         }
+
         public static void CreateNewTask()
         {
             DO.Task taskToAdd = GenerateTask(0);
+
             s_dalTask!.Create(taskToAdd);
         }
+
         public static void CreateNewDependency()
         {
             Dependency dependencyToAdd = GenerateDependency(0);
+
             s_dalDependency!.Create(dependencyToAdd);
 
         }

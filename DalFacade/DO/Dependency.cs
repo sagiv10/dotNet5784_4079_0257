@@ -2,15 +2,14 @@
 /// <summary>
 /// record of dependency with the following parameters:
 /// </summary>
-/// <param name="Id">the id of the dependency</param>
-/// //A cannot happan until B is done.
-/// <param name="DependentTask">id of A</param>
-/// <param name="DependsOnTask">id of B</param>
+/// <param name="_id">the id of the dependency</param>
+/// <param name="_dependentTask">id of the mission that dependet</param>
+/// <param name="_dependsOnTask">id of the mission that dependes on</param>
 public record Dependency
 (
-    int Id, 
-    int? DependentTask = null, 
-    int? DependsOnTask = null
+    int _id, 
+    int? _dependentTask = null, 
+    int? _dependsOnTask = null
 )
 { 
     public Dependency() : this(0) { }

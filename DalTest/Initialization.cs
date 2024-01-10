@@ -7,9 +7,8 @@ public static class Initialization
     private static IEngineer? s_dalEngineer; 
     private static IDependency? s_dalDependency;
     private static readonly Random s_rand = new(DateTime.Now.Millisecond);
-    private static int[] idEngineers = new int[5];
-
-    private static DO.ComplexityLvls[] arrOfCmplx = new DO.ComplexityLvls[] { ComplexityLvls.Beginner, ComplexityLvls.BetterBeginner, ComplexityLvls.Advanced, ComplexityLvls.Expert, ComplexityLvls.Master };
+    private static int[] _idEngineers = new int[5];
+    private static DO.ComplexityLvls[] _arrOfCmplx = new DO.ComplexityLvls[] { ComplexityLvls.Beginner, ComplexityLvls.BetterBeginner, ComplexityLvls.Advanced, ComplexityLvls.Expert, ComplexityLvls.Master };
 
 
     private static void createEngineer()
@@ -24,11 +23,11 @@ public static class Initialization
         };
         for (int i = 0; i < NamesOfEngineers.Length; i++)
         {
-            Engineer newEngineer = new Engineer(s_rand.Next(200000000, 400000001), s_rand.Next(10000, 40001) + (((double)s_rand.Next(100)) / 100), NamesOfEngineers[i] + "@gmail.com", NamesOfEngineers[i], arrOfCmplx[i], true);
+            Engineer newEngineer = new Engineer(s_rand.Next(200000000, 400000001), s_rand.Next(10000, 40001) + (((double)s_rand.Next(100)) / 100), NamesOfEngineers[i] + "@gmail.com", NamesOfEngineers[i], _arrOfCmplx[i], true);
             try
             {
                 s_dalEngineer!.Create(newEngineer);
-                idEngineers[i] = newEngineer.Id;
+                _idEngineers[i] = newEngineer._id;
             }
             catch (Exception problem)
             {
@@ -93,7 +92,7 @@ public static class Initialization
         {
             DateTime scheduleTime = DateTime.Now.AddMonths(s_rand.Next(30));
             DateTime current = DateTime.Now;
-            Task? newTask = new Task(0, DateTime.Now, false,AliasOfTasks[i], DescriptionOfTasks[i], scheduleTime, null, scheduleTime - current, scheduleTime.AddDays(14) , null, null, null,arrOfCmplx[i%5], idEngineers[i%5], true) ;
+            Task? newTask = new Task(0, DateTime.Now, false,AliasOfTasks[i], DescriptionOfTasks[i], scheduleTime, null, scheduleTime - current, scheduleTime.AddDays(14) , null, null, null,_arrOfCmplx[i%5], _idEngineers[i%5], true) ;
             s_dalTask!.Create(newTask);
         }
     }

@@ -8,7 +8,7 @@ public class TaskImplementation : ITask
     public int Create(Task item)
     {
         int newId = DataSource.Config.NextTaskId;
-        Task newItem = item with { Id = newId };
+        Task newItem = item with { _id = newId };
         DataSource.Tasks.Add(newItem);
         return newId;
     }
@@ -19,7 +19,7 @@ public class TaskImplementation : ITask
         if(idxOfDeleted ==-1) {
             throw new Exception($"Task with ID={id} does Not exist");
         }
-        Task? NotActiveOne = DataSource.Tasks[idxOfDeleted]! with { isActive = false };
+        Task? NotActiveOne = DataSource.Tasks[idxOfDeleted]! with { _isActive = false };
         DataSource.Tasks.RemoveAt(idxOfDeleted);
         DataSource.Tasks.Add(NotActiveOne);
     }
@@ -27,7 +27,7 @@ public class TaskImplementation : ITask
     {
         foreach (var task in DataSource.Tasks) 
         {
-            if(id==task!.Id && task.isActive==true)
+            if(id==task!._id && task._isActive==true)
             {
                 return task;
             }
@@ -41,7 +41,7 @@ public class TaskImplementation : ITask
         List<Task?> newList = new List<Task?>();
         foreach (var item in DataSource.Tasks)
         {
-            temp=new Task(item!.Id, item!.CreatedAtDate, item!.IsMilestone, item!.Alias, item!.Description, item!.ScheduledDate, item!.StartDate, item!.RequiredEffortTime, item!.DeadlineDate,item!.CompleteDate, item!.Deliverables,item!.Remarks,item!.Complexity,item!.EngineerId,item!.isActive);
+            temp=new Task(item!._id, item!._createdAtDate, item!._isMilestone, item!._alias, item!._description, item!._scheduledDate, item!._startDate, item!._requiredEffortTime, item!._deadlineDate,item!._completeDate, item!._deliverables,item!._remarks,item!._complexity,item!._engineerId,item!._isActive);
             newList.Add(temp);
         }
         return newList;
@@ -50,10 +50,10 @@ public class TaskImplementation : ITask
     public void Update(Task item)
     {
 
-        int idxOfDeleted = DataSource.Config.FindIndexTasks(item.Id);
-        if(idxOfDeleted == -1||DataSource.Tasks[idxOfDeleted]!.isActive==false)
+        int idxOfDeleted = DataSource.Config.FindIndexTasks(item._id);
+        if(idxOfDeleted == -1||DataSource.Tasks[idxOfDeleted]!._isActive==false)
         {
-            throw new Exception($"Task with ID={item.Id} does Not exist");
+            throw new Exception($"Task with ID={item._id} does Not exist");
         }
         DataSource.Tasks.RemoveAt(idxOfDeleted);
         DataSource.Tasks.Add(item);
