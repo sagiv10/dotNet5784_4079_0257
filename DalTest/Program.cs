@@ -88,7 +88,9 @@
                     break;
             }
         }
-
+        /// <summary>
+        /// this method gets from the user an id of task and a full details of task and updates the task with this id from the list with the new details. if not exist write a message.
+        /// </summary>
         public static void UpdateTask()
         {
             try
@@ -96,53 +98,53 @@
                 Console.WriteLine("write the id of the task you want to update:");
 
                 int idToUpdate;
-                idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);
+                idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);//sends to another method that gets the id from the user and  checks if the input is correct.
 
-                DO.Task? oldTask = s_dalTask!.Read(idToUpdate);
-                if(oldTask != null)
+                DO.Task? oldTask = s_dalTask!.Read(idToUpdate);//prints the old details, if id not found so set to null
+                if (oldTask != null)//if we found the id in the list 
                 {
                     Console.WriteLine(oldTask);
 
                     Console.WriteLine("Enter the following parameters: nickname, description, if it's milestone ('1' for yes and '0' to no), when it created, the scheduled Date to beginning, when it started, deadline date, complete date, deliverables, notes and the level of complexity, and the engineer's id:");
 
-                    string newName = Console.ReadLine() ?? oldTask._alias;
+                    string newName = Console.ReadLine() ?? oldTask._alias; //if we got a correct new info-change to what the user wrote . else dont.
 
-                    string newDescription = Console.ReadLine() ?? oldTask._description;
+                    string newDescription = Console.ReadLine() ?? oldTask._description; //if we got a correct new info-change to what the user wrote . else dont.
 
                     int intIsMilestone;
 
-                    intIsMilestone = (int.TryParse(Console.ReadLine(), out intIsMilestone)) ? intIsMilestone : ((oldTask._isMilestone!) ? 1 : 0);
+                    intIsMilestone = (int.TryParse(Console.ReadLine(), out intIsMilestone)) ? intIsMilestone : ((oldTask._isMilestone!) ? 1 : 0); //if we got a correct new info-change to what the user wrote . else dont.
 
                     bool newIsMilestone = intIsMilestone == 1 ? true : false;
 
                     DateTime newCreatedTime;
-                    newCreatedTime = DateTime.TryParse(Console.ReadLine(), out newCreatedTime) ? newCreatedTime : (DateTime)oldTask._createdAtDate!;
+                    newCreatedTime = DateTime.TryParse(Console.ReadLine(), out newCreatedTime) ? newCreatedTime : (DateTime)oldTask._createdAtDate!; //if we got a correct new info-change to what the user wrote . else dont.
 
                     DateTime newScheduledDate;
-                    newScheduledDate = DateTime.TryParse(Console.ReadLine(), out newScheduledDate) ? newScheduledDate : (DateTime)oldTask._scheduledDate!;
+                    newScheduledDate = DateTime.TryParse(Console.ReadLine(), out newScheduledDate) ? newScheduledDate : (DateTime)oldTask._scheduledDate!; //if we got a correct new info-change to what the user wrote . else dont.
 
                     DateTime newStartedDate;
-                    newStartedDate = DateTime.TryParse(Console.ReadLine(), out newStartedDate) ? newStartedDate : (DateTime)oldTask._startDate!;
+                    newStartedDate = DateTime.TryParse(Console.ReadLine(), out newStartedDate) ? newStartedDate : (DateTime)oldTask._startDate!; //if we got a correct new info-change to what the user wrote . else dont.
 
                     DateTime newDeadlineTime;
-                    newDeadlineTime = DateTime.TryParse(Console.ReadLine(), out newDeadlineTime) ? newDeadlineTime : (DateTime)oldTask._deadlineDate!;
+                    newDeadlineTime = DateTime.TryParse(Console.ReadLine(), out newDeadlineTime) ? newDeadlineTime : (DateTime)oldTask._deadlineDate!; //if we got a correct new info-change to what the user wrote . else dont.
 
                     DateTime newCompletedDate;
-                    newCompletedDate = DateTime.TryParse(Console.ReadLine(), out newCompletedDate) ? newCompletedDate : (DateTime)oldTask._completeDate!;
+                    newCompletedDate = DateTime.TryParse(Console.ReadLine(), out newCompletedDate) ? newCompletedDate : (DateTime)oldTask._completeDate!; //if we got a correct new info-change to what the user wrote . else dont.
 
                     string newDeliverables = Console.ReadLine() ?? oldTask._deliverables!;
 
                     string newRemarks = Console.ReadLine() ?? oldTask._remarks!;
 
                     int newComplexityLevel;
-                    newComplexityLevel = (int.TryParse(Console.ReadLine(), out newComplexityLevel) && newComplexityLevel >= 0 && newComplexityLevel < 5) ? newComplexityLevel : (int)oldTask._complexity;
+                    newComplexityLevel = (int.TryParse(Console.ReadLine(), out newComplexityLevel) && newComplexityLevel >= 0 && newComplexityLevel < 5) ? newComplexityLevel : (int)oldTask._complexity;  //if we got a correct new info-change to what the user wrote . else dont.
 
                     int newEngineerId;
-                    newEngineerId = (int.TryParse(Console.ReadLine(), out newEngineerId)) ? newEngineerId : (int)oldTask._engineerId!;
+                    newEngineerId = (int.TryParse(Console.ReadLine(), out newEngineerId)) ? newEngineerId : (int)oldTask._engineerId!; //if we got a correct new info-change to what the user wrote . else dont.
 
-                    DO.Task updatedTask = new DO.Task(idToUpdate, newCreatedTime, newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, newScheduledDate - newCreatedTime, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);
+                    DO.Task updatedTask = new DO.Task(idToUpdate, newCreatedTime, newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, newScheduledDate - newCreatedTime, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);//create a new task with the given details
 
-                    s_dalTask!.Update(updatedTask);
+                    s_dalTask!.Update(updatedTask);//update the new task
                 }
                 else
                 {
@@ -156,6 +158,9 @@
             }
             
         }
+        /// <summary>
+        /// this method gets from the user an id of engineer and a full details of engineer and updates the engineer with this id from the list with the new details. if not exist write a message.
+        /// </summary>
         public static void UpdateEngineer()
         {
             try
@@ -163,29 +168,29 @@
                 Console.WriteLine("write the id of the Engineer you want to update:");
 
                 int idToUpdate;
-                idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);
+                idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);//sends to another method that gets the id from the user and  checks if the input is correct.
 
-                DO.Engineer? oldEngineer = s_dalEngineer!.Read(idToUpdate);
+                DO.Engineer? oldEngineer = s_dalEngineer!.Read(idToUpdate);//prints the old details, if id not found so set to null
 
-                if(oldEngineer != null )
+                if (oldEngineer != null)//if we found the id in the list 
                 {
                     Console.WriteLine(oldEngineer);
 
                     Console.WriteLine("Enter the following parameters: email address, salary, name and the complexity level:");
 
-                    string newEmail = Console.ReadLine() ?? oldEngineer._email!;
+                    string newEmail = Console.ReadLine() ?? oldEngineer._email!; //if we got a correct new info-change to what the user wrote . else dont.
 
                     double newCost;
-                    newCost = double.TryParse(Console.ReadLine(), out newCost) ? newCost : oldEngineer._cost;
+                    newCost = double.TryParse(Console.ReadLine(), out newCost) ? newCost : oldEngineer._cost; //if we got a correct new info-change to what the user wrote . else dont.
 
-                    string newName = Console.ReadLine() ?? oldEngineer._name;
+                    string newName = Console.ReadLine() ?? oldEngineer._name; //if we got a correct new info-change to what the user wrote . else dont.
 
                     int newComplexityLevel=-1;
-                    newComplexityLevel = (int.TryParse(Console.ReadLine(), out newComplexityLevel) && newComplexityLevel>=0 && newComplexityLevel<5) ? newComplexityLevel : (int)oldEngineer._level!;
+                    newComplexityLevel = (int.TryParse(Console.ReadLine(), out newComplexityLevel) && newComplexityLevel>=0 && newComplexityLevel<5) ? newComplexityLevel : (int)oldEngineer._level!; //if we got a correct new info-change to what the user wrote . else dont.
 
-                    DO.Engineer updatedEngineer = new DO.Engineer(idToUpdate, newCost, newEmail, newName, (DO.ComplexityLvls)newComplexityLevel, true);
+                    DO.Engineer updatedEngineer = new DO.Engineer(idToUpdate, newCost, newEmail, newName, (DO.ComplexityLvls)newComplexityLevel, true);//create a new engineer with the given details
 
-                    s_dalEngineer!.Update(updatedEngineer);
+                    s_dalEngineer!.Update(updatedEngineer);//update the new engineer
                 }
                 else
                 {
@@ -199,6 +204,9 @@
             }
 
         }
+        /// <summary>
+        /// this method gets from the user an id of dependecy and a full details of dependecy and updates the dependency with this id from the list with the new details. if not exist write a message.
+        /// </summary>
         public static void UpdateDependency()
         {
             try
@@ -206,11 +214,11 @@
                 Console.WriteLine("write the id of the Dependency you want to update:");
 
                 int idToUpdate;
-                idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);
+                idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);//sends to another method that gets the id from the user and  checks if the input is correct.
 
-                Dependency? oldDependency = s_dalDependency!.Read(idToUpdate);
+                Dependency? oldDependency = s_dalDependency!.Read(idToUpdate);//prints the old details, if id not found so set to null
 
-                if (oldDependency != null)
+                if (oldDependency != null) //if we found the id in the list 
                 {
                     Console.WriteLine(oldDependency);
 
@@ -218,15 +226,15 @@
 
                     int dependentTask;
 
-                    dependentTask = (int.TryParse(Console.ReadLine(), out dependentTask)) ? dependentTask : (int)oldDependency._dependentTask!;
+                    dependentTask = (int.TryParse(Console.ReadLine(), out dependentTask)) ? dependentTask : (int)oldDependency._dependentTask!;//sends to another method that gets the dependentTask from the user and  checks if the input is correct.
 
                     int dependsOnTask;
 
-                    dependsOnTask = (int.TryParse(Console.ReadLine(), out dependsOnTask)) ? dependsOnTask : (int)oldDependency._dependsOnTask!;
+                    dependsOnTask = (int.TryParse(Console.ReadLine(), out dependsOnTask)) ? dependsOnTask : (int)oldDependency._dependsOnTask!;//sends to another method that gets the dependsOnTask from the user and  checks if the input is correct.
 
-                    DO.Dependency updatedDependency = new DO.Dependency(idToUpdate, dependentTask, dependsOnTask);
+                    DO.Dependency updatedDependency = new DO.Dependency(idToUpdate, dependentTask, dependsOnTask);//create a new dependency with the given details
 
-                    s_dalDependency!.Update(updatedDependency);
+                    s_dalDependency!.Update(updatedDependency);//update the new dependency 
                 }
                 else
                 {
