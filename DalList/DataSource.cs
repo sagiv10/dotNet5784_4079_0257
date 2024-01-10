@@ -4,9 +4,9 @@ namespace Dal;
 
 internal static class DataSource
 {
-    internal static List<DO.Task?> Tasks { get; } =new();
-    internal static List<DO.Engineer?> Engineers { get; } =new();
-    internal static List<DO.Dependency?> Dependencies { get; } =new();
+    internal static List<DO.Task?> Tasks { get; } = new();
+    internal static List<DO.Engineer?> Engineers { get; } = new();
+    internal static List<DO.Dependency?> Dependencies { get; } = new();
 
     internal static class Config
     {
@@ -26,7 +26,7 @@ internal static class DataSource
         {
             foreach (Dependency? temp in DataSource.Dependencies)//go all over the dependency list 
             {
-                if (temp!=null && temp._id == wantedId)//if we found the dependency in the list with the correct id 
+                if (temp != null && temp._id == wantedId)//if we found the dependency in the list with the correct id 
                 {
                     return temp;
                 }
@@ -42,7 +42,7 @@ internal static class DataSource
         {
             foreach (Engineer? temp in DataSource.Engineers)
             {
-                if (temp!=null && temp._id == wantedId)//if we found the engineer in the list with the correct id
+                if (temp != null && temp._id == wantedId)//if we found the engineer in the list with the correct id
                 {
                     return temp;
                 }
@@ -74,9 +74,9 @@ internal static class DataSource
         internal static int FindIndexDependency(int id)
         {
             int counter = 0;
-            foreach(var temp in DataSource.Dependencies)//go all over the list of dependency
+            foreach (var temp in DataSource.Dependencies)//go all over the list of dependency
             {
-                if(temp!=null && temp._id == id)//if we didnt find yet the dependency we want with the same id we got 
+                if (temp != null && temp._id == id)//if we didnt find yet the dependency we want with the same id we got 
                 {
                     return counter;
                 }
@@ -84,6 +84,7 @@ internal static class DataSource
             }
             return -1; // if didnt find
         }
+
         /// <summary>
         /// this method returns the index of a engineer from the list with the id we got, if not exist in the list so returns -1.
         /// </summary>
@@ -102,7 +103,7 @@ internal static class DataSource
             }
             return -1;// if didnt find
         }
-    }
+
         /// <summary>
         /// this method returns the index of a task from the list with the id we got, if not exist in the list so returns -1.
         /// </summary>
@@ -120,9 +121,7 @@ internal static class DataSource
                 counter++;//count how many failed checks we had 
             }
             return -1;// if didnt find
-    }
-}
-
+        }
     }
 }
 
