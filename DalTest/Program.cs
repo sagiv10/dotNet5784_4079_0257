@@ -240,6 +240,10 @@
             }
 
         }
+
+        /// <summary>
+        /// gets an id of task from the user and delete it from the tasks list
+        /// </summary>
         public static void DeleteTask()
         {
             try
@@ -247,7 +251,7 @@
                 Console.WriteLine("write the id of the task you want to delete:");
 
                 int idToDelete;
-                idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete);
+                idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete); //request an int from the user and checks if it valid
 
                 s_dalTask!.Delete(idToDelete);
             }
@@ -256,6 +260,10 @@
                 Console.WriteLine(problem.Message);
             }
         }
+
+        /// <summary>
+        /// gets an id of engineer from the user and delete it from the engineers list
+        /// </summary>
         public static void DeleteEngineer()
         {
             try
@@ -263,7 +271,7 @@
                 Console.WriteLine("write the id of the Engineer you want to delete:");
 
                 int idToDelete;
-                idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete);
+                idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete); //request an int from the user and checks if it valid
 
                 s_dalEngineer!.Delete(idToDelete);
             }
@@ -272,6 +280,10 @@
                 Console.WriteLine(problem.Message);
             }
         }
+
+        /// <summary>
+        /// gets an id of dependency from the user and delete it from the dependencys list
+        /// </summary>
         public static void DeleteDependency()
         {
             try
@@ -279,7 +291,7 @@
                 Console.WriteLine("write the id of the Dependency you want to delete:");
 
                 int idToDelete;
-                idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete);
+                idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete); //request an int from the user and checks if it valid
 
                 s_dalDependency!.Delete(idToDelete);
             }
@@ -288,6 +300,10 @@
                 Console.WriteLine(problem.Message);
             }
         }
+
+        /// <summary>
+        /// gets from the user a replica of the tasks list an then prints all their data
+        /// </summary>
         public static void ReadAllTask()
         {
             foreach (var item in s_dalTask!.ReadAll())
@@ -295,6 +311,10 @@
                 Console.WriteLine(item);
             }
         }
+
+        /// <summary>
+        /// gets from the user a replica of the engineers list an then prints all their data
+        /// /// </summary>
         public static void ReadAllEngineer()
         {
             foreach (var item in s_dalEngineer!.ReadAll())
@@ -306,6 +326,10 @@
                 }
             }
         }
+
+        /// <summary>
+        /// gets from the user a replica of the dependencies list an then prints all their data
+        /// /// </summary>
         public static void ReadAllDependency()
         {
             foreach (var item in s_dalDependency!.ReadAll())
@@ -313,6 +337,10 @@
                 Console.WriteLine(item);
             }
         }
+
+        /// <summary>
+        /// gets an id from the user and if there is an engineer with that id it prints him, if there is not it will tell it to the user
+        /// </summary>
         public static void ReadEngineer()
         {
             try
@@ -320,13 +348,13 @@
                 Console.WriteLine("Write the id of the engineer you want to see:");
 
                 int inputId;
-                inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId);
+                inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
 
                 Engineer newEngineer = s_dalEngineer!.Read(inputId)!;
 
                 if (newEngineer == null)
                 {
-                    throw new Exception("id is not in the system");
+                    throw new Exception("id is not in the system"); //request an int from the user and checks if it valid
 
                 }
 
@@ -337,6 +365,10 @@
                 Console.WriteLine(problem.Message);
             }
         }
+
+        /// <summary>
+        /// gets an id from the user and if there is an task with that id it prints him, if there is not it will tell it to the user
+        /// </summary>
         public static void ReadTask()
         {
             try
@@ -344,13 +376,13 @@
                 Console.WriteLine("Write the id of the Task you want to see:");
 
                 int inputId;
-                inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId);
+                inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
 
                 DO.Task newTask = s_dalTask!.Read(inputId)!;
 
                 if (newTask == null)
                 {
-                    throw new Exception("id is not in the system");
+                    throw new Exception("id is not in the system"); //request an int from the user and checks if it valid
                 }
 
                 Console.WriteLine(newTask);
@@ -360,6 +392,10 @@
                 Console.WriteLine(problem.Message);
             }
         }
+
+        /// <summary>
+        /// gets an id from the user and if there is an dependency with that id it prints him, if there is not it will tell it to the user
+        /// </summary>
         public static void ReadDependency()
         {
             try
@@ -367,13 +403,13 @@
                 Console.WriteLine("Write the id of the Dependency you want to see:");
 
                 int inputId;
-                inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId);
+                inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
 
                 Dependency newDependency = s_dalDependency!.Read(inputId)!;
 
                 if (newDependency == null)
                 {
-                    throw new Exception("id is not in the system");
+                    throw new Exception("id is not in the system"); //request an int from the user and checks if it valid
 
                 }
 
@@ -385,11 +421,61 @@
             }
         }
 
+        /// <summary>
+        /// create new engineer and store it in the lists
+        /// </summary>
+        public static void CreateNewEngineer()
+        {
+            try
+            {
+                Console.WriteLine("enter the new id of the engineer:");
+
+                int newId;
+                newId = CheckIntInput(int.TryParse(Console.ReadLine(), out newId), newId); //request an int from the user and checks if it valid
+
+                Engineer engToAdd = GenerateEngineerCreate(newId);
+
+                s_dalEngineer!.Create(engToAdd);
+            }
+            catch (Exception problem)
+            {
+                Console.WriteLine(problem.Message);
+            }
+        }
+
+        /// <summary>
+        /// create new task and store it in the lists
+        /// </summary>
+        public static void CreateNewTask()
+        {
+            DO.Task taskToAdd = GenerateTaskCreate();
+
+            s_dalTask!.Create(taskToAdd);
+        }
+
+        /// <summary>
+        /// create new dependency and store it in the lists
+        /// </summary>
+        public static void CreateNewDependency()
+        {
+            Dependency dependencyToAdd = GenerateDependencyCreate();
+
+            s_dalDependency!.Create(dependencyToAdd);
+
+        }
+
         //METHODS THAT HELP US TO CREATE THE CRUD METHODS: 
+
+        /// <summary>
+        /// gets an int and boolean that tells if the first convertion to this int was successfull. and requests from the user new int untill the convertion will success. then it returns the changed int
+        /// </summary>
+        /// <param name="isConvertible">boolean that tells if the first convertion to the int was successfull</param>
+        /// <param name="input">the input int we want to change if it did not converted in the first time</param>
+        /// <returns></returns>
         public static int CheckIntInput(bool isConvertible, int input)
         {
             int newInput = input;
-            while (isConvertible == false)
+            while (isConvertible == false) //while it not converted properly - request new input from the user until he will enter proper input
             {
                 Console.WriteLine("wrong input, please insert another number:");
 
@@ -398,40 +484,57 @@
             return newInput;
         }
 
+        /// <summary>
+        /// gets an double and boolean that tells if the first convertion to this double was successfull. and requests from the user new double untill the convertion will success. then it returns the changed double
+        /// </summary>
+        /// <param name="isConvertible">boolean that tells if the first convertion to the double was successfull</param>
+        /// <param name="input">the input int we want to change if it did not converted in the first time</param>
+        /// <returns></returns>
         public static double CheckDoubleInput(bool isConvertible, double input)
         {
             double newInput = input;
             while (isConvertible == false)
             {
-                Console.WriteLine("wrong input, please insert another number:");
+                Console.WriteLine("wrong input, please insert another number:");//while it not converted properly - request new input from the user until he will enter proper input
 
                 isConvertible = double.TryParse(Console.ReadLine(), out newInput);
             }
             return newInput;
         }
 
+
+        /// <summary>
+        /// gets an ComplexityLevel and boolean that tells if the first convertion to this ComplexityLevel was successfull. and requests from the user new ComplexityLevel untill the convertion will success. then it returns the changed ComplexityLevel
+        /// </summary>
+        /// <param name="isConvertible">boolean that tells if the first convertion to the ComplexityLevel was successfull</param>
+        /// <param name="input">the input int we want to change if it did not converted in the first time</param>
+        /// <returns></returns>
         public static int CheckComplexityLevelInput(bool isConvertible, int input)
         {
             int newInput = input;
-            while (isConvertible == false)
+            while (isConvertible == false)//while it not converted properly - request new input from the user until he will enter proper input
             {
                 Console.WriteLine("wrong input, please insert another number:");
 
                 isConvertible = int.TryParse(Console.ReadLine(), out newInput);
 
-                newInput = CheckIntInput(isConvertible, newInput);
+                newInput = CheckIntInput(isConvertible, newInput); //check if this was valid int input
 
-                isConvertible = (newInput >= 0 && newInput < 5);
+                isConvertible = (newInput >= 0 && newInput < 5);  //check if this was valid complexity level input (between 0-4)
             }
             return newInput;
         }
 
-        //this program gets a bool variable if the input is string or DateTime and the input.
-        // the program returns a correct input. 
+        /// <summary>
+        /// gets an DateTime and boolean that tells if the first convertion to this DateTime was successfull. and requests from the user new DateTime untill the convertion will success. then it returns the changed DateTime
+        /// </summary>
+        /// <param name="isConvertible">boolean that tells if the first convertion to the DateTime was successfull</param>
+        /// <param name="input">the input int we want to change if it did not converted in the first time</param>
+        /// <returns></returns> 
         public static DateTime CheckDateTimeInput(bool isConvertible, DateTime input)
         {
             DateTime tempInput = input;
-            while (isConvertible == false)
+            while (isConvertible == false) //while it not converted properly - request new input from the user until he will enter proper input
             {
                 Console.WriteLine("invalid time format");
 
@@ -440,7 +543,13 @@
             return tempInput;
         }
 
-        public static DO.Engineer GenerateEngineer(int newId)
+
+        /// <summary>
+        /// request all the pameters from the user for new engineer, create him and return it
+        /// </summary>
+        /// <param name="newId"> the new id for the new engineer, we won't need to get new one </param>
+        /// <returns></returns>
+        public static DO.Engineer GenerateEngineerCreate(int newId)
         {
             Console.WriteLine("Enter the following parameters: email address, salary, name and the complexity level:");
 
@@ -460,94 +569,70 @@
             return newEngineer;
         }
 
-        public static DO.Task GenerateTask(int newId)
+        /// <summary>
+        /// request all the pameters from the user for new task, create him and return it
+        /// </summary>
+        /// <returns></returns>
+        public static DO.Task GenerateTaskCreate()
         {
-            Console.WriteLine("Enter the following parameters: nickname, description, if it's milestone ('Y' or 'N'), when it created, the scheduled Date to beginning, when it started, deadline date, complete date, deliverables, notes and the level of complexity, and the engineer's id:");
+            Console.WriteLine("Enter the following parameters: nickname, description, if it's milestone ('1' for yes and '0' to no), when it created, the scheduled Date to beginning, when it started, deadline date, complete date, deliverables, notes and the level of complexity, and the engineer's id:");
             
-            string newName = Console.ReadLine() ?? "";
+            string newName = Console.ReadLine() ?? ""; //requst new name from the user + null check
             
-            string newDescription = Console.ReadLine() ?? "";
-            
-            bool newIsMilestone = Console.ReadLine() == "Y" ? true : false;
+            string newDescription = Console.ReadLine() ?? ""; //requst new description from the user + null check
+
+            int isMilestone;
+            isMilestone = CheckIntInput(int.TryParse(Console.ReadLine(), out isMilestone), isMilestone); //request an int from the user and checks if it valid
+            bool newIsMilestone = isMilestone == 1 ? true : false;
             
             DateTime newCreatedTime;
-            
-            newCreatedTime = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newCreatedTime), newCreatedTime);
-            
+            newCreatedTime = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newCreatedTime), newCreatedTime); //requst new DateTime from the user + null check
+
             DateTime newScheduledDate;
-            newScheduledDate = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newScheduledDate), newScheduledDate);
-            
+            newScheduledDate = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newScheduledDate), newScheduledDate); //requst new DateTime from the user + null check
+
             DateTime newStartedDate;
-            newStartedDate = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newStartedDate), newStartedDate);
-            
+            newStartedDate = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newStartedDate), newStartedDate); //requst new DateTime from the user + null check
+
             DateTime newDeadlineTime;
-            newDeadlineTime = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newDeadlineTime), newDeadlineTime);
-            
+            newDeadlineTime = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newDeadlineTime), newDeadlineTime); //requst new DateTime from the user + null check
+
             DateTime newCompletedDate;
-            newCompletedDate = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newCompletedDate), newCompletedDate);
-            
-            string newDeliverables = Console.ReadLine() ?? "";
-            
-            string newRemarks = Console.ReadLine() ?? "";
-            
+            newCompletedDate = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newCompletedDate), newCompletedDate); //requst new DateTime from the user + null check
+
+            string newDeliverables = Console.ReadLine() ?? ""; //requst new name from the user + null check
+
+            string newRemarks = Console.ReadLine() ?? ""; //requst new name from the user + null check
+
             int newComplexityLevel;
             newComplexityLevel = CheckIntInput(int.TryParse(Console.ReadLine(), out newComplexityLevel), newComplexityLevel);
-            newComplexityLevel = CheckComplexityLevelInput((newComplexityLevel >= 0 && newComplexityLevel < 5), newComplexityLevel);
-            
+            newComplexityLevel = CheckComplexityLevelInput((newComplexityLevel >= 0 && newComplexityLevel < 5), newComplexityLevel); //requst new complexity level from the user + validation check
+
             int newEngineerId;
-            newEngineerId = CheckIntInput(int.TryParse(Console.ReadLine(), out newEngineerId), newEngineerId);
-            
-            DO.Task newTask = new DO.Task(newId, newCreatedTime, newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, newScheduledDate - newCreatedTime, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);
+            newEngineerId = CheckIntInput(int.TryParse(Console.ReadLine(), out newEngineerId), newEngineerId); //request an int from the user and checks if it valid
+
+            DO.Task newTask = new DO.Task(0, newCreatedTime, newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, newScheduledDate - newCreatedTime, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);
             return newTask;
         }
 
-        public static DO.Dependency GenerateDependencyCreate(int newId)
+        /// <summary>
+        /// request all the pameters from the dependency for new task, create him and return it
+        /// </summary>
+        /// <returns></returns>
+        public static DO.Dependency GenerateDependencyCreate()
         {
             Console.WriteLine("Enter the following parameters: DependentTask and DependsOnTask");
             
             int dependentTask;
-            dependentTask = CheckIntInput(int.TryParse(Console.ReadLine(), out dependentTask), dependentTask);
-            
+            dependentTask = CheckIntInput(int.TryParse(Console.ReadLine(), out dependentTask), dependentTask); //request an int from the user and checks if it valid
+
             int dependsOnTask;
-            dependsOnTask = CheckIntInput(int.TryParse(Console.ReadLine(), out dependsOnTask), dependsOnTask);
-            
-            DO.Dependency newDependency = new DO.Dependency(newId,dependentTask, dependsOnTask);
+            dependsOnTask = CheckIntInput(int.TryParse(Console.ReadLine(), out dependsOnTask), dependsOnTask); //request an int from the user and checks if it valid
+
+            DO.Dependency newDependency = new DO.Dependency(0,dependentTask, dependsOnTask);
             return newDependency;
         }
-
-        public static void CreateNewEngineer()
-        {
-            try
-            {
-                Console.WriteLine("enter the new id of the engineer:");
-
-                int newId;
-                newId = CheckIntInput(int.TryParse(Console.ReadLine(), out newId), newId);
-
-                Engineer engToAdd = GenerateEngineer(newId);
-
-                s_dalEngineer!.Create(engToAdd);
-            }
-            catch (Exception problem)
-            {
-                Console.WriteLine(problem.Message);
-            }
-        }
-
-        public static void CreateNewTask()
-        {
-            DO.Task taskToAdd = GenerateTask(0);
-
-            s_dalTask!.Create(taskToAdd);
-        }
-
-        public static void CreateNewDependency()
-        {
-            Dependency dependencyToAdd = GenerateDependencyCreate(0);
-
-            s_dalDependency!.Create(dependencyToAdd);
-
-        }
+        
     }
 }
 
