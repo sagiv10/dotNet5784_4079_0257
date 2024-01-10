@@ -87,7 +87,7 @@
                     }
                     break;
                 case "Task":
-                    switch (choice)
+                    switch (choice) 
                     {
                         case 1: CreateNewTask(); break;
                         case 2: ReadTask(); break;
