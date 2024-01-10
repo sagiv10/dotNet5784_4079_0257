@@ -62,6 +62,7 @@ internal static class DataSource
                 {
                     return counter;
                 }
+                counter++;
             }
             return -1;
         }
@@ -75,6 +76,7 @@ internal static class DataSource
                 {
                     return counter;
                 }
+                counter++;
             }
             return -1;
         }
@@ -88,6 +90,7 @@ internal static class DataSource
                 {
                     return counter;
                 }
+                counter++;
             }
             return -1;
         }
