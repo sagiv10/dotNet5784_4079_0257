@@ -11,21 +11,26 @@
 
     internal class Program
     {
-        private static ITask? s_dalTask = new TaskImplementation(); //stage 1
-        private static IDependency? s_dalDependency = new DependencyImplementation(); //stage 1
-        private static IEngineer? s_dalEngineer = new EngineerImplementation(); //stage 1
+        private static ITask? s_dalTask = new TaskImplementation(); //so we can use the Task's CRUD methods
+        private static IDependency? s_dalDependency = new DependencyImplementation(); //so we can use the Dependency's CRUD methods
+        private static IEngineer? s_dalEngineer = new EngineerImplementation(); //so we can use the Engineer's CRUD methods
+
+        /// <summary>
+        /// the main function
+        /// </summary>
+        /// <param name="typeChoice"></param>
         static void Main(string[] args)
         {
             try
             {
-                Initialization.Do(s_dalTask!, s_dalEngineer!, s_dalDependency!);
+                Initialization.Do(s_dalTask!, s_dalEngineer!, s_dalDependency!); //init the list with starting data
 
                 int choice = 1;
                 while (!(choice == 0))
                 {
                     Console.WriteLine("Select an entity you want to check:\n0. exit from the menu.\n1. Engineer.\n2. Dependency.\n3. Task");
                     
-                    choice = CheckIntInput(int.TryParse(Console.ReadLine(), out choice), choice);
+                    choice = CheckIntInput(int.TryParse(Console.ReadLine(), out choice), choice); //gets int from the user + validation
 
                     switch (choice)
                     {
@@ -48,6 +53,11 @@
                 Console.WriteLine(problem.Message);
             }
         }
+
+        /// <summary>
+        /// the secondery menu
+        /// </summary>
+        /// <param name="typeChoice"></param>
         public static void EntityMenu(string typeChoice)
         {
             Console.WriteLine("Choose method:\n1.Create.\n2.Read.\n3.ReadAll.\n4.Update.\n5.Delete.");
@@ -88,6 +98,7 @@
                     break;
             }
         }
+
         /// <summary>
         /// this method gets from the user an id of task and a full details of task and updates the task with this id from the list with the new details. if not exist write a message.
         /// </summary>
