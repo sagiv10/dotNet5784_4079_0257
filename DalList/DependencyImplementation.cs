@@ -3,7 +3,7 @@ using DO;
 using DalApi;
 using System.Collections.Generic;
 
-public class DependencyImplementation : IDependency
+internal class DependencyImplementation : IDependency
 {
     /// <summary>
     /// this method gets a dependency and gets him into the dependency list with a new id from the staic property. in the end returnes the new id.

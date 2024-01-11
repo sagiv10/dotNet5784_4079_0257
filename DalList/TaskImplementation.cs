@@ -4,7 +4,7 @@ using DO;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-public class TaskImplementation : ITask
+internal class TaskImplementation : ITask
 {
     /// <summary>
     /// this method takes the info of the task the user wrote us as a given parameter and changes the id by the static property and adds it to the tasks list.
