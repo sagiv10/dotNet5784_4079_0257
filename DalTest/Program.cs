@@ -11,9 +11,7 @@
 
     internal class Program
     {
-        private static ITask? s_dalTask = new TaskImplementation(); //so we can use the Task's CRUD methods
-        private static IDependency? s_dalDependency = new DependencyImplementation(); //so we can use the Dependency's CRUD methods
-        private static IEngineer? s_dalEngineer = new EngineerImplementation(); //so we can use the Engineer's CRUD methods
+        static readonly IDal s_dal = new DalList(); //the way we used the CRUD methods
 
         /// <summary>
         /// the main function
@@ -23,7 +21,7 @@
         {
             try
             {
-                Initialization.Do(s_dalTask!, s_dalEngineer!, s_dalDependency!); //init the list with starting data
+                Initialization.Do(s_dal!); //init the list with starting data
 
                 int choice = 1;
                 while (!(choice == 0))
@@ -111,7 +109,7 @@
                 int idToUpdate;
                 idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);//sends to another method that gets the id from the user and  checks if the input is correct.
 
-                DO.Task? oldTask = s_dalTask!.Read(idToUpdate);//prints the old details, if id not found so set to null
+                DO.Task? oldTask = s_dal!.Task!.Read(idToUpdate);//prints the old details, if id not found so set to null
                 if (oldTask != null)//if we found the id in the list 
                 {
                     Console.WriteLine(oldTask);
@@ -155,7 +153,7 @@
 
                     DO.Task updatedTask = new DO.Task(idToUpdate, newCreatedTime, newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, newScheduledDate - newCreatedTime, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);//create a new task with the given details
 
-                    s_dalTask!.Update(updatedTask);//update the new task
+                    s_dal!.Task!.Update(updatedTask);//update the new task
                 }
                 else
                 {
@@ -181,7 +179,7 @@
                 int idToUpdate;
                 idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);//sends to another method that gets the id from the user and  checks if the input is correct.
 
-                DO.Engineer? oldEngineer = s_dalEngineer!.Read(idToUpdate);//prints the old details, if id not found so set to null
+                DO.Engineer? oldEngineer = s_dal!.Engineer!.Read(idToUpdate);//prints the old details, if id not found so set to null
 
                 if (oldEngineer != null)//if we found the id in the list 
                 {
@@ -201,7 +199,7 @@
 
                     DO.Engineer updatedEngineer = new DO.Engineer(idToUpdate, newCost, newEmail, newName, (DO.ComplexityLvls)newComplexityLevel, true);//create a new engineer with the given details
 
-                    s_dalEngineer!.Update(updatedEngineer);//update the new engineer
+                    s_dal!.Engineer!.Update(updatedEngineer);//update the new engineer
                 }
                 else
                 {
@@ -227,7 +225,7 @@
                 int idToUpdate;
                 idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);//sends to another method that gets the id from the user and  checks if the input is correct.
 
-                Dependency? oldDependency = s_dalDependency!.Read(idToUpdate);//prints the old details, if id not found so set to null
+                Dependency? oldDependency = s_dal!.Dependency!.Read(idToUpdate);//prints the old details, if id not found so set to null
 
                 if (oldDependency != null) //if we found the id in the list 
                 {
@@ -245,7 +243,7 @@
 
                     DO.Dependency updatedDependency = new DO.Dependency(idToUpdate, dependentTask, dependsOnTask);//create a new dependency with the given details
 
-                    s_dalDependency!.Update(updatedDependency);//update the new dependency 
+                    s_dal!.Dependency!.Update(updatedDependency);//update the new dependency 
                 }
                 else
                 {
@@ -272,7 +270,7 @@
                 int idToDelete;
                 idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete); //request an int from the user and checks if it valid
 
-                s_dalTask!.Delete(idToDelete);
+                s_dal!.Task!.Delete(idToDelete);
             }
             catch (Exception problem)
             {
@@ -292,7 +290,7 @@
                 int idToDelete;
                 idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete); //request an int from the user and checks if it valid
 
-                s_dalEngineer!.Delete(idToDelete);
+                s_dal!.Engineer!.Delete(idToDelete);
             }
             catch (Exception problem)
             {
@@ -312,7 +310,7 @@
                 int idToDelete;
                 idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete); //request an int from the user and checks if it valid
 
-                s_dalDependency!.Delete(idToDelete);
+                s_dal!.Dependency!.Delete(idToDelete);
             }
             catch (Exception problem)
             {
@@ -325,7 +323,7 @@
         /// </summary>
         public static void ReadAllTask()
         {
-            foreach (var item in s_dalTask!.ReadAll())
+            foreach (var item in s_dal!.Task!.ReadAll())
             {
                 Console.WriteLine(item);
             }
@@ -336,7 +334,7 @@
         /// /// </summary>
         public static void ReadAllEngineer()
         {
-            foreach (var item in s_dalEngineer!.ReadAll())
+            foreach (var item in s_dal!.Engineer!.ReadAll())
             {
                 if (item!._isActive == true)
                 {
@@ -351,7 +349,7 @@
         /// /// </summary>
         public static void ReadAllDependency()
         {
-            foreach (var item in s_dalDependency!.ReadAll())
+            foreach (var item in s_dal!.Dependency!.ReadAll())
             {
                 Console.WriteLine(item);
             }
@@ -369,7 +367,7 @@
                 int inputId;
                 inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
 
-                Engineer newEngineer = s_dalEngineer!.Read(inputId)!;
+                Engineer newEngineer = s_dal!.Engineer!.Read(inputId)!;
 
                 if (newEngineer == null)
                 {
@@ -397,7 +395,7 @@
                 int inputId;
                 inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
 
-                DO.Task newTask = s_dalTask!.Read(inputId)!;
+                DO.Task newTask = s_dal!.Task!.Read(inputId)!;
 
                 if (newTask == null)
                 {
@@ -424,7 +422,7 @@
                 int inputId;
                 inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
 
-                Dependency newDependency = s_dalDependency!.Read(inputId)!;
+                Dependency newDependency = s_dal!.Dependency!.Read(inputId)!;
 
                 if (newDependency == null)
                 {
@@ -454,7 +452,7 @@
 
                 Engineer engToAdd = GenerateEngineerCreate(newId);
 
-                s_dalEngineer!.Create(engToAdd);
+                s_dal!.Engineer!.Create(engToAdd);
             }
             catch (Exception problem)
             {
@@ -469,7 +467,7 @@
         {
             DO.Task taskToAdd = GenerateTaskCreate();
 
-            s_dalTask!.Create(taskToAdd);
+            s_dal!.Task!.Create(taskToAdd);
         }
 
         /// <summary>
@@ -479,7 +477,7 @@
         {
             Dependency dependencyToAdd = GenerateDependencyCreate();
 
-            s_dalDependency!.Create(dependencyToAdd);
+            s_dal!.Dependency!.Create(dependencyToAdd);
 
         }
 

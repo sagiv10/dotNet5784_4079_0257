@@ -5,9 +5,7 @@ using DO;
 
 public static class Initialization
 {
-    private static ITask? s_dalTask; 
-    private static IEngineer? s_dalEngineer; 
-    private static IDependency? s_dalDependency;
+    private static IDal? s_dal;
     private static readonly Random s_rand = new(DateTime.Now.Millisecond);
     private static int[] _idEngineers = new int[5];
     private static DO.ComplexityLvls[] _arrOfCmplx = new DO.ComplexityLvls[] { ComplexityLvls.Beginner, ComplexityLvls.BetterBeginner, ComplexityLvls.Advanced, ComplexityLvls.Expert, ComplexityLvls.Master };
@@ -29,7 +27,7 @@ public static class Initialization
             Engineer newEngineer = new Engineer(s_rand.Next(200000000, 400000001), s_rand.Next(10000, 40001) + (((double)s_rand.Next(100)) / 100), NamesOfEngineers[i] + "@gmail.com", NamesOfEngineers[i], _arrOfCmplx[i], true);
             try
             {
-                s_dalEngineer!.Create(newEngineer);//throw if id we wrote in the create method already exist.
+                s_dal!.Engineer.Create(newEngineer);//throw if id we wrote in the create method already exist.
                 _idEngineers[i] = newEngineer._id;
             }
             catch (Exception problem)
@@ -98,7 +96,7 @@ public static class Initialization
             DateTime scheduleTime = DateTime.Now.AddMonths(s_rand.Next(30));//sets the scheduled time to be a rand number not bigger then 30 days after the current time.
             DateTime current = DateTime.Now;
             Task? newTask = new Task(0, DateTime.Now, false,AliasOfTasks[i], DescriptionOfTasks[i], scheduleTime, null, scheduleTime - current, scheduleTime.AddDays(14) , null, null, null,_arrOfCmplx[i%5], _idEngineers[i%5], true) ;
-            s_dalTask!.Create(newTask);
+            s_dal!.Task.Create(newTask);
         }
     }
 
@@ -153,7 +151,7 @@ public static class Initialization
         for(int i=0; i<arrOfDependencies.Length;i=i+2)
         {
             Dependency? newDependency = new Dependency(0, arrOfDependencies[i], arrOfDependencies[i + 1]);
-            s_dalDependency!.Create(newDependency);
+            s_dal!.Dependency.Create(newDependency);
         }
     }
     /// <summary>
@@ -163,11 +161,9 @@ public static class Initialization
     /// <param name="dalEngineer">the implementation of the entity engineer that helps us reach to the interface of engineer</param>
     /// <param name="dalDependency">the implementation of the entity dependency that helps us reach to the interface of dependency</param>
     /// <exception cref="NullReferenceException"></exception>
-    public static void Do(ITask? dalTask, IEngineer? dalEngineer, IDependency? dalDependency)
+    public static void Do(IDal dal)
     {
-        s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+        s_dal = dal ?? throw new NullReferenceException("DAL can not be null!");
         createEngineer();
         createTask();
         createDependency();
