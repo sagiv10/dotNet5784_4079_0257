@@ -3,6 +3,7 @@ using DalApi;
 using DO;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 internal class TaskImplementation : ITask
 {
@@ -11,10 +12,10 @@ internal class TaskImplementation : ITask
     /// </summary>
     /// <param name="item"> new task info from the user</param>
     /// <returns> the new id</returns>
-    public int Create(Task item)
+    public int Create(DO.Task item)
     {
         int newId = DataSource.Config.NextTaskId;
-        Task newItem = item with { _id = newId };
+        DO.Task newItem = item with { _id = newId };
         DataSource.Tasks.Add(newItem);
         return newId;
     }
@@ -29,7 +30,7 @@ internal class TaskImplementation : ITask
         if(idxOfDeleted ==-1) {
             throw new Exception($"Task with ID={id} does Not exist");
         }
-        Task? NotActiveOne = DataSource.Tasks[idxOfDeleted]! with { _isActive = false };
+        DO.Task? NotActiveOne = DataSource.Tasks[idxOfDeleted]! with { _isActive = false };
         DataSource.Tasks.RemoveAt(idxOfDeleted);
         DataSource.Tasks.Add(NotActiveOne);
     }
@@ -38,28 +39,21 @@ internal class TaskImplementation : ITask
     /// </summary>
     /// <param name="id"> what task we want to print</param>
     /// <returns> returns the task we want to print</returns>
-    public Task? Read(int id)
+    public DO.Task? Read(Func<DO.Task, bool> filter)
     {
-        foreach (var task in DataSource.Tasks) 
-        {
-            if(id==task!._id && task._isActive==true)//if the specific task has the right id and also active.
-            {
-                return task;
-            }
-        }
-        return null;
+        return DataSource.Tasks.FirstOrDefault(filter);
     }
     /// <summary>
     /// this method creates a new task list, copy the whole old list to the new one and returns the new.
     /// </summary>
     /// <returns>the new list </returns>
-    public List<Task?> ReadAll()
+    public List<DO.Task?> ReadAll()
     {
-        Task? temp;
-        List<Task?> newList = new List<Task?>();
+        DO.Task? temp;
+        List<DO.Task?> newList = new List<DO.Task?>();
         foreach (var item in DataSource.Tasks)
         {
-            temp=new Task(item!._id, item!._createdAtDate, item!._isMilestone, item!._alias, item!._description, item!._scheduledDate, item!._startDate, item!._requiredEffortTime, item!._deadlineDate,item!._completeDate, item!._deliverables,item!._remarks,item!._complexity,item!._engineerId,item!._isActive);
+            temp=new DO.Task(item!._id, item!._createdAtDate, item!._isMilestone, item!._alias, item!._description, item!._scheduledDate, item!._startDate, item!._requiredEffortTime, item!._deadlineDate,item!._completeDate, item!._deliverables,item!._remarks,item!._complexity,item!._engineerId,item!._isActive);
             newList.Add(temp);
         }
         return newList;
@@ -69,7 +63,7 @@ internal class TaskImplementation : ITask
     /// </summary>
     /// <param name="item">the new task</param>
     /// <exception cref="Exception"></exception>
-    public void Update(Task item)
+    public void Update(DO.Task item)
     {
 
         int idxOfDeleted = DataSource.Config.FindIndexTasks(item._id);

@@ -57,18 +57,9 @@ internal class EngineerImplementation : IEngineer
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public Engineer? Read(int id)
+    public DO.Engineer? Read(Func<DO.Engineer, bool> filter)
     {
-        Engineer? returnedValue = DataSource.Config.FindEngineer(id);
-        if(returnedValue != null && returnedValue._isActive == true)//if the id is exist in the list and the founded engineer is active.
-        {
-            return returnedValue;
-        }
-        else
-        {
-            return null;
-        }
-
+        return DataSource.Engineers.FirstOrDefault(filter);
     }
     /// <summary>
     /// this method creats a new list of engineers with the same details of the old list.

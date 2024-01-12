@@ -37,9 +37,9 @@ internal class DependencyImplementation : IDependency
     /// </summary>
     /// <param name="id">the id of the dependency we want to find </param>
     /// <returns></returns>
-    public Dependency? Read(int id)
+    public DO.Dependency? Read(Func<DO.Dependency, bool> filter)
     {
-        return DataSource.Config.FindDependency(id);
+        return DataSource.Dependencies.FirstOrDefault(filter);
     }
     /// <summary>
     /// this method creats a new dependency list and returns him. 
