@@ -45,15 +45,9 @@ internal class DependencyImplementation : IDependency
     /// this method creats a new dependency list and returns him. 
     /// </summary>
     /// <returns>the new list </returns>
-    public List<Dependency?> ReadAll()
+    public IEnumerable<Dependency?> ReadAll()
     {
-        Dependency? temp;
-        List<Dependency?> newList = new List<Dependency?>();
-        foreach (var item in DataSource.Dependencies)
-        {
-            temp = new Dependency(item!._id, item!._dependentTask,item!._dependsOnTask)??null;
-            newList.Add((Dependency?)item);
-        }
+        IEnumerable<Dependency?> newList = DataSource.Dependencies.Select(item => item);
         return newList;
     }
     /// <summary>
