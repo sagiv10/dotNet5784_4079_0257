@@ -65,16 +65,18 @@ internal class EngineerImplementation : IEngineer
     /// this method creats a new list of engineers with the same details of the old list.
     /// </summary>
     /// <returns>the new list</returns>
-    public List<Engineer?> ReadAll()
+    public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter)
     {
-        Engineer? temp;
-        List<Engineer?> newList = new List<Engineer?>();
-        foreach (var item in DataSource.Engineers)
+        if (filter == null)
         {
-            temp=new Engineer(item!._id, item!._cost, item!._email, item!._name, item!._level,item!._isActive);
-            newList.Add(temp);
+            IEnumerable<Engineer?> newList = DataSource.Engineers.Select(item => item);
+            return newList;
         }
-        return newList;
+        else
+        {
+            IEnumerable<Engineer?> newList = DataSource.Engineers.Where(item => filter(item!));
+            return newList;
+        }
     }
     /// <summary>
     /// this program gets a new engineer and removes the old engineer with the same id that in the list and gets the new one in. 

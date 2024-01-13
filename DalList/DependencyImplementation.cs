@@ -45,10 +45,18 @@ internal class DependencyImplementation : IDependency
     /// this method creats a new dependency list and returns him. 
     /// </summary>
     /// <returns>the new list </returns>
-    public IEnumerable<Dependency?> ReadAll()
+    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter)
     {
-        IEnumerable<Dependency?> newList = DataSource.Dependencies.Select(item => item);
-        return newList;
+        if (filter== null) 
+        {
+            IEnumerable<Dependency?> newList = DataSource.Dependencies.Select(item => item);
+            return newList;
+        }
+        else
+        {
+            IEnumerable<Dependency?> newList = DataSource.Dependencies.Where(item => filter(item!));
+            return newList;
+        }
     }
     /// <summary>
     /// this method gets a new dependency and makes the list from now and on the point on the new dependency and not on the old dependency that already was in the list with the same id as the new we got.

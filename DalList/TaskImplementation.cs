@@ -47,16 +47,18 @@ internal class TaskImplementation : ITask
     /// this method creates a new task list, copy the whole old list to the new one and returns the new.
     /// </summary>
     /// <returns>the new list </returns>
-    public List<DO.Task?> ReadAll()
+    public IEnumerable<DO.Task?> ReadAll(Func<DO.Task, bool>? filter)
     {
-        DO.Task? temp;
-        List<DO.Task?> newList = new List<DO.Task?>();
-        foreach (var item in DataSource.Tasks)
+        if (filter == null)
         {
-            temp=new DO.Task(item!._id, item!._createdAtDate, item!._isMilestone, item!._alias, item!._description, item!._scheduledDate, item!._startDate, item!._requiredEffortTime, item!._deadlineDate,item!._completeDate, item!._deliverables,item!._remarks,item!._complexity,item!._engineerId,item!._isActive);
-            newList.Add(temp);
+            IEnumerable<DO.Task?> newList = DataSource.Tasks.Select(item => item);
+            return newList;
         }
-        return newList;
+        else
+        {
+            IEnumerable<DO.Task?> newList = DataSource.Tasks.Where(item => filter(item!));
+            return newList;
+        }
     }
     /// <summary>
     /// this method gets a task, finds other task in the list with the same id to remove and sets the new task with the same id as the new task given.
