@@ -11,6 +11,8 @@ namespace DalApi
     {
         int Create(T item); //Creates new entity object in DAL
 
+        T? Read(int id); //Reads entity object by it's id
+
         T? Read(Func<T, bool> filter); //Reads entity object by one of it's fields
 
         IEnumerable<T?> ReadAll(Func<T, bool>? filter = null); //stage 1 only, Reads all entity objects

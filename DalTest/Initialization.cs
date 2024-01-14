@@ -30,7 +30,7 @@ public static class Initialization
                 s_dal!.Engineer.Create(newEngineer);//throw if id we wrote in the create method already exist.
                 _idEngineers[i] = newEngineer._id;
             }
-            catch (Exception problem)
+            catch (DalAlreadyExistsException problem)
             {
                 i--; //if the id already exist so ask for all the info again.
             }
