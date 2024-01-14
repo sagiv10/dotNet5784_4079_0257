@@ -10,7 +10,7 @@ internal class EngineerImplementation : IEngineer
     /// </summary>
     /// <param name="item"> the new engineer we want to add</param>
     /// <returns>the id of the new engineer</returns>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DalAlreadyExistsException"></exception>
     public int Create(Engineer item)
     {
         Engineer? ifExists = DataSource.Config.FindEngineer(item._id);
@@ -26,7 +26,7 @@ internal class EngineerImplementation : IEngineer
             }
             if(ifExists._isActive ==true ) // if we found him and we cant add him
             {
-                throw new Exception($"Engineer with ID={ifExists._id} already exists");
+                throw new DalAlreadyExistsException($"Engineer with ID={ifExists._id} already exists");
             }
 
         }

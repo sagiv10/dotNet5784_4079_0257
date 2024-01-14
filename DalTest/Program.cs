@@ -454,7 +454,7 @@
 
                 s_dal!.Engineer!.Create(engToAdd);
             }
-            catch (Exception problem)
+            catch (DalAlreadyExistsException problem)
             {
                 Console.WriteLine(problem.Message);
             }

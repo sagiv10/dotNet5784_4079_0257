@@ -1,11 +1,14 @@
 ﻿using System;
 namespace DO;
+
 [Serializable]
 public class DalNotFoundException : Exception
 {
-    DalNotFoundException(string? message) : base(message) { }
+    public DalNotFoundException(string? message) : base(message) { }
 }
+
+[Serializable]
 public class DalAlreadyExistsException : Exception
 {
-    DalAlreadyExistsException(string? message) : base(message) { }
+    public DalAlreadyExistsException(string? message) : base(message) { }
 }
