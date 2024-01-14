@@ -23,12 +23,12 @@ internal class TaskImplementation : ITask
     /// this program deletes the task that has the id we got. if not found-throw. if found so set isActive to false (by using new one and add him and remove the old one)
     /// </summary>
     /// <param name="id"> id to delete</param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DalNotFoundException"></exception>
     public void Delete(int id)
     {
         int idxOfDeleted = DataSource.Config.FindIndexTasks(id);
         if(idxOfDeleted ==-1) {
-            throw new Exception($"Task with ID={id} does Not exist");
+            throw new DalNotFoundException($"Task with ID={id} does Not exist");
         }
         DO.Task? NotActiveOne = DataSource.Tasks[idxOfDeleted]! with { _isActive = false };
         DataSource.Tasks.RemoveAt(idxOfDeleted);
@@ -66,14 +66,14 @@ internal class TaskImplementation : ITask
     /// this method gets a task, finds other task in the list with the same id to remove and sets the new task with the same id as the new task given.
     /// </summary>
     /// <param name="item">the new task</param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DalNotFoundException"></exception>
     public void Update(DO.Task item)
     {
 
         int idxOfDeleted = DataSource.Config.FindIndexTasks(item._id);
         if(idxOfDeleted == -1||DataSource.Tasks[idxOfDeleted]!._isActive==false)//if the old task with the same id is not active or if we didnt found a task with the same id so throw.
         {
-            throw new Exception($"Task with ID={item._id} does Not exist");
+            throw new DalNotFoundException($"Task with ID={item._id} does Not exist");
         }
         DataSource.Tasks.RemoveAt(idxOfDeleted);
         DataSource.Tasks.Add(item);
