@@ -17,12 +17,12 @@ internal class DependencyImplementation : IDependency
         DataSource.Dependencies.Add(newDependency);
         return newId;
     }
-   
+
     /// <summary>
     /// this method removes a dependency from the list by a given id. if we didnt find the id in the list so throw 
     /// </summary>
     /// <param name="id">the id of the old dependency we want to remove </param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DalNotFoundException"></exception>
     public void Delete(int id)
     {
         int theIndex = DataSource.Config.FindIndexDependency(id);
@@ -31,7 +31,7 @@ internal class DependencyImplementation : IDependency
             DataSource.Dependencies.RemoveAt(theIndex);
             return;
         }
-        throw new Exception($"Dependency with ID={id} does Not exist");
+        throw new DalNotFoundException($"Dependency with ID={id} does Not exist");
     }
 
     /// <summary>
@@ -63,18 +63,18 @@ internal class DependencyImplementation : IDependency
             return newList;
         }
     }
-   
+
     /// <summary>
     /// this method gets a new dependency and makes the list from now and on the point on the new dependency and not on the old dependency that already was in the list with the same id as the new we got.
     /// </summary>
     /// <param name="item">the new dependency</param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DalNotFoundException"></exception>
     public void Update(Dependency item)
     {
         int theIndex = DataSource.Config.FindIndexDependency(item._id);
         if (theIndex == -1)
         {
-            throw new Exception($"Dependency with ID={item._id} does Not exist");
+            throw new DalNotFoundException($"Dependency with ID={item._id} does Not exist");
         }
         DataSource.Dependencies[theIndex] = item;
     }

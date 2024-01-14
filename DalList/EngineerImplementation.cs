@@ -38,7 +38,7 @@ internal class EngineerImplementation : IEngineer
     /// this method set an engineer to not active if he exists(we can know his existence by given id), else throw.
     /// </summary>
     /// <param name="id"></param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DalNotFoundException"></exception>
     public void Delete(int id)
     {
         Engineer? oldEngineer = DataSource.Config.FindEngineer(id);
@@ -50,7 +50,7 @@ internal class EngineerImplementation : IEngineer
             DataSource.Engineers.Add(updatedEngineer);
             return;
         }
-        throw new Exception($"Engineer with ID={id} does Not exist");
+        throw new DalNotFoundException($"Engineer with ID={id} does Not exist");
     }
 
 
@@ -86,13 +86,13 @@ internal class EngineerImplementation : IEngineer
     /// this program gets a new engineer and removes the old engineer with the same id that in the list and gets the new one in. 
     /// </summary>
     /// <param name="item">the new engineer </param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DalNotFoundException"></exception>
     public void Update(Engineer item)
     {
         Engineer? oldValue = DataSource.Config.FindEngineer(item._id);
         if(oldValue==null || oldValue._isActive==false) //if the engineer from the list isn't active or not found 
         {
-            throw new Exception($"Engineer with ID={item._id} does Not exist");
+            throw new DalNotFoundException($"Engineer with ID={item._id} does Not exist");
         }
         int theIndex = DataSource.Config.FindIndexEngineer(item._id);
         DataSource.Engineers[theIndex] = item;

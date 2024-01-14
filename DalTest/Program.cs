@@ -46,7 +46,7 @@
                     }
                 }
             }
-            catch (Exception problem)
+            catch (NullReferenceException problem)
             {
                 Console.WriteLine(problem.Message);
             }
@@ -157,11 +157,11 @@
                 }
                 else
                 {
-                    throw new Exception("id is not in the system");
+                    throw new DalNotFoundException("id is not in the system");
 
                 }
             }
-            catch (Exception problem)
+            catch (DalNotFoundException problem)
             {
                 Console.WriteLine(problem.Message);
             }
@@ -203,11 +203,11 @@
                 }
                 else
                 {
-                    throw new Exception("id is not in the system");
+                    throw new DalNotFoundException("id is not in the system");
                 }
 
             }
-            catch (Exception problem)
+            catch (DalNotFoundException problem)
             {
                 Console.WriteLine(problem.Message);
             }
@@ -247,11 +247,11 @@
                 }
                 else
                 {
-                    throw new Exception("id is not in the system");
+                    throw new DalNotFoundException("id is not in the system");
 
                 }
             }
-            catch (Exception problem)
+            catch (DalNotFoundException problem)
             {
                 Console.WriteLine(problem.Message);
             }
@@ -272,7 +272,7 @@
 
                 s_dal!.Task!.Delete(idToDelete);
             }
-            catch (Exception problem)
+            catch (DalNotFoundException problem)
             {
                 Console.WriteLine(problem.Message);
             }
@@ -292,7 +292,7 @@
 
                 s_dal!.Engineer!.Delete(idToDelete);
             }
-            catch (Exception problem)
+            catch (DalNotFoundException problem)
             {
                 Console.WriteLine(problem.Message);
             }
@@ -312,7 +312,7 @@
 
                 s_dal!.Dependency!.Delete(idToDelete);
             }
-            catch (Exception problem)
+            catch (DalNotFoundException problem)
             {
                 Console.WriteLine(problem.Message);
             }
@@ -371,13 +371,13 @@
 
                 if (newEngineer == null)
                 {
-                    throw new Exception("id is not in the system"); //request an int from the user and checks if it valid
+                    throw new DalNotFoundException("id is not in the system"); //request an int from the user and checks if it valid
 
                 }
 
                 Console.WriteLine(newEngineer);
             }
-            catch (Exception problem)
+            catch (DalNotFoundException problem)
             {
                 Console.WriteLine(problem.Message);
             }
@@ -399,12 +399,12 @@
 
                 if (newTask == null)
                 {
-                    throw new Exception("id is not in the system"); //request an int from the user and checks if it valid
+                    throw new DalNotFoundException("id is not in the system"); //request an int from the user and checks if it valid
                 }
 
                 Console.WriteLine(newTask);
             }
-            catch (Exception problem)
+            catch (DalNotFoundException problem)
             {
                 Console.WriteLine(problem.Message);
             }
@@ -426,13 +426,13 @@
 
                 if (newDependency == null)
                 {
-                    throw new Exception("id is not in the system"); //request an int from the user and checks if it valid
+                    throw new DalNotFoundException("id is not in the system"); //request an int from the user and checks if it valid
 
                 }
 
                 Console.WriteLine(newDependency);
             }
-            catch (Exception problem)
+            catch (DalNotFoundException problem)
             {
                 Console.WriteLine(problem.Message);
             }
