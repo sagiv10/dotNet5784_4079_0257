@@ -9,7 +9,7 @@ namespace DalApi
 {
     public interface ICrud<T> where T : class
     {
-        int Create(T item); //Creates new entity object in DAL
+        int Create(T item); //Creates new entity object in DAL 
 
         T? Read(int id); //Reads entity object by it's id
 
