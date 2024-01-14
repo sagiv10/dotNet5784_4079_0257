@@ -37,6 +37,18 @@ internal class DependencyImplementation : IDependency
     /// </summary>
     /// <param name="id">the id of the dependency we want to find </param>
     /// <returns></returns>
+    /// 
+
+    /// <summary>
+    /// this method returns the dependency with the id it got.
+    /// </summary>
+    /// <param name="id">the id of the dependency we want to find </param>
+    /// <returns></returns>
+    public Dependency? Read(int id)
+    {
+        return DataSource.Config.FindDependency(id);
+    }
+
     public DO.Dependency? Read(Func<DO.Dependency, bool> filter)
     {
         return DataSource.Dependencies.FirstOrDefault(filter);

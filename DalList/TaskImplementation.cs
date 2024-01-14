@@ -39,6 +39,7 @@ internal class TaskImplementation : ITask
     /// </summary>
     /// <param name="id"> what task we want to print</param>
     /// <returns> returns the task we want to print</returns>
+
     public DO.Task? Read(Func<DO.Task, bool> filter)
     {
         return DataSource.Tasks.FirstOrDefault(filter);
