@@ -53,6 +53,24 @@ internal class EngineerImplementation : IEngineer
         throw new DalNotFoundException($"Engineer with ID={id} does Not exist");
     }
 
+    /// <summary>
+    /// this method gets id and returns the engineer in the list that has this id, if not exists so return null.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public Engineer? Read(int id)
+    {
+        Engineer? returnedValue = DataSource.Config.FindEngineer(id);
+        if (returnedValue != null && returnedValue._isActive == true)//if the id is exist in the list and the founded engineer is active.
+        {
+            return returnedValue;
+        }
+        else
+        {
+            return null;
+        }
+
+    }
 
     /// <summary>
     /// this method gets id and returns the engineer in the list that has this id, if not exists so return null.

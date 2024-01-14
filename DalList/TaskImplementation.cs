@@ -34,12 +34,29 @@ internal class TaskImplementation : ITask
         DataSource.Tasks.RemoveAt(idxOfDeleted);
         DataSource.Tasks.Add(NotActiveOne);
     }
+
+    /// <summary>
+    /// this method helps us to print the info of a specific task that we recognize from given id by returning the task. if not found return null.
+    /// </summary>
+    /// <param name="id"> what task we want to print</param>
+    /// <returns> returns the task we want to print</returns>
+    public DO.Task? Read(int id)
+    {
+        foreach (var task in DataSource.Tasks)
+        {
+            if (id == task!._id && task._isActive == true)//if the specific task has the right id and also active.
+            {
+                return task;
+            }
+        }
+        return null;
+    }
+
     /// <summary>
     /// this method helps us to print the info of a specific task that we recognize from given id by returning the task. if not found return null.
     /// </summary>
     /// <param name="filter"> predicat that determine wich task we want to print</param>
-    /// <returns> returns the task we want to print</returns>
-
+    /// <returns> returns the task we want to print</returns
     public DO.Task? Read(Func<DO.Task, bool> filter)
     {
         return DataSource.Tasks.FirstOrDefault(filter!);

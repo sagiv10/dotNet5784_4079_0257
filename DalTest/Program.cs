@@ -109,7 +109,7 @@
                 int idToUpdate;
                 idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);//sends to another method that gets the id from the user and  checks if the input is correct.
 
-                DO.Task? oldTask = s_dal!.Task!.Read(dependency => dependency._id == idToUpdate);//prints the old details, if id not found so set to null
+                DO.Task? oldTask = s_dal!.Task!.Read(idToUpdate);//prints the old details, if id not found so set to null
                 if (oldTask != null)//if we found the id in the list 
                 {
                     Console.WriteLine(oldTask);
@@ -179,7 +179,7 @@
                 int idToUpdate;
                 idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);//sends to another method that gets the id from the user and  checks if the input is correct.
 
-                DO.Engineer? oldEngineer = s_dal!.Engineer!.Read(dependency => dependency._id == idToUpdate);//prints the old details, if id not found so set to null
+                DO.Engineer? oldEngineer = s_dal!.Engineer!.Read(idToUpdate);//prints the old details, if id not found so set to null
 
                 if (oldEngineer != null)//if we found the id in the list 
                 {
@@ -225,7 +225,7 @@
                 int idToUpdate;
                 idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);//sends to another method that gets the id from the user and  checks if the input is correct.
 
-                Dependency? oldDependency = s_dal!.Dependency!.Read(dependency=>dependency._id == idToUpdate);//prints the old details, if id not found so set to null
+                Dependency? oldDependency = s_dal!.Dependency!.Read(idToUpdate);//prints the old details, if id not found so set to null
 
                 if (oldDependency != null) //if we found the id in the list 
                 {
@@ -367,7 +367,7 @@
                 int inputId;
                 inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
 
-                Engineer newEngineer = s_dal!.Engineer!.Read(dependency => dependency._id == inputId)!;
+                Engineer newEngineer = s_dal!.Engineer!.Read(inputId)!;
 
                 if (newEngineer == null)
                 {
@@ -395,7 +395,7 @@
                 int inputId;
                 inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
 
-                DO.Task newTask = s_dal!.Task!.Read(dependency => dependency._id == inputId)!;
+                DO.Task newTask = s_dal!.Task!.Read(inputId)!;
 
                 if (newTask == null)
                 {
@@ -422,7 +422,7 @@
                 int inputId;
                 inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
 
-                Dependency newDependency = s_dal!.Dependency!.Read(dependency => dependency._id == inputId)!;
+                Dependency newDependency = s_dal!.Dependency!.Read(inputId)!;
 
                 if (newDependency == null)
                 {
