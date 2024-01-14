@@ -57,15 +57,17 @@ internal class EngineerImplementation : IEngineer
     /// <summary>
     /// this method gets id and returns the engineer in the list that has this id, if not exists so return null.
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="filter"> predicat that determine wich engineer we want to print</param>
     /// <returns></returns>
     public DO.Engineer? Read(Func<DO.Engineer, bool> filter)
     {
-        return DataSource.Engineers.FirstOrDefault(filter);
+        return DataSource.Engineers.FirstOrDefault(filter!);
     }
+
     /// <summary>
     /// this method creats a new list of engineers with the same details of the old list.
     /// </summary>
+    /// <param name="filter"> predicat that determine wich engineers we want to return</param>
     /// <returns>the new list</returns>
     public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter)
     {

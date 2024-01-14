@@ -37,16 +37,17 @@ internal class TaskImplementation : ITask
     /// <summary>
     /// this method helps us to print the info of a specific task that we recognize from given id by returning the task. if not found return null.
     /// </summary>
-    /// <param name="id"> what task we want to print</param>
+    /// <param name="filter"> predicat that determine wich task we want to print</param>
     /// <returns> returns the task we want to print</returns>
 
     public DO.Task? Read(Func<DO.Task, bool> filter)
     {
-        return DataSource.Tasks.FirstOrDefault(filter);
+        return DataSource.Tasks.FirstOrDefault(filter!);
     }
     /// <summary>
     /// this method creates a new task list, copy the whole old list to the new one and returns the new.
     /// </summary>
+    /// <param name="filter"> predicat that determine wich tasks we want to return</param>
     /// <returns>the new list </returns>
     public IEnumerable<DO.Task?> ReadAll(Func<DO.Task, bool>? filter)
     {
