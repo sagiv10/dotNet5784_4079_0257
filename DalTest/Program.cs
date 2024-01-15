@@ -14,7 +14,7 @@
         static readonly IDal s_dal = new DalList(); //the way we used the CRUD methods
 
         /// <summary>
-        /// the main function
+        /// the main functions
         /// </summary>
         /// <param name="typeChoice"></param>
         static void Main(string[] args)
