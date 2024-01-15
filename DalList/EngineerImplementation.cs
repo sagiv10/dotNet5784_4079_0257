@@ -58,18 +58,16 @@ internal class EngineerImplementation : IEngineer
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public Engineer? Read(int id)
+    public Engineer? Read(int requestedId)
     {
-        Engineer? returnedValue = DataSource.Config.FindEngineer(id);
-        if (returnedValue != null && returnedValue._isActive == true)//if the id is exist in the list and the founded engineer is active.
+        foreach (Engineer? engineer in DataSource.Engineers)
         {
-            return returnedValue;
+            if (engineer!._id == requestedId)
+            {
+                return engineer;
+            }
         }
-        else
-        {
-            return null;
-        }
-
+        return null;
     }
 
     /// <summary>

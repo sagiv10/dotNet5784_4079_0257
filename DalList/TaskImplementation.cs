@@ -40,11 +40,11 @@ internal class TaskImplementation : ITask
     /// </summary>
     /// <param name="id"> what task we want to print</param>
     /// <returns> returns the task we want to print</returns>
-    public DO.Task? Read(int id)
+    public DO.Task? Read(int requestedId)
     {
-        foreach (var task in DataSource.Tasks)
+        foreach (DO.Task? task in DataSource.Tasks)
         {
-            if (id == task!._id && task._isActive == true)//if the specific task has the right id and also active.
+            if (task!._id == requestedId)
             {
                 return task;
             }
