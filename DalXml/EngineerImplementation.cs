@@ -6,9 +6,7 @@ using DO;
 
 internal class EngineerImplementation : IEngineer
 {
-
     readonly string s_engineers_xml = "engineers";
-
     /// <summary>
     /// this method gets a new engineer and if he doesnt exist in the engineer xml file - add him. else throw an exception.
     /// </summary>

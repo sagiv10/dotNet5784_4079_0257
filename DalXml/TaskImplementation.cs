@@ -13,7 +13,7 @@ internal class TaskImplementation :ITask
     /// <returns></returns>
     public int Create(DO.Task item)
     {
-        int newId = XMLTools.GetAndIncreaseNextId(s_tasks_xml, "NextTaskId");
+        int newId = Config.NextTaskId;
         DO.Task newItem = item with { _id = newId };
         List<Task> ListToWorkWith = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);//get the list from the xml file to work with it
         ListToWorkWith.Add(newItem);
