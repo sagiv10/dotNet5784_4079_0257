@@ -44,7 +44,7 @@ internal class TaskImplementation : ITask
     {
         foreach (DO.Task? task in DataSource.Tasks)
         {
-            if (task!._id == requestedId)
+            if (task!._id == requestedId &&task!._isActive==true)
             {
                 return task;
             }
@@ -59,6 +59,7 @@ internal class TaskImplementation : ITask
     /// <returns> returns the task we want to print</returns
     public DO.Task? Read(Func<DO.Task, bool> filter)
     {
+        ////////////////////////////////////////////////////////////////////////////
         return DataSource.Tasks.FirstOrDefault(filter!);
     }
     /// <summary>
@@ -75,6 +76,7 @@ internal class TaskImplementation : ITask
         }
         else
         {
+            //////////////////////////////////////////////////////////
             IEnumerable<DO.Task?> newList = DataSource.Tasks.Where(item => filter(item!));
             return newList;
         }
