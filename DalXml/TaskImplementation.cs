@@ -28,7 +28,7 @@ internal class TaskImplementation :ITask
     public void Delete(int id)
     {
         List<Task> ListToWorkWith = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml); //get the list from the xml file to work with it
-        int indexToUpdate = ListToWorkWith.FindIndex(item => item._id == id);//if the task with the correct id exists-return his idx, else return -1.
+        int indexToUpdate = ListToWorkWith.FindIndex(item => item._id == id && item._isActive==true);//if the task with the correct id exists-return his idx, else return -1.
         if (indexToUpdate == -1)
             throw new DalXMLFileLoadCreateException($"Task with ID={id} does Not exist");
         DO.Task? NotActiveOne = ListToWorkWith[indexToUpdate]! with { _isActive = false };
@@ -46,7 +46,7 @@ internal class TaskImplementation :ITask
         List<Task> ListToWorkWith = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);//get the list from the xml file to work with it
         foreach (DO.Task? task in ListToWorkWith)
         {
-            if (task!._id == id && task!._isActive)
+            if (task!._id == id && task!._isActive==true)
             {
                 //XMLTools.SaveListToXMLSerializer<Task>(ListToWorkWith, s_tasks_xml); //save the changes we did in the list we got in the start
                 return task;
@@ -60,7 +60,7 @@ internal class TaskImplementation :ITask
     {
         List<Task> ListToWorkWith = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);//get the list from the xml file to work with it
         //XMLTools.SaveListToXMLSerializer<Task>(ListToWorkWith, s_tasks_xml); //save the changes we did in the list we got in the start
-        return ListToWorkWith.FirstOrDefault(item => filter!(item)&&item._isActive);
+        return ListToWorkWith.FirstOrDefault(item => filter!(item) && item._isActive == true);
     }
     /// <summary>
     /// this method creates a new task list, copy the whole old list to the new one and returns the new.
@@ -91,7 +91,7 @@ internal class TaskImplementation :ITask
     public void Update(DO.Task itemUpdated)
     {
         List<Task> ListToWorkWith = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);//get the list from the xml file to work with it
-        int indexToUpdate = ListToWorkWith.FindIndex(itemOfTheLoop => itemOfTheLoop._id == itemUpdated._id &&itemOfTheLoop._isActive);//if the task with the correct id exists-return his idx, else return -1.
+        int indexToUpdate = ListToWorkWith.FindIndex(itemOfTheLoop => itemOfTheLoop._id == itemUpdated._id &&itemOfTheLoop._isActive == true);//if the task with the correct id exists-return his idx, else return -1.
         if (indexToUpdate == -1)
             throw new DalXMLFileLoadCreateException($"Task with ID={itemUpdated._id} does Not exist");
         ListToWorkWith.RemoveAt(indexToUpdate);
