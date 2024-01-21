@@ -6,7 +6,7 @@ using System.Collections.Generic;
 internal class EngineerImplementation : IEngineer
 {
     /// <summary>
-    /// this method gets a new engineer and if he doesnt exist in the engineer list- add him. else throw.
+    /// this method gets a new engineer and if he doesnt exist in the engineer lists - add him and return his id. else throw an exception.
     /// </summary>
     /// <param name="item"> the new engineer we want to add</param>
     /// <returns>the id of the new engineer</returns>
@@ -62,7 +62,7 @@ internal class EngineerImplementation : IEngineer
     {
         foreach (Engineer? engineer in DataSource.Engineers)
         {
-            if (engineer!._id == requestedId)
+            if (engineer!._id == requestedId && engineer._isActive != false)
             {
                 return engineer;
             }
@@ -77,7 +77,7 @@ internal class EngineerImplementation : IEngineer
     /// <returns></returns>
     public DO.Engineer? Read(Func<DO.Engineer, bool> filter)
     {
-        return DataSource.Engineers.FirstOrDefault(filter!);
+        return DataSource.Engineers.FirstOrDefault(temp=> filter(temp!) && temp!._isActive==true);
     }
 
     /// <summary>
@@ -98,6 +98,7 @@ internal class EngineerImplementation : IEngineer
             return newList;
         }
     }
+
     /// <summary>
     /// this program gets a new engineer and removes the old engineer with the same id that in the list and gets the new one in. 
     /// </summary>
