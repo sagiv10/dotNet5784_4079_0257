@@ -97,4 +97,6 @@ internal class TaskImplementation : ITask
         DataSource.Tasks.RemoveAt(idxOfDeleted);
         DataSource.Tasks.Add(item);
     }
+    public void DeleteAll() { }
+
 }
