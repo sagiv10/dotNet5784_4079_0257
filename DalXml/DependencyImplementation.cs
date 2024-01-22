@@ -22,8 +22,8 @@ internal class DependencyImplementation : IDependency
         {
             XElement? idSon = xel.Element("_id"); //if the id field exists then idSon has it, if not it will be null
             if (idSon != null && int.Parse(idSon.Value) == requestedId)
-            {//the otherc parts of the program made the input that it will be converticle no int so we wont do try parse
-                return xel;
+            {//the other parts of the program made the input that it will be converticle no int so we wont do try parse
+                return xel; 
             }
         }
         return null;
@@ -56,7 +56,31 @@ internal class DependencyImplementation : IDependency
             else
             {
                 return new XElement("Dependency", item._id, item._dependentTask, item._dependsOnTask);
-
+            }
+        }
+    }
+    private static DO.Dependency CreateDependecyFromXElement(XElement Xele)
+    {
+        if (int.Parse(Xele.Element("_dependentTask").Value) == null)
+        {
+            if (int.Parse(Xele.Element("_dependsOnTask").Value) == null)
+            {
+                return new Dependency(int.Parse(Xele.Element("_id").Value));
+            }
+            else
+            {
+                return new Dependency(int.Parse(Xele.Element("_id").Value), int.Parse(Xele.Element("_dependsOnTask").Value));
+            }
+        }
+        else
+        {
+            if (int.Parse(Xele.Element("_dependsOnTask").Value) == null)
+            {
+                return new Dependency(int.Parse(Xele.Element("_id").Value), int.Parse(Xele.Element("_dependentTask").Value));
+            }
+            else
+            {
+                return new Dependency(int.Parse(Xele.Element("_id").Value), int.Parse(Xele.Element("_dependentTask").Value), int.Parse(Xele.Element("_dependsOnTask").Value));
             }
         }
     }
@@ -69,8 +93,17 @@ internal class DependencyImplementation : IDependency
     public int Create(Dependency item)
     {
         XElement root = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
-        XElement? ifExists = findXElement(root.Elements(), item._id);
-
+        XElement? ifExists = findXElement(root.Elements(), item._id);//if the item with the same id already exists-return it by ref, else return null.
+        if(ifExists != null)//if found another one with the same id so remove the first one 
+        {
+            ifExists.Remove();
+        }
+        int newId = Config.NextDependencyId;
+        DO.Dependency newItem= item with { _id = newId };
+        //get the new item into the xml file:
+        root.Add(newItem);
+        XMLTools.SaveListToXMLElement(root, s_dependencies_xml);
+        return newId;
     }
 
     /// <summary>
@@ -81,7 +114,7 @@ internal class DependencyImplementation : IDependency
     public void Delete(int id)
     {
         XElement root = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
-        XElement deletedDependency = findXElement(root.Elements(), id) ?? throw new DalNotFoundException($"Engineer with ID={id} does Not exist"); //find the XElement that need to be updated
+        XElement deletedDependency = findXElement(root.Elements(), id) ?? throw new DalNotFoundException($"Dependency with ID={id} does Not exist"); //find the XElement that need to be updated
         deletedDependency.Remove();
         XMLTools.SaveListToXMLElement(root, s_dependencies_xml);
     }
@@ -94,7 +127,11 @@ internal class DependencyImplementation : IDependency
     /// <returns>the requested id or null if there is not any Dependency with that id</returns>
     public Dependency? Read(int id)
     {
-        throw new NotImplementedException();
+        XElement root = XMLTools.LoadListFromXMLElement(s_dependencies_xml);//root is "ArrayOfDependencies"
+        XElement? ifExists = findXElement(root.Elements(), id)??throw new DalNotFoundException($"Dependency with ID={id} does Not exist");
+        //make this XElement (ifExists) into Dependency type:
+        Dependency depToReturn = CreateDependecyFromXElement(ifExists);
+        return depToReturn;
     }
 
     /// <summary>
@@ -104,7 +141,15 @@ internal class DependencyImplementation : IDependency
     /// <returns> the requested id or null if there is not any Dependency with that id</returns>
     public Dependency? Read(Func<Dependency, bool> filter)
     {
-        throw new NotImplementedException();
+        XElement root = XMLTools.LoadListFromXMLElement(s_dependencies_xml);//root is "ArrayOfDependencies
+        foreach (var xel in root.Elements())
+        {
+            if (filter(CreateDependecyFromXElement(xel)) || filter==null)
+            {
+                return CreateDependecyFromXElement(xel);
+            }
+        }
+        throw new DalNotFoundException($"Dependency that anwser this filter does Not exist");
     }
 
     /// <summary>
