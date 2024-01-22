@@ -125,4 +125,13 @@ internal class EngineerImplementation : IEngineer
         engineers[isExists] = item;
         XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml); //save the new list in the xml file
     }
+    /// <summary>
+    /// Delete all existing data from xml file to let us do a new initalize.
+    /// </summary>
+    public void DeleteAll()
+    {
+        List<Task> ListToWorkWith = XMLTools.LoadListFromXMLSerializer<Task>(s_engineers_xml);//get the list from the xml file to work with it
+        ListToWorkWith.Clear();
+        XMLTools.SaveListToXMLSerializer<Task>(ListToWorkWith, s_engineers_xml);//save the changes we did in the list we got in the start
+    }
 }

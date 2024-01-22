@@ -171,4 +171,13 @@ internal class DependencyImplementation : IDependency
         root.Add(newDependency);
         XMLTools.SaveListToXMLElement(root, s_dependencies_xml);
     }
+    /// <summary>
+    /// Delete all existing data from xml file to let us do a new initalize.
+    /// </summary>
+    public void DeleteAll()
+    {
+        List<Task> ListToWorkWith = XMLTools.LoadListFromXMLSerializer<Task>(s_dependencies_xml);//get the list from the xml file to work with it
+        ListToWorkWith.Clear();
+        XMLTools.SaveListToXMLSerializer<Task>(ListToWorkWith, s_dependencies_xml);//save the changes we did in the list we got in the start
+    }
 }

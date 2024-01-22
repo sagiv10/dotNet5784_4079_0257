@@ -11,7 +11,8 @@
 
     internal class Program
     {
-        static readonly IDal s_dal = new DalList(); //the way we used the CRUD methods
+        //static readonly IDal s_dal = new DalList(); //the way we used the CRUD methods
+        static readonly IDal s_dal=new DalXml(); //the way we used the CRUD methods through XML files.
 
         /// <summary>
         /// the main functions
@@ -21,13 +22,11 @@
         {
             try
             {
-                Initialization.Do(s_dal!); //init the list with starting data
-
+                //Initialization.Do(s_dal!); //init the list with starting data //stage2 
                 int choice = 1;
                 while (!(choice == 0))
                 {
-                    Console.WriteLine("Select an entity you want to check:\n0. exit from the menu.\n1. Engineer.\n2. Dependency.\n3. Task");
-                    
+                    Console.WriteLine("Select an entity you want to check:\n0. exit from the menu.\n1. Engineer.\n2. Dependency.\n3. Task.\n4. initalize the whole data.");
                     choice = CheckIntInput(int.TryParse(Console.ReadLine(), out choice), choice); //gets int from the user + validation
 
                     switch (choice)
@@ -40,6 +39,15 @@
                             break;
                         case 3:
                             EntityMenu("Task");
+                            break;
+                        case 4:
+                            Console.Write("Would you like to create Initial data? (Y/N)"); //stage 3
+                            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
+                            if (ans == "Y") //stage 3
+                            {
+
+                                Initialization.Do(s_dal); //stage 2
+                            }
                             break;
                         case 0: break;
                         default: break;
