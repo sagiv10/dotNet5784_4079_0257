@@ -1,8 +1,7 @@
 ﻿namespace Dal;
 using DalApi;
 using DO;
-
-
+using System.Xml.Linq;
 
 internal class EngineerImplementation : IEngineer
 {
@@ -130,8 +129,7 @@ internal class EngineerImplementation : IEngineer
     /// </summary>
     public void DeleteAll()
     {
-        List<Task> ListToWorkWith = XMLTools.LoadListFromXMLSerializer<Task>(s_engineers_xml);//get the list from the xml file to work with it
-        ListToWorkWith.Clear();
-        XMLTools.SaveListToXMLSerializer<Task>(ListToWorkWith, s_engineers_xml);//save the changes we did in the list we got in the start
+        XElement emptyRoot=new XElement("ArrayOfEngineers");//get the list from the xml file to work with it
+        XMLTools.SaveListToXMLElement(emptyRoot, s_engineers_xml);//save the changes we did in the list we got in the start
     }
 }
