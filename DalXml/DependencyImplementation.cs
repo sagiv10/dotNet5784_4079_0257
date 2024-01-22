@@ -15,7 +15,7 @@ internal class DependencyImplementation : IDependency
     /// </summary>
     /// <param name="elements"> the collection of XElements </param>
     /// <param name="requestedId"> the id to look for </param>
-    /// <returns> the XElement with this id by refference </returns>
+    /// <returns> the XElement with this id by reference </returns>
     private static XElement? findXElement(IEnumerable<XElement> elements, int requestedId) //helping method that gets an id and find in the XElement array the index of the id
     {
         foreach(var xel in elements)

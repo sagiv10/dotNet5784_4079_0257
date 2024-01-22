@@ -30,7 +30,6 @@ internal class EngineerImplementation : IEngineer
         XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml); //save the new list in the xml file
         return item._id;
     }
-
     /// <summary>
     /// this method set an engineer to not active if he exists(we can know his existence by given id), else throw an exeption.
     /// </summary>
