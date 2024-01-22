@@ -2,6 +2,7 @@
 namespace Dal;
 using DO;
 using System.Data.Common;
+using System.Xml.Linq;
 
 internal class TaskImplementation : ITask
 {
@@ -103,8 +104,7 @@ internal class TaskImplementation : ITask
     /// </summary>
     public void DeleteAll()
     {
-        List<Task> ListToWorkWith = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);//get the list from the xml file to work with it
-        ListToWorkWith.Clear();
-        XMLTools.SaveListToXMLSerializer<Task>(ListToWorkWith, s_tasks_xml);//save the changes we did in the list we got in the start
+        XElement emptyRoot = new XElement("ArrayOfEngineers");//get the list from the xml file to work with it
+        XMLTools.SaveListToXMLElement(emptyRoot, s_tasks_xml);//save the changes we did in the list we got in the start
     }
 }
