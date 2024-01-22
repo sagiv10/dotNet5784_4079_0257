@@ -134,7 +134,7 @@ internal class DependencyImplementation : IDependency
                 return CreateDependecyFromXElement(xel);
             }
         }
-        throw new DalNotFoundException($"Dependency that anwser this filter does Not exist");
+        return null;
     }
 
     /// <summary>
