@@ -165,7 +165,7 @@ internal class DependencyImplementation : IDependency
     public void Update(Dependency item)
     {
         XElement root = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
-        XElement oldDependency = findXElement(root.Elements(), item._id) ?? throw new DalNotFoundException($"Engineer with ID={item._id} does Not exist"); //find the XElement that need to be updated
+        XElement oldDependency = findXElement(root.Elements(), item._id) ?? throw new DalNotFoundException($"Dependency with ID={item._id} does Not exist"); //find the XElement that need to be updated
         XElement newDependency = createNullableXElement(item); //create the new XElement properly
         oldDependency.Remove();
         root.Add(newDependency);
