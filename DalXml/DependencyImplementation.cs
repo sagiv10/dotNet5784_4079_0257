@@ -40,22 +40,22 @@ internal class DependencyImplementation : IDependency
         {
             if (item._dependsOnTask == null)
             {
-                return new XElement("Dependency", item._id);
+                return new XElement("Dependency", new XElement("_id", item._id));
             }
             else
             {
-                return new XElement("Dependency", item._id, item._dependsOnTask);
+                return new XElement("Dependency", new XElement("_id", item._id), new XElement("_dependsOnTask", item._dependsOnTask));
             }
         }
         else
         {
             if (item._dependsOnTask == null)
             {
-                return new XElement("Dependency", item._id, item._dependentTask);
+                return new XElement("Dependency", new XElement("_id", item._id), new XElement("_dependentTask", item._dependentTask));
             }
             else
             {
-                return new XElement("Dependency", item._id, item._dependentTask, item._dependsOnTask);
+                return new XElement("Dependency", new XElement("_id", item._id), new XElement("_dependentTask", item._dependentTask), new XElement("_dependsOnTask", item._dependsOnTask));
 
             }
         }
