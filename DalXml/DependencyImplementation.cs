@@ -23,20 +23,9 @@ internal class DependencyImplementation : IDependency
         return null;
     }
 
-    private static int? getSomeId(XElement element, string typeOfId) //helping method that gets an XElement of Depandency and returns his id if he exists or null else.
-    {
-        XElement? returnedId = element.Element(typeOfId); //if the id field exists then returnedId has it, if not it will be null
-        int isConvertible;
-        if (returnedId != null && int.TryParse(returnedId.Value,out isConvertible)==true)
-        {
-            return int.Parse(returnedId.Value);
-        }
-        return null;
-    }
-
     public int Create(Dependency item)
     {
-        XElement root = XElement.Load(s_dependencies_xml);
+        XElement root = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
         XElement? ifExists = findXElement(root.Elements(), item._id);
 
     }
@@ -58,12 +47,12 @@ internal class DependencyImplementation : IDependency
 
     public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
     {
-        XElement root = XElement.Load(s_dependencies_xml);
+        XElement root = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
         return from XElement item in root.Elements()
                select new Dependency(
-                   (int)getSomeId(item, "_id")!,
-                   getSomeId(item, "_dependentTask"),
-                   getSomeId(item, "_dependsOnTask")
+                   (int)XMLTools.ToIntNullable(item, "_id")!,
+                   XMLTools.ToIntNullable(item, "_dependentTask"),
+                   XMLTools.ToIntNullable(item, "_dependsOnTask")
                    );
     }
 
