@@ -111,7 +111,9 @@ internal class DependencyImplementation : IDependency
     public Dependency? Read(int id)
     {
         XElement root = XMLTools.LoadListFromXMLElement(s_dependencies_xml);//root is "ArrayOfDependencies"
-        XElement? ifExists = findXElement(root.Elements(), id) ?? throw new DalNotFoundException($"Dependency with ID={id} does Not exist");
+        XElement? ifExists = findXElement(root.Elements(), id);
+        if(ifExists==null)
+            return null;
         //make this XElement (ifExists) into Dependency type:
         Dependency depToReturn = CreateDependecyFromXElement(ifExists);
         return depToReturn;
