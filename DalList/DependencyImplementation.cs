@@ -52,11 +52,10 @@ internal class DependencyImplementation : IDependency
     }
 
     /// <summary>
-    /// this method returns the dependency with the id it got.
+    /// this method returns the dependency that answering the filter requirments.
     /// </summary>
-    /// <param name="filter"> predicat that determine wich dependency we want to print</param>
-    /// <returns></returns>
-    /// 
+    /// <param name="filter"> predicat that determine wich dependency we want to return</param>
+    /// <returns> the requested id or null if there is not any Dependency with that id</returns>
     public DO.Dependency? Read(Func<DO.Dependency, bool> filter)
     {
         return DataSource.Dependencies.FirstOrDefault(filter!);
@@ -82,9 +81,9 @@ internal class DependencyImplementation : IDependency
     }
 
     /// <summary>
-    /// this method gets a new dependency and makes the list from now and on the point on the new dependency and not on the old dependency that already was in the list with the same id as the new we got.
+    /// this method gets a new dependency and update the lists with the updated value of one dependency.
     /// </summary>
-    /// <param name="item">the new dependency</param>
+    /// <param name="item">the new dependency to update</param>
     /// <exception cref="DalNotFoundException"></exception>
     public void Update(Dependency item)
     {
