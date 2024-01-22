@@ -60,30 +60,18 @@ internal class DependencyImplementation : IDependency
             }
         }
     }
+
+    /// <summary>
+    /// helping method that creates new Dependency from an XElement
+    /// </summary>
+    /// <param name="Xele"> the XElement </param>
+    /// <returns> new Dependency </returns>
     private static DO.Dependency CreateDependecyFromXElement(XElement Xele)
     {
-        if (int.Parse(Xele.Element("_dependentTask").Value) == null)
-        {
-            if (int.Parse(Xele.Element("_dependsOnTask").Value) == null)
-            {
-                return new Dependency(int.Parse(Xele.Element("_id").Value));
-            }
-            else
-            {
-                return new Dependency(int.Parse(Xele.Element("_id").Value), int.Parse(Xele.Element("_dependsOnTask").Value));
-            }
-        }
-        else
-        {
-            if (int.Parse(Xele.Element("_dependsOnTask").Value) == null)
-            {
-                return new Dependency(int.Parse(Xele.Element("_id").Value), int.Parse(Xele.Element("_dependentTask").Value));
-            }
-            else
-            {
-                return new Dependency(int.Parse(Xele.Element("_id").Value), int.Parse(Xele.Element("_dependentTask").Value), int.Parse(Xele.Element("_dependsOnTask").Value));
-            }
-        }
+        return new Dependency(
+                   (int)XMLTools.ToIntNullable(Xele, "_id")!,
+                   XMLTools.ToIntNullable(Xele, "_dependentTask"),
+                   XMLTools.ToIntNullable(Xele, "_dependsOnTask"));
     }
 
     /// <summary>
@@ -94,15 +82,10 @@ internal class DependencyImplementation : IDependency
     public int Create(Dependency item)
     {
         XElement root = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
-        XElement? ifExists = findXElement(root.Elements(), item._id);//if the item with the same id already exists-return it by ref, else return null.
-        if(ifExists != null)//if found another one with the same id so remove the first one 
-        {
-            ifExists.Remove();
-        }
         int newId = Config.NextDependencyId;
         DO.Dependency newItem= item with { _id = newId };
         //get the new item into the xml file:
-        root.Add(newItem);
+        root.Add(createNullableXElement(newItem));
         XMLTools.SaveListToXMLElement(root, s_dependencies_xml);
         return newId;
     }
@@ -120,7 +103,6 @@ internal class DependencyImplementation : IDependency
         XMLTools.SaveListToXMLElement(root, s_dependencies_xml);
     }
 
-
     /// <summary>
     /// this method returns the dependency with the id it got.
     /// </summary>
@@ -129,7 +111,7 @@ internal class DependencyImplementation : IDependency
     public Dependency? Read(int id)
     {
         XElement root = XMLTools.LoadListFromXMLElement(s_dependencies_xml);//root is "ArrayOfDependencies"
-        XElement? ifExists = findXElement(root.Elements(), id)??throw new DalNotFoundException($"Dependency with ID={id} does Not exist");
+        XElement? ifExists = findXElement(root.Elements(), id) ?? throw new DalNotFoundException($"Dependency with ID={id} does Not exist");
         //make this XElement (ifExists) into Dependency type:
         Dependency depToReturn = CreateDependecyFromXElement(ifExists);
         return depToReturn;
@@ -145,7 +127,7 @@ internal class DependencyImplementation : IDependency
         XElement root = XMLTools.LoadListFromXMLElement(s_dependencies_xml);//root is "ArrayOfDependencies
         foreach (var xel in root.Elements())
         {
-            if (filter(CreateDependecyFromXElement(xel)) || filter==null)
+            if (filter == null || filter(CreateDependecyFromXElement(xel)))
             {
                 return CreateDependecyFromXElement(xel);
             }
