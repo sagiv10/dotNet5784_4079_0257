@@ -134,7 +134,7 @@ internal class DependencyImplementation : IDependency
                 return CreateDependecyFromXElement(xel);
             }
         }
-        throw new DalNotFoundException($"Dependency that anwser this filter does Not exist");
+        return null;
     }
 
     /// <summary>
@@ -146,14 +146,8 @@ internal class DependencyImplementation : IDependency
     {
         XElement root = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
         return from XElement item in root.Elements() //convert the elements collection into a INumerable of Dependencies.
-               where filter==null || filter(new Dependency( 
-                   (int)XMLTools.ToIntNullable(item, "_id")!,
-                   XMLTools.ToIntNullable(item, "_dependentTask"),
-                   XMLTools.ToIntNullable(item, "_dependsOnTask"))) //if filter is null then we dont need to do anything, if he is not then build an dependency and activate the filter on it
-               select new Dependency(
-                   (int)XMLTools.ToIntNullable(item, "_id")!,
-                   XMLTools.ToIntNullable(item, "_dependentTask"),
-                   XMLTools.ToIntNullable(item, "_dependsOnTask") //create the Dependency
+               where filter==null || filter(CreateDependecyFromXElement(item)) //if filter is null then we dont need to do anything, if he is not then build an dependency and activate the filter on it
+               select (CreateDependecyFromXElement(item) //create the Dependency
                    );
     }
 
