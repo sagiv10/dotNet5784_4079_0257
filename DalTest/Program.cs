@@ -126,37 +126,35 @@
                     string newDescription = Console.ReadLine() ?? oldTask._description; //if we got a correct new info-change to what the user wrote . else dont.
 
                     int intIsMilestone;
-
                     intIsMilestone = (int.TryParse(Console.ReadLine(), out intIsMilestone)) ? intIsMilestone : ((oldTask._isMilestone!) ? 1 : 0); //if we got a correct new info-change to what the user wrote . else dont.
-
                     bool newIsMilestone = intIsMilestone == 1 ? true : false;
 
                     DateTime newCreatedTime;
                     newCreatedTime = DateTime.TryParse(Console.ReadLine(), out newCreatedTime) ? newCreatedTime : (DateTime)oldTask._createdAtDate!; //if we got a correct new info-change to what the user wrote . else dont.
 
-                    DateTime newScheduledDate;
-                    newScheduledDate = DateTime.TryParse(Console.ReadLine(), out newScheduledDate) ? newScheduledDate : (DateTime)oldTask._scheduledDate!; //if we got a correct new info-change to what the user wrote . else dont.
+                    DateTime? newScheduledDate = getNullableDateTimeInput();
+                    newScheduledDate = (newScheduledDate != null) ? newScheduledDate : (DateTime?)oldTask._scheduledDate; //if we got a correct new info-change to what the user wrote . else dont.
 
-                    DateTime newStartedDate;
-                    newStartedDate = DateTime.TryParse(Console.ReadLine(), out newStartedDate) ? newStartedDate : (DateTime)oldTask._startDate!; //if we got a correct new info-change to what the user wrote . else dont.
+                    DateTime? newStartedDate = getNullableDateTimeInput();
+                    newStartedDate = (newStartedDate != null) ? newStartedDate : (DateTime?)oldTask._startDate; //if we got a correct new info-change to what the user wrote . else dont.
 
-                    DateTime newDeadlineTime;
-                    newDeadlineTime = DateTime.TryParse(Console.ReadLine(), out newDeadlineTime) ? newDeadlineTime : (DateTime)oldTask._deadlineDate!; //if we got a correct new info-change to what the user wrote . else dont.
+                    DateTime? newDeadlineTime = getNullableDateTimeInput();
+                    newDeadlineTime = (newDeadlineTime != null) ? newDeadlineTime : (DateTime?)oldTask._deadlineDate; //if we got a correct new info-change to what the user wrote . else dont.
 
-                    DateTime newCompletedDate;
-                    newCompletedDate = DateTime.TryParse(Console.ReadLine(), out newCompletedDate) ? newCompletedDate : (DateTime)oldTask._completeDate!; //if we got a correct new info-change to what the user wrote . else dont.
+                    DateTime? newCompletedDate = getNullableDateTimeInput();
+                    newCompletedDate = (newCompletedDate != null) ? newCompletedDate : (DateTime?)oldTask._completeDate; //if we got a correct new info-change to what the user wrote . else dont.
 
-                    string newDeliverables = Console.ReadLine() ?? oldTask._deliverables!;
+                    string? newDeliverables = Console.ReadLine() ?? oldTask._deliverables!;
 
-                    string newRemarks = Console.ReadLine() ?? oldTask._remarks!;
+                    string? newRemarks = Console.ReadLine() ?? oldTask._remarks!;
 
                     int newComplexityLevel;
                     newComplexityLevel = (int.TryParse(Console.ReadLine(), out newComplexityLevel) && newComplexityLevel >= 0 && newComplexityLevel < 5) ? newComplexityLevel : (int)oldTask._complexity;  //if we got a correct new info-change to what the user wrote . else dont.
 
-                    int newEngineerId;
-                    newEngineerId = (int.TryParse(Console.ReadLine(), out newEngineerId)) ? newEngineerId : (int)oldTask._engineerId!; //if we got a correct new info-change to what the user wrote . else dont.
+                    int? newEngineerId = getNullableIntInput();
+                    newEngineerId = (newEngineerId != null) ? newEngineerId : (int)oldTask._engineerId!; //if we got a correct new info-change to what the user wrote . else dont.
 
-                    DO.Task updatedTask = new DO.Task(idToUpdate, newCreatedTime, newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, newScheduledDate - newCreatedTime, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);//create a new task with the given details
+                    DO.Task updatedTask = new DO.Task(idToUpdate, newCreatedTime, newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, (newScheduledDate!=null) ? newScheduledDate - newCreatedTime : null, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);//create a new task with the given details
 
                     s_dal!.Task!.Update(updatedTask);//update the new task
                 }
@@ -238,13 +236,13 @@
 
                     Console.WriteLine("Enter the following parameters: DependentTask and DependsOnTask");
 
-                    int dependentTask;
+                    int? dependentTask = getNullableIntInput();
 
-                    dependentTask = (int.TryParse(Console.ReadLine(), out dependentTask)) ? dependentTask : (int)oldDependency._dependentTask!;//sends to another method that gets the dependentTask from the user and  checks if the input is correct.
+                    dependentTask = (dependentTask != null) ? dependentTask : (int)oldDependency._dependentTask!;//sends to another method that gets the dependentTask from the user and  checks if the input is correct.
 
-                    int dependsOnTask;
+                    int? dependsOnTask = getNullableIntInput();
 
-                    dependsOnTask = (int.TryParse(Console.ReadLine(), out dependsOnTask)) ? dependsOnTask : (int)oldDependency._dependsOnTask!;//sends to another method that gets the dependsOnTask from the user and  checks if the input is correct.
+                    dependsOnTask = (dependsOnTask != null) ? dependsOnTask : (int)oldDependency._dependsOnTask!;//sends to another method that gets the dependsOnTask from the user and  checks if the input is correct.
 
                     DO.Dependency updatedDependency = new DO.Dependency(idToUpdate, dependentTask, dependsOnTask);//create a new dependency with the given details
 
@@ -654,7 +652,44 @@
             DO.Dependency newDependency = new DO.Dependency(0,dependentTask, dependsOnTask);
             return newDependency;
         }
-        
+
+        /// <summary>
+        /// helping method that gets an DateTime from the user, if the user entered null then it return null and if the user entered wrong input then request another input.         /// </summary>
+        /// <returns> new nullanle DateTime from the user </returns>
+        private static DateTime? getNullableDateTimeInput()
+        {
+            string input = Console.ReadLine();
+            if(input == "")
+            {
+                return null;
+            }
+            else
+            {
+                DateTime result;
+                result = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out result), result);
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// helping method that gets an int from the user, if the user entered null then it return null and if the user entered wrong input then request another input.  
+        /// </summary>
+        /// <returns> new nullanle DateTime from the user </returns>
+        private static int? getNullableIntInput()
+        {
+            string input = Console.ReadLine();
+            if (input == "")
+            {
+                return null;
+            }
+            else
+            {
+                int result;
+                result = CheckIntInput(int.TryParse(Console.ReadLine(), out result), result);
+                return result;
+            }
+        }
+
     }
 }
 

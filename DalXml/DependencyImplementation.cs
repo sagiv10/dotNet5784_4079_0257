@@ -170,8 +170,7 @@ internal class DependencyImplementation : IDependency
     /// </summary>
     public void DeleteAll()
     {
-        List<Task> ListToWorkWith = XMLTools.LoadListFromXMLSerializer<Task>(s_dependencies_xml);//get the list from the xml file to work with it
-        ListToWorkWith.Clear();
-        XMLTools.SaveListToXMLSerializer<Task>(ListToWorkWith, s_dependencies_xml);//save the changes we did in the list we got in the start
+        XElement emptyRoot = new XElement("ArrayOfDependency");//get the list from the xml file to work with it
+        XMLTools.SaveListToXMLElement(emptyRoot, s_dependencies_xml);//save the changes we did in the list we got in the start
     }
 }
