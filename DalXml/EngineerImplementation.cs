@@ -60,10 +60,10 @@ internal class EngineerImplementation : IEngineer
         if (isExists != -1 && engineers[isExists]._isActive == true)
         {
             //XMLTools.SaveListToXMLSerializer(engineers,   s_engineers_xml); //save the new list in the xml file
-            return null;
+            return engineers[isExists];
         }
         //XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml); //save the new list in the xml file
-        return engineers[isExists];
+        return null;
     }
 
     /// <summary>

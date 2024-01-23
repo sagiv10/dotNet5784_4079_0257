@@ -24,7 +24,7 @@ public static class Initialization
         };
         for (int i = 0; i < NamesOfEngineers.Length; i++)
         {
-            Engineer newEngineer = new Engineer(s_rand.Next(200000000, 400000001), s_rand.Next(10000, 40001) + (((double)s_rand.Next(100)) / 100), NamesOfEngineers[i] + "@gmail.com", NamesOfEngineers[i], _arrOfCmplx[i], true);
+            Engineer newEngineer = new Engineer(s_rand.Next(200000000, 400000001), s_rand.Next(10000, 40001) + (((double)s_rand.Next(100)) / 100), NamesOfEngineers[i].ToLower() + "@gmail.com", NamesOfEngineers[i], _arrOfCmplx[i], true);
             try
             {
                 s_dal!.Engineer.Create(newEngineer);//throw if id we wrote in the create method already exist.
