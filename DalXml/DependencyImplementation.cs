@@ -170,7 +170,7 @@ internal class DependencyImplementation : IDependency
     /// </summary>
     public void DeleteAll()
     {
-        XElement emptyRoot = new XElement("ArrayOfEngineers");//get the list from the xml file to work with it
+        XElement emptyRoot = new XElement("ArrayOfDependency");//get the list from the xml file to work with it
         XMLTools.SaveListToXMLElement(emptyRoot, s_dependencies_xml);//save the changes we did in the list we got in the start
     }
 }

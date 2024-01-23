@@ -128,7 +128,7 @@ internal class EngineerImplementation : IEngineer
     /// </summary>
     public void DeleteAll()
     {
-        XElement emptyRoot=new XElement("ArrayOfEngineers");//get the list from the xml file to work with it
+        XElement emptyRoot=new XElement("ArrayOfEngineer");//get the list from the xml file to work with it
         XMLTools.SaveListToXMLElement(emptyRoot, s_engineers_xml);//save the changes we did in the list we got in the start
     }
 }
