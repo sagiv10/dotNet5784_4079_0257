@@ -658,7 +658,7 @@
         /// <returns> new nullanle DateTime from the user </returns>
         private static DateTime? getNullableDateTimeInput()
         {
-            string input = Console.ReadLine();
+            string input = Console.ReadLine()!;
             if(input == "")
             {
                 return null;
@@ -677,7 +677,7 @@
         /// <returns> new nullanle DateTime from the user </returns>
         private static int? getNullableIntInput()
         {
-            string input = Console.ReadLine();
+            string input = Console.ReadLine()!;
             if (input == "")
             {
                 return null;

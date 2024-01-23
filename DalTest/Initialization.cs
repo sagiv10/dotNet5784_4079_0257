@@ -1,7 +1,9 @@
-﻿
-namespace DalTest;
+﻿namespace DalTest;
 using DalApi;
 using DO;
+using Dal;
+using System.Xml.Linq;
+
 
 public static class Initialization
 {
@@ -164,11 +166,13 @@ public static class Initialization
     public static void Do(IDal dal)
     {
         s_dal = dal ?? throw new NullReferenceException("DAL can not be null!");
-        s_dal.Engineer.DeleteAll();
-        s_dal.Task.DeleteAll();
-        s_dal.Dependency.DeleteAll();
-        createEngineer();
-        createTask();
-        createDependency();
+        XElement newNumbers = new XElement("config", new XElement("NextDependencyId", 0), new XElement("NextTaskId", 0));
+        XMLTools.SaveListToXMLElement(newNumbers, "data-config");//save new running numberwhen they equal to 0 now
+        s_dal.Engineer.DeleteAll(); //reset the engineer xml file
+        s_dal.Task.DeleteAll(); //reset the task xml file
+        s_dal.Dependency.DeleteAll(); //reset the dependency xml file
+        createEngineer(); //create  the new engineers
+        createTask(); //create  the new tasks
+        createDependency(); //create  the new dependencies
     }   
 }
