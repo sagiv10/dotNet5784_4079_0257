@@ -166,7 +166,7 @@ public static class Initialization
     public static void Do(IDal dal)
     {
         s_dal = dal ?? throw new NullReferenceException("DAL can not be null!");
-        XElement newNumbers = new XElement("config", new XElement("NextDependencyId", 0), new XElement("NextTaskId", 0));
+        XElement newNumbers = new XElement("config", new XElement("NextDependencyId", 1), new XElement("NextTaskId", 1));
         XMLTools.SaveListToXMLElement(newNumbers, "data-config");//save new running numberwhen they equal to 0 now
         s_dal.Engineer.DeleteAll(); //reset the engineer xml file
         s_dal.Task.DeleteAll(); //reset the task xml file
