@@ -5,6 +5,9 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
+ /// <summary>
+ /// helping class for the xml files access methods
+ /// </summary>
 public static class XMLTools
 {
     const string s_xml_dir = @"..\xml\";
