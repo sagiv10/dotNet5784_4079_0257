@@ -37,6 +37,12 @@ public record Task
 )
 {
     public Task() : this(0,DateTime.Now,false) { }
-
-
+    public bool ShouldSerialize_scheduledDate() { return _scheduledDate.HasValue; }
+    public bool ShouldSerialize_startDate() { return _startDate.HasValue; }
+    public bool ShouldSerialize_requiredEffortTime() { return _requiredEffortTime.HasValue; }
+    public bool ShouldSerialize_deadlineDate() { return _deadlineDate.HasValue; }
+    public bool ShouldSerialize_completeDate() { return _completeDate.HasValue; }
+    public bool ShouldSerialize_deliverables() { return !string.IsNullOrEmpty(_deliverables); }
+    public bool ShouldSerialize_remarks() { return !string.IsNullOrEmpty(_remarks); }
+    public bool ShouldSerialize_engineerId() { return _engineerId.HasValue; }
 }
