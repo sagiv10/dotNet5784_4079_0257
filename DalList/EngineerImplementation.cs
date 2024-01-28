@@ -114,7 +114,7 @@ internal class EngineerImplementation : IEngineer
         int theIndex = DataSource.Config.FindIndexEngineer(item._id);
         DataSource.Engineers[theIndex] = item;
     }
-    public void DeleteAll() { }
+    public void DeleteAll() { DataSource.Engineers.Clear(); }
 
 }
 

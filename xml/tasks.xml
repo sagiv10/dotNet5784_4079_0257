@@ -2,288 +2,288 @@
 <ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Task>
     <_id>1</_id>
-    <_createdAtDate>2024-01-24T17:13:49.5524369+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.5658796+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Theoretical analysis of the engine</_alias>
     <_description>Conducting a detailed examination of the theoretical principles underlying the design and functionality of the rocket's propulsion system to ensure optimal performance and efficiency.</_description>
-    <_scheduledDate>2025-06-24T17:13:49.5524272+03:00</_scheduledDate>
-    <_requiredEffortTime>P516DT23H59M59.9999907S</_requiredEffortTime>
-    <_deadlineDate>2025-07-08T17:13:49.5524272+03:00</_deadlineDate>
+    <_scheduledDate>2025-04-28T22:39:31.5658454+03:00</_scheduledDate>
+    <_requiredEffortTime>P455DT23H59M59.9999663S</_requiredEffortTime>
+    <_deadlineDate>2025-05-12T22:39:31.5658454+03:00</_deadlineDate>
     <_complexity>Beginner</_complexity>
-    <_engineerId>244817447</_engineerId>
+    <_engineerId>270830413</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>2</_id>
-    <_createdAtDate>2024-01-24T17:13:49.5571632+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.5994294+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Theoretical analysis of aerodynamics</_alias>
     <_description>Evaluating the theoretical aspects of airflow and forces acting on the rocket to design a streamlined shape that minimizes air resistance and enhances stability during flight.</_description>
-    <_scheduledDate>2025-06-24T17:13:49.5571535+03:00</_scheduledDate>
-    <_requiredEffortTime>P516DT23H59M59.9999906S</_requiredEffortTime>
-    <_deadlineDate>2025-07-08T17:13:49.5571535+03:00</_deadlineDate>
+    <_scheduledDate>2025-07-28T22:39:31.5994242+03:00</_scheduledDate>
+    <_requiredEffortTime>P546DT23H59M59.999995S</_requiredEffortTime>
+    <_deadlineDate>2025-08-11T22:39:31.5994242+03:00</_deadlineDate>
     <_complexity>BetterBeginner</_complexity>
-    <_engineerId>247436596</_engineerId>
+    <_engineerId>306912650</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>3</_id>
-    <_createdAtDate>2024-01-24T17:13:49.5738171+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.618952+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Theoretical analysis of the structure</_alias>
     <_description>Examining the theoretical foundations of the rocket's structural design to ensure it can withstand the stresses and forces experienced during launch and flight.</_description>
-    <_scheduledDate>2025-06-24T17:13:49.5738124+03:00</_scheduledDate>
-    <_requiredEffortTime>P516DT23H59M59.9999955S</_requiredEffortTime>
-    <_deadlineDate>2025-07-08T17:13:49.5738124+03:00</_deadlineDate>
+    <_scheduledDate>2024-11-28T22:39:31.618949+02:00</_scheduledDate>
+    <_requiredEffortTime>P304DT23H59M59.9999974S</_requiredEffortTime>
+    <_deadlineDate>2024-12-12T22:39:31.618949+02:00</_deadlineDate>
     <_complexity>Advanced</_complexity>
-    <_engineerId>217743210</_engineerId>
+    <_engineerId>290322920</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>4</_id>
-    <_createdAtDate>2024-01-24T17:13:49.5896984+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.7238814+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Building a theoretical skeleton of the engine</_alias>
     <_description>Developing a preliminary conceptual framework for the rocket's propulsion system to guide the subsequent engineering and construction phases.</_description>
-    <_scheduledDate>2026-03-24T17:13:49.589692+02:00</_scheduledDate>
-    <_requiredEffortTime>P789DT23H59M59.999994S</_requiredEffortTime>
-    <_deadlineDate>2026-04-07T17:13:49.589692+03:00</_deadlineDate>
+    <_scheduledDate>2025-02-28T22:39:31.723875+02:00</_scheduledDate>
+    <_requiredEffortTime>P396DT23H59M59.9999939S</_requiredEffortTime>
+    <_deadlineDate>2025-03-14T22:39:31.723875+02:00</_deadlineDate>
     <_complexity>Expert</_complexity>
-    <_engineerId>269783168</_engineerId>
+    <_engineerId>319747038</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>5</_id>
-    <_createdAtDate>2024-01-24T17:13:49.6062758+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.7618607+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Building a general theoretical skeleton</_alias>
     <_description>Creating an overarching conceptual framework that outlines the fundamental elements and connections within the entire rocket design.</_description>
-    <_scheduledDate>2024-12-24T17:13:49.6062694+02:00</_scheduledDate>
-    <_requiredEffortTime>P334DT23H59M59.999994S</_requiredEffortTime>
-    <_deadlineDate>2025-01-07T17:13:49.6062694+02:00</_deadlineDate>
+    <_scheduledDate>2024-05-28T22:39:31.7618559+03:00</_scheduledDate>
+    <_requiredEffortTime>P120DT23H59M59.9999954S</_requiredEffortTime>
+    <_deadlineDate>2024-06-11T22:39:31.7618559+03:00</_deadlineDate>
     <_complexity>Master</_complexity>
-    <_engineerId>356949338</_engineerId>
+    <_engineerId>376257745</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>6</_id>
-    <_createdAtDate>2024-01-24T17:13:49.6217209+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.7759967+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Finding suitable components</_alias>
     <_description>Identifying and selecting appropriate materials and parts required for the construction of the rocket, taking into account factors such as durability, weight, and compatibility.</_description>
-    <_scheduledDate>2024-02-24T17:13:49.621716+02:00</_scheduledDate>
-    <_requiredEffortTime>P30DT23H59M59.9999953S</_requiredEffortTime>
-    <_deadlineDate>2024-03-09T17:13:49.621716+02:00</_deadlineDate>
+    <_scheduledDate>2025-05-28T22:39:31.7759917+03:00</_scheduledDate>
+    <_requiredEffortTime>P485DT23H59M59.9999953S</_requiredEffortTime>
+    <_deadlineDate>2025-06-11T22:39:31.7759917+03:00</_deadlineDate>
     <_complexity>Beginner</_complexity>
-    <_engineerId>244817447</_engineerId>
+    <_engineerId>270830413</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>7</_id>
-    <_createdAtDate>2024-01-24T17:13:49.638876+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.7892458+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Component cost calculation</_alias>
     <_description>Estimating the financial investment required for acquiring all the necessary components for the rocket, considering factors such as manufacturing, transportation, and assembly costs.</_description>
-    <_scheduledDate>2025-02-24T17:13:49.63887+02:00</_scheduledDate>
-    <_requiredEffortTime>P396DT23H59M59.9999942S</_requiredEffortTime>
-    <_deadlineDate>2025-03-10T17:13:49.63887+02:00</_deadlineDate>
+    <_scheduledDate>2025-10-28T22:39:31.7892413+02:00</_scheduledDate>
+    <_requiredEffortTime>P638DT23H59M59.9999958S</_requiredEffortTime>
+    <_deadlineDate>2025-11-11T22:39:31.7892413+02:00</_deadlineDate>
     <_complexity>BetterBeginner</_complexity>
-    <_engineerId>247436596</_engineerId>
+    <_engineerId>306912650</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>8</_id>
-    <_createdAtDate>2024-01-24T17:13:49.6550988+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.8021238+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Ordering components</_alias>
     <_description>Initiating the procurement process to acquire the identified components and materials, ensuring timely delivery for the construction phase.</_description>
-    <_scheduledDate>2026-04-24T17:13:49.6550919+03:00</_scheduledDate>
-    <_requiredEffortTime>P820DT23H59M59.9999935S</_requiredEffortTime>
-    <_deadlineDate>2026-05-08T17:13:49.6550919+03:00</_deadlineDate>
+    <_scheduledDate>2025-10-28T22:39:31.8021205+02:00</_scheduledDate>
+    <_requiredEffortTime>P638DT23H59M59.9999971S</_requiredEffortTime>
+    <_deadlineDate>2025-11-11T22:39:31.8021205+02:00</_deadlineDate>
     <_complexity>Advanced</_complexity>
-    <_engineerId>217743210</_engineerId>
+    <_engineerId>290322920</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>9</_id>
-    <_createdAtDate>2024-01-24T17:13:49.6720604+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.8135848+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Construction of a warhead</_alias>
     <_description>Assembling the explosive payload component of the rocket, ensuring precision and safety in handling and integration.</_description>
-    <_scheduledDate>2025-06-24T17:13:49.6720532+03:00</_scheduledDate>
-    <_requiredEffortTime>P516DT23H59M59.9999932S</_requiredEffortTime>
-    <_deadlineDate>2025-07-08T17:13:49.6720532+03:00</_deadlineDate>
+    <_scheduledDate>2026-01-28T22:39:31.8135801+02:00</_scheduledDate>
+    <_requiredEffortTime>P730DT23H59M59.9999955S</_requiredEffortTime>
+    <_deadlineDate>2026-02-11T22:39:31.8135801+02:00</_deadlineDate>
     <_complexity>Expert</_complexity>
-    <_engineerId>269783168</_engineerId>
+    <_engineerId>319747038</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>10</_id>
-    <_createdAtDate>2024-01-24T17:13:49.6883226+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.8249119+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Construction of an exoskeleton</_alias>
     <_description>Building the outer protective structure of the rocket, providing support and shielding for internal components during launch and flight.</_description>
-    <_scheduledDate>2024-03-24T17:13:49.6883185+02:00</_scheduledDate>
-    <_requiredEffortTime>P59DT23H59M59.9999961S</_requiredEffortTime>
-    <_deadlineDate>2024-04-07T17:13:49.6883185+03:00</_deadlineDate>
+    <_scheduledDate>2025-02-28T22:39:31.8249087+02:00</_scheduledDate>
+    <_requiredEffortTime>P396DT23H59M59.9999977S</_requiredEffortTime>
+    <_deadlineDate>2025-03-14T22:39:31.8249087+02:00</_deadlineDate>
     <_complexity>Master</_complexity>
-    <_engineerId>356949338</_engineerId>
+    <_engineerId>376257745</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>11</_id>
-    <_createdAtDate>2024-01-24T17:13:49.7050728+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.837268+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Engine construction</_alias>
     <_description>Physically assembling and integrating the propulsion system components to create a functional rocket engine.</_description>
-    <_scheduledDate>2026-02-24T17:13:49.7050683+02:00</_scheduledDate>
-    <_requiredEffortTime>P761DT23H59M59.9999957S</_requiredEffortTime>
-    <_deadlineDate>2026-03-10T17:13:49.7050683+02:00</_deadlineDate>
+    <_scheduledDate>2025-05-28T22:39:31.8372626+03:00</_scheduledDate>
+    <_requiredEffortTime>P485DT23H59M59.9999948S</_requiredEffortTime>
+    <_deadlineDate>2025-06-11T22:39:31.8372626+03:00</_deadlineDate>
     <_complexity>Beginner</_complexity>
-    <_engineerId>244817447</_engineerId>
+    <_engineerId>270830413</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>12</_id>
-    <_createdAtDate>2024-01-24T17:13:49.7209905+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.8516046+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Construction of a fuel tank</_alias>
     <_description>Building the container that holds the rocket's fuel, ensuring proper storage, stability, and controlled release during launch.</_description>
-    <_scheduledDate>2026-05-24T17:13:49.720984+03:00</_scheduledDate>
-    <_requiredEffortTime>P850DT23H59M59.9999938S</_requiredEffortTime>
-    <_deadlineDate>2026-06-07T17:13:49.720984+03:00</_deadlineDate>
+    <_scheduledDate>2024-01-28T22:39:31.8516005+02:00</_scheduledDate>
+    <_requiredEffortTime>-PT0.0000036S</_requiredEffortTime>
+    <_deadlineDate>2024-02-11T22:39:31.8516005+02:00</_deadlineDate>
     <_complexity>BetterBeginner</_complexity>
-    <_engineerId>247436596</_engineerId>
+    <_engineerId>306912650</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>13</_id>
-    <_createdAtDate>2024-01-24T17:13:49.7358571+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.8646099+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Building the software skeleton of the missile</_alias>
     <_description>Developing the initial framework for the software that controls and coordinates various functions of the rocket.</_description>
-    <_scheduledDate>2025-11-24T17:13:49.7358508+02:00</_scheduledDate>
-    <_requiredEffortTime>P669DT23H59M59.999994S</_requiredEffortTime>
-    <_deadlineDate>2025-12-08T17:13:49.7358508+02:00</_deadlineDate>
+    <_scheduledDate>2024-02-28T22:39:31.864607+02:00</_scheduledDate>
+    <_requiredEffortTime>P30DT23H59M59.9999974S</_requiredEffortTime>
+    <_deadlineDate>2024-03-13T22:39:31.864607+02:00</_deadlineDate>
     <_complexity>Advanced</_complexity>
-    <_engineerId>217743210</_engineerId>
+    <_engineerId>290322920</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>14</_id>
-    <_createdAtDate>2024-01-24T17:13:49.751108+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.880222+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Writing the missile software</_alias>
     <_description>Creating and programming the software that governs the rocket's navigation, guidance, and communication systems.</_description>
-    <_scheduledDate>2024-05-24T17:13:49.7511044+03:00</_scheduledDate>
-    <_requiredEffortTime>P120DT23H59M59.9999965S</_requiredEffortTime>
-    <_deadlineDate>2024-06-07T17:13:49.7511044+03:00</_deadlineDate>
+    <_scheduledDate>2024-09-28T22:39:31.8802179+03:00</_scheduledDate>
+    <_requiredEffortTime>P243DT23H59M59.9999962S</_requiredEffortTime>
+    <_deadlineDate>2024-10-12T22:39:31.8802179+03:00</_deadlineDate>
     <_complexity>Expert</_complexity>
-    <_engineerId>269783168</_engineerId>
+    <_engineerId>319747038</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>15</_id>
-    <_createdAtDate>2024-01-24T17:13:49.767894+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.8934102+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Building a communication component</_alias>
     <_description>Constructing the communication subsystem that enables the rocket to send and receive data during its mission.</_description>
-    <_scheduledDate>2026-05-24T17:13:49.7678885+03:00</_scheduledDate>
-    <_requiredEffortTime>P850DT23H59M59.9999948S</_requiredEffortTime>
-    <_deadlineDate>2026-06-07T17:13:49.7678885+03:00</_deadlineDate>
+    <_scheduledDate>2025-07-28T22:39:31.8934072+03:00</_scheduledDate>
+    <_requiredEffortTime>P546DT23H59M59.9999973S</_requiredEffortTime>
+    <_deadlineDate>2025-08-11T22:39:31.8934072+03:00</_deadlineDate>
     <_complexity>Master</_complexity>
-    <_engineerId>356949338</_engineerId>
+    <_engineerId>376257745</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>16</_id>
-    <_createdAtDate>2024-01-24T17:13:49.7846571+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.9078583+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>A test for the missile software</_alias>
     <_description>Conducting a preliminary evaluation to verify the functionality and reliability of the rocket's software systems.</_description>
-    <_scheduledDate>2025-08-24T17:13:49.7846534+03:00</_scheduledDate>
-    <_requiredEffortTime>P577DT23H59M59.9999964S</_requiredEffortTime>
-    <_deadlineDate>2025-09-07T17:13:49.7846534+03:00</_deadlineDate>
+    <_scheduledDate>2025-04-28T22:39:31.9078526+03:00</_scheduledDate>
+    <_requiredEffortTime>P455DT23H59M59.9999949S</_requiredEffortTime>
+    <_deadlineDate>2025-05-12T22:39:31.9078526+03:00</_deadlineDate>
     <_complexity>Beginner</_complexity>
-    <_engineerId>244817447</_engineerId>
+    <_engineerId>270830413</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>17</_id>
-    <_createdAtDate>2024-01-24T17:13:49.8011023+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.9209362+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Refactoring</_alias>
     <_description>Iteratively improving and optimizing the rocket's design, software, or components based on testing and feedback.</_description>
-    <_scheduledDate>2025-06-24T17:13:49.8010969+03:00</_scheduledDate>
-    <_requiredEffortTime>P516DT23H59M59.9999948S</_requiredEffortTime>
-    <_deadlineDate>2025-07-08T17:13:49.8010969+03:00</_deadlineDate>
+    <_scheduledDate>2026-01-28T22:39:31.9209302+02:00</_scheduledDate>
+    <_requiredEffortTime>P730DT23H59M59.9999945S</_requiredEffortTime>
+    <_deadlineDate>2026-02-11T22:39:31.9209302+02:00</_deadlineDate>
     <_complexity>BetterBeginner</_complexity>
-    <_engineerId>247436596</_engineerId>
+    <_engineerId>306912650</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>18</_id>
-    <_createdAtDate>2024-01-24T17:13:49.8172847+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.934436+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Final testing of the software</_alias>
     <_description>Performing comprehensive tests to ensure the rocket's software operates as intended under various conditions.</_description>
-    <_scheduledDate>2025-12-24T17:13:49.8172808+02:00</_scheduledDate>
-    <_requiredEffortTime>P699DT23H59M59.9999962S</_requiredEffortTime>
-    <_deadlineDate>2026-01-07T17:13:49.8172808+02:00</_deadlineDate>
+    <_scheduledDate>2025-05-28T22:39:31.9344293+03:00</_scheduledDate>
+    <_requiredEffortTime>P485DT23H59M59.9999937S</_requiredEffortTime>
+    <_deadlineDate>2025-06-11T22:39:31.9344293+03:00</_deadlineDate>
     <_complexity>Advanced</_complexity>
-    <_engineerId>217743210</_engineerId>
+    <_engineerId>290322920</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>19</_id>
-    <_createdAtDate>2024-01-24T17:13:49.8354274+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.9487797+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Final assembly of the missile</_alias>
     <_description>Integrating all components, including the structural, propulsion, software, and payload systems, to create the complete and functional rocket.</_description>
-    <_scheduledDate>2026-01-24T17:13:49.8354204+02:00</_scheduledDate>
-    <_requiredEffortTime>P730DT23H59M59.9999932S</_requiredEffortTime>
-    <_deadlineDate>2026-02-07T17:13:49.8354204+02:00</_deadlineDate>
+    <_scheduledDate>2025-09-28T22:39:31.9487748+03:00</_scheduledDate>
+    <_requiredEffortTime>P608DT23H59M59.9999954S</_requiredEffortTime>
+    <_deadlineDate>2025-10-12T22:39:31.9487748+03:00</_deadlineDate>
     <_complexity>Expert</_complexity>
-    <_engineerId>269783168</_engineerId>
+    <_engineerId>319747038</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>20</_id>
-    <_createdAtDate>2024-01-24T17:13:49.855418+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.9716568+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Dry test of the operation of the components</_alias>
     <_description>Conducting a thorough examination and simulation of the rocket's systems without using actual propellants to identify and address any potential issues.</_description>
-    <_scheduledDate>2026-02-24T17:13:49.8554141+02:00</_scheduledDate>
-    <_requiredEffortTime>P761DT23H59M59.9999964S</_requiredEffortTime>
-    <_deadlineDate>2026-03-10T17:13:49.8554141+02:00</_deadlineDate>
+    <_scheduledDate>2025-01-28T22:39:31.971651+02:00</_scheduledDate>
+    <_requiredEffortTime>P365DT23H59M59.9999945S</_requiredEffortTime>
+    <_deadlineDate>2025-02-11T22:39:31.971651+02:00</_deadlineDate>
     <_complexity>Master</_complexity>
-    <_engineerId>356949338</_engineerId>
+    <_engineerId>376257745</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>21</_id>
-    <_createdAtDate>2024-01-24T17:13:49.874193+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:31.9869661+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Wet inspection of the components</_alias>
     <_description>Verifying the rocket's systems and components under realistic conditions, often involving the use of actual propellants in a controlled environment.</_description>
-    <_scheduledDate>2026-03-24T17:13:49.8741881+02:00</_scheduledDate>
-    <_requiredEffortTime>P789DT23H59M59.9999954S</_requiredEffortTime>
-    <_deadlineDate>2026-04-07T17:13:49.8741881+03:00</_deadlineDate>
+    <_scheduledDate>2026-06-28T22:39:31.9869624+03:00</_scheduledDate>
+    <_requiredEffortTime>P881DT23H59M59.9999968S</_requiredEffortTime>
+    <_deadlineDate>2026-07-12T22:39:31.9869624+03:00</_deadlineDate>
     <_complexity>Beginner</_complexity>
-    <_engineerId>244817447</_engineerId>
+    <_engineerId>270830413</_engineerId>
     <_isActive>true</_isActive>
   </Task>
   <Task>
     <_id>22</_id>
-    <_createdAtDate>2024-01-24T17:13:49.892065+02:00</_createdAtDate>
+    <_createdAtDate>2024-01-28T22:39:32.0023714+02:00</_createdAtDate>
     <_isMilestone>false</_isMilestone>
     <_alias>Dispatch</_alias>
     <_description>Launching the rocket into its intended trajectory or mission, marking the conclusion of the manufacturing and preparation phases.</_description>
-    <_scheduledDate>2024-04-24T17:13:49.8920614+03:00</_scheduledDate>
-    <_requiredEffortTime>P90DT23H59M59.9999966S</_requiredEffortTime>
-    <_deadlineDate>2024-05-08T17:13:49.8920614+03:00</_deadlineDate>
+    <_scheduledDate>2024-07-28T22:39:32.0023681+03:00</_scheduledDate>
+    <_requiredEffortTime>P181DT23H59M59.999997S</_requiredEffortTime>
+    <_deadlineDate>2024-08-11T22:39:32.0023681+03:00</_deadlineDate>
     <_complexity>BetterBeginner</_complexity>
-    <_engineerId>247436596</_engineerId>
+    <_engineerId>306912650</_engineerId>
     <_isActive>true</_isActive>
   </Task>
 </ArrayOfTask>
