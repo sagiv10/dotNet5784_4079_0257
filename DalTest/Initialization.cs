@@ -163,9 +163,9 @@ public static class Initialization
     /// <param name="dalEngineer">the implementation of the entity engineer that helps us reach to the interface of engineer</param>
     /// <param name="dalDependency">the implementation of the entity dependency that helps us reach to the interface of dependency</param>
     /// <exception cref="NullReferenceException"></exception>
-    public static void Do(IDal dal)
+    public static void Do()
     {
-        s_dal = dal ?? throw new NullReferenceException("DAL can not be null!");
+        s_dal = Factory.Get; //choose the data source by the xml file - 'dal - config'
         XElement newNumbers = new XElement("config", new XElement("NextDependencyId", 1), new XElement("NextTaskId", 1));
         XMLTools.SaveListToXMLElement(newNumbers, "data-config");//save new running numberwhen they equal to 0 now
         s_dal.Engineer.DeleteAll(); //reset the engineer xml file

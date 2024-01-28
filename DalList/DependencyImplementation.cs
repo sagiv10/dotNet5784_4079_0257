@@ -94,5 +94,5 @@ internal class DependencyImplementation : IDependency
         }
         DataSource.Dependencies[theIndex] = item;
     }
-    public void DeleteAll() { }
+    public void DeleteAll() { DataSource.Dependencies.Clear(); }
 }

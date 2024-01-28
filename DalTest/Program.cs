@@ -12,7 +12,7 @@
     internal class Program
     {
         //static readonly IDal s_dal = new DalList(); //the way we used the CRUD methods
-        static readonly IDal s_dal=new DalXml(); //the way we used the CRUD methods through XML files.
+        static readonly IDal s_dal= Factory.Get; //the way we used the CRUD methods through XML files or lists.
 
         /// <summary>
         /// the main functions
@@ -44,7 +44,7 @@
                             Console.Write("Would you like to create Initial data? (Y/N)"); //stage 3
                             string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
                             if (ans == "Y") //stage 3
-                                Initialization.Do(s_dal); //stage 2
+                                Initialization.Do(); //stage 2
                             break;
                         case 0: break;
                         default: break;
