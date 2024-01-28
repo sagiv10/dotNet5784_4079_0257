@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config>
-  <NextDependencyId>41</NextDependencyId>
-  <NextTaskId>23</NextTaskId>
+	<dal>list</dal>
+	<dal-packages>
+		<list>DalList</list>
+		<xml>DalXml</xml>
+	</dal-packages>
 </config>
