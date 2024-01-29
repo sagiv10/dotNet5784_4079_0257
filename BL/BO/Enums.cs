@@ -1,4 +1,6 @@
-﻿namespace BO
+﻿using System;
+
+namespace BO
 {
     public enum EngineerExperience
     {
@@ -7,5 +9,13 @@
         Advanced,
         Expert,
         Master
+    }
+    public enum Status
+    {
+        Unscheduled,
+        Scheduled,
+        OnTrack,
+        InJeopardy,
+        Done
     }
 }
