@@ -1,6 +1,6 @@
 ﻿namespace BO;
 /// <summary>
-/// A class to full describe of a specific milestone of tasks.
+/// A class to fully describe an engineer.
 /// <param name="Id">the id of the engineer</param>
 /// <param name="Name">the name of the engineer</param>
 /// <param name="Email">the email of the engineer </param>
