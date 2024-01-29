@@ -19,13 +19,13 @@ public class Milestone
     public string Description { get; set; }
     public string Alias { get; set; }
     public DateTime CreatedAtDate { get; init; }
-    public BO.Status Status { get; set; }
-    public DateTime ForecasatDate { get; set; }
-    public DateTime DeadlineDate { get; set; }
-    public DateTime CompleteDate { get; set; }
-    public double CompletionPercentage { get; set; }
-    public string Remarks { get; set; }
-    public List<BO.TaskInList> Dependencies { get; init; }//init becasue we change the content of the list and not the list herself.
+    public BO.Status? Status { get; set; }
+    public DateTime? ForecasatDate { get; set; }
+    public DateTime? DeadlineDate { get; set; }
+    public DateTime? CompleteDate { get; set; }
+    public double? CompletionPercentage { get; set; }
+    public string? Remarks { get; set; }
+    public List<BO.TaskInList>? Dependencies { get; init; }//init becasue we change the content of the list and not the list herself.
 }
 
 
