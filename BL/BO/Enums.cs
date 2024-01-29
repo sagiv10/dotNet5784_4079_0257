@@ -1,6 +1,6 @@
 ﻿namespace BO
 {
-    public enum ComplexityLvls
+    public enum EngineerExperience
     {
         Beginner,
         BetterBeginner,
