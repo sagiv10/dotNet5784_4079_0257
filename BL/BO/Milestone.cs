@@ -25,7 +25,7 @@ public class Milestone
     public DateTime? CompleteDate { get; set; }
     public double? CompletionPercentage { get; set; }
     public string? Remarks { get; set; }
-    public List<BO.TaskInList>? Dependencies { get; init; }//init becasue we change the content of the list and not the list herself.
+    public List<BO.TaskInList>? Dependencies { get; init; } = null;//init becasue we change the content of the list and not the list herself.
 }
 
 
