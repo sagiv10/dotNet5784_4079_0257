@@ -27,7 +27,7 @@ namespace BO;
 /// <param name="Engineer"> the id of the engineer that working on the task </param>
 /// <param name="Copmlexity"> the level of complexity of the task </param>
 /// </summary>
-internal class Task
+public class Task
 {
     public int Id { get; init; }
 

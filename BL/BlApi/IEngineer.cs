@@ -11,7 +11,7 @@ internal interface IEngineer
     /// </summary>
     /// <param name="filter"> the requirements </param>
     /// <returns> list of the engineers that follows the requirements </returns>
-    public List<BO.Engineer> GetWantedEngineers(Func<DO.Engineer, bool>? filter=null);
+    public List<BO.Engineer> ReadAllEngineers(Func<DO.Engineer, bool>? filter=null);
 
     /// <summary>
     /// get the engineer with the required id
@@ -22,14 +22,25 @@ internal interface IEngineer
     /// <exception cref="BLWrongIntInputException"></exception>
     /// <exception cref="BLWrongStringInputException"></exception>
     /// <exception cref="BLWrongDoubleInputException"></exception>
-    public BO.Engineer GetEngineer(int id);
+    public BO.Engineer ReadEngineer(int id);
+
+    /// <summary>
+    /// get the engineer that answer the requirments
+    /// </summary>
+    /// <param name="filter"> the requirment </param>
+    /// <returns> the engineer with the id we want </returns>
+    /// <exception cref="BLNotFoundException"></exception>
+    /// <exception cref="BLWrongIntInputException"></exception>
+    /// <exception cref="BLWrongStringInputException"></exception>
+    /// <exception cref="BLWrongDoubleInputException"></exception>
+    public BO.Engineer ReadEngineer(Func<DO.Engineer, bool>? filter = null);
 
     /// <summary>
     /// adds new engineers to the system
     /// </summary>
     /// <param name="newEngineer"> the engineer we want to add </param>
     /// <exception cref="BLWrongIntInputException"></exception>
-    public void AddEngineer(BO.Engineer newEngineer);
+    public void CreateEngineer(BO.Engineer newEngineer);
 
     /// <summary>
     /// delete an engineer from the system
@@ -47,7 +58,7 @@ internal interface IEngineer
     /// <exception cref="BLWrongStringInputException"></exception>
     /// <exception cref="BLWrongDoubleInputException"></exception>
     /// <exception cref="BLNotFoundException"></exception>
-    public void updateEngineer(BO.Engineer newEngineer);
+    public void UpdateEngineer(BO.Engineer newEngineer);
 
     /// <summary>
     /// get the list of the avialable tasks to the requested engineer
