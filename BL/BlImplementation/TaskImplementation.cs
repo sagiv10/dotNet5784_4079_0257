@@ -6,12 +6,42 @@ using DO;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-internal class TaskImplementation : ITask
+internal class TaskImplementation : BlApi.ITask
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;//with this field we can access to the methods of task in dal. the way to use the method is being chosen inside factory.
-    public int Create(BO.Task? newTask)
+    public int Create(BO.Task? newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
     {
-        throw new NotImplementedException();
+        if(newTask.Id<=0)
+            throw new NotImplementedException();
+        if(newTask.Alias=="")
+            throw new NotImplementedException();
+        DO.Task? doTaskToCheck = _dal.Task.Read(newTask.Id);//get task to check if exist
+        if(doTaskToCheck != null)
+            throw new NotImplementedException();
+        newTask.Dependencies.Select(dependency=>createTloot(newTask.Id, dependency));
+        DO.Task? doTaskToCreate = BOToDOTask(newTask);
+        _dal.Task.Create(doTaskToCreate);
+        return newTask.Id;
+    }
+    private DO.Task? BOToDOTask(BO.Task newTask)
+    {
+        return new DO.Task() {
+            _id = newTask.Id,
+            _createdAtDate = newTask.CreatedAtDate,
+            _isMilestone = false,
+            _alias = newTask.Alias,
+            _description = newTask.Description,
+            _scheduledDate = newTask.ScheduledDate,
+            _startDate = newTask.StartDate,
+            _requiredEffortTime = newTask.RequiredEffortTime,
+            _deadlineDate = newTask.DeadlineDate,
+            _completeDate = newTask.CompleteDate,
+            _deliverables = newTask.Deliverables,
+            _remarks = newTask.Remarks,
+            _complexity = (ComplexityLvls)newTask.Complexity,
+            _engineerId = newTask.Engineer.Id,
+            _isActive = true
+        };
     }
 
     public void Delete(int idOfTaskToDelete)
@@ -25,25 +55,7 @@ internal class TaskImplementation : ITask
         if (doTask == null)
             throw new BO.BlDoesNotExistException($"Task with ID={idOfWantedTask} does Not exist");
 
-        return new BO.Task()//return a BO.task using the info from the do.task
-        {
-            Id = idOfWantedTask,
-            Description = doTask._description,
-            Alias = doTask._alias,
-            CreatedAtDate = doTask._createdAtDate,
-            Status = (Status?)WhatStatus(doTask._scheduledDate, doTask._startDate, doTask._completeDate),
-            Dependencies = CheckDependenciesFromDal(idOfWantedTask),
-            RequiredEffortTime = doTask._requiredEffortTime,
-            StartDate = doTask._startDate,
-            ScheduledDate = doTask._scheduledDate,
-            ForecastDate = ForecastCalc(doTask._scheduledDate, doTask._startDate, doTask._requiredEffortTime),
-            DeadlineDate = doTask._deadlineDate,
-            CompleteDate = doTask._completeDate,
-            Deliverables = doTask._alias,
-            Remarks = doTask._remarks,  
-            Engineer = CheckIfEngineerFromTaskIsExist(idOfWantedTask),
-            Complexity = (BO.EngineerExperience)doTask._complexity
-        };
+        return MakeBOFromDoTASK(doTask);
     }
 
     private DateTime? ForecastCalc(DateTime? scheduledDate, DateTime? startDate, TimeSpan? RequiredEffortTime)
@@ -85,7 +97,12 @@ internal class TaskImplementation : ITask
 
     public BO.Task? Read(Func<BO.Task?, bool> filter)
     {
-        throw new NotImplementedException();
+        IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
+        if (AllDOTasks == null)
+            throw new BO.BlDoesNotExistException($"Task does Not exist");
+        IEnumerable<BO.Task?> AllBOTasks = AllDOTasks.Select(DOTtaskInList => MakeBOFromDoTASK(DOTtaskInList));
+        BO.Task? chosen= AllBOTasks.FirstOrDefault(filter);//FILTER
+        return chosen;
     }
 
     public IEnumerable<BO.TaskInList?> ReadAll(Func<BO.Task?, bool>? filter = null)
@@ -93,33 +110,15 @@ internal class TaskImplementation : ITask
         IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
         if (AllDOTasks == null)
             throw new BO.BlDoesNotExistException($"Tasks list does Not exist");
-        IEnumerable<BO.Task?> AllBOTasks = AllDOTasks.Select(DOTtaskInList => new BO.Task()//CAST TO BE ABLE TO FILTER
-        {
-            Id = DOTtaskInList._id,
-            Description = DOTtaskInList._description,
-            Alias = DOTtaskInList._alias,
-            CreatedAtDate = DOTtaskInList._createdAtDate,
-            Status = (Status?)WhatStatus(DOTtaskInList._scheduledDate, DOTtaskInList._startDate, DOTtaskInList._completeDate),
-            Dependencies = CheckDependenciesFromDal(DOTtaskInList._id),
-            RequiredEffortTime = ((DOTtaskInList._deadlineDate) - (DOTtaskInList._startDate)),
-            StartDate = DOTtaskInList._startDate,
-            ScheduledDate = DOTtaskInList._scheduledDate,
-            ForecastDate = 0,///////// //
-            DeadlineDate = DOTtaskInList._deadlineDate,
-            CompleteDate = DOTtaskInList._completeDate,
-            Deliverables = DOTtaskInList._alias,
-            Remarks = DOTtaskInList._remarks,
-            Engineer = CheckIfEngineerFromTaskIsExist(DOTtaskInList._id),
-            Complexity = (BO.EngineerExperience)DOTtaskInList._complexity
-        } );
+        IEnumerable<BO.Task?> AllBOTasks = AllDOTasks.Select(DOTtaskInList => MakeBOFromDoTASK(DOTtaskInList));
         AllBOTasks = AllBOTasks.Where(TaskEx=>filter(TaskEx));//FILTER
         IEnumerable<TaskInList?> TasksInList = AllBOTasks.Select(BOtaskInList => new TaskInList()//make to task in list to return properly
         {
-            Id=BOtaskInList.Id,
-            Description=BOtaskInList.Description,
-            Alias=BOtaskInList.Alias,
-            Status= (Status?)WhatStatus(BOtaskInList.ScheduledDate,BOtaskInList.StartDate,BOtaskInList.CompleteDate)
-        } );
+            Id = BOtaskInList.Id,
+            Description = BOtaskInList.Description,
+            Alias = BOtaskInList.Alias,
+            Status = BOtaskInList.Status 
+        }) ;
         return TasksInList;
     }
 
@@ -139,4 +138,27 @@ internal class TaskImplementation : ITask
         { return 3; }//done
         //IF WE WANT TAKE CARE OF JEOPARDY 
     }
+    BO.Task? MakeBOFromDoTASK (DO.Task? doTask)
+    {
+        return new BO.Task()
+        {
+            Id = doTask._id,
+            Description = doTask._description,
+            Alias = doTask._alias,
+            CreatedAtDate = doTask._createdAtDate,
+            Status = (Status?)WhatStatus(doTask._scheduledDate, doTask._startDate, doTask._completeDate),
+            Dependencies = CheckDependenciesFromDal(doTask._id),
+            RequiredEffortTime = doTask._requiredEffortTime,
+            StartDate = doTask._startDate,
+            ScheduledDate = doTask._scheduledDate,
+            ForecastDate = ForecastCalc(doTask._scheduledDate, doTask._startDate, doTask._requiredEffortTime),
+            DeadlineDate = doTask._deadlineDate,
+            CompleteDate = doTask._completeDate,
+            Deliverables = doTask._alias,
+            Remarks = doTask._remarks,
+            Engineer = CheckIfEngineerFromTaskIsExist(doTask._id),
+            Complexity = (BO.EngineerExperience)doTask._complexity
+        };
+    }
 }
+
