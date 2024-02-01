@@ -32,18 +32,26 @@ internal class TaskImplementation : ITask
             Alias = doTask._alias,
             CreatedAtDate = doTask._createdAtDate,
             Status = (Status?)WhatStatus(doTask._scheduledDate, doTask._startDate, doTask._completeDate),
-            Dependencies = CheckDependenciesFromDal(idOfWantedTask),///////
-            RequiredEffortTime = ((doTask._deadlineDate) - (doTask._startDate)),
+            Dependencies = CheckDependenciesFromDal(idOfWantedTask),
+            RequiredEffortTime = doTask._requiredEffortTime,
             StartDate = doTask._startDate,
             ScheduledDate = doTask._scheduledDate,
-            ForecastDate = 0,///////// //
+            ForecastDate = ForecastCalc(doTask._scheduledDate, doTask._startDate, doTask._requiredEffortTime),
             DeadlineDate = doTask._deadlineDate,
             CompleteDate = doTask._completeDate,
             Deliverables = doTask._alias,
             Remarks = doTask._remarks,  
-            Engineer = CheckIfEngineerFromTaskIsExist(idOfWantedTask),//eng,
+            Engineer = CheckIfEngineerFromTaskIsExist(idOfWantedTask),
             Complexity = (BO.EngineerExperience)doTask._complexity
         };
+    }
+
+    private DateTime? ForecastCalc(DateTime? scheduledDate, DateTime? startDate, TimeSpan? RequiredEffortTime)
+    {
+        if(scheduledDate > startDate)
+            return scheduledDate + RequiredEffortTime;
+        else
+            return startDate + RequiredEffortTime;
     }
 
     private EngineerInTask CheckIfEngineerFromTaskIsExist(int idOfTask)

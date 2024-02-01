@@ -97,7 +97,7 @@ public static class Initialization
         {
             DateTime scheduleTime = DateTime.Now.AddMonths(s_rand.Next(30));//sets the scheduled time to be a rand number not bigger then 30 days after the current time.
             DateTime current = DateTime.Now;
-            Task? newTask = new Task(0, DateTime.Now, false,AliasOfTasks[i], DescriptionOfTasks[i], scheduleTime, null, scheduleTime - current, scheduleTime.AddDays(14) , null, null, null,_arrOfCmplx[i%5], _idEngineers[i%5], true) ;
+            Task? newTask = new Task(0, DateTime.Now, false,AliasOfTasks[i], DescriptionOfTasks[i], null, null,rand /*scheduleTime - current*/, null , null, null, null,_arrOfCmplx[i%5], _idEngineers[i%5], true) ;
             s_dal!.Task.Create(newTask);
         }
     }
