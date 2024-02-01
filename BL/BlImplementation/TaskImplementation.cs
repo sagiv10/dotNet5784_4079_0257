@@ -21,14 +21,7 @@ internal class TaskImplementation : ITask
 
     public BO.Task? Read(int idOfWantedTask)
     {
-        BO.EngineerInTask? eng = null;
         DO.Task? doTask = _dal.Task.Read(idOfWantedTask);//use read func from dal to get details of specific task
-        if (doTask._engineerId != null)//some engineer works on this task
-        {
-            DO.Engineer? doEngineer = _dal.Engineer.Read((int)doTask._engineerId);//use read func from dal to get details of specific task
-            eng = new BO.EngineerInTask() { Id = (int)doTask._engineerId, Name = doEngineer._name };
-        }
-
         if (doTask == null)
             throw new BO.BlDoesNotExistException($"Task with ID={idOfWantedTask} does Not exist");
 
@@ -43,14 +36,26 @@ internal class TaskImplementation : ITask
             RequiredEffortTime = ((doTask._deadlineDate) - (doTask._startDate)),
             StartDate = doTask._startDate,
             ScheduledDate = doTask._scheduledDate,
-            ForecastDate = 0,///////////
+            ForecastDate = 0,///////// //
             DeadlineDate = doTask._deadlineDate,
             CompleteDate = doTask._completeDate,
             Deliverables = doTask._alias,
-            Remarks = doTask._remarks,
-            Engineer = eng,
+            Remarks = doTask._remarks,  
+            Engineer = CheckIfEngineerFromTaskIsExist(idOfWantedTask),//eng,
             Complexity = (BO.EngineerExperience)doTask._complexity
         };
+    }
+
+    private EngineerInTask CheckIfEngineerFromTaskIsExist(int idOfTask)
+    {
+        BO.EngineerInTask? eng = null;
+        DO.Task? doTask = _dal.Task.Read(idOfTask);//use read func from dal to get details of specific task
+        if (doTask._engineerId != null)//some engineer works on this task
+        {
+            DO.Engineer? doEngineer = _dal.Engineer.Read((int)doTask._engineerId);//use read func from dal to get details of specific task
+            eng = new BO.EngineerInTask() { Id = (int)doTask._engineerId, Name = doEngineer._name };
+        }
+        return eng;
     }
 
     List<TaskInList?> CheckDependenciesFromDal(int idOfWantedTask)
@@ -75,9 +80,39 @@ internal class TaskImplementation : ITask
         throw new NotImplementedException();
     }
 
-    public IEnumerable<BO.Task?> ReadAll(Func<BO.Task?, bool>? filter = null)
+    public IEnumerable<BO.TaskInList?> ReadAll(Func<BO.Task?, bool>? filter = null)
     {
-        throw new NotImplementedException();
+        IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
+        if (AllDOTasks == null)
+            throw new BO.BlDoesNotExistException($"Tasks list does Not exist");
+        IEnumerable<BO.Task?> AllBOTasks = AllDOTasks.Select(DOTtaskInList => new BO.Task()//CAST TO BE ABLE TO FILTER
+        {
+            Id = DOTtaskInList._id,
+            Description = DOTtaskInList._description,
+            Alias = DOTtaskInList._alias,
+            CreatedAtDate = DOTtaskInList._createdAtDate,
+            Status = (Status?)WhatStatus(DOTtaskInList._scheduledDate, DOTtaskInList._startDate, DOTtaskInList._completeDate),
+            Dependencies = CheckDependenciesFromDal(DOTtaskInList._id),
+            RequiredEffortTime = ((DOTtaskInList._deadlineDate) - (DOTtaskInList._startDate)),
+            StartDate = DOTtaskInList._startDate,
+            ScheduledDate = DOTtaskInList._scheduledDate,
+            ForecastDate = 0,///////// //
+            DeadlineDate = DOTtaskInList._deadlineDate,
+            CompleteDate = DOTtaskInList._completeDate,
+            Deliverables = DOTtaskInList._alias,
+            Remarks = DOTtaskInList._remarks,
+            Engineer = CheckIfEngineerFromTaskIsExist(DOTtaskInList._id),
+            Complexity = (BO.EngineerExperience)DOTtaskInList._complexity
+        } );
+        AllBOTasks = AllBOTasks.Where(TaskEx=>filter(TaskEx));//FILTER
+        IEnumerable<TaskInList?> TasksInList = AllBOTasks.Select(BOtaskInList => new TaskInList()//make to task in list to return properly
+        {
+            Id=BOtaskInList.Id,
+            Description=BOtaskInList.Description,
+            Alias=BOtaskInList.Alias,
+            Status= (Status?)WhatStatus(BOtaskInList.ScheduledDate,BOtaskInList.StartDate,BOtaskInList.CompleteDate)
+        } );
+        return TasksInList;
     }
 
     public void Update(BO.Task? item)
@@ -93,7 +128,7 @@ internal class TaskImplementation : ITask
         if (DateTime.Now < completeDate)//OnTrack
         { return 2; }
         else
-        { return 3; }
+        { return 3; }//done
         //IF WE WANT TAKE CARE OF JEOPARDY 
     }
 }
