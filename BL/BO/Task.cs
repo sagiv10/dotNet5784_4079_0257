@@ -25,9 +25,9 @@ namespace BO;
 /// <param name="Deliverables"> the Deliverables of the task </param>
 /// <param name="Remarks"> the Deliverables of the task </param>
 /// <param name="Engineer"> the id of the engineer that working on the task </param>
-/// <param name="Copmlexity"> the level of complexity of the task </param>
+/// <param name="Complexity"> the level of complexity of the task </param>
 /// </summary>
-internal class Task
+public class Task
 {
     public int Id { get; init; }
 
@@ -61,5 +61,5 @@ internal class Task
 
     public BO.EngineerInTask? Engineer { get; set; }
 
-    public BO.EngineerExperience? Copmlexity {  get; set; }
+    public BO.EngineerExperience? Complexity {  get; set; }
 }
