@@ -8,4 +8,10 @@ public class TaskInEngineer
 {
     public int Id { get; init; }
     public string Alias { get; set; }
+
+    public TaskInEngineer(int id, string alias)
+    {
+        Id = id;
+        Alias = alias;
+    }
 }

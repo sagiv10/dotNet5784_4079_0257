@@ -18,4 +18,10 @@ namespace BO
         InJeopardy,
         Done
     }
+
+    public enum ProjectStatus
+    {
+        Planning,
+        Execution
+    }
 }

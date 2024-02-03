@@ -17,4 +17,13 @@ public class Engineer
     public double Cost { get; set; }
     public BO.TaskInEngineer? Task { get; set; }
 
+    public Engineer(int id, string name, string email, EngineerExperience level, double cost, TaskInEngineer? task)
+    {
+        Id = id;
+        Name = name;
+        Email = email;
+        Level = level;
+        Cost = cost;
+        Task = task;
+    }
 }

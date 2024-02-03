@@ -147,7 +147,7 @@ internal class TaskImplementation : BlApi.ITask
             Alias = doTask._alias,
             CreatedAtDate = doTask._createdAtDate,
             Status = (Status?)WhatStatus(doTask._scheduledDate, doTask._startDate, doTask._completeDate),
-            Dependencies = CheckDependenciesFromDal(doTask._id),
+            Dependencies = CheckDependenciesFromDal(doTask._id) ?? null,
             RequiredEffortTime = doTask._requiredEffortTime,
             StartDate = doTask._startDate,
             ScheduledDate = doTask._scheduledDate,
