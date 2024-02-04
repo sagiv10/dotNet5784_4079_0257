@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BlApi;
+﻿namespace BlApi;
 
 public interface IBl
 {
@@ -12,9 +6,8 @@ public interface IBl
 
     public ITask Task { get; }
 
-    public BO.ProjectStatus Status {  get; }
+    public void AutoScedule(DateTime startingDate);
 
-    public static void AutoScedule(DateTime startingDate) { }
+    public void ManualScedule(DateTime startingDate);
 
-    public static void ManualScedule(DateTime startingDate) { }
 }

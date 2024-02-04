@@ -18,9 +18,7 @@ public interface IEngineer
     /// <param name="id"> the id of the engineer we want </param>
     /// <returns> the engineer with the id we want </returns>
     /// <exception cref="BLNotFoundException"></exception>
-    /// <exception cref="BLWrongIntInputException"></exception>
-    /// <exception cref="BLWrongStringInputException"></exception>
-    /// <exception cref="BLWrongDoubleInputException"></exception>
+    /// <exception cref="BLWrongIdInputException"></exception>
     public BO.Engineer ReadEngineer(int id);
 
     /// <summary>
@@ -29,17 +27,16 @@ public interface IEngineer
     /// <param name="filter"> the requirment </param>
     /// <returns> the engineer with the id we want </returns>
     /// <exception cref="BLNotFoundException"></exception>
-    /// <exception cref="BLWrongIdInputException"></exception>
     public BO.Engineer ReadEngineer(Func<DO.Engineer, bool>? filter);
 
     /// <summary>
     /// adds new engineers to the system
+    /// very important: we will always add new engineer with no task assigned no matter what will be at the field 'Task'.
     /// </summary>
     /// <param name="newEngineer"> the engineer we want to add </param>
     /// <exception cref="BLWrongIdInputException"></exception>
     /// <exception cref="BLWrongEmailInputException"></exception>
     /// <exception cref="BLWrongDoubleInputException"></exception>
-    /// <exception cref="BLTaskNotExistsException"></exception>
     /// <exception cref="BLAlredyExistsException"></exception>
     public void CreateEngineer(BO.Engineer newEngineer);
 
@@ -54,12 +51,14 @@ public interface IEngineer
 
     /// <summary>
     /// updates an engineer from the system
+    /// the update method will not change the task status of the engineer - only in assign\deassign\finish method, no matter what will be at the field 'Task'.
     /// </summary>
     /// <param name="newEngineer"> the engineer we want to update </param>
     /// <exception cref="BLWrongIdInputException"></exception>
     /// <exception cref="BLWrongEmailInputException"></exception>
     /// <exception cref="BLWrongCostInputException"></exception>
     /// <exception cref="BLNotFoundException"></exception>
+    /// <exception cref="BLCannotLowerLevelException"></exception>
     public void UpdateEngineer(BO.Engineer newEngineer);
 
     /// <summary>
@@ -80,6 +79,8 @@ public interface IEngineer
     /// <exception cref="BLWrongIdException"></exception>
     /// <exception cref="BLHasAlredyTaskException"></exception>
     /// <exception cref="BLUnavailableTaskException"></exception>
+    /// <exception cref="BLWrongStageException"></exception>
+
     public void AssignTask(int engineerId, int taskId);
 
     /// <summary>
@@ -88,6 +89,8 @@ public interface IEngineer
     /// <param name="engineerId"> the id of the engineer  </param>
     /// <exception cref="BLWrongIdInputException"></exception>
     /// <exception cref="BLNotFoundException"></exception>
+    /// <exception cref="BLNoTaskAssignedException"></exception>
+    /// <exception cref="BLWrongStageException"></exception>
     public void DeAssignTask(int engineerId);
 
     /// <summary>
@@ -98,6 +101,8 @@ public interface IEngineer
     /// <exception cref="BLWrongIdInputException"></exception>
     /// <exception cref="BLNotFoundException"></exception>
     /// <exception cref="BLNoTaskAssignedException"></exception>
+    /// <exception cref="BLWrongStageException"></exception>
+
     public BO.TaskInEngineer ShowTask(int engineerId);
 
     /// <summary>
@@ -107,6 +112,8 @@ public interface IEngineer
     /// <exception cref="BLWrongIdInputException"></exception>
     /// <exception cref="BLNoTaskAssignedException"></exception>
     /// <exception cref="BLNotFoundException"></exception>
+    /// <exception cref="BLWrongStageException"></exception>
+
     public void FinishTask(int engineerId);
 
 }

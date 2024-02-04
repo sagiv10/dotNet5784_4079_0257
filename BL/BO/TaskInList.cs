@@ -13,7 +13,7 @@ public class TaskInList
     public string Alias { get; set; }
     public BO.Status? Status { get; set; }
 
-    public TaskInList(int id, string description, string alias, BO.Status status)
+    public TaskInList(int id, string description, string alias, BO.Status? status)
     {
         Id = id;
         Description = description;

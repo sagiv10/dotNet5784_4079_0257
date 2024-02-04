@@ -22,6 +22,7 @@ namespace BO
     public enum ProjectStatus
     {
         Planning,
+        Sceduling,
         Execution
     }
 }

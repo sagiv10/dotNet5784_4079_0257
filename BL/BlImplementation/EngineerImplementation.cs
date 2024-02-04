@@ -7,10 +7,22 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Net.Mail;
+using System.Xml.Linq;
 
 internal class EngineerImplementation : BlApi.IEngineer
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
+
+    /// <summary>
+    /// helping method that gets from the dal-config xml file the current progect status
+    /// </summary>
+    /// <returns>the current status of the project</returns>
+    private BO.ProjectStatus getProjectStatus()
+    {
+        XElement configRoot = XElement.Load(@"..\xml\data-config.xml");
+        return (BO.ProjectStatus)int.Parse(configRoot.Element("project-stage")!.Value);
+    }
+
 
     /// <summary>
     /// helping method that gets an DO engineer and returns BO engineer according to the DO engineer. we assume that the function will be called only to engineers with isActive=true
@@ -99,44 +111,13 @@ internal class EngineerImplementation : BlApi.IEngineer
             throw ex;
         }
         DO.Engineer newDOEngineer = BoToDoEngineer(newEngineer);  //convert the engineer to do entity
-        if(newEngineer.Task != null) //if he has assigned task
+        try
         {
-            //TODO: THE PLANNING PROCESS EXCEPTION
-            DO.Task? hisTask = _dal.Task.Read(newEngineer.Task!.Id);
-            if(hisTask == null) //if there is no such task exists
-            {
-                throw new BLTaskNotExistsException(newEngineer.Task!.Id);
-            }
-            else
-            {
-                try
-                {
-                    _dal.Engineer.Create(newDOEngineer); //create the engineer
-                }
-                catch (DO.DalAlreadyExistsException ex)
-                {
-                    throw new BLAlredyExistsException(newEngineer.Id, ex); //if he  alredy exists
-                }
-                try //try to assign his task
-                {
-                    AssignTask(newEngineer.Id, hisTask._id);
-                }
-                catch(Exception ex)
-                {
-                    throw ex;
-                }
-            }
+            _dal.Engineer.Create(newDOEngineer); //try to create it
         }
-        else
+        catch (DO.DalAlreadyExistsException ex)
         {
-            try
-            {
-                _dal.Engineer.Create(newDOEngineer); //try to create it
-            }
-            catch (DO.DalAlreadyExistsException ex)
-            {
-                throw new BLAlredyExistsException(newEngineer.Id, ex); //if he alredy exists
-            }
+            throw new BLAlredyExistsException(newEngineer.Id, ex); //if he alredy exists
         }
     }
 
@@ -155,7 +136,7 @@ internal class EngineerImplementation : BlApi.IEngineer
             BO.TaskInEngineer ifExists = ShowTask(id);
             throw new BLHasTaskException(ifExists.Id); //if this did not thrown yet  it means that he has assigned task
         }
-        catch(BLNoTaskAssignedException exp) //if he has no assigned task
+        catch(BLNoTaskAssignedException exp) //if he has no assigned task - then we can delete it 
         {
             _dal.Engineer.Delete(id);
         }
@@ -193,45 +174,17 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw ex;
         }
+        DO.Engineer? originalEngineer = _dal.Engineer.Read(newEngineer.Id);
+        if(originalEngineer == null)
+        {
+            throw new BLNotFoundException(newEngineer.Id); //if he not exists
+        }
+        if((int)originalEngineer!._level! > (int)newEngineer.Level) //cannot lower level of engineer
+        {
+            throw new BLCannotLowerLevelException();
+        }
         DO.Engineer newDOEngineer = BoToDoEngineer(newEngineer);  //convert the engineer to do entity
-        if (newEngineer.Task != null) //if he has assigned task
-        {
-            DO.Task? hisTask = _dal.Task.Read(newEngineer.Task!.Id);
-            if (hisTask == null) //if there is no such task exists
-            {
-                throw new BLTaskNotExistsException(newEngineer.Task!.Id);
-            }
-            else
-            {
-                try
-                {
-                    _dal.Engineer.Update(newDOEngineer); //update the engineer
-                }
-                catch (DO.DalNotFoundException ex)
-                {
-                    throw new BLNotFoundException(newEngineer.Id, ex); //if he not exists
-                }
-                try //try to assign his task
-                {
-                    AssignTask(newEngineer.Id, hisTask._id);
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-        }
-        else
-        {
-            try
-            {
-                _dal.Engineer.Update(newDOEngineer); //update the engineer
-            }
-            catch (DO.DalNotFoundException ex)
-            {
-                throw new BLNotFoundException(newEngineer.Id, ex); //if he not exists
-            }
-        }
+        _dal.Engineer.Update(newDOEngineer); //update the engineer
     }
 
     public void DeAssignTask(int id)
@@ -240,7 +193,12 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw new BLWrongIdInputException(id);
         }
-        //TODO -EXCEPTION EXECUTION
+
+        if ((int)getProjectStatus() != 3)
+        {
+            throw new BLWrongStageException();
+        }
+
         if (_dal.Engineer.Read(id) == null)
         {
             throw new BLNotFoundException(id);
@@ -260,11 +218,17 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw new BLWrongIdInputException(engineerId);
         }
+
+        if ((int)getProjectStatus() != 3)
+        {
+            throw new BLWrongStageException();
+        }
+
         if (taskId <= 0)
         {
             throw new BLWrongIdInputException(taskId);
         }
-        //TODO -EXCEPTION EXECUTION
+
         DO.Task? theTask = _dal.Task.Read(taskId);
         DO.Engineer? theEngineer = _dal.Engineer.Read(engineerId);
         if (theEngineer == null)
@@ -307,6 +271,12 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw new BLWrongIdInputException(id);
         }
+
+        if ((int)getProjectStatus() != 3)
+        {
+            throw new BLWrongStageException();
+        }
+
         try
         {
             DO.Engineer engineer = _dal.Engineer.Read(id)!;
@@ -325,8 +295,13 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw new BLWrongIdInputException(id);
         }
-        //TODO -EXCEPTION EXECUTION
-        if(_dal.Engineer.Read(id) == null)
+
+        if ((int)getProjectStatus() != 3)
+        {
+            throw new BLWrongStageException();
+        }
+
+        if (_dal.Engineer.Read(id) == null)
         {
             throw new BLNotFoundException(id);
         }
@@ -344,7 +319,12 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw new BLWrongIdInputException(id);
         }
-        //TODO -EXCEPTION EXECUTION
+
+        if ((int)getProjectStatus() != 3)
+        {
+            throw new BLWrongStageException();
+        }
+
         if (_dal.Engineer.Read(id) == null)
         {
             throw new BLNotFoundException(id);

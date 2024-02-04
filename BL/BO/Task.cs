@@ -43,7 +43,7 @@ public class Task
 
     public BO.MilestoneInTask? Milestone { get; set; }
 
-    public TimeSpan? RequiredEffortTime { get; set; }
+    public TimeSpan RequiredEffortTime { get; set; }
 
     public DateTime? StartDate {  get; set; }
 

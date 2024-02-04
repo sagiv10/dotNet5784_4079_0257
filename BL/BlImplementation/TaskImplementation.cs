@@ -3,17 +3,87 @@ using BlApi;
 using BO;
 using DalApi;
 using DO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
 internal class TaskImplementation : BlApi.ITask
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;//with this field we can access to the methods of task in dal. the way to use the method is being chosen inside factory.
+
+    /// <summary>
+    /// helping method that gets from the dal-config xml file the current progect status
+    /// </summary>
+    /// <returns>the current status of the project</returns>
+    private BO.ProjectStatus getProjectStatus()
+    {
+        XElement configRoot = XElement.Load(@"..\xml\data-config.xml");
+        return (BO.ProjectStatus)int.Parse(configRoot.Element("project-stage")!.Value);
+    }
+
+    /// <summary>
+    /// helping method that change the dal-config xml file into the current progect status
+    /// </summary>
+    private void setProjectStatus(int newStatus)
+    {
+        XElement configRoot = XElement.Load(@"..\xml\data-config.xml");
+        configRoot.Element("project-stage")!.Value = String.Format("{0}", newStatus);
+    }
+
+    /// <summary>
+    /// helping method to the general automatic scedule method
+    /// </summary>
+    public void AutoScedule(DateTime startingDate)
+    {
+        setProjectStatus((int)BO.ProjectStatus.Sceduling); //we are now at the Sceduling stage
+
+        IEnumerable<int> basicTasks = from task in _dal.Task.ReadAll()     //all the task
+                                      where !((_dal.Dependency.ReadAll(d=> d._dependentTask == task._id)).Any()) //all the task that nothing depends on them
+                                      select task._id; //all their ids
+
+        foreach(int taskId in basicTasks)
+        {
+            autoSceduleTask(taskId, startingDate);
+        }
+
+        setProjectStatus((int)BO.ProjectStatus.Execution); //we are now at the Execution stage
+    }
+
+    /// <summary>
+    /// reqursive helping method for the AutoScedule method
+    /// </summary>
+    /// <param name="taskId"> the task we want to scedule </param>
+    /// <param name="formerForcastDate"> the forcast date from the task that was before him in the reqursive method </param>
+    private void autoSceduleTask(int taskId, DateTime formerForcastDate)
+    {
+        DO.Task theTask = _dal.Task.Read(taskId)!;
+        DO.Task sceduledTask;
+        if (theTask._scheduledDate == null || formerForcastDate > theTask._scheduledDate) 
+        {
+            sceduledTask = theTask with { _scheduledDate = formerForcastDate}; //when the new suggested date is later the previous one or when there is no previous one
+        }
+        else
+        {
+            sceduledTask = theTask; //in case there is alredy leter date so keep him
+        }
+        _dal.Task.Update(sceduledTask);
+        foreach (var dep in _dal.Dependency.ReadAll(d => d._dependsOnTask == taskId)) //change all the task that depends on him
+        {
+            autoSceduleTask((int)dep!._dependentTask!, (DateTime)(sceduledTask._scheduledDate + sceduledTask._requiredEffortTime!));
+        }
+    }
+
     public int Create(BO.Task? newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
     {
         if(newTask.Id<=0)
             throw new NotImplementedException();
-        if(newTask.Alias=="")
+
+        if ((int)getProjectStatus() != 1)
+        {
+            throw new BLWrongStageException();
+        }
+
+        if (newTask.Alias=="")
             throw new NotImplementedException();
         DO.Task? doTaskToCheck = _dal.Task.Read(newTask.Id);//get task to check if exist
         if(doTaskToCheck != null)
@@ -23,6 +93,7 @@ internal class TaskImplementation : BlApi.ITask
         _dal.Task.Create(doTaskToCreate);
         return newTask.Id;
     }
+
     private DO.Task? BOToDOTask(BO.Task newTask)
     {
         return new DO.Task() {
@@ -46,7 +117,10 @@ internal class TaskImplementation : BlApi.ITask
 
     public void Delete(int idOfTaskToDelete)
     {
-        throw new NotImplementedException();
+        if ((int)getProjectStatus() != 1)
+        {
+            throw new BLWrongStageException();
+        }
     }
 
     public BO.Task? Read(int idOfWantedTask)
@@ -58,12 +132,18 @@ internal class TaskImplementation : BlApi.ITask
         return MakeBOFromDoTASK(doTask);
     }
 
-    private DateTime? ForecastCalc(DateTime? scheduledDate, DateTime? startDate, TimeSpan? RequiredEffortTime)
+    private DateTime? ForecastCalc(DateTime? scheduledDate, DateTime? startDate, TimeSpan RequiredEffortTime)
     {
-        if(scheduledDate > startDate)
+        if(scheduledDate == null && startDate == null) //if n one of those 2 times has been started
+        {
+            return null;
+        }
+        if(startDate == null || scheduledDate < startDate) //if the scheduledDate is before the start or if the task hasn't started yet
             return scheduledDate + RequiredEffortTime;
-        else
+        else //then the start is before the scheduledDate
+        {
             return startDate + RequiredEffortTime;
+        }
     }
 
     private EngineerInTask CheckIfEngineerFromTaskIsExist(int idOfTask)
@@ -78,20 +158,14 @@ internal class TaskImplementation : BlApi.ITask
         return eng;
     }
 
-    List<TaskInList?> CheckDependenciesFromDal(int idOfWantedTask)
+    private List<TaskInList?> CheckDependenciesFromDal(int idOfWantedTask)
     {
         //change like that: all dependencies => only the dependent dependencies => only their id's => their correct tasks => their correct TaskInList
         IEnumerable <DO.Dependency?> listDependencies = _dal.Dependency.ReadAll();//use read func from dal to get details of specific task
         listDependencies = listDependencies.Where(dependency => dependency._dependentTask == idOfWantedTask);
         IEnumerable<int?> listID = listDependencies.Select(dependency => dependency?._id);
         IEnumerable<DO.Task?> listTask = listID.Select(dependencyID => _dal.Task.Read((int)dependencyID));
-        IEnumerable<TaskInList?> listTaskInList = listTask.Select(TaskEx => new TaskInList() 
-        {
-            Id= TaskEx._id,
-            Description=TaskEx._description,
-            Alias=TaskEx._alias,
-            Status= (Status?)WhatStatus(TaskEx._scheduledDate, TaskEx._startDate, TaskEx._completeDate)
-        } );
+        IEnumerable<TaskInList?> listTaskInList = listTask.Select(TaskEx => new TaskInList(TaskEx._id, TaskEx._description, TaskEx._alias, (Status)WhatStatus(TaskEx._scheduledDate, TaskEx._startDate, TaskEx._completeDate)));
         return (List<TaskInList?>)listTaskInList;
     }
 
@@ -112,19 +186,16 @@ internal class TaskImplementation : BlApi.ITask
             throw new BO.BlDoesNotExistException($"Tasks list does Not exist");
         IEnumerable<BO.Task?> AllBOTasks = AllDOTasks.Select(DOTtaskInList => MakeBOFromDoTASK(DOTtaskInList));
         AllBOTasks = AllBOTasks.Where(TaskEx=>filter(TaskEx));//FILTER
-        IEnumerable<TaskInList?> TasksInList = AllBOTasks.Select(BOtaskInList => new TaskInList()//make to task in list to return properly
-        {
-            Id = BOtaskInList.Id,
-            Description = BOtaskInList.Description,
-            Alias = BOtaskInList.Alias,
-            Status = BOtaskInList.Status 
-        }) ;
+        IEnumerable<TaskInList?> TasksInList = AllBOTasks.Select((BOtaskInList => new TaskInList(BOtaskInList.Id, BOtaskInList.Description, BOtaskInList.Alias, BOtaskInList.Status)));//make to task in list to return properly
         return TasksInList;
     }
 
     public void Update(BO.Task? item)
     {
-        throw new NotImplementedException();
+        if ((int)getProjectStatus() != 1)
+        {
+            throw new BLWrongStageException();
+        }
     }
     int WhatStatus(DateTime? scheduledDate, DateTime? startDate, DateTime? completeDate)//////////////////
     {
