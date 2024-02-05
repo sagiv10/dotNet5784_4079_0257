@@ -6,7 +6,7 @@ public interface Iproject
     /// helping method that gets from the dal-config xml file the current progect status
     /// </summary>
     /// <returns>the current status of the project</returns>
-    private int getProjectStatus();
+    int getProjectStatus();
     //{
     //    XElement configRoot = XElement.Load(@"..\xml\data-config.xml");
     //    return (BO.ProjectStatus)int.Parse(configRoot.Element("project-stage")!.Value);
@@ -15,7 +15,7 @@ public interface Iproject
     /// <summary>
     /// helping method that change the dal-config xml file into the current progect status
     /// </summary>
-    private void setProjectStatus(int newStatus);
+    void setProjectStatus(int newStatus);
     //{
     //    XElement configRoot = XElement.Load(@"..\xml\data-config.xml"); //get the previous root
 
@@ -27,7 +27,7 @@ public interface Iproject
     /// <summary>
     /// helping method that change the dal-config xml file into the current progect starting time
     /// </summary>
-    private void setStartingDate(DateTime start);
+    void setStartingDate(DateTime start);
     //{
     //    XElement configRoot = XElement.Load(@"..\xml\data-config.xml"); //get the previous root
 
@@ -41,5 +41,5 @@ public interface Iproject
     /// <summary>
     /// helping method that change the dal-config xml file into the current progect starting time
     /// </summary>
-    private void getStartingDate(DateTime start);
+    void getStartingDate(DateTime start);
 }
