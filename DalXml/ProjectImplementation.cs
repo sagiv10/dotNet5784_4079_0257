@@ -25,13 +25,34 @@ internal class ProjectImplementation : Iproject
         throw new NotImplementedException();
     }
 
-    public void setStartingDate(DateTime start)
+    public void setStartingDate(DateTime? start)
     {
         XElement configRoot = XElement.Load(@"..\xml\data-config.xml"); //get the previous root
 
-        XElement theTime = new XElement("project-starting-date", start); //create new tag of the starting date
+        XElement? theTime = configRoot.Element("project-starting-date");
 
-        configRoot.Element("project-stage")!.Add(theTime); //create the field of the starting date (he did not exist untill now)
+        if(start == null ) //then we  want to delete the starting time
+        {
+            if (theTime != null)
+            {
+                theTime.Remove();
+            }
+            //else - nothing
+        }
+        else
+        {
+
+            if (theTime != null)
+            {
+                configRoot.Element("project-starting-date")?.SetValue(start);
+            }
+            else
+            {
+                XElement newTime = new XElement("project-starting-date", start); //create new tag of the starting date
+
+                configRoot.Add(newTime); //create the field of the starting date (he did not exist untill now)
+            }
+        }
 
         configRoot.Save(@"..\xml\data-config.xml"); //save it
     }

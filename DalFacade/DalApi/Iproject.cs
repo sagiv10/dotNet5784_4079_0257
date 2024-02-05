@@ -16,7 +16,7 @@ public interface Iproject
     /// <summary>
     /// helping method that change the dal-config xml file into the current progect starting time
     /// </summary>
-    public void setStartingDate(DateTime start);
+    public void setStartingDate(DateTime? start);
 
     /// <summary>
     /// helping method that change the dal-config xml file into the current progect starting time
