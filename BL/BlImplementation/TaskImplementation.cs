@@ -71,6 +71,27 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
+    public int Create(BO.Task? newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
+    {
+        if(newTask.Id<=0)
+            throw new NotImplementedException();
+
+        if ((int)getProjectStatus() != 1)
+        {
+            throw new BLWrongStageException();
+        }
+
+        if (newTask.Alias=="")
+            throw new NotImplementedException();
+        DO.Task? doTaskToCheck = _dal.Task.Read(newTask.Id);//get task to check if exist
+        if(doTaskToCheck != null)
+            throw new NotImplementedException();
+        newTask.Dependencies.Select(dependency=>createTloot(newTask.Id, dependency));
+        DO.Task? doTaskToCreate = BOToDOTask(newTask);
+        _dal.Task.Create(doTaskToCreate);
+        return newTask.Id;
+    }
+
     private DO.Task? BOToDOTask(BO.Task newTask)
     {
         return new DO.Task()
@@ -95,25 +116,23 @@ internal class TaskImplementation : BlApi.ITask
 
     private BO.Task? MakeBOFromDoTASK(DO.Task? doTask)
     {
-        return new BO.Task()
+        IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
+        int? check = AllDOTasks.FirstOrDefault(task => idOfTaskToDelete == task._id);
+        if (check != null)
         {
-            Id = doTask._id,
-            Description = doTask._description,
-            Alias = doTask._alias,
-            CreatedAtDate = doTask._createdAtDate,
-            Status = (Status?)WhatStatus(doTask._scheduledDate, doTask._startDate, doTask._completeDate),
-            Dependencies = CheckDependenciesFromDal(doTask._id) ?? null,
-            RequiredEffortTime = doTask._requiredEffortTime,
-            StartDate = doTask._startDate,
-            ScheduledDate = doTask._scheduledDate,
-            ForecastDate = ForecastCalc(doTask._scheduledDate, doTask._startDate, doTask._requiredEffortTime),
-            DeadlineDate = doTask._deadlineDate,
-            CompleteDate = doTask._completeDate,
-            Deliverables = doTask._alias,
-            Remarks = doTask._remarks,
-            Engineer = CheckIfEngineerFromTaskIsExist(doTask._id),
-            Complexity = (BO.EngineerExperience)doTask._complexity
-        };
+            throw BLIdNotExist();
+        }
+        if ((int)getProjectStatus() != 1)
+        {
+            throw new BLWrongStageException();
+        }
+        IEnumerable<DO.Dependency?> AllDODependency = _dal.Dependency.ReadAll();//use read func from dal to get details of all tasks
+        int? check2 = AllDODependency.FirstOrDefault(dep => dep._dependsOnTask/**/== idOfTaskToDelete);
+        if(check2!=null)
+        {
+            throw BLcantDeleteBczDependency();
+        }
+        _dal.Task.Delete(idOfTaskToDelete);
     }
 
     private DateTime? ForecastCalc(DateTime? scheduledDate, DateTime? startDate, TimeSpan RequiredEffortTime)
