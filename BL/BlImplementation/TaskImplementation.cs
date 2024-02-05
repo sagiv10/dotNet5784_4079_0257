@@ -49,7 +49,7 @@ internal class TaskImplementation : BlApi.ITask
     public int Create(BO.Task? newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
     {
         if(newTask.Id<=0)
-            throw new lkmklmlk();
+            throw new wrongid();
 
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
@@ -58,7 +58,7 @@ internal class TaskImplementation : BlApi.ITask
 
         if (newTask.Alias=="")
         {
-            throw new drgd();
+            throw new wrongname();
         }
         DO.Task? doTaskToCheck = _dal.Task.Read(newTask.Id);//get task to check if exist
         if(doTaskToCheck != null)
@@ -233,7 +233,7 @@ internal class TaskImplementation : BlApi.ITask
         {
             throw BLcantDeleteBczDependency();
         }
-        _dal.Task.Delete(idOfTaskToDelete);
+        _dal.Task.Delete(idOfTaskToDelete);///////////////////////////////////////
     }
 
     public BO.Task? Read(int idOfWantedTask)
@@ -249,7 +249,7 @@ internal class TaskImplementation : BlApi.ITask
     {
         IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
         if (AllDOTasks == null)
-            throw new BO.BlDoesNotExistException($"Task does Not exist");
+            throw new BO.BlDoesNotExistException($"Tasks does Not exist");
         IEnumerable<BO.Task?> AllBOTasks = AllDOTasks.Select(DOTtaskInList => MakeBOFromDoTASK(DOTtaskInList));
         BO.Task? chosen= AllBOTasks.FirstOrDefault(filter);//FILTER
         return chosen;
