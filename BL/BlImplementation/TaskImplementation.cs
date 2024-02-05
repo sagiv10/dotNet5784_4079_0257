@@ -185,27 +185,6 @@ internal class TaskImplementation : BlApi.ITask
         //IF WE WANT TAKE CARE OF JEOPARDY 
     }
 
-    public int Create(BO.Task? newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
-    {
-        if(newTask.Id<=0)
-            throw new NotImplementedException();
-
-        if ((int)getProjectStatus() != 1)
-        {
-            throw new BLWrongStageException();
-        }
-
-        if (newTask.Alias=="")
-            throw new NotImplementedException();
-        DO.Task? doTaskToCheck = _dal.Task.Read(newTask.Id);//get task to check if exist
-        if(doTaskToCheck != null)
-            throw new NotImplementedException();
-        newTask.Dependencies.Select(dependency=>createTloot(newTask.Id, dependency));
-        DO.Task? doTaskToCreate = BOToDOTask(newTask);
-        _dal.Task.Create(doTaskToCreate);
-        return newTask.Id;
-    }
-
     public void Delete(int idOfTaskToDelete)
     {
         if ((int)getProjectStatus() != 1)
