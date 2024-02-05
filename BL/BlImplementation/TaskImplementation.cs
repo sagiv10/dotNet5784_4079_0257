@@ -205,10 +205,13 @@ internal class TaskImplementation : BlApi.ITask
 
     public void Update(BO.Task? item)
     {
+        //BDIKAT NETOONIM
         if ((int)getProjectStatus() != 1)
         {
             throw new BLWrongStageException();
         }
+        DO.Task? doTask = BOToDOTask(item);
+        _dal.Task.Update(doTask);
     }
     int WhatStatus(DateTime? scheduledDate, DateTime? startDate, DateTime? completeDate)//////////////////
     {
