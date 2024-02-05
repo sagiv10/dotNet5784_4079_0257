@@ -55,7 +55,7 @@ internal class EngineerImplementation : BlApi.IEngineer
             oldEngineer.Email,
             oldEngineer.Name,
             (DO.ComplexityLvls)(oldEngineer.Level!),
-            true
+            true //of course he is active we've just made him...
             );
     }
 

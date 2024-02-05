@@ -21,12 +21,12 @@ public record Task
 (
    int _id,
    DateTime _createdAtDate,
+   TimeSpan _requiredEffortTime,
    bool _isMilestone = false,
    string _alias = "",
-   string _description ="", 
+   string _description ="",
    DateTime? _scheduledDate = null,
-   DateTime? _startDate = null, 
-   TimeSpan? _requiredEffortTime = null, 
+   DateTime? _startDate = null,  
    DateTime? _deadlineDate = null, 
    DateTime? _completeDate = null,
    string? _deliverables = null, 
@@ -36,10 +36,9 @@ public record Task
    bool _isActive=false
 )
 {
-    public Task() : this(0,DateTime.Now,false) { }
+    public Task() : this(0, DateTime.Now, new TimeSpan(7), false) { }
     public bool ShouldSerialize_scheduledDate() { return _scheduledDate.HasValue; }
     public bool ShouldSerialize_startDate() { return _startDate.HasValue; }
-    public bool ShouldSerialize_requiredEffortTime() { return _requiredEffortTime.HasValue; }
     public bool ShouldSerialize_deadlineDate() { return _deadlineDate.HasValue; }
     public bool ShouldSerialize_completeDate() { return _completeDate.HasValue; }
     public bool ShouldSerialize_deliverables() { return !string.IsNullOrEmpty(_deliverables); }

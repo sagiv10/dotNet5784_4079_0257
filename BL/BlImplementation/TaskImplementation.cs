@@ -26,27 +26,25 @@ internal class TaskImplementation : BlApi.ITask
     /// </summary>
     private void setProjectStatus(int newStatus)
     {
-        XElement configRoot = XElement.Load(@"..\xml\data-config.xml");
-        configRoot.Element("project-stage")!.Value = String.Format("{0}", newStatus);
+        XElement configRoot = XElement.Load(@"..\xml\data-config.xml"); //get the previous root
+        
+        configRoot.Element("project-stage")!.Value = String.Format("{0}", newStatus); //change the field of the projectStatus
+        
+        configRoot.Save(@"..\xml\data-config.xml"); //save it
     }
 
     /// <summary>
-    /// helping method to the general automatic scedule method
+    /// helping method that change the dal-config xml file into the current progect starting time
     /// </summary>
-    public void AutoScedule(DateTime startingDate)
+    private void saveStartingDate(DateTime start)
     {
-        setProjectStatus((int)BO.ProjectStatus.Sceduling); //we are now at the Sceduling stage
-
-        IEnumerable<int> basicTasks = from task in _dal.Task.ReadAll()     //all the task
-                                      where !((_dal.Dependency.ReadAll(d=> d._dependentTask == task._id)).Any()) //all the task that nothing depends on them
-                                      select task._id; //all their ids
-
-        foreach(int taskId in basicTasks)
-        {
-            autoSceduleTask(taskId, startingDate);
-        }
-
-        setProjectStatus((int)BO.ProjectStatus.Execution); //we are now at the Execution stage
+        XElement configRoot = XElement.Load(@"..\xml\data-config.xml"); //get the previous root
+        
+        XElement theTime = new XElement("project-starting-date", start); //create new tag of the starting date
+        
+        configRoot.Element("project-stage")!.Add(theTime); //create the field of the starting date (he did not exist untill now)
+        
+        configRoot.Save(@"..\xml\data-config.xml"); //save it
     }
 
     /// <summary>
@@ -96,7 +94,8 @@ internal class TaskImplementation : BlApi.ITask
 
     private DO.Task? BOToDOTask(BO.Task newTask)
     {
-        return new DO.Task() {
+        return new DO.Task()
+        {
             _id = newTask.Id,
             _createdAtDate = newTask.CreatedAtDate,
             _isMilestone = false,
@@ -115,7 +114,7 @@ internal class TaskImplementation : BlApi.ITask
         };
     }
 
-    public void Delete(int idOfTaskToDelete)
+    private BO.Task? MakeBOFromDoTASK(DO.Task? doTask)
     {
         IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
         int? check = AllDOTasks.FirstOrDefault(task => idOfTaskToDelete == task._id);
@@ -136,22 +135,13 @@ internal class TaskImplementation : BlApi.ITask
         _dal.Task.Delete(idOfTaskToDelete);
     }
 
-    public BO.Task? Read(int idOfWantedTask)
-    {
-        DO.Task? doTask = _dal.Task.Read(idOfWantedTask);//use read func from dal to get details of specific task
-        if (doTask == null)
-            throw new BO.BlDoesNotExistException($"Task with ID={idOfWantedTask} does Not exist");
-
-        return MakeBOFromDoTASK(doTask);
-    }
-
     private DateTime? ForecastCalc(DateTime? scheduledDate, DateTime? startDate, TimeSpan RequiredEffortTime)
     {
-        if(scheduledDate == null && startDate == null) //if n one of those 2 times has been started
+        if (scheduledDate == null && startDate == null) //if n one of those 2 times has been started
         {
             return null;
         }
-        if(startDate == null || scheduledDate < startDate) //if the scheduledDate is before the start or if the task hasn't started yet
+        if (startDate == null || scheduledDate < startDate) //if the scheduledDate is before the start or if the task hasn't started yet
             return scheduledDate + RequiredEffortTime;
         else //then the start is before the scheduledDate
         {
@@ -174,12 +164,55 @@ internal class TaskImplementation : BlApi.ITask
     private List<TaskInList?> CheckDependenciesFromDal(int idOfWantedTask)
     {
         //change like that: all dependencies => only the dependent dependencies => only their id's => their correct tasks => their correct TaskInList
-        IEnumerable <DO.Dependency?> listDependencies = _dal.Dependency.ReadAll();//use read func from dal to get details of specific task
+        IEnumerable<DO.Dependency?> listDependencies = _dal.Dependency.ReadAll();//use read func from dal to get details of specific task
         listDependencies = listDependencies.Where(dependency => dependency._dependentTask == idOfWantedTask);
         IEnumerable<int?> listID = listDependencies.Select(dependency => dependency?._id);
         IEnumerable<DO.Task?> listTask = listID.Select(dependencyID => _dal.Task.Read((int)dependencyID));
         IEnumerable<TaskInList?> listTaskInList = listTask.Select(TaskEx => new TaskInList(TaskEx._id, TaskEx._description, TaskEx._alias, (Status)WhatStatus(TaskEx._scheduledDate, TaskEx._startDate, TaskEx._completeDate)));
         return (List<TaskInList?>)listTaskInList;
+    }
+
+    private int WhatStatus(DateTime? scheduledDate, DateTime? startDate, DateTime? completeDate)//////////////////
+    {
+        if (scheduledDate == null)//Unscheduled
+        { return 0; }
+        if (DateTime.Now < scheduledDate)//Scheduled
+        { return 1; }
+        if (DateTime.Now < completeDate)//OnTrack
+        { return 2; }
+        else
+        { return 3; }//done
+        //IF WE WANT TAKE CARE OF JEOPARDY 
+    }
+
+    public void Delete(int idOfTaskToDelete)
+    {
+        IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
+        DO.Task? check = AllDOTasks.FirstOrDefault(task => idOfTaskToDelete == task._id);
+        if (check != null)
+        {
+            throw BLIdNotExist();
+        }
+        if ((int)getProjectStatus() != 1)
+        {
+            throw new BLWrongStageException();
+        }
+        IEnumerable<DO.Dependency?> AllDODependency = _dal.Dependency.ReadAll();//use read func from dal to get details of all tasks
+        DO.Dependency? check2 = AllDODependency.FirstOrDefault(dep => dep._dependsOnTask/**/== idOfTaskToDelete);
+        if (check2 != null)
+        {
+            throw BLcantDeleteBczDependency();
+        }
+        _dal.Task.Delete(idOfTaskToDelete);
+    }
+
+    public BO.Task? Read(int idOfWantedTask)
+    {
+        DO.Task? doTask = _dal.Task.Read(idOfWantedTask);//use read func from dal to get details of specific task
+        if (doTask == null)
+            throw new BO.BlDoesNotExistException($"Task with ID={idOfWantedTask} does Not exist");
+
+        return MakeBOFromDoTASK(doTask);
     }
 
     public BO.Task? Read(Func<BO.Task?, bool> filter)
@@ -213,39 +246,27 @@ internal class TaskImplementation : BlApi.ITask
         DO.Task? doTask = BOToDOTask(item);
         _dal.Task.Update(doTask);
     }
-    int WhatStatus(DateTime? scheduledDate, DateTime? startDate, DateTime? completeDate)//////////////////
+
+    public void AutoScedule(DateTime startingDate)
     {
-        if (scheduledDate == null)//Unscheduled
-        { return 0; }
-        if (DateTime.Now < scheduledDate)//Scheduled
-        { return 1; }
-        if (DateTime.Now < completeDate)//OnTrack
-        { return 2; }
-        else
-        { return 3; }//done
-        //IF WE WANT TAKE CARE OF JEOPARDY 
-    }
-    BO.Task? MakeBOFromDoTASK (DO.Task? doTask)
-    {
-        return new BO.Task()
+        saveStartingDate(startingDate); //saving the new starting date
+        setProjectStatus((int)BO.ProjectStatus.Sceduling); //we are now at the Sceduling stage
+
+        IEnumerable<int> basicTasks = from task in _dal.Task.ReadAll()     //all the task
+                                      where !((_dal.Dependency.ReadAll(d => d._dependentTask == task._id)).Any()) //all the task that nothing depends on them
+                                      select task._id; //all their ids
+
+        foreach (int taskId in basicTasks)
         {
-            Id = doTask._id,
-            Description = doTask._description,
-            Alias = doTask._alias,
-            CreatedAtDate = doTask._createdAtDate,
-            Status = (Status?)WhatStatus(doTask._scheduledDate, doTask._startDate, doTask._completeDate),
-            Dependencies = CheckDependenciesFromDal(doTask._id) ?? null,
-            RequiredEffortTime = doTask._requiredEffortTime,
-            StartDate = doTask._startDate,
-            ScheduledDate = doTask._scheduledDate,
-            ForecastDate = ForecastCalc(doTask._scheduledDate, doTask._startDate, doTask._requiredEffortTime),
-            DeadlineDate = doTask._deadlineDate,
-            CompleteDate = doTask._completeDate,
-            Deliverables = doTask._alias,
-            Remarks = doTask._remarks,
-            Engineer = CheckIfEngineerFromTaskIsExist(doTask._id),
-            Complexity = (BO.EngineerExperience)doTask._complexity
-        };
+            autoSceduleTask(taskId, startingDate);
+        }
+
+        setProjectStatus((int)BO.ProjectStatus.Execution); //we are now at the Execution stage
+    }
+
+    public void AddDependency(int dependentTask, int DependsOnTask)
+    {
+        throw new NotImplementedException();
     }
 }
 
