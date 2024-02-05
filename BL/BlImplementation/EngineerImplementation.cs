@@ -313,7 +313,6 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw new BLWrongStageException();
         }
-
         if (_dal.Engineer.Read(id) == null)
         {
             throw new BLNotFoundException(id);

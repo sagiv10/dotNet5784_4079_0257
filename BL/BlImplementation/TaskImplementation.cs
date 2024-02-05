@@ -247,7 +247,10 @@ internal class TaskImplementation : BlApi.ITask
         {
             throw BLcantDeleteBczDependency();
         }
-        _dal.Task.Delete(idOfTaskToDelete);///////////////////////////////////////
+        _dal.Task.Delete(idOfTaskToDelete);
+        IEnumerable<DO.Dependency?> filteredIEN = _dal.Dependency.ReadAll(cond => cond._dependentTask==idOfTaskToDelete);
+        foreach (var dep in filteredIEN)
+            _dal.Dependency.Delete(dep._id);
     }
 
     public BO.Task? Read(int idOfWantedTask)
@@ -371,14 +374,14 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
-    public void StartSchedule(DateTime StartingDate)
+    public void StartSchedule(DateTime StartingDateOfProject)
     {
         if((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)// this method can be acceced only in the planning stage
         {
             throw new BLWrongStageException();
         }
         _dal.Project.setProjectStatus((int)BO.ProjectStatus.Sceduling);
-        _dal.Project.setStartingDate(StartingDate);
+        _dal.Project.setStartingDate(StartingDateOfProject);
     }
 }
 
