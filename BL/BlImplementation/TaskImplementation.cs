@@ -40,7 +40,7 @@ internal class TaskImplementation : BlApi.ITask
         if(newTask.Id<=0)
             throw new NotImplementedException();
 
-        if ((int)getProjectStatus() != 1)
+        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
             throw new BLWrongStageException();
         }
@@ -80,23 +80,12 @@ internal class TaskImplementation : BlApi.ITask
 
     private BO.Task? MakeBOFromDoTASK(DO.Task? doTask)
     {
-        IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
-        int? check = AllDOTasks.FirstOrDefault(task => idOfTaskToDelete == task._id);
-        if (check != null)
+        return new BO.Task()
         {
-            throw BLIdNotExist();
-        }
-        if ((int)getProjectStatus() != 1)
-        {
-            throw new BLWrongStageException();
-        }
-        IEnumerable<DO.Dependency?> AllDODependency = _dal.Dependency.ReadAll();//use read func from dal to get details of all tasks
-        int? check2 = AllDODependency.FirstOrDefault(dep => dep._dependsOnTask/**/== idOfTaskToDelete);
-        if(check2!=null)
-        {
-            throw BLcantDeleteBczDependency();
-        }
-        _dal.Task.Delete(idOfTaskToDelete);
+            Id = doTask._id,
+            Des
+            
+        };
     }
 
     private DateTime? ForecastCalc(DateTime? scheduledDate, DateTime? startDate, TimeSpan RequiredEffortTime)
@@ -157,12 +146,12 @@ internal class TaskImplementation : BlApi.ITask
         {
             throw BLIdNotExist();
         }
-        if ((int)getProjectStatus() != 1)
+        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
             throw new BLWrongStageException();
         }
         IEnumerable<DO.Dependency?> AllDODependency = _dal.Dependency.ReadAll();//use read func from dal to get details of all tasks
-        DO.Dependency? check2 = AllDODependency.FirstOrDefault(dep => dep._dependsOnTask/**/== idOfTaskToDelete);
+        DO.Dependency? check2 = AllDODependency.FirstOrDefault(dep => dep._dependsOnTask == idOfTaskToDelete);
         if (check2 != null)
         {
             throw BLcantDeleteBczDependency();
@@ -202,7 +191,7 @@ internal class TaskImplementation : BlApi.ITask
 
     public void Update(BO.Task? item)
     {
-        if ((int)getProjectStatus() != 1)
+        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
             throw new BLWrongStageException();
         }

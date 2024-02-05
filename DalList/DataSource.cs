@@ -18,9 +18,9 @@ internal static class DataSource
         private static int nextDependencyId = startDependencyId;
         internal static int NextDependencyId { get => nextDependencyId++; }
 
-        internal static DateTime startingDate; 
+        internal static DateTime? startingDate = null; 
 
-        internal static int projectStatus;
+        internal static int projectStatus = 1;
 
         /// <summary>
         /// this method returns a dependency by the id we gave it. if not exists return null.
