@@ -63,7 +63,7 @@ internal class TaskImplementation : BlApi.ITask
     public int Create(BO.Task? newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
     {
         if(newTask.Id<=0)
-            throw new lkmklmlk();
+            throw new wrongid();
 
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
@@ -72,7 +72,7 @@ internal class TaskImplementation : BlApi.ITask
 
         if (newTask.Alias=="")
         {
-            throw new drgd();
+            throw new wrongname();
         }
         DO.Task? doTaskToCheck = _dal.Task.Read(newTask.Id);//get task to check if exist
         if(doTaskToCheck != null)
@@ -248,6 +248,9 @@ internal class TaskImplementation : BlApi.ITask
             throw BLcantDeleteBczDependency();
         }
         _dal.Task.Delete(idOfTaskToDelete);
+        IEnumerable<DO.Dependency?> filteredIEN = _dal.Dependency.ReadAll(cond => cond._dependentTask==idOfTaskToDelete);
+        foreach (var dep in filteredIEN)
+            _dal.Dependency.Delete(dep._id);
     }
 
     public BO.Task? Read(int idOfWantedTask)
@@ -263,7 +266,7 @@ internal class TaskImplementation : BlApi.ITask
     {
         IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
         if (AllDOTasks == null)
-            throw new BO.BlDoesNotExistException($"Task does Not exist");
+            throw new BO.BlDoesNotExistException($"Tasks does Not exist");
         IEnumerable<BO.Task?> AllBOTasks = AllDOTasks.Select(DOTtaskInList => MakeBOFromDoTASK(DOTtaskInList));
         BO.Task? chosen= AllBOTasks.FirstOrDefault(filter);//FILTER
         return chosen;
@@ -371,14 +374,14 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
-    public void StartSchedule(DateTime StartingDate)
+    public void StartSchedule(DateTime StartingDateOfProject)
     {
         if((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)// this method can be acceced only in the planning stage
         {
             throw new BLWrongStageException();
         }
         _dal.Project.setProjectStatus((int)BO.ProjectStatus.Sceduling);
-        _dal.Project.setStartingDate(StartingDate);
+        _dal.Project.setStartingDate(StartingDateOfProject);
     }
 }
 

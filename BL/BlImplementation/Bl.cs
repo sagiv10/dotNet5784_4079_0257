@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,7 @@ namespace BlImplementation
 {
     internal class Bl : IBl
     {
-        public IEngineer Engineer => new EngineerImplementation();
-
-        public ITask Task => new TaskImplementation();
+        public IEngineer Engineer =>  new EngineerImplementation();
+        public ITask Task =>  new TaskImplementation();
     }
 }

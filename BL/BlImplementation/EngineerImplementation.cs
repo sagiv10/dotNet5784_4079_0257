@@ -234,13 +234,13 @@ internal class EngineerImplementation : BlApi.IEngineer
         try
         {
             ShowTask(engineerId); //try to see if the engineer alredy has a task assigned
-            throw new BLHasAlredyTaskException(engineerId); //if we got herethen he has a task assigned
+            throw new BLHasAlreadyTaskException(engineerId); //if we got herethen he has a task assigned
         }
         catch(BLNoTaskAssignedException ex) //if we got here then the engineer doesnt have a task assigned
         {
             //everything here its okay!:)
         }
-        catch (BLHasAlredyTaskException ex)
+        catch (BLHasAlreadyTaskException ex)
         {
             throw ex;
         }
@@ -316,7 +316,6 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw new BLWrongStageException();
         }
-
         if (_dal.Engineer.Read(id) == null)
         {
             throw new BLNotFoundException(id);
