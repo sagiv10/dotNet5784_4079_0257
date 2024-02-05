@@ -11,5 +11,6 @@ namespace DalApi
         ITask Task { get; }
         IEngineer Engineer { get; }
         IDependency Dependency { get; }
+        Iproject Project { get; }
     }
 }
