@@ -61,7 +61,7 @@ internal class TaskImplementation : BlApi.ITask
         DO.Task? doTaskToCheck = _dal.Task.Read(newTask.Id);//get task to check if exist
         if(doTaskToCheck != null)
             throw new NotImplementedException();
-        newTask.Dependencies.Select(dependency=>createTloot(newTask.Id, dependency));
+        foreach (var dep in newTask.Dependencies){ AddDependency(newTask.Id, dep.Id); }
         DO.Task? doTaskToCreate = BOToDOTask(newTask);
         _dal.Task.Create(doTaskToCreate);
         return newTask.Id;
@@ -91,7 +91,26 @@ internal class TaskImplementation : BlApi.ITask
 
     private BO.Task? MakeBOFromDoTASK(DO.Task? doTask)
     {
-
+        return new BO.Task()
+        {
+            Id = doTask._id,
+            Description=doTask._description,
+            Alias=doTask._alias,
+            CreatedAtDate=doTask._createdAtDate,
+            Status=(Status?)WhatStatus(doTask._scheduledDate,doTask._startDate,doTask._completeDate),
+            Dependencies=GetDependenciesFromDal(doTask._id),
+            Milestone=null,
+            RequiredEffortTime=doTask._requiredEffortTime,
+            StartDate=doTask._startDate,
+            ScheduledDate=doTask._scheduledDate,
+            ForecastDate=ForecastCalc(doTask._scheduledDate, doTask._startDate, doTask._requiredEffortTime),
+            DeadlineDate=doTask._deadlineDate,
+            CompleteDate=doTask._completeDate,
+            Deliverables=doTask._deliverables,
+            Remarks=doTask._remarks,
+            Engineer= CheckIfEngineerFromTaskIsExist((int)doTask._engineerId),
+            Complexity=(BO.EngineerExperience)doTask._complexity
+        };
     }
 
     private DateTime? ForecastCalc(DateTime? scheduledDate, DateTime? startDate, TimeSpan RequiredEffortTime)
@@ -108,7 +127,7 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
-    private EngineerInTask CheckIfEngineerFromTaskIsExist(int idOfTask)
+    private BO.EngineerInTask? CheckIfEngineerFromTaskIsExist(int idOfTask)
     {
         BO.EngineerInTask? eng = null;
         DO.Task? doTask = _dal.Task.Read(idOfTask);//use read func from dal to get details of specific task
@@ -120,7 +139,7 @@ internal class TaskImplementation : BlApi.ITask
         return eng;
     }
 
-    private List<TaskInList?> CheckDependenciesFromDal(int idOfWantedTask)
+    private List<TaskInList?> GetDependenciesFromDal(int idOfWantedTask)
     {
         //change like that: all dependencies => only the dependent dependencies => only their id's => their correct tasks => their correct TaskInList
         IEnumerable<DO.Dependency?> listDependencies = _dal.Dependency.ReadAll();//use read func from dal to get details of specific task
@@ -201,6 +220,8 @@ internal class TaskImplementation : BlApi.ITask
         {
             throw new BLWrongStageException();
         }
+        DO.Task? doTask = BOToDOTask(item);
+        _dal.Task.Update(doTask);
     }
 
     public void AutoScedule(DateTime startingDate)
