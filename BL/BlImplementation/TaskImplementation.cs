@@ -339,8 +339,8 @@ internal class TaskImplementation : BlApi.ITask
     {
         if (isConfirmed == false)
         {
-            if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Sceduling)//if thats the first time we using this so get project status from "PLANNING" to "SCEDULING"
-                _dal.Project.setProjectStatus(2);
+            if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Sceduling)//if we are in the wrong stage
+                throw new BLWrongStageException();
             IEnumerable<int> nullDates = from dep in _dal.Dependency.ReadAll(d => d._dependentTask == idOfTask)
                                          let hisTask = _dal.Task.Read((int)dep._dependsOnTask!)
                                          where hisTask._scheduledDate == null
@@ -363,8 +363,22 @@ internal class TaskImplementation : BlApi.ITask
                 throw new BLSuggestOptional(optionalDate);
             }
         }
-        DO.Task updatedTask = _dal.Task.Read(idOfTask) with { _scheduledDate = wantedTime };
+        DO.Task updatedTask = _dal.Task.Read(idOfTask)! with { _scheduledDate = wantedTime };
         _dal.Task.Update(updatedTask);
+        if(_dal.Task.ReadAll(t=>t._scheduledDate == null).Count() == 0)
+        {
+            _dal.Project.setProjectStatus((int)BO.ProjectStatus.Execution);
+        }
+    }
+
+    public void StartSchedule(DateTime StartingDate)
+    {
+        if((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)// this method can be acceced only in the planning stage
+        {
+            throw new BLWrongStageException();
+        }
+        _dal.Project.setProjectStatus((int)BO.ProjectStatus.Sceduling);
+        _dal.Project.setStartingDate(StartingDate);
     }
 }
 
