@@ -20,7 +20,7 @@ internal class EngineerImplementation : BlApi.IEngineer
     /// <returns> BO engineer </returns>
     private BO.Engineer DoToBoEngineer(DO.Engineer oldEngineer)
     {
-        DO.Task? workingOn = _dal.Task.Read(task => task._engineerId == oldEngineer._id);
+        DO.Task? workingOn = _dal.Task.Read(task => task._engineerId == oldEngineer._id && task._completeDate == null);
         return new BO.Engineer(
             oldEngineer._id,
             oldEngineer._name,
@@ -120,15 +120,11 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw new BLNotFoundException(id);
         }
-        try //try to see if he has a task
+        if(_dal.Task.ReadAll(t => t._engineerId == id).Count() != 0)
         {
-            BO.TaskInEngineer ifExists = ShowTask(id);
-            throw new BLHasTaskException(ifExists.Id); //if this did not thrown yet  it means that he has assigned task
+            throw new BLHasTasksException(ifExists.Id); //if this did not thrown yet  it means that he has assigned task
         }
-        catch(BLNoTaskAssignedException exp) //if he has no assigned task - then we can delete it 
-        {
-            _dal.Engineer.Delete(id);
-        }
+        _dal.Engineer.Delete(id);
     }
 
     public List<BO.Engineer> ReadAllEngineers(Func<BO.Engineer, bool>? filter = null)
@@ -323,7 +319,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw new BLNoTaskAssignedException(id);
         }
-        DO.Task doneTask = hisTask with { _completeDate = DateTime.Now, _engineerId = null };
+        DO.Task doneTask = hisTask with { _completeDate = DateTime.Now};
         _dal.Task.Update(doneTask);
     }
 }
