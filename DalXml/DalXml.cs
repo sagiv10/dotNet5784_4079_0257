@@ -13,4 +13,6 @@ sealed internal class DalXml : IDal //helping singleton entity to get access to 
     public ITask Task => new TaskImplementation();
     public IEngineer Engineer => new EngineerImplementation();
     public IDependency Dependency => new DependencyImplementation();
+    public Iproject Project => new ProjectImplementation();
+
 }

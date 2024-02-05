@@ -26,5 +26,7 @@ namespace Dal
         public IEngineer Engineer => new EngineerImplementation();
 
         public IDependency Dependency => new DependencyImplementation();
+
+        public Iproject Project => new ProjectImplementation();
     }
 }
