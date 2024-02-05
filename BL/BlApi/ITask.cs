@@ -19,8 +19,15 @@ public interface ITask
     public BO.Task Read(Func<BO.Task, bool> filter); //getting the details of task that the filter accept
 
     public IEnumerable<BO.TaskInList> ReadAll(Func<BO.Task, bool>? filter = null); //returns the task list from dal
-    public void Update(BO.Task item); //Updates task
-    public void Delete(int idOfTaskToDelete); //Deletes an task by its Id
-    //public void UpdateOrAdd(int idOfTask,DateTime dateToCheck); //Updates or adding a schedule start of task with given date 
 
+    public void Update(BO.Task item); //Updates task
+
+    public void Delete(int idOfTaskToDelete); //Deletes an task by its Id
+
+    /// <summary>
+    /// helping method to the general automatic scedule method
+    /// </summary>
+    public void AutoScedule(DateTime startingDate);
+
+    public void AddDependency(int dependentTask, int DependsOnTask);
 }

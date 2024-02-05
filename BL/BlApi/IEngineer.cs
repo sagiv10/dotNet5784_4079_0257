@@ -102,7 +102,6 @@ public interface IEngineer
     /// <exception cref="BLNotFoundException"></exception>
     /// <exception cref="BLNoTaskAssignedException"></exception>
     /// <exception cref="BLWrongStageException"></exception>
-
     public BO.TaskInEngineer ShowTask(int engineerId);
 
     /// <summary>
