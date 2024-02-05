@@ -14,17 +14,6 @@ internal class EngineerImplementation : BlApi.IEngineer
     private DalApi.IDal _dal = DalApi.Factory.Get;
 
     /// <summary>
-    /// helping method that gets from the dal-config xml file the current progect status
-    /// </summary>
-    /// <returns>the current status of the project</returns>
-    private BO.ProjectStatus getProjectStatus()
-    {
-        XElement configRoot = XElement.Load(@"..\xml\data-config.xml");
-        return (BO.ProjectStatus)int.Parse(configRoot.Element("project-stage")!.Value);
-    }
-
-
-    /// <summary>
     /// helping method that gets an DO engineer and returns BO engineer according to the DO engineer. we assume that the function will be called only to engineers with isActive=true
     /// </summary>
     /// <param name="oldEngineer"> the DO engineer </param>
@@ -194,7 +183,7 @@ internal class EngineerImplementation : BlApi.IEngineer
             throw new BLWrongIdInputException(id);
         }
 
-        if ((int)getProjectStatus() != 3)
+        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Execution)
         {
             throw new BLWrongStageException();
         }
@@ -219,7 +208,7 @@ internal class EngineerImplementation : BlApi.IEngineer
             throw new BLWrongIdInputException(engineerId);
         }
 
-        if ((int)getProjectStatus() != 3)
+        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Execution)
         {
             throw new BLWrongStageException();
         }
@@ -272,7 +261,7 @@ internal class EngineerImplementation : BlApi.IEngineer
             throw new BLWrongIdInputException(id);
         }
 
-        if ((int)getProjectStatus() != 3)
+        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Execution)
         {
             throw new BLWrongStageException();
         }
@@ -296,7 +285,7 @@ internal class EngineerImplementation : BlApi.IEngineer
             throw new BLWrongIdInputException(id);
         }
 
-        if ((int)getProjectStatus() != 3)
+        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Execution)
         {
             throw new BLWrongStageException();
         }
@@ -320,7 +309,7 @@ internal class EngineerImplementation : BlApi.IEngineer
             throw new BLWrongIdInputException(id);
         }
 
-        if ((int)getProjectStatus() != 3)
+        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Execution)
         {
             throw new BLWrongStageException();
         }

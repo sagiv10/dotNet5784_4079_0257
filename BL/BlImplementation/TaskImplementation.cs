@@ -35,6 +35,17 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
+    /// <summary>
+    /// hepling method that checks if we got a circular dependency from the new dependency
+    /// </summary>
+    /// <param name="dependent"> the id of the dependent task </param>
+    /// <param name="dependOn"> the id of the dependent On task </param>
+    /// <returns></returns>
+    //public bool checkCircularDependency(int dependent, int dependOn)
+    //{
+
+    //}
+
     public int Create(BO.Task? newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
     {
         if(newTask.Id<=0)
@@ -227,8 +238,8 @@ internal class TaskImplementation : BlApi.ITask
 
     public void AutoScedule(DateTime startingDate)
     {
-        saveStartingDate(startingDate); //saving the new starting date
-        setProjectStatus((int)BO.ProjectStatus.Sceduling); //we are now at the Sceduling stage
+        _dal.Project.setStartingDate(startingDate); //saving the new starting date
+        _dal.Project.setProjectStatus((int)BO.ProjectStatus.Sceduling); //we are now at the Sceduling stage
 
         IEnumerable<int> basicTasks = from task in _dal.Task.ReadAll()     //all the task
                                       where !((_dal.Dependency.ReadAll(d => d._dependentTask == task._id)).Any()) //all the task that nothing depends on them
@@ -239,12 +250,16 @@ internal class TaskImplementation : BlApi.ITask
             autoSceduleTask(taskId, startingDate);
         }
 
-        setProjectStatus((int)BO.ProjectStatus.Execution); //we are now at the Execution stage
+        _dal.Project.setProjectStatus((int)BO.ProjectStatus.Execution); //we are now at the Execution stage
     }
 
     public void AddDependency(int dependentTask, int DependsOnTask)
     {
-        throw new NotImplementedException();
+        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
+        {
+            throw new BLWrongStageException();
+        }
+        _dal.Dependency.Create(new DO.Dependency(dependentTask, DependsOnTask));
     }
 }
 
