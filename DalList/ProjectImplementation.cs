@@ -10,7 +10,7 @@ internal class ProjectImplementation : Iproject
         return DataSource.Config.startingDate;
     }
 
-    public void setStartingDate(DateTime start)
+    public void setStartingDate(DateTime? start)
     {
         DataSource.Config.startingDate = start;
     }
