@@ -38,7 +38,7 @@ internal class TaskImplementation : BlApi.ITask
     public int Create(BO.Task? newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
     {
         if(newTask.Id<=0)
-            throw new NotImplementedException();
+            throw new lkmklmlk();
 
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
@@ -46,7 +46,9 @@ internal class TaskImplementation : BlApi.ITask
         }
 
         if (newTask.Alias=="")
-            throw new NotImplementedException();
+        {
+            throw new drgd();
+        }
         DO.Task? doTaskToCheck = _dal.Task.Read(newTask.Id);//get task to check if exist
         if(doTaskToCheck != null)
             throw new NotImplementedException();
@@ -72,7 +74,7 @@ internal class TaskImplementation : BlApi.ITask
             _completeDate = newTask.CompleteDate,
             _deliverables = newTask.Deliverables,
             _remarks = newTask.Remarks,
-            _complexity = (ComplexityLvls)newTask.Complexity,
+            _complexity = (ComplexityLvls)newTask.Complexity!,
             _engineerId = newTask.Engineer.Id,
             _isActive = true
         };
@@ -208,6 +210,16 @@ internal class TaskImplementation : BlApi.ITask
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
             throw new BLWrongStageException();
+        }
+        IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();
+        DO.Task? check = AllDOTasks.FirstOrDefault(task => item.Id == task._id);
+        if (check != null)
+        {
+            throw BLItemNotExist();
+        }
+        if(item.Alias=="")
+        {
+            throw new drgd();
         }
         DO.Task? doTask = BOToDOTask(item);
         _dal.Task.Update(doTask);
