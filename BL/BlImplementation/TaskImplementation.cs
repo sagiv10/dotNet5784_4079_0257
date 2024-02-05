@@ -187,10 +187,23 @@ internal class TaskImplementation : BlApi.ITask
 
     public void Delete(int idOfTaskToDelete)
     {
+        IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
+        DO.Task? check = AllDOTasks.FirstOrDefault(task => idOfTaskToDelete == task._id);
+        if (check != null)
+        {
+            throw BLIdNotExist();
+        }
         if ((int)getProjectStatus() != 1)
         {
             throw new BLWrongStageException();
         }
+        IEnumerable<DO.Dependency?> AllDODependency = _dal.Dependency.ReadAll();//use read func from dal to get details of all tasks
+        DO.Dependency? check2 = AllDODependency.FirstOrDefault(dep => dep._dependsOnTask/**/== idOfTaskToDelete);
+        if (check2 != null)
+        {
+            throw BLcantDeleteBczDependency();
+        }
+        _dal.Task.Delete(idOfTaskToDelete);
     }
 
     public BO.Task? Read(int idOfWantedTask)
