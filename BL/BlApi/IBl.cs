@@ -6,8 +6,4 @@ public interface IBl
 
     public ITask Task { get; }
 
-    public void AutoScedule(DateTime startingDate);
-
-    public void ManualScedule(DateTime startingDate);
-
 }
