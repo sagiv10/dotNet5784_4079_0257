@@ -118,7 +118,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         }
         if(_dal.Engineer.Read(id) == null) //check if he exists in the DAL
         {
-            throw new BLNotFoundException(id);
+            throw new BLNotFoundException("engineer", id);
         }
         if(_dal.Task.ReadAll(t => t._engineerId == id).Count() != 0)
         {
@@ -252,7 +252,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         DO.Task assignedTask = theTask with
         {
             _engineerId = engineerId,
-            _startDate = theTask._startDate ?? DateTime.Now
+            _startDate = theTask._startDate ?? DateTime.Now //if this is the first time we assigned this task then the startDate is now!!
         };
         _dal.Task.Update(assignedTask);
     }
