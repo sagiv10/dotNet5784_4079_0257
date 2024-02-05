@@ -67,6 +67,11 @@ internal class TaskImplementation : BlApi.ITask
         return newTask.Id;
     }
 
+    /// <summary>
+    /// helping method that converts BO.Task to DO.Task
+    /// </summary>
+    /// <param name="newTask"> BO.Task </param>
+    /// <returns> DO.Task </returns>
     private DO.Task? BOToDOTask(BO.Task newTask)
     {
         return new DO.Task()
@@ -83,13 +88,18 @@ internal class TaskImplementation : BlApi.ITask
             _completeDate = newTask.CompleteDate,
             _deliverables = newTask.Deliverables,
             _remarks = newTask.Remarks,
-            _complexity = (ComplexityLvls)newTask.Complexity,
+            _complexity = (ComplexityLvls)newTask.Complexity!,
             _engineerId = newTask.Engineer.Id,
             _isActive = true
         };
     }
 
-    private BO.Task? MakeBOFromDoTASK(DO.Task? doTask)
+    /// <summary>
+    /// helping method that converts DO.Task to BO.Task
+    /// </summary>
+    /// <param name="doTask"> DO.Task </param>
+    /// <returns> BO.Task </returns>
+    private BO.Task MakeBOFromDoTASK(DO.Task doTask)
     {
         return new BO.Task()
         {
@@ -97,8 +107,8 @@ internal class TaskImplementation : BlApi.ITask
             Description=doTask._description,
             Alias=doTask._alias,
             CreatedAtDate=doTask._createdAtDate,
-            Status=(Status?)WhatStatus(doTask._scheduledDate,doTask._startDate,doTask._completeDate),
-            Dependencies=GetDependenciesFromDal(doTask._id),
+            Status=(Status?)WhatStatus(doTask._scheduledDate,doTask._startDate,doTask._completeDate), //inducate his status
+            Dependencies=GetDependenciesFromDal(doTask._id), //all his dependencies
             Milestone=null,
             RequiredEffortTime=doTask._requiredEffortTime,
             StartDate=doTask._startDate,
@@ -113,6 +123,13 @@ internal class TaskImplementation : BlApi.ITask
         };
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="scheduledDate"></param>
+    /// <param name="startDate"></param>
+    /// <param name="RequiredEffortTime"></param>
+    /// <returns></returns>
     private DateTime? ForecastCalc(DateTime? scheduledDate, DateTime? startDate, TimeSpan RequiredEffortTime)
     {
         if (scheduledDate == null && startDate == null) //if n one of those 2 times has been started
@@ -127,6 +144,11 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="idOfTask"></param>
+    /// <returns></returns>
     private BO.EngineerInTask? CheckIfEngineerFromTaskIsExist(int idOfTask)
     {
         BO.EngineerInTask? eng = null;
@@ -139,6 +161,11 @@ internal class TaskImplementation : BlApi.ITask
         return eng;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="idOfWantedTask"></param>
+    /// <returns></returns>
     private List<TaskInList?> GetDependenciesFromDal(int idOfWantedTask)
     {
         //change like that: all dependencies => only the dependent dependencies => only their id's => their correct tasks => their correct TaskInList
@@ -150,6 +177,13 @@ internal class TaskImplementation : BlApi.ITask
         return (List<TaskInList?>)listTaskInList;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="scheduledDate"></param>
+    /// <param name="startDate"></param>
+    /// <param name="completeDate"></param>
+    /// <returns></returns>
     private int WhatStatus(DateTime? scheduledDate, DateTime? startDate, DateTime? completeDate)//////////////////
     {
         if (scheduledDate == null)//Unscheduled
@@ -167,6 +201,10 @@ internal class TaskImplementation : BlApi.ITask
     {
         IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
         DO.Task? check = AllDOTasks.FirstOrDefault(task => idOfTaskToDelete == task._id);
+        if (idOfTaskToDelete <= 0)
+        {
+            throw new BLWrongIdInputException();
+        }
         if (check != null)
         {
             throw BLIdNotExist();
