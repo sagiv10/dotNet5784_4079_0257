@@ -199,6 +199,18 @@ internal class TaskImplementation : BlApi.ITask
         //IF WE WANT TAKE CARE OF JEOPARDY 
     }
 
+    private DateTime findOptionalDate(int TaskId)
+    {
+        IEnumerable<DateTime> nullDates = from dep in _dal.Dependency.ReadAll(d => d._dependentTask == TaskId)
+                                     let hisTask = _dal.Task.Read((int)dep._dependsOnTask!)
+                                     select (DateTime)hisTask._scheduledDate! +  hisTask._requiredEffortTime;
+        if(nullDates.Count() == 0)
+        {
+            return (DateTime)_dal.Project.getStartingDate()!;
+        }
+        return nullDates.Max();
+    }
+
     public void Delete(int idOfTaskToDelete)
     {
         IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
@@ -299,5 +311,47 @@ internal class TaskImplementation : BlApi.ITask
         }
         _dal.Dependency.Create(new DO.Dependency(dependentTask, DependsOnTask));
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="idOfTask"></param>
+    /// <param name="wantedTime"></param>
+    /// <param name="isConfirmed">if the manager still want his date, even that his date isnt the earliest. if the method is being called from one of the throws=T, if just sent from GUI=F</param>
+    /// <exception cref="BLCannotSceduleOneException"></exception>
+    /// <exception cref="BLCannotSceduleMoreThanOneException"></exception>
+    /// <exception cref="BLToEarlySuggestOptional"></exception>
+    /// <exception cref="BLSuggestOptional"></exception>
+    public void ManualScedule(int idOfTask,DateTime wantedTime,bool isConfirmed)
+    {
+        if (isConfirmed == false)
+        {
+            if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Sceduling)//if thats the first time we using this so get project status from "PLANNING" to "SCEDULING"
+                _dal.Project.setProjectStatus(2);
+            IEnumerable<int> nullDates = from dep in _dal.Dependency.ReadAll(d => d._dependentTask == idOfTask)
+                                         let hisTask = _dal.Task.Read((int)dep._dependsOnTask!)
+                                         where hisTask._scheduledDate == null
+                                         select hisTask._id;
+            if (nullDates.Count() == 1)
+            {
+                throw new BLCannotSceduleOneException(nullDates.FirstOrDefault());
+            }
+            if (nullDates.Count() > 1)
+            {
+                throw new BLCannotSceduleMoreThanOneException(nullDates.Count());
+            }
+            DateTime optionalDate = findOptionalDate(idOfTask);
+            if (optionalDate > wantedTime) //the time the manager want to start is too soon
+            {
+                throw new BLToEarlySuggestOptional(optionalDate);
+            }
+            if (optionalDate < wantedTime)
+            {
+                throw new BLSuggestOptional(optionalDate);
+            }
+        }
+        DO.Task updatedTask = _dal.Task.Read(idOfTask) with { _scheduledDate = wantedTime };
+        _dal.Task.Update(updatedTask);
+    }
 }
+
 
