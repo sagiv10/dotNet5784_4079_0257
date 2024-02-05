@@ -162,14 +162,21 @@ internal class EngineerImplementation : BlApi.IEngineer
         DO.Engineer? originalEngineer = _dal.Engineer.Read(newEngineer.Id);
         if(originalEngineer == null)
         {
-            throw new BLNotFoundException(newEngineer.Id); //if he not exists
+            throw new BLNotFoundException("engineer", newEngineer.Id); //if he not exists
         }
         if((int)originalEngineer!._level! > (int)newEngineer.Level) //cannot lower level of engineer
         {
             throw new BLCannotLowerLevelException();
         }
         DO.Engineer newDOEngineer = BoToDoEngineer(newEngineer);  //convert the engineer to do entity
-        _dal.Engineer.Update(newDOEngineer); //update the engineer
+        try
+        {
+            _dal.Engineer.Update(newDOEngineer); //update the engineer
+        }
+        catch(DO.DalNotFoundException ex)
+        {
+            throw new BLNotFoundException("engineer", newEngineer.Id, ex);
+        }
     }
 
     public void DeAssignTask(int id)
