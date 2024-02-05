@@ -59,11 +59,11 @@ internal class EngineerImplementation : BlApi.IEngineer
     {
         if (engineer.Id < 0)
         {
-            throw new BLWrongIdInputException();
+            throw new BLWrongIdException(engineer.Id);
         }
         if(engineer.Cost < 0)
         {
-            throw new BLWrongCostInputException();
+            throw new BLWrongCostException(engineer.Cost);
         }
         try
         {
@@ -71,7 +71,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         }
         catch(FormatException ex)
         {
-            throw new BLWrongEmailInputException();
+            throw new BLWrongEmailException(engineer.Email);
         }
 
     }
@@ -106,7 +106,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BLAlredyExistsException(newEngineer.Id, ex); //if he alredy exists
+            throw new BLAlreadyExistException("engineer", newEngineer.Id, ex); //if he alredy exists
         }
     }
 
@@ -114,7 +114,7 @@ internal class EngineerImplementation : BlApi.IEngineer
     {
         if (id < 0)//check if the id is valid
         {
-            throw new BLWrongIdInputException();
+            throw new BLWrongIdException(id);
         }
         if(_dal.Engineer.Read(id) == null) //check if he exists in the DAL
         {
@@ -122,7 +122,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         }
         if(_dal.Task.ReadAll(t => t._engineerId == id).Count() != 0)
         {
-            throw new BLHasTasksException(ifExists.Id); //if this did not thrown yet  it means that he has assigned task
+            throw new BLCannotDeleteHasTasksException(id); //if this did not thrown yet  it means that he has assigned task
         }
         _dal.Engineer.Delete(id);
     }
@@ -137,16 +137,16 @@ internal class EngineerImplementation : BlApi.IEngineer
     {
         if(id< 0) //check if the id is valid
         {
-            throw new BLWrongIdInputException();
+            throw new BLWrongIdException(id);
         }
         DO.Engineer? engineer = _dal.Engineer.Read(id);
-        return engineer == null ? throw new BLNotFoundException(id) : DoToBoEngineer(engineer);
+        return engineer == null ? throw new BLNotFoundException("engineer", id) : DoToBoEngineer(engineer);
     }
 
     public BO.Engineer ReadEngineer(Func<DO.Engineer, bool>? filter)
     {
         DO.Engineer? engineer = _dal.Engineer.Read(filter!);
-        return engineer == null ? throw new BLNotFoundException() : DoToBoEngineer(engineer);
+        return engineer == null ? throw new BLNotFoundException("engineer") : DoToBoEngineer(engineer);
     }
 
     public void UpdateEngineer(BO.Engineer newEngineer)
@@ -166,7 +166,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         }
         if((int)originalEngineer!._level! > (int)newEngineer.Level) //cannot lower level of engineer
         {
-            throw new BLCannotLowerLevelException();
+            throw new BLCannotLowerLevelException((int)newEngineer.Level);
         }
         DO.Engineer newDOEngineer = BoToDoEngineer(newEngineer);  //convert the engineer to do entity
         try
@@ -183,17 +183,17 @@ internal class EngineerImplementation : BlApi.IEngineer
     {
         if (id <= 0)
         {
-            throw new BLWrongIdInputException(id);
+            throw new BLWrongIdException(id);
         }
 
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Execution)
         {
-            throw new BLWrongStageException();
+            throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 3);
         }
 
         if (_dal.Engineer.Read(id) == null)
         {
-            throw new BLNotFoundException(id);
+            throw new BLNotFoundException("engineer", id);
         }
         DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == id);
         if (hisTask == null)
@@ -208,28 +208,28 @@ internal class EngineerImplementation : BlApi.IEngineer
     {
         if (engineerId <= 0)
         {
-            throw new BLWrongIdInputException(engineerId);
+            throw new BLWrongIdException(engineerId);
         }
 
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Execution)
         {
-            throw new BLWrongStageException();
+            throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 3);
         }
 
         if (taskId <= 0)
         {
-            throw new BLWrongIdInputException(taskId);
+            throw new BLWrongIdException(taskId);
         }
 
         DO.Task? theTask = _dal.Task.Read(taskId);
         DO.Engineer? theEngineer = _dal.Engineer.Read(engineerId);
         if (theEngineer == null)
         {
-            throw new BLNotFoundException(engineerId);
+            throw new BLNotFoundException("engineer", engineerId);
         }
         if (theTask == null)
         {
-            throw new BLNotFoundException(taskId);
+            throw new BLNotFoundException("task", taskId);
         }
         try
         {
@@ -261,12 +261,12 @@ internal class EngineerImplementation : BlApi.IEngineer
     {
         if(id <= 0)
         {
-            throw new BLWrongIdInputException(id);
+            throw new BLWrongIdException(id);
         }
 
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Execution)
         {
-            throw new BLWrongStageException();
+            throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 3);
         }
 
         try
@@ -277,7 +277,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         }
         catch(DalNotFoundException ex)
         {
-            throw new BLNotFoundException(ex);
+            throw new BLNotFoundException("engineer", id, ex);
         }
     }
 
@@ -285,17 +285,17 @@ internal class EngineerImplementation : BlApi.IEngineer
     {
         if (id <= 0)
         {
-            throw new BLWrongIdInputException(id);
+            throw new BLWrongIdException(id);
         }
 
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Execution)
         {
-            throw new BLWrongStageException();
+            throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 3);
         }
 
         if (_dal.Engineer.Read(id) == null)
         {
-            throw new BLNotFoundException(id);
+            throw new BLNotFoundException("engineer", id);
         }
         DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == id);
         if (hisTask == null)
@@ -309,16 +309,16 @@ internal class EngineerImplementation : BlApi.IEngineer
     {
         if (id <= 0)
         {
-            throw new BLWrongIdInputException(id);
+            throw new BLWrongIdException(id);
         }
 
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Execution)
         {
-            throw new BLWrongStageException();
+            throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 3);
         }
         if (_dal.Engineer.Read(id) == null)
         {
-            throw new BLNotFoundException(id);
+            throw new BLNotFoundException("engineer", id);
         }
         DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == id);
         if (hisTask == null)

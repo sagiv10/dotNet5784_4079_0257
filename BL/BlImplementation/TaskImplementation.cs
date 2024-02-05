@@ -320,13 +320,17 @@ internal class TaskImplementation : BlApi.ITask
         _dal.Project.setProjectStatus((int)BO.ProjectStatus.Execution); //we are now at the Execution stage
     }
 
-    public void AddDependency(int dependentTask, int DependsOnTask)
+    public void AddDependency(int dependentTask, int dependsOnTask)
     {
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
-            throw new BLWrongStageException();
+            throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 1);
         }
-        _dal.Dependency.Create(new DO.Dependency(dependentTask, DependsOnTask));
+        if(checkCircularDependency(dependentTask, dependsOnTask) == true)
+        {
+            throw new BLCannotAddCircularDependencyException(dependentTask, dependsOnTask);
+        }
+        _dal.Dependency.Create(new DO.Dependency(dependentTask, dependsOnTask));
     }
     /// <summary>
     /// 

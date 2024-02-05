@@ -6,6 +6,7 @@ public class BLNotFoundException : Exception
     public BLNotFoundException(string type, int id) : base($"{type} with id: {id} does not exist") { }
     public BLNotFoundException(string type, int id, Exception innerException)
                 : base($"{type} with id {id} does not exist", innerException) { }
+    public BLNotFoundException(string type) : base($"{type} that is answering those parameters does not exist") { }
 }
 public class BLWrongInputException : Exception
 {
@@ -22,28 +23,30 @@ public class BLWrongAliasException : BLWrongInputException
 }
 public class BLWrongEmailException : BLWrongInputException
 {
-    public BLWrongEmailException(string email) : base($"not valid Email input") { }
+    public BLWrongEmailException(string email) : base($"the email {email} is not a valid Email input") { }
 }
 public class BLWrongCostException : BLWrongInputException
 {
-    public BLWrongCostException(double cost) : base($"not valid Cost input") { }
+    public BLWrongCostException(double cost) : base($"the cost {cost} is not a valid Cost input") { }
 }
 public class BLTooEarlyException : BLWrongInputException
 {
     public BLTooEarlyException(DateTime OptionalDate) : base($"your date is too early and not valid, here is a suggestion for a good date:{OptionalDate} ") { }
 }
 //---------------------------------------------------------------
-public class BLAlreadyExistException : Exception
+public class BLExistProbException : Exception
 {
-    public BLAlreadyExistException(string messege) : base(messege) { }
+    public BLExistProbException(string messege) : base(messege) { }
+    public BLExistProbException(string messege, DO.DalAlreadyExistsException ex) : base(messege, ex) { }
 }
 public class BLHasTaskException: BLAlreadyExistException
 {
     public BLHasTaskException():base($"cannot assign a task because a task already exist") { }
 }
-public class BLExistProbException : BLAlreadyExistException
+public class BLAlreadyExistException : BLExistProbException
 {
-    public BLExistProbException(string type) : base($"{type} is already exist!") { }
+    public BLAlreadyExistException(string type, int id) : base($"{type} with id: {id} is already exist!") { }
+    public BLAlreadyExistException(string type, int id, DO.DalAlreadyExistsException ex) : base($"{type} with id: {id} is already exist!", ex) { }
 }
 //-------------------------------------------------------------------
 public class BLEmptyDatabaseException : Exception
@@ -110,7 +113,10 @@ public class BLDateSuggestionException : Exception
     public BLDateSuggestionException(DateTime optionalDate) : base("your date is not the optimal option, here is a suggestion for a better date:)") { }
 }
 
-
+public class BLCannotAddCircularDependencyException : Exception
+{
+    public BLCannotAddCircularDependencyException(int dep, int depOn) : base($"cannot create dependency between {dep} and {depOn} due to circular dependency creation") { }
+}
 
 
 

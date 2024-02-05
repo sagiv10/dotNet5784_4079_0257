@@ -29,5 +29,18 @@ public interface ITask
     /// </summary>
     public void AutoScedule(DateTime startingDate);
 
+    /// <summary>
+    /// adds new dependency
+    /// </summary>
+    /// <param name="dependentTask"> the dependent task </param>
+    /// <param name="DependsOnTask"> the depends on task </param>
+    /// <exception cref="BLCannotAddCircularDependencyException"></exception>
     public void AddDependency(int dependentTask, int DependsOnTask);
+
+    /// <summary>
+    /// starts the schedualing stage
+    /// </summary>
+    /// <param name="StartingDateOfProject"> the starting time of the project </param>
+    public void StartSchedule(DateTime StartingDateOfProject);
+
 }
