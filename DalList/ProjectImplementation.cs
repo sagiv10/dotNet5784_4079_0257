@@ -5,26 +5,23 @@ using System;
 
 internal class ProjectImplementation : Iproject
 {
-    public int getProjectStatus()
+    public DateTime? getStartingDate()
     {
-        {
-          XElement configRoot = XElement.Load(@"..\xml\data-config.xml");
-          return (BO.ProjectStatus)int.Parse(configRoot.Element("project-stage")!.Value);
-        }
-
-        public void getStartingDate(DateTime start)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void setProjectStatus(int newStatus)
-    {
-        throw new NotImplementedException();
+        return DataSource.Config.startingDate;
     }
 
     public void setStartingDate(DateTime start)
     {
-        throw new NotImplementedException();
+        DataSource.Config.startingDate = start;
+    }
+
+    int Iproject.getProjectStatus()
+    {
+        return DataSource.Config.projectStatus;
+    }
+
+    void Iproject.setProjectStatus(int newStatus)
+    {
+        DataSource.Config.projectStatus = newStatus;
     }
 }
-    
