@@ -39,7 +39,7 @@ public class Task
 
     public BO.Status? Status { get; set; }
 
-    public List<BO.TaskInList>? Dependencies { get; init; } = null; //the content will change, but not the list itself
+    public List<BO.TaskInList?> Dependencies { get; init; } = null; //the content will change, but not the list itself
 
     public BO.MilestoneInTask? Milestone { get; set; }
 
