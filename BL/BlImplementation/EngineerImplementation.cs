@@ -84,8 +84,7 @@ internal class EngineerImplementation : BlApi.IEngineer
     /// <returns> inducation if the task is available </returns>
     private bool isEnabeled(DO.Task task)
     {
-        return !((from dep in _dal.Dependency.
-                  (d => d._dependentTask == task._id)
+        return !((from dep in _dal.Dependency.ReadAll(d => d._dependentTask == task._id)
                where _dal.Task.Read((int)dep._dependsOnTask!)!._completeDate != null
                select true).Any());
     }

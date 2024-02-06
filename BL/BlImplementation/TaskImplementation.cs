@@ -134,7 +134,7 @@ internal class TaskImplementation : BlApi.ITask
             CompleteDate=doTask._completeDate,
             Deliverables=doTask._deliverables,
             Remarks=doTask._remarks,
-            Engineer= CheckIfEngineerFromTaskIsExist((int)doTask._engineerId),
+            Engineer= CheckIfEngineerFromTaskIsExist(doTask._engineerId),
             Complexity=(BO.EngineerExperience)doTask._complexity
         };
     }
@@ -165,15 +165,18 @@ internal class TaskImplementation : BlApi.ITask
     /// </summary>
     /// <param name="idOfTask"></param>
     /// <returns></returns>
-    private BO.EngineerInTask? CheckIfEngineerFromTaskIsExist(int idOfTask)
+    private BO.EngineerInTask? CheckIfEngineerFromTaskIsExist(int? idOfEngineer)
     {
-        BO.EngineerInTask? eng = null;
-        DO.Task? doTask = _dal.Task.Read(idOfTask);//use read func from dal to get details of specific task
-        if (doTask._engineerId != null)//some engineer works on this task
+        if (idOfEngineer == null)
         {
-            DO.Engineer? doEngineer = _dal.Engineer.Read((int)doTask._engineerId);//use read func from dal to get details of specific task
-            eng = new BO.EngineerInTask() { Id = (int)doTask._engineerId, Name = doEngineer._name };
+            return null; 
         }
+        DO.Engineer? doEngineer = _dal.Engineer.Read((int)idOfEngineer!);//use read func from dal to get details of specific task
+        if(doEngineer == null)
+        {
+            throw new BLNotFoundException("task", (int)idOfEngineer!);
+        }
+        BO.EngineerInTask eng = new BO.EngineerInTask() { Id = (int)doEngineer!._id, Name = doEngineer._name };
         return eng;
     }
 
@@ -182,15 +185,15 @@ internal class TaskImplementation : BlApi.ITask
     /// </summary>
     /// <param name="idOfWantedTask"></param>
     /// <returns></returns>
-    private List<TaskInList?> GetDependenciesFromDal(int idOfWantedTask)
+    private List<TaskInList> GetDependenciesFromDal(int idOfWantedTask)
     {
         //change like that: all dependencies => only the dependent dependencies => only their id's => their correct tasks => their correct TaskInList
-        IEnumerable<DO.Dependency?> listDependencies = _dal.Dependency.ReadAll();//use read func from dal to get details of specific task
-        listDependencies = listDependencies.Where(dependency => dependency._dependentTask == idOfWantedTask);
-        IEnumerable<int?> listID = listDependencies.Select(dependency => dependency?._id);
-        IEnumerable<DO.Task?> listTask = listID.Select(dependencyID => _dal.Task.Read((int)dependencyID));
-        IEnumerable<TaskInList?> listTaskInList = listTask.Select(TaskEx => new TaskInList(TaskEx._id, TaskEx._description, TaskEx._alias, (Status)WhatStatus(TaskEx._scheduledDate, TaskEx._startDate, TaskEx._completeDate)));
-        return (List<TaskInList?>)listTaskInList;
+        IEnumerable<DO.Dependency> listDependencies = _dal.Dependency.ReadAll();//use read func from dal to get details of specific task
+        listDependencies = listDependencies.Where(dependency => dependency!._dependentTask == idOfWantedTask);
+        IEnumerable<int> listID = listDependencies.Select(dependency => dependency._id);
+        IEnumerable<DO.Task> listTask = listID.Select(dependencyID => _dal.Task.Read(dependencyID)!);
+        IEnumerable<TaskInList> listTaskInList = listTask.Select(TaskEx => new TaskInList(TaskEx._id, TaskEx._description, TaskEx._alias, (Status)WhatStatus(TaskEx._scheduledDate, TaskEx._startDate, TaskEx._completeDate)));
+        return listTaskInList.ToList();
     }
 
     /// <summary>
@@ -215,14 +218,14 @@ internal class TaskImplementation : BlApi.ITask
 
     private DateTime findOptionalDate(int TaskId)
     {
-        IEnumerable<DateTime> nullDates = from dep in _dal.Dependency.ReadAll(d => d._dependentTask == TaskId)
+        IEnumerable<DateTime> formerDates = from dep in _dal.Dependency.ReadAll(d => d._dependentTask == TaskId)
                                      let hisTask = _dal.Task.Read((int)dep._dependsOnTask!)
                                      select (DateTime)hisTask._scheduledDate! +  hisTask._requiredEffortTime;
-        if(nullDates.Count() == 0)
+        if(formerDates.Count() == 0)
         {
             return (DateTime)_dal.Project.getStartingDate()!;
         }
-        return nullDates.Max();
+        return formerDates.Max();
     }
 
     public void Delete(int idOfTaskToDelete)
@@ -342,7 +345,7 @@ internal class TaskImplementation : BlApi.ITask
     /// <exception cref="BLCannotSceduleMoreThanOneException"></exception>
     /// <exception cref="BLToEarlySuggestOptional"></exception>
     /// <exception cref="BLSuggestOptional"></exception>
-    public void ManualScedule(int idOfTask,DateTime wantedTime,bool isConfirmed)
+    public void ManualScedule(int idOfTask, DateTime wantedTime, bool isConfirmed)
     {
         if (isConfirmed == false)
         {

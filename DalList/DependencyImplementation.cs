@@ -66,8 +66,7 @@ internal class DependencyImplementation : IDependency
     /// </summary>
     /// <param name="filter"> predicat that determine wich dependencies we want to return</param>
     /// <returns>the new list </returns>
-    public IEnumerable<Dependency> 
-        (Func<Dependency, bool>? filter)
+    public IEnumerable<Dependency> ReadAll(Func<Dependency, bool>? filter)
     {
         if (filter== null) 
         {

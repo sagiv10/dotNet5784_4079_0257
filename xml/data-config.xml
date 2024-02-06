@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config>
-	<NextDependencyId>1</NextDependencyId>
-	<NextTaskId>1</NextTaskId>
-	<project-stage>1</project-stage>
+  <NextDependencyId>1</NextDependencyId>
+  <NextTaskId>1</NextTaskId>
 </config>

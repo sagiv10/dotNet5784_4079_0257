@@ -20,4 +20,7 @@ public class TaskInList
         Alias = alias;
         Status=status;
     }
+
+    public override string ToString() => this.ToStringProperty();
+
 }
