@@ -63,7 +63,7 @@ internal class TaskImplementation : BlApi.ITask
     public int Create(BO.Task newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
     {
         if(newTask.Id<=0)
-            throw new BLWrongIdException(newTask.Id);
+            throw new BLWrongIdException();
 
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
