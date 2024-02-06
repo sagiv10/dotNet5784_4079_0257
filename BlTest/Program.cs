@@ -16,13 +16,13 @@ public class BlTest
 
         //-------------------------------------------------------------
         //TASK:
-        //BO.Task task = s_bl.Task.Read(1);
-        //Console.WriteLine(task);
+        BO.Task task = s_bl.Task.Read(1); 
+        Console.WriteLine(task);
 
-        List<BO.TaskInList> tasks = (List<TaskInList>)s_bl.Task.ReadAll();
-        Console.WriteLine(tasks);
+        //List<BO.TaskInList> tasks = (List<BO.TaskInList>)s_bl.Task.ReadAll();     X
+        //Console.WriteLine(tasks);
 
-        //BO.Task task= new BO.Task();
+        //BO.Task task = new BO.Task();
         //s_bl.Task.Create(task);
         //Console.WriteLine(task);
 
