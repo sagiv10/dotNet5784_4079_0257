@@ -21,7 +21,7 @@ namespace BO
 
     public enum ProjectStatus
     {
-        Planning,
+        Planning = 1,
         Sceduling,
         Execution
     }

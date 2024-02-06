@@ -14,4 +14,7 @@ public class TaskInEngineer
         Id = id;
         Alias = alias;
     }
+
+    public override string ToString() => this.ToStringProperty();
+
 }

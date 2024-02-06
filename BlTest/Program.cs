@@ -1,26 +1,19 @@
-﻿namespace DalTest
-{
-    using Dal;
-    using DalApi;
-    using DO;
-    using System;
-    using System.Reflection.Metadata;
-    using System.Reflection.Metadata.Ecma335;
-    using System.Runtime.CompilerServices;
-    using System.Threading.Tasks;
+﻿namespace BlTest;
+using BO;
+using BlApi;
+using DalTest;
 
-    internal class Program
+public class BlTest
+{
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
+    public static void Main()
     {
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        static void Main(string[] args)
-        {
-            Console.Write("Would you like to create Initial data? (Y/N)");
-            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
-            if (ans == "Y")
-                DalTest.Initialization.Do();
-            BO.Task? boTask = s_bl.Task.Read(3);
-        }
+        Console.Write("Would you like to create Initial data? (Y/N)");
+        string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
+        if (ans == "Y")
+            DalTest.Initialization.Do();
+        BO.Task task = s_bl.Task.Read(1);
+        Console.WriteLine(task);
     }
 }
-
-

@@ -22,7 +22,8 @@ internal class ProjectImplementation : Iproject
 
     public DateTime? getStartingDate()
     {
-        throw new NotImplementedException();
+        XElement configRoot = XElement.Load(@"..\xml\data-config.xml");
+        return configRoot.Element("project-starting-date") != null ? DateTime.Parse(configRoot.Element("project-starting-date")!.Value) : null;
     }
 
     public void setStartingDate(DateTime? start)
