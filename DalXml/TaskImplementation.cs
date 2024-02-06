@@ -68,18 +68,18 @@ internal class TaskImplementation : ITask
     /// </summary>
     /// <param name="filter"> predicat that determine wich tasks we want to return</param>
     /// <returns>the new list </returns>
-    public IEnumerable<DO.Task?> ReadAll(Func<DO.Task, bool>? filter = null)
+    public IEnumerable<DO.Task> ReadAll(Func<DO.Task, bool>? filter = null)
     {
         List<Task> ListToWorkWith = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);//get the list from the xml file to work with it
         if (filter == null)
         {
-            IEnumerable<DO.Task?> newList = ListToWorkWith.Select(item => item);
+            IEnumerable<DO.Task> newList = ListToWorkWith.Select(item => item);
             //XMLTools.SaveListToXMLSerializer<Task>(ListToWorkWith, s_tasks_xml);//save the changes we did in the list we got in the start
             return newList;
         }
         else
         {
-            IEnumerable<DO.Task?> newList = ListToWorkWith.Where(item => filter(item!));
+            IEnumerable<DO.Task> newList = ListToWorkWith.Where(item => filter(item!));
             //XMLTools.SaveListToXMLSerializer<Task>(ListToWorkWith, s_tasks_xml);//save the changes we did in the list we got in the start
             return newList;
         }

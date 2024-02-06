@@ -90,18 +90,18 @@ internal class EngineerImplementation : IEngineer
     /// </summary>
     /// <param name="filter"> predicat that determine wich engineers we want to return</param>
     /// <returns>the new list</returns>
-    public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter = null)
+    public IEnumerable<Engineer> ReadAll(Func<Engineer, bool>? filter = null)
     {
         List<Engineer>? engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml); //get the list from the xml file
         if (filter == null)
         {
-            IEnumerable<Engineer?> newList = engineers.Select(item => item);
+            IEnumerable<Engineer> newList = engineers.Select(item => item);
             //XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml); //save the new list in the xml file
             return newList;
         }
         else
         {
-            IEnumerable<Engineer?> newList = engineers.Where(item => filter(item!));
+            IEnumerable<Engineer> newList = engineers.Where(item => filter(item!));
             //XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml); //save the new list in the xml file
             return newList;
         }

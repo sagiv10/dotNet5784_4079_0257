@@ -142,7 +142,7 @@ internal class DependencyImplementation : IDependency
     /// </summary>
     /// <param name="filter"> predicat that determine wich dependencies we want to return</param>
     /// <returns>the new collection </returns>
-    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
+    public IEnumerable<Dependency> ReadAll(Func<Dependency, bool>? filter = null)
     {
         XElement root = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
         return from XElement item in root.Elements() //convert the elements collection into a INumerable of Dependencies.
