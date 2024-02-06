@@ -66,16 +66,17 @@ internal class DependencyImplementation : IDependency
     /// </summary>
     /// <param name="filter"> predicat that determine wich dependencies we want to return</param>
     /// <returns>the new list </returns>
-    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter)
+    public IEnumerable<Dependency> 
+        (Func<Dependency, bool>? filter)
     {
         if (filter== null) 
         {
-            IEnumerable<Dependency?> newList = DataSource.Dependencies.Select(item => item);
+            IEnumerable<Dependency> newList = DataSource.Dependencies.Select(item => item);
             return newList;
         }
         else
         {
-            IEnumerable<Dependency?> newList = DataSource.Dependencies.Where(item => filter(item!));
+            IEnumerable<Dependency> newList = DataSource.Dependencies.Where(item => filter(item!));
             return newList;
         }
     }

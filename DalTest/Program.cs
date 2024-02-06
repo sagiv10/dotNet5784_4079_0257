@@ -154,7 +154,7 @@
                     int? newEngineerId = getNullableIntInput();
                     newEngineerId = (newEngineerId != null) ? newEngineerId : (int)oldTask._engineerId!; //if we got a correct new info-change to what the user wrote . else dont.
 
-                    DO.Task updatedTask = new DO.Task(idToUpdate, newCreatedTime, newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, (newScheduledDate!=null) ? newScheduledDate - newCreatedTime : null, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);//create a new task with the given details
+                    DO.Task updatedTask = new DO.Task(idToUpdate, newCreatedTime, (newScheduledDate != null) ? (TimeSpan)(newScheduledDate - newCreatedTime) : new TimeSpan(7), newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);//create a new task with the given details
 
                     s_dal!.Task!.Update(updatedTask);//update the new task
                 }
@@ -631,7 +631,7 @@
             int newEngineerId;
             newEngineerId = CheckIntInput(int.TryParse(Console.ReadLine(), out newEngineerId), newEngineerId); //request an int from the user and checks if it valid
 
-            DO.Task newTask = new DO.Task(0, newCreatedTime, newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, newScheduledDate - newCreatedTime, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);
+            DO.Task newTask = new DO.Task(0, newCreatedTime, newScheduledDate - newCreatedTime, newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);
             return newTask;
         }
 
