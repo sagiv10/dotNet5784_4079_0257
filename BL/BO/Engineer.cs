@@ -26,4 +26,6 @@ public class Engineer
         Cost = cost;
         Task = task;
     }
+    public override string ToString() => this.ToStringProperty();
+
 }
