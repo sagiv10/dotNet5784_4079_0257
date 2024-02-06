@@ -15,7 +15,7 @@ public class BLWrongInputException : Exception
 //---------------------------------------------------------------------
 public class BLWrongIdException: BLWrongInputException
 {
-    public BLWrongIdException(int id) : base($"not valid id input") {}
+    public BLWrongIdException() : base($"not valid id input") {}
 }
 public class BLWrongAliasException : BLWrongInputException
 {

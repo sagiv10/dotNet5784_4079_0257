@@ -231,15 +231,15 @@ internal class TaskImplementation : BlApi.ITask
         DO.Task? check = AllDOTasks.FirstOrDefault(task => idOfTaskToDelete == task._id);
         if (idOfTaskToDelete <= 0)
         {
-            throw new BLWrongIdInputException();
+            throw new BLWrongIdException();
         }
-        if (check != null)
+        if (check == null)
         {
-            throw BLIdNotExist();
+            throw new BLNotFoundException("Task", idOfTaskToDelete);
         }
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
-            throw new BLWrongStageException();
+            throw new BLWrongStageException(_dal.Project.getProjectStatus(),(int)BO.ProjectStatus.Planning);
         }
         IEnumerable<DO.Dependency?> AllDODependency = _dal.Dependency.ReadAll();//use read func from dal to get details of all tasks
         DO.Dependency? check2 = AllDODependency.FirstOrDefault(dep => dep._dependsOnTask == idOfTaskToDelete);
@@ -287,7 +287,7 @@ internal class TaskImplementation : BlApi.ITask
     {
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
-            throw new BLWrongStageException();
+            throw new BLWrongStageException(_dal.Project.getProjectStatus(), (int)BO.ProjectStatus.Planning);
         }
         IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();
         DO.Task? check = AllDOTasks.FirstOrDefault(task => item.Id == task._id);
@@ -347,7 +347,7 @@ internal class TaskImplementation : BlApi.ITask
         if (isConfirmed == false)
         {
             if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Sceduling)//if we are in the wrong stage
-                throw new BLWrongStageException();
+                throw new BLWrongStageException(_dal.Project.getProjectStatus(), (int)BO.ProjectStatus.Sceduling);
             IEnumerable<int> nullDates = from dep in _dal.Dependency.ReadAll(d => d._dependentTask == idOfTask)
                                          let hisTask = _dal.Task.Read((int)dep._dependsOnTask!)
                                          where hisTask._scheduledDate == null
@@ -382,7 +382,7 @@ internal class TaskImplementation : BlApi.ITask
     {
         if((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)// this method can be acceced only in the planning stage
         {
-            throw new BLWrongStageException();
+            throw new BLWrongStageException(_dal.Project.getProjectStatus(), (int)BO.ProjectStatus.Planning);
         }
         _dal.Project.setProjectStatus((int)BO.ProjectStatus.Sceduling);
         _dal.Project.setStartingDate(StartingDateOfProject);
