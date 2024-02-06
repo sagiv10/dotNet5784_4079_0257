@@ -63,7 +63,7 @@ internal class TaskImplementation : BlApi.ITask
     public int Create(BO.Task newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
     {
         if(newTask.Id<=0)
-            throw new BLWrongIdException(newTask.Id);
+            throw new BLWrongIdException();
 
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
@@ -72,7 +72,7 @@ internal class TaskImplementation : BlApi.ITask
 
         if (newTask.Alias == "")
         {
-            throw new BLWrongAliasException(newTask.Alias);
+            throw new BLWrongAliasException();
         }
         DO.Task? doTaskToCheck = _dal.Task.Read(newTask.Id);//get task to check if exist
         if(doTaskToCheck != null)
@@ -245,7 +245,7 @@ internal class TaskImplementation : BlApi.ITask
         DO.Dependency? check2 = AllDODependency.FirstOrDefault(dep => dep._dependsOnTask == idOfTaskToDelete);
         if (check2 != null)
         {
-            throw BLcantDeleteBczDependency();
+            throw new BLCannotDeleteHasDependencyException(idOfTaskToDelete);
         }
         _dal.Task.Delete(idOfTaskToDelete);
         IEnumerable<DO.Dependency?> filteredIEN = _dal.Dependency.ReadAll(cond => cond._dependentTask==idOfTaskToDelete);
@@ -257,7 +257,7 @@ internal class TaskImplementation : BlApi.ITask
     {
         DO.Task? doTask = _dal.Task.Read(idOfWantedTask);//use read func from dal to get details of specific task
         if (doTask == null)
-            throw new BO.BlDoesNotExistException($"Task with ID={idOfWantedTask} does Not exist");
+            throw new BLNotFoundException("Task",idOfWantedTask);
 
         return MakeBOFromDoTASK(doTask);
     }
@@ -266,7 +266,7 @@ internal class TaskImplementation : BlApi.ITask
     {
         IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
         if (AllDOTasks == null)
-            throw new BO.BlDoesNotExistException($"Tasks does Not exist");
+            throw new BLEmptyDatabaseException();
         IEnumerable<BO.Task?> AllBOTasks = AllDOTasks.Select(DOTtaskInList => MakeBOFromDoTASK(DOTtaskInList));
         BO.Task? chosen= AllBOTasks.FirstOrDefault(filter);//FILTER
         return chosen;
@@ -276,7 +276,7 @@ internal class TaskImplementation : BlApi.ITask
     {
         IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
         if (AllDOTasks == null)
-            throw new BO.BlDoesNotExistException($"Tasks list does Not exist");
+            throw new BLEmptyDatabaseException();
         IEnumerable<BO.Task?> AllBOTasks = AllDOTasks.Select(DOTtaskInList => MakeBOFromDoTASK(DOTtaskInList));
         AllBOTasks = AllBOTasks.Where(TaskEx=>filter(TaskEx));//FILTER
         IEnumerable<TaskInList?> TasksInList = AllBOTasks.Select((BOtaskInList => new TaskInList(BOtaskInList.Id, BOtaskInList.Description, BOtaskInList.Alias, BOtaskInList.Status)));//make to task in list to return properly
@@ -291,13 +291,13 @@ internal class TaskImplementation : BlApi.ITask
         }
         IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();
         DO.Task? check = AllDOTasks.FirstOrDefault(task => item.Id == task._id);
-        if (check != null)
+        if (check == null)
         {
-            throw BLItemNotExist();
+            throw new BLNotFoundException("Task",item.Id);
         }
         if(item.Alias=="")
         {
-            throw new drgd();
+            throw new BLWrongAliasException();
         }
         DO.Task? doTask = BOToDOTask(item);
         _dal.Task.Update(doTask);
@@ -354,20 +354,20 @@ internal class TaskImplementation : BlApi.ITask
                                          select hisTask._id;
             if (nullDates.Count() == 1)
             {
-                throw new BLCannotSceduleOneException(nullDates.FirstOrDefault());
+                throw new BLCannotScheduleOneFormerUnscheduledException(nullDates.FirstOrDefault());
             }
             if (nullDates.Count() > 1)
             {
-                throw new BLCannotSceduleMoreThanOneException(nullDates.Count());
+                throw new BLCannotScheduleMoreTanOneFormerUnscheduledException(nullDates.Count());
             }
             DateTime optionalDate = findOptionalDate(idOfTask);
             if (optionalDate > wantedTime) //the time the manager want to start is too soon
             {
-                throw new BLToEarlySuggestOptional(optionalDate);
+                throw new BLTooEarlyException(optionalDate);
             }
             if (optionalDate < wantedTime)
             {
-                throw new BLSuggestOptional(optionalDate);
+                throw new BLDateSuggestionException(optionalDate);
             }
         }
         DO.Task updatedTask = _dal.Task.Read(idOfTask)! with { _scheduledDate = wantedTime };

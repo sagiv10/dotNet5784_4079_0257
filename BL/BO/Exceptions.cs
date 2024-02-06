@@ -19,7 +19,7 @@ public class BLWrongIdException: BLWrongInputException
 }
 public class BLWrongAliasException : BLWrongInputException
 {
-    public BLWrongAliasException(string alias) : base($"not valid Alias input") { }
+    public BLWrongAliasException() : base($"not valid Alias input") { }
 }
 public class BLWrongEmailException : BLWrongInputException
 {
