@@ -188,8 +188,7 @@ internal class TaskImplementation : BlApi.ITask
     private List<TaskInList> GetDependenciesFromDal(int idOfWantedTask)
     {
         //change like that: all dependencies => only the dependent dependencies => only their id's => their correct tasks => their correct TaskInList
-        IEnumerable<DO.Dependency> listDependencies = _dal.Dependency.ReadAll();//use read func from dal to get details of specific task
-        listDependencies = listDependencies.Where(dependency => dependency!._dependentTask == idOfWantedTask);
+        IEnumerable<DO.Dependency> listDependencies = _dal.Dependency.ReadAll(dependency => dependency!._dependentTask == idOfWantedTask);//use read func from dal to get details of specific task
         IEnumerable<int> listID = listDependencies.Select(dependency => dependency._id);
         IEnumerable<DO.Task> listTask = listID.Select(dependencyID => _dal.Task.Read(dependencyID)!);
         IEnumerable<TaskInList> listTaskInList = listTask.Select(TaskEx => new TaskInList(TaskEx._id, TaskEx._description, TaskEx._alias, (Status)WhatStatus(TaskEx._scheduledDate, TaskEx._startDate, TaskEx._completeDate)));
@@ -281,7 +280,10 @@ internal class TaskImplementation : BlApi.ITask
         if (AllDOTasks == null)
             throw new BLEmptyDatabaseException();
         IEnumerable<BO.Task?> AllBOTasks = AllDOTasks.Select(DOTtaskInList => MakeBOFromDoTASK(DOTtaskInList));
-        AllBOTasks = AllBOTasks.Where(TaskEx=>filter(TaskEx));//FILTER
+        if (filter != null)
+        {
+            AllBOTasks = AllBOTasks.Where(TaskEx => filter(TaskEx));//FILTER
+        }
         IEnumerable<TaskInList> TasksInList = AllBOTasks.Select((BOtaskInList => new TaskInList(BOtaskInList.Id, BOtaskInList.Description, BOtaskInList.Alias, BOtaskInList.Status)));//make to task in list to return properly
         return TasksInList;
     }
