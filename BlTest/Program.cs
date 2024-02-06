@@ -19,8 +19,8 @@ public class BlTest
         //BO.Task task = s_bl.Task.Read(1);
         //Console.WriteLine(task);
 
-        //List<BO.Task> tasks = (List<BO.Task>)s_bl.Task.ReadAll();
-        //Console.WriteLine(tasks);
+        List<BO.TaskInList> tasks = (List<TaskInList>)s_bl.Task.ReadAll();
+        Console.WriteLine(tasks);
 
         //BO.Task task= new BO.Task();
         //s_bl.Task.Create(task);
