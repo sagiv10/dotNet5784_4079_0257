@@ -39,9 +39,9 @@ public class BLExistProbException : Exception
     public BLExistProbException(string messege) : base(messege) { }
     public BLExistProbException(string messege, DO.DalAlreadyExistsException ex) : base(messege, ex) { }
 }
-public class BLHasTaskException: BLAlreadyExistException
+public class BLHasTaskException: BLExistProbException
 {
-    public BLHasTaskException():base($"cannot assign a task because a task already exist") { }
+    public BLHasTaskException(int id):base($"cannot assign a task to engineer with id {id} because a task already exist") { }
 }
 public class BLAlreadyExistException : BLExistProbException
 {
@@ -90,7 +90,7 @@ public class BLDoesNotHasTaskException : Exception
 
 public class BLNotAvialableTaskException : Exception
 {
-    public BLNotAvialableTaskException(int taskId) : base($"the task with id {taskId} is not avialable to be assigned") { }
+    public BLNotAvialableTaskException(int engineerId, int taskId) : base($"the task with id {taskId} is not avialable to be assigned to engineer with id {engineerId}") { }
 }
 
 public class BLCannotScheduleOneFormerUnscheduledException : BLCannotScheduleException

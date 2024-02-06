@@ -60,26 +60,26 @@ internal class TaskImplementation : BlApi.ITask
 
     }
 
-    public int Create(BO.Task? newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
+    public int Create(BO.Task newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
     {
         if(newTask.Id<=0)
-            throw new wrongid();
+            throw new BLWrongIdException(newTask.Id);
 
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
-            throw new BLWrongStageException();
+            throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 1);
         }
 
-        if (newTask.Alias=="")
+        if (newTask.Alias == "")
         {
-            throw new wrongname();
+            throw new BLWrongAliasException(newTask.Alias);
         }
         DO.Task? doTaskToCheck = _dal.Task.Read(newTask.Id);//get task to check if exist
         if(doTaskToCheck != null)
             throw new NotImplementedException();
         foreach (var dep in newTask.Dependencies){ AddDependency(newTask.Id, dep.Id); }
         DO.Task? doTaskToCreate = BOToDOTask(newTask);
-        _dal.Task.Create(doTaskToCreate);
+        _dal.Task.Create(doTaskToCreate!);
         return newTask.Id;
     }
 

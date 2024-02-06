@@ -198,7 +198,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == id);
         if (hisTask == null)
         {
-            throw new BLNoTaskAssignedException(id);
+            throw new BLDoesNotHasTaskException(id);
         }
         DO.Task unassignedTask = hisTask with { _engineerId = null };
         _dal.Task.Update(unassignedTask);
@@ -234,20 +234,20 @@ internal class EngineerImplementation : BlApi.IEngineer
         try
         {
             ShowTask(engineerId); //try to see if the engineer alredy has a task assigned
-            throw new BLHasAlreadyTaskException(engineerId); //if we got herethen he has a task assigned
+            throw new BLHasTaskException(engineerId); //if we got herethen he has a task assigned
         }
-        catch(BLNoTaskAssignedException ex) //if we got here then the engineer doesnt have a task assigned
+        catch(BLDoesNotHasTaskException ex) //if we got here then the engineer doesnt have a task assigned
         {
             //everything here its okay!:)
         }
-        catch (BLHasAlreadyTaskException ex)
+        catch (BLHasTaskException ex)
         {
             throw ex;
         }
 
         if(!isEnabeled(theTask) || theTask._completeDate != null || theTask._complexity > theEngineer._level || theTask._engineerId != null) //if the task is not enabled, or completed, or not in his level, or has anothe engineer then we must throw an exception
         {
-            throw new BLUnavailableTaskException(engineerId, taskId);
+            throw new BLNotAvialableTaskException(engineerId, taskId);
         }
         DO.Task assignedTask = theTask with
         {
@@ -300,7 +300,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == id);
         if (hisTask == null)
         {
-            throw new BLNoTaskAssignedException(id);
+            throw new BLDoesNotHasTaskException(id);
         }
         return new BO.TaskInEngineer(hisTask._id, hisTask._alias);
     }
@@ -323,7 +323,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == id);
         if (hisTask == null)
         {
-            throw new BLNoTaskAssignedException(id);
+            throw new BLDoesNotHasTaskException(id);
         }
         DO.Task doneTask = hisTask with { _completeDate = DateTime.Now};
         _dal.Task.Update(doneTask);
