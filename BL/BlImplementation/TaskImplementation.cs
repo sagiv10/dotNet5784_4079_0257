@@ -279,11 +279,11 @@ internal class TaskImplementation : BlApi.ITask
             throw new BLEmptyDatabaseException();
         IEnumerable<BO.Task?> AllBOTasks = AllDOTasks.Select(DOTtaskInList => MakeBOFromDoTASK(DOTtaskInList));
         AllBOTasks = AllBOTasks.Where(TaskEx=>filter(TaskEx));//FILTER
-        IEnumerable<TaskInList?> TasksInList = AllBOTasks.Select((BOtaskInList => new TaskInList(BOtaskInList.Id, BOtaskInList.Description, BOtaskInList.Alias, BOtaskInList.Status)));//make to task in list to return properly
+        IEnumerable<TaskInList> TasksInList = AllBOTasks.Select((BOtaskInList => new TaskInList(BOtaskInList.Id, BOtaskInList.Description, BOtaskInList.Alias, BOtaskInList.Status)));//make to task in list to return properly
         return TasksInList;
     }
 
-    public void Update(BO.Task? item)
+    public void Update(BO.Task item)
     {
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
@@ -300,7 +300,7 @@ internal class TaskImplementation : BlApi.ITask
             throw new BLWrongAliasException();
         }
         DO.Task? doTask = BOToDOTask(item);
-        _dal.Task.Update(doTask);
+        _dal.Task.Update(doTask!);
     }
 
     public void AutoScedule(DateTime startingDate)

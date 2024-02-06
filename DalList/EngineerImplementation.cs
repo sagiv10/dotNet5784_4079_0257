@@ -85,16 +85,16 @@ internal class EngineerImplementation : IEngineer
     /// </summary>
     /// <param name="filter"> predicat that determine wich engineers we want to return</param>
     /// <returns>the new list</returns>
-    public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter)
+    public IEnumerable<Engineer> ReadAll(Func<Engineer, bool>? filter)
     {
         if (filter == null)
         {
-            IEnumerable<Engineer?> newList = DataSource.Engineers.Select(item => item);
+            IEnumerable<Engineer> newList = DataSource.Engineers.Select(item => item);
             return newList;
         }
         else
         {
-            IEnumerable<Engineer?> newList = DataSource.Engineers.Where(item => filter(item!));
+            IEnumerable<Engineer> newList = DataSource.Engineers.Where(item => filter(item!));
             return newList;
         }
     }

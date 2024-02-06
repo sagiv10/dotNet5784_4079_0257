@@ -67,11 +67,11 @@ internal class TaskImplementation : ITask
     /// </summary>
     /// <param name="filter"> predicat that determine wich tasks we want to return</param>
     /// <returns>the new list </returns>
-    public IEnumerable<DO.Task?> ReadAll(Func<DO.Task, bool>? filter)
+    public IEnumerable<DO.Task> ReadAll(Func<DO.Task, bool>? filter)
     {
         if (filter == null)
         {
-            IEnumerable<DO.Task?> newList = DataSource.Tasks.Select(item => item);
+            IEnumerable<DO.Task> newList = DataSource.Tasks.Select(item => item);
             return newList;
         }
         else
