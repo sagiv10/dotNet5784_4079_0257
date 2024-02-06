@@ -227,7 +227,7 @@ internal class TaskImplementation : BlApi.ITask
 
     public void Delete(int idOfTaskToDelete)
     {
-        IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
+        IEnumerable<DO.Task> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
         DO.Task? check = AllDOTasks.FirstOrDefault(task => idOfTaskToDelete == task._id);
         if (idOfTaskToDelete <= 0)
         {
@@ -241,14 +241,14 @@ internal class TaskImplementation : BlApi.ITask
         {
             throw new BLWrongStageException(_dal.Project.getProjectStatus(),(int)BO.ProjectStatus.Planning);
         }
-        IEnumerable<DO.Dependency?> AllDODependency = _dal.Dependency.ReadAll();//use read func from dal to get details of all tasks
+        IEnumerable<DO.Dependency> AllDODependency = _dal.Dependency.ReadAll();//use read func from dal to get details of all tasks
         DO.Dependency? check2 = AllDODependency.FirstOrDefault(dep => dep._dependsOnTask == idOfTaskToDelete);
         if (check2 != null)
         {
             throw new BLCannotDeleteHasDependencyException(idOfTaskToDelete);
         }
         _dal.Task.Delete(idOfTaskToDelete);
-        IEnumerable<DO.Dependency?> filteredIEN = _dal.Dependency.ReadAll(cond => cond._dependentTask==idOfTaskToDelete);
+        IEnumerable<DO.Dependency> filteredIEN = _dal.Dependency.ReadAll(cond => cond._dependentTask==idOfTaskToDelete);
         foreach (var dep in filteredIEN)
             _dal.Dependency.Delete(dep._id);
     }
@@ -272,9 +272,9 @@ internal class TaskImplementation : BlApi.ITask
         return chosen;
     }
 
-    public IEnumerable<BO.TaskInList?> ReadAll(Func<BO.Task?, bool>? filter = null)
+    public IEnumerable<BO.TaskInList> ReadAll(Func<BO.Task?, bool>? filter = null)
     {
-        IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
+        IEnumerable<DO.Task> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
         if (AllDOTasks == null)
             throw new BLEmptyDatabaseException();
         IEnumerable<BO.Task?> AllBOTasks = AllDOTasks.Select(DOTtaskInList => MakeBOFromDoTASK(DOTtaskInList));
@@ -289,7 +289,7 @@ internal class TaskImplementation : BlApi.ITask
         {
             throw new BLWrongStageException(_dal.Project.getProjectStatus(), (int)BO.ProjectStatus.Planning);
         }
-        IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();
+        IEnumerable<DO.Task> AllDOTasks = _dal.Task.ReadAll();
         DO.Task? check = AllDOTasks.FirstOrDefault(task => item.Id == task._id);
         if (check == null)
         {
