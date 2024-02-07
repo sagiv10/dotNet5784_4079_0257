@@ -213,7 +213,7 @@ public class BlTest
 
             Console.WriteLine(oldEngineer);
 
-            Console.WriteLine("Enter the following parameters: email address, salary, name and the complexity level:");
+            Console.WriteLine("Enter the following parameters: email, costmand level:");
 
             string newEmail = Console.ReadLine();
             newEmail = newEmail! == "" ? oldEngineer.Email : newEmail!; //if we got a correct new info-change to what the user wrote . else dont.
@@ -371,6 +371,7 @@ public class BlTest
     {
         try
         {
+            Console.WriteLine("pls write the id of the engineer you want to see" );
             int inputId;
             inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
 
@@ -382,7 +383,7 @@ public class BlTest
             }
             Console.WriteLine(newEngineer);
         }
-        catch (DalNotFoundException problem)
+        catch (BLNotFoundException problem)
         {
             Console.WriteLine(problem.Message);
         }
@@ -603,7 +604,7 @@ public class BlTest
             int EngineerId;
             EngineerId = CheckIntInput(int.TryParse(Console.ReadLine(), out EngineerId), EngineerId); //request an int from the user and checks if it valid 
 
-            s_bl.Engineer.ShowTask(EngineerId);
+           Console.WriteLine(s_bl.Engineer.ShowTask(EngineerId));
         }
         catch (BLWrongStageException problem)
         {
@@ -632,7 +633,7 @@ public class BlTest
             int EngineerId;
             EngineerId = CheckIntInput(int.TryParse(Console.ReadLine(), out EngineerId), EngineerId); //request an int from the user and checks if it valid 
 
-            s_bl.Engineer.GetPotentialTasks(EngineerId);
+            Console.WriteLine(s_bl.Engineer.GetPotentialTasks(EngineerId));
         }
         catch (BLWrongStageException problem)
         {
