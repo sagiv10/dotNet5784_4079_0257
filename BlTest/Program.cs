@@ -127,7 +127,7 @@ public class BlTest
                     Description = newDescription,
                     Alias = newName,
                     CreatedAtDate = DateTime.Now,
-                    Status = newStatus,////////////////////////////
+                    Status = Status.Unscheduled,
                     Dependencies = new List<BO.TaskInList?>(),
                     Milestone = null,
                     RequiredEffortTime = new TimeSpan(random.Next(1, 7)),
