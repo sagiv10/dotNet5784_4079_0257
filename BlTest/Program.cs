@@ -5,6 +5,7 @@ using DalTest;
 using DalApi;
 using DO;
 using System.Linq.Expressions;
+using System;
 using System.Threading.Channels;
 
 public class BlTest
@@ -268,6 +269,21 @@ public class BlTest
         catch (BLCannotDeleteHasDependencyException problem)
         {
             Console.WriteLine(problem.Message);
+    }
+
+    /// <summary>
+    /// gets an id of engineer from the user and delete it from the engineers list
+    /// </summary>
+    public static void DeleteEngineer()
+    {
+        try
+        {
+            Console.WriteLine("write the id of the Engineer you want to delete:");
+
+            int idToDelete;
+            idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete); //request an int from the user and checks if it valid
+
+            s_bl!.Engineer!.DeleteEngineer(idToDelete);
         }
         catch (BLWrongStageException problem)
         {
@@ -275,29 +291,9 @@ public class BlTest
         }
     }
 
-    ///// <summary>
-    ///// gets an id of engineer from the user and delete it from the engineers list
-    ///// </summary>
-    //public static void DeleteEngineer()
-    //{
-    //    try
-    //    {
-    //        Console.WriteLine("write the id of the Engineer you want to delete:");
-
-    //        int idToDelete;
-    //        idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete); //request an int from the user and checks if it valid
-
-    //        s_dal!.Engineer!.Delete(idToDelete);
-    //    }
-    //    catch (DalNotFoundException problem)
-    //    {
-    //        Console.WriteLine(problem.Message);
-    //    }
-    //}
-
-    ///// <summary>
-    ///// gets an id of dependency from the user and delete it from the dependencys list
-    ///// </summary>
+    /// <summary>
+    /// gets an id of dependency from the user and delete it from the dependencys list
+    /// </summary>
     public static void DeleteDependency()
     {
         try
@@ -342,48 +338,22 @@ public class BlTest
         
     }
 
-    ///// <summary>
-    ///// gets from the user a replica of the engineers list an then prints all their data
-    ///// /// </summary>
-    //public static void ReadAllEngineer()
-    //{
-    //    foreach (var item in s_dal!.Engineer!.ReadAll())
-    //    {
-    //        if (item!._isActive == true)
-    //        {
-    //            Console.WriteLine(item);
+            int inputId;
+            inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
+                 
+            BO.Engineer newEngineer = s_bl!.Engineer!.ReadEngineer(inputId)!;
 
-    //        }
-    //    }
-    //}
-
-    ///// <summary>
-    ///// gets an id from the user and if there is an engineer with that id it prints him, if there is not it will tell it to the user
-    ///// </summary>
-    //public static void ReadEngineer()
-    //{
-    //    try
-    //    {
-    //        Console.WriteLine("Write the id of the engineer you want to see:");
-
-    //        int inputId;
-    //        inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
-
-    //        Engineer newEngineer = s_dal!.Engineer!.Read(inputId)!;
-
-    //        if (newEngineer == null)
-    //        {
-    //            throw new DalNotFoundException("id is not in the system"); //request an int from the user and checks if it valid
-
-    //        }
-
-    //        Console.WriteLine(newEngineer);
-    //    }
-    //    catch (DalNotFoundException problem)
-    //    {
-    //        Console.WriteLine(problem.Message);
-    //    }
-    //}
+            if (newEngineer == null)
+            {
+                throw new DalNotFoundException("id is not in the system"); //request an int from the user and checks if it valid
+            }
+            Console.WriteLine(newEngineer);
+        }
+        catch (DalNotFoundException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+    }
 
     ///// <summary>
     ///// gets an id from the user and if there is an task with that id it prints him, if there is not it will tell it to the user
@@ -406,28 +376,6 @@ public class BlTest
             Console.WriteLine(problem.Message);
         }
     }
-
-    ///// <summary>
-    ///// create new engineer and store it in the lists
-    ///// </summary>
-    //public static void CreateNewEngineer()
-    //{
-    //    try
-    //    {
-    //        Console.WriteLine("enter the new id of the engineer:");
-
-    //        int newId;
-    //        newId = CheckIntInput(int.TryParse(Console.ReadLine(), out newId), newId); //request an int from the user and checks if it valid
-
-    //        Engineer engToAdd = GenerateEngineerCreate(newId);
-
-    //        s_dal!.Engineer!.Create(engToAdd);
-    //    }
-    //    catch (DalAlreadyExistsException problem)
-    //    {
-    //        Console.WriteLine(problem.Message);
-    //    }
-    //}
 
     /// <summary>
     /// create new task and store it in the lists
@@ -491,31 +439,97 @@ public class BlTest
 
     //}
 
+    public static void AssignEngineer()
+    {
+        try
+        {
+            Console.WriteLine("enter the ID of the engineer you want to assign task to him:");
+            int EngineerToAssignId;
+            EngineerToAssignId = CheckIntInput(int.TryParse(Console.ReadLine(), out EngineerToAssignId), EngineerToAssignId); //request an int from the user and checks if it valid
+            Console.WriteLine("enter the ID of the task you want to assign to him:");
+            int IdOfTaskToAssign;
+            IdOfTaskToAssign = CheckIntInput(int.TryParse(Console.ReadLine(), out IdOfTaskToAssign), IdOfTaskToAssign); //request an int from the user and checks if it valid
 
-    //public static void DeassignEngineer()
-    //{
+            s_bl.Engineer.AssignTask(EngineerToAssignId,IdOfTaskToAssign);
+        }
+        catch (DalAlreadyExistsException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+    }
+
+    //}
+
+    public static void DeassignEngineer()
+    {
+        try
+        {
+            Console.WriteLine("enter the ID of the engineer you want to remove his task from him:");
+            int EngineerToRemoveId;
+            EngineerToRemoveId = CheckIntInput(int.TryParse(Console.ReadLine(), out EngineerToRemoveId), EngineerToRemoveId); //request an int from the user and checks if it valid 
+
+            s_bl.Engineer.DeAssignTask(EngineerToRemoveId);
+        }
+        catch (DalAlreadyExistsException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+    }
+
+    //}
+
+    public static void FinishTaskEngineer()
+    {
+        try
+        {
+            Console.WriteLine("enter the ID of the engineer you want to complete his task:");
+            int EngineerId;
+            EngineerId = CheckIntInput(int.TryParse(Console.ReadLine(), out EngineerId), EngineerId); //request an int from the user and checks if it valid 
+
+            s_bl.Engineer.FinishTask(EngineerId);
+        }
+        catch (DalAlreadyExistsException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+    }
 
     //}
 
 
-    //public static void FinishTaskEngineer()
-    //{
+    public static void ShowTaskEngineer()
+    {
+        try
+        {
+            Console.WriteLine("enter the ID of the engineer you want to see his task details:");
+            int EngineerId;
+            EngineerId = CheckIntInput(int.TryParse(Console.ReadLine(), out EngineerId), EngineerId); //request an int from the user and checks if it valid 
+
+            s_bl.Engineer.ShowTask(EngineerId);
+        }
+        catch (DalAlreadyExistsException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+    }
 
     //}
 
+    public static void ShowPotentialTaskEngineer(int idOfEngineer)
+    {
+        try
+        {
+            Console.WriteLine("enter the ID of the engineer you want to see his potential tasks:");
+            int EngineerId;
+            EngineerId = CheckIntInput(int.TryParse(Console.ReadLine(), out EngineerId), EngineerId); //request an int from the user and checks if it valid 
 
-    //public static void ShowTaskEngineer()
-    //{
-
-    //}
-
-
-    //public static void ShowPotentialTaskEngineer()
-    //{
-
-    //}
-
-
+            s_bl.Engineer.GetPotentialTasks(EngineerId);
+        }
+        catch (DalAlreadyExistsException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+    }
 
     public static void ManualScheduleTask()
     {
@@ -662,23 +676,18 @@ public class BlTest
     /// </summary>
     /// <param name="newId"> the new id for the new engineer, we won't need to get new one </param>
     /// <returns></returns>
-    public static DO.Engineer GenerateEngineerCreate(int newId)
+    public static BO.Engineer GenerateEngineerCreate(int newId)
     {
-        Console.WriteLine("Enter the following parameters: email address, salary, name and the complexity level:");
-
+        Console.WriteLine("Enter the following parameters: name, email, level, and cost:");
+        string newName = Console.ReadLine() ?? "";
         string newEmail = Console.ReadLine() ?? "";
-
         double newCost;
         newCost = CheckDoubleInput(double.TryParse(Console.ReadLine(), out newCost), newCost);
+        int newLevel;
+        newLevel = CheckIntInput(int.TryParse(Console.ReadLine(), out newLevel), newLevel);
+        newLevel = CheckComplexityLevelInput((newLevel >= 0 && newLevel < 5), newLevel);
 
-        string newName = Console.ReadLine() ?? "";
-
-        int newComplexityLevel;
-        newComplexityLevel = CheckIntInput(int.TryParse(Console.ReadLine(), out newComplexityLevel), newComplexityLevel);
-        newComplexityLevel = CheckComplexityLevelInput((newComplexityLevel >= 0 && newComplexityLevel < 5), newComplexityLevel);
-
-        DO.Engineer newEngineer = new DO.Engineer(newId, newCost, newEmail, newName, (DO.ComplexityLvls)newComplexityLevel, true);
-
+        BO.Engineer newEngineer = new BO.Engineer(newId, newName, newEmail, (BO.EngineerExperience)newLevel, newCost, null);
         return newEngineer;
     }
 
