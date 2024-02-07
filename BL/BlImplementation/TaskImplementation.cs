@@ -60,15 +60,6 @@ internal class TaskImplementation : BlApi.ITask
 
     }
 
-    /// <summary>
-    /// this method creats new Task in the logic section by using a task from the do section
-    /// </summary>
-    /// <param name="newTask"></param>
-    /// <returns>id of the new bo task</returns>
-    /// <exception cref="BLWrongIdException"></exception>
-    /// <exception cref="BLWrongStageException"></exception>
-    /// <exception cref="BLWrongAliasException"></exception>
-    /// <exception cref="NotImplementedException"></exception>
     public int Create(BO.Task newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
     {
         if(newTask.Id<=0)
@@ -237,14 +228,6 @@ internal class TaskImplementation : BlApi.ITask
         }
         return formerDates.Max();
     }
-    /// <summary>
-    /// this method deletes specific task from the logic section using the delete from dal section 
-    /// </summary>
-    /// <param name="idOfTaskToDelete"></param>
-    /// <exception cref="BLWrongIdException"></exception>
-    /// <exception cref="BLNotFoundException"></exception>
-    /// <exception cref="BLWrongStageException"></exception>
-    /// <exception cref="BLCannotDeleteHasDependencyException"></exception>
     public void Delete(int idOfTaskToDelete)
     {
         IEnumerable<DO.Task> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
@@ -272,12 +255,6 @@ internal class TaskImplementation : BlApi.ITask
         foreach (var dep in filteredIEN)
             _dal.Dependency.Delete(dep._id);
     }
-    /// <summary>
-    /// gets id of task and returnes bo task 
-    /// </summary>
-    /// <param name="idOfWantedTask"></param>
-    /// <returns>bo task </returns>
-    /// <exception cref="BLNotFoundException"></exception>
     public BO.Task? Read(int idOfWantedTask)
     {
         DO.Task? doTask = _dal.Task.Read(idOfWantedTask);//use read func from dal to get details of specific task
@@ -286,27 +263,15 @@ internal class TaskImplementation : BlApi.ITask
 
         return MakeBOFromDoTASK(doTask);
     }
-    /// <summary>
-    /// get filter of task and returnes the first task that anwsers this filter
-    /// </summary>
-    /// <param name="filter"></param>
-    /// <returns>bo task</returns>
-    /// <exception cref="BLEmptyDatabaseException"></exception>
     public BO.Task? Read(Func<BO.Task?, bool> filter)
     {
         IEnumerable<DO.Task?> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
         if (AllDOTasks == null)
             throw new BLEmptyDatabaseException();
-        IEnumerable<BO.Task?> AllBOTasks = AllDOTasks.Select(DOTtaskInList => MakeBOFromDoTASK(DOTtaskInList));
+        IEnumerable<BO.Task?> AllBOTasks = AllDOTasks.Select(DOTtaskInList => MakeBOFromDoTASK(DOTtaskInList!));
         BO.Task? chosen= AllBOTasks.FirstOrDefault(filter);//FILTER
         return chosen;
     }
-    /// <summary>
-    /// this method returnes a TaskInList list of all the tasks that anwsers specifc filter.
-    /// </summary>
-    /// <param name="filter"></param>
-    /// <returns>list of TaskInList</returns>
-    /// <exception cref="BLEmptyDatabaseException"></exception>
     public IEnumerable<BO.TaskInList> ReadAll(Func<BO.Task?, bool>? filter = null)
     {
         IEnumerable<DO.Task> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
@@ -317,16 +282,9 @@ internal class TaskImplementation : BlApi.ITask
         {
             AllBOTasks = AllBOTasks.Where(TaskEx => filter(TaskEx));//FILTER
         }
-        IEnumerable<TaskInList> TasksInList = AllBOTasks.Select((BOtaskInList => new TaskInList(BOtaskInList.Id, BOtaskInList.Description, BOtaskInList.Alias, BOtaskInList.Status)));//make to task in list to return properly
+        IEnumerable<TaskInList> TasksInList = AllBOTasks.Select((BOtaskInList => new TaskInList(BOtaskInList!.Id, BOtaskInList.Description, BOtaskInList.Alias, BOtaskInList.Status)));//make to task in list to return properly
         return TasksInList;
     }
-    /// <summary>
-    /// this method gets bo task and updates an existing task using the update from do 
-    /// </summary>
-    /// <param name="item"></param>
-    /// <exception cref="BLWrongStageException"></exception>
-    /// <exception cref="BLNotFoundException"></exception>
-    /// <exception cref="BLWrongAliasException"></exception>
     public void Update(BO.Task item)
     {
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
@@ -346,10 +304,6 @@ internal class TaskImplementation : BlApi.ITask
         DO.Task? doTask = BOToDOTask(item);
         _dal.Task.Update(doTask!);
     }
-    /// <summary>
-    /// this method automaticly calculate valid dates for all the tasks existing 
-    /// </summary>
-    /// <param name="startingDate"></param>
     public void AutoScedule(DateTime startingDate)
     {
         _dal.Project.setStartingDate(startingDate); //saving the new starting date
@@ -366,13 +320,6 @@ internal class TaskImplementation : BlApi.ITask
 
         _dal.Project.setProjectStatus((int)BO.ProjectStatus.Execution); //we are now at the Execution stage
     }
-    /// <summary>
-    /// tihs method help us to add dependencies of new task that just been created 
-    /// </summary>
-    /// <param name="dependentTask"></param>
-    /// <param name="dependsOnTask"></param>
-    /// <exception cref="BLWrongStageException"></exception>
-    /// <exception cref="BLCannotAddCircularDependencyException"></exception>
     public void AddDependency(int dependentTask, int dependsOnTask)
     {
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
@@ -385,17 +332,6 @@ internal class TaskImplementation : BlApi.ITask
         }
         _dal.Dependency.Create(new DO.Dependency(dependentTask, dependsOnTask));
     }
-
-    /// <summary>
-    /// this method sets up a schedule date together with the manager of the project. provide him all the information he needs in the time he sets up times to the tasks 
-    /// </summary>
-    /// <param name="idOfTask"></param>
-    /// <param name="wantedTime"></param>
-    /// <param name="isConfirmed">if the manager still want his date, even that his date isnt the earliest. if the method is being called from one of the throws=T, if just sent from GUI=F</param>
-    /// <exception cref="BLCannotSceduleOneException"></exception>
-    /// <exception cref="BLCannotSceduleMoreThanOneException"></exception>
-    /// <exception cref="BLToEarlySuggestOptional"></exception>
-    /// <exception cref="BLSuggestOptional"></exception>
     public void ManualScedule(int idOfTask, DateTime wantedTime, bool isConfirmed)
     {
         if (isConfirmed == false)
@@ -431,11 +367,6 @@ internal class TaskImplementation : BlApi.ITask
             _dal.Project.setProjectStatus((int)BO.ProjectStatus.Execution);
         }
     }
-    /// <summary>
-    /// this method help us to change the status of the project from Planning to Scheduling. (2 to 3)
-    /// </summary>
-    /// <param name="StartingDateOfProject"></param>
-    /// <exception cref="BLWrongStageException"></exception>
     public void StartSchedule(DateTime StartingDateOfProject)
     {
         if((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)// this method can be acceced only in the planning stage
