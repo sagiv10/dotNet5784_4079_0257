@@ -113,6 +113,7 @@ public class BlTest
                 Console.WriteLine(oldTask);
 
                 Console.WriteLine("Enter the following parameters: alias, description, deliverables, remarks and the level of complexity,");
+                Random random = new Random();
                 string newName = Console.ReadLine() ?? oldTask.Alias; //if we got a correct new info-change to what the user wrote . else dont.
                 string newDescription = Console.ReadLine() ?? oldTask.Description; //if we got a correct new info-change to what the user wrote . else dont.
                 BO.Status newStatus =;
@@ -127,9 +128,9 @@ public class BlTest
                     Alias = newName,
                     CreatedAtDate = DateTime.Now,
                     Status = newStatus,////////////////////////////
-                    Dependencies = new List<BO.TaskInList?>(),/////
+                    Dependencies = new List<BO.TaskInList?>(),
                     Milestone = null,
-                    RequiredEffortTime =,//////////////////////////
+                    RequiredEffortTime = new TimeSpan(random.Next(1, 7)),
                     StartDate = null,
                     ScheduledDate = null,
                     ForecastDate = null,
@@ -137,7 +138,7 @@ public class BlTest
                     CompleteDate = null,
                     Deliverables = newDeliverables,
                     Remarks = newRemarks,
-                    Engineer =,//////////////////////////////////////
+                    Engineer =null,
                     Complexity= (BO.EngineerExperience)newComplexityLevel
                 };
 
