@@ -386,6 +386,7 @@ internal class TaskImplementation : BlApi.ITask
         {
             if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Sceduling)//if we are in the wrong stage
                 throw new BLWrongStageException(_dal.Project.getProjectStatus(), (int)BO.ProjectStatus.Sceduling);
+          
             IEnumerable<int> nullDates = from dep in _dal.Dependency.ReadAll(d => d._dependentTask == idOfTask)
                                          let hisTask = _dal.Task.Read((int)dep._dependsOnTask!)
                                          where hisTask._scheduledDate == null
