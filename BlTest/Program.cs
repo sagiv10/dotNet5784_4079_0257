@@ -13,7 +13,6 @@ public class BlTest
         string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
         if (ans == "Y")
             DalTest.Initialization.Do();
-
         //-------------------------------------------------------------
         //TASK:
         BO.Task task = s_bl.Task.Read(1); 
