@@ -3,7 +3,9 @@ using BlApi;
 using BO;
 using DalApi;
 using DO;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -62,9 +64,6 @@ internal class TaskImplementation : BlApi.ITask
 
     public int Create(BO.Task newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
     {
-        if(newTask.Id<=0)
-            throw new BLWrongIdException();
-
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
             throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 1);
@@ -88,7 +87,7 @@ internal class TaskImplementation : BlApi.ITask
     /// </summary>
     /// <param name="newTask"> BO.Task </param>
     /// <returns> DO.Task </returns>
-    private DO.Task? BOToDOTask(BO.Task newTask)
+    private DO.Task BOToDOTask(BO.Task newTask)
     {
         return new DO.Task()
         {
@@ -105,7 +104,7 @@ internal class TaskImplementation : BlApi.ITask
             _deliverables = newTask.Deliverables,
             _remarks = newTask.Remarks,
             _complexity = (ComplexityLvls)newTask.Complexity!,
-            _engineerId = newTask.Engineer.Id,
+            _engineerId = (newTask.Engineer != null) ? newTask.Engineer.Id : null,
             _isActive = true
         };
     }
@@ -117,26 +116,26 @@ internal class TaskImplementation : BlApi.ITask
     /// <returns> BO.Task </returns>
     private BO.Task MakeBOFromDoTASK(DO.Task doTask)
     {
-        return new BO.Task()
-        {
-            Id = doTask._id,
-            Description=doTask._description,
-            Alias=doTask._alias,
-            CreatedAtDate=doTask._createdAtDate,
-            Status=(Status?)WhatStatus(doTask._scheduledDate,doTask._startDate,doTask._completeDate), //inducate his status
-            Dependencies=GetDependenciesFromDal(doTask._id), //all his dependencies
-            Milestone=null,
-            RequiredEffortTime=doTask._requiredEffortTime,
-            StartDate=doTask._startDate,
-            ScheduledDate=doTask._scheduledDate,
-            ForecastDate=ForecastCalc(doTask._scheduledDate, doTask._startDate, doTask._requiredEffortTime),
-            DeadlineDate=doTask._deadlineDate,
-            CompleteDate=doTask._completeDate,
-            Deliverables=doTask._deliverables,
-            Remarks=doTask._remarks,
-            Engineer= CheckIfEngineerFromTaskIsExist(doTask._engineerId),
-            Complexity=(BO.EngineerExperience)doTask._complexity
-        };
+        return new BO.Task(
+        
+            doTask._id,
+            doTask._description,
+            doTask._alias,
+            doTask._createdAtDate,
+            (Status?)WhatStatus(doTask._scheduledDate,doTask._startDate,doTask._completeDate), //inducate his status
+            GetDependenciesFromDal(doTask._id), //all his dependencies
+            null,
+            doTask._requiredEffortTime,
+            doTask._startDate,
+            doTask._scheduledDate,
+            ForecastCalc(doTask._scheduledDate, doTask._startDate, doTask._requiredEffortTime),
+            doTask._deadlineDate,
+            doTask._completeDate,
+            doTask._deliverables,
+            doTask._remarks,
+            CheckIfEngineerFromTaskIsExist(doTask._engineerId),
+            (BO.EngineerExperience)doTask._complexity
+        );
     }
 
     /// <summary>
@@ -230,8 +229,7 @@ internal class TaskImplementation : BlApi.ITask
     }
     public void Delete(int idOfTaskToDelete)
     {
-        IEnumerable<DO.Task> AllDOTasks = _dal.Task.ReadAll();//use read func from dal to get details of all tasks
-        DO.Task? check = AllDOTasks.FirstOrDefault(task => idOfTaskToDelete == task._id);
+        DO.Task? check = _dal.Task.Read(idOfTaskToDelete);
         if (idOfTaskToDelete <= 0)
         {
             throw new BLWrongIdException();
@@ -250,7 +248,14 @@ internal class TaskImplementation : BlApi.ITask
         {
             throw new BLCannotDeleteHasDependencyException(idOfTaskToDelete);
         }
-        _dal.Task.Delete(idOfTaskToDelete);
+        try
+        {
+            _dal.Task.Delete(idOfTaskToDelete);
+        }
+        catch(BLNotFoundException ex)
+        {
+            throw new BLNotFoundException("Task", idOfTaskToDelete);
+        }
         IEnumerable<DO.Dependency> filteredIEN = _dal.Dependency.ReadAll(cond => cond._dependentTask==idOfTaskToDelete);
         foreach (var dep in filteredIEN)
             _dal.Dependency.Delete(dep._id);
@@ -304,8 +309,13 @@ internal class TaskImplementation : BlApi.ITask
         DO.Task? doTask = BOToDOTask(item);
         _dal.Task.Update(doTask!);
     }
-    public void AutoScedule(DateTime startingDate)
+    public void AutoScedule()
     {
+        if((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Sceduling)
+        {
+            throw new BO.BLWrongStageException(_dal.Project.getProjectStatus(), (int)BO.ProjectStatus.Sceduling);
+        }
+        DateTime startingDate = (DateTime)_dal.Project.getStartingDate()!;
         _dal.Project.setStartingDate(startingDate); //saving the new starting date
         _dal.Project.setProjectStatus((int)BO.ProjectStatus.Sceduling); //we are now at the Sceduling stage
 
@@ -322,6 +332,15 @@ internal class TaskImplementation : BlApi.ITask
     }
     public void AddDependency(int dependentTask, int dependsOnTask)
     {
+        if(_dal.Task.Read(dependsOnTask) == null)
+        {
+            throw new BLNotFoundException("task", dependsOnTask);
+        }
+        if (_dal.Task.Read(dependentTask) == null)
+        {
+            throw new BLNotFoundException("task", dependentTask);
+
+        }
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
         {
             throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 1);
@@ -330,8 +349,37 @@ internal class TaskImplementation : BlApi.ITask
         {
             throw new BLCannotAddCircularDependencyException(dependentTask, dependsOnTask);
         }
+        if(_dal.Dependency.Read(d=> d._dependsOnTask == dependsOnTask && d._dependentTask == dependentTask) != null)
+        {
+            throw new BLAlreadyExistException("dependency", _dal.Dependency.Read(d => d._dependsOnTask == dependsOnTask && d._dependentTask == dependentTask)!._id);
+        }
         _dal.Dependency.Create(new DO.Dependency(dependentTask, dependsOnTask));
     }
+
+    public void DeleteDependency(int dependentTask, int dependsOnTask)
+    {
+        if (_dal.Task.Read(dependsOnTask) == null)
+        {
+            throw new BLNotFoundException("task", dependsOnTask);
+        }
+        if (_dal.Task.Read(dependentTask) == null)
+        {
+            throw new BLNotFoundException("task", dependentTask);
+
+        }
+        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
+        {
+            throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 1);
+        }
+        DO.Dependency? dep = _dal.Dependency.Read(d => d._dependsOnTask == dependsOnTask && d._dependentTask == dependentTask);
+        if (dep == null)
+        {
+            throw new BLNotFoundException("dependency", -1);
+        }
+        _dal.Dependency.Delete(dep._id);
+    }
+
+
     public void ManualScedule(int idOfTask, DateTime wantedTime, bool isConfirmed)
     {
         if (isConfirmed == false)
@@ -376,6 +424,8 @@ internal class TaskImplementation : BlApi.ITask
         _dal.Project.setProjectStatus((int)BO.ProjectStatus.Sceduling);
         _dal.Project.setStartingDate(StartingDateOfProject);
     }
+
+
 }
 
 

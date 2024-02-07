@@ -41,7 +41,7 @@ public class Task
 
     public BO.Status? Status { get; set; }
 
-    public List<BO.TaskInList?> Dependencies { get; init; } = null; //the content will change, but not the list itself
+    public List<BO.TaskInList>? Dependencies { get; init; } = null; //the content will change, but not the list itself
 
     public BO.MilestoneInTask? Milestone { get; set; }
 
@@ -64,6 +64,27 @@ public class Task
     public BO.EngineerInTask? Engineer { get; set; }
 
     public BO.EngineerExperience Complexity {  get; set; }
+
+    public Task(int id, string description, string alias, DateTime createdAtDate, Status? status, List<TaskInList>? dependencies, MilestoneInTask? milestone, TimeSpan requiredEffortTime, DateTime? startDate, DateTime? scheduledDate, DateTime? forecastDate, DateTime? deadlineDate, DateTime? completeDate, string? deliverables, string? remarks, EngineerInTask? engineer, EngineerExperience complexity)
+    {
+        Id = id;
+        Description = description;
+        Alias = alias;
+        CreatedAtDate = createdAtDate;
+        Status = status;
+        Dependencies = dependencies;
+        Milestone = milestone;
+        RequiredEffortTime = requiredEffortTime;
+        StartDate = startDate;
+        ScheduledDate = scheduledDate;
+        ForecastDate = forecastDate;
+        DeadlineDate = deadlineDate;
+        CompleteDate = completeDate;
+        Deliverables = deliverables;
+        Remarks = remarks;
+        Engineer = engineer;
+        Complexity = complexity;
+    }
 
     public override string ToString() => this.ToStringProperty();
 

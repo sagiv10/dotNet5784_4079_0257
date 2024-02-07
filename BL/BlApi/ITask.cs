@@ -11,10 +11,10 @@ public interface ITask
     /// </summary>
     /// <param name="newTask"></param>
     /// <returns>id of the new bo task</returns>
-    /// <exception cref="BLWrongIdException"></exception>
-    /// <exception cref="BLWrongStageException"></exception>
-    /// <exception cref="BLWrongAliasException"></exception>
-    /// <exception cref="NotImplementedException"></exception>
+    /// <exception cref="BO.BLWrongIdException"></exception>
+    /// <exception cref="BO.BLWrongAliasException"></exception>
+    /// <exception cref="BO.BLWrongStageException"></exception>
+    /// <exception cref="BO.BLEmptyDatabaseException"></exception>
     public int Create(BO.Task newTask);
     /// <summary>
     /// gets id of task and returnes bo task 
@@ -59,26 +59,40 @@ public interface ITask
     /// this method automaticly calculate valid dates for all the tasks existing 
     /// </summary>
     /// <param name="startingDate"></param>
-    public void AutoScedule(DateTime startingDate);
+    /// <exception cref="BO.BLWrongStageException"></exception>
+    public void AutoScedule();
     /// <summary>
     /// this method sets up a schedule date together with the manager of the project. provide him all the information he needs in the time he sets up times to the tasks 
     /// </summary>
     /// <param name="idOfTask"></param>
     /// <param name="wantedTime"></param>
     /// <param name="isConfirmed">if the manager still want his date, even that his date isnt the earliest. if the method is being called from one of the throws=T, if just sent from GUI=F</param>
-    /// <exception cref="BLCannotSceduleOneException"></exception>
-    /// <exception cref="BLCannotSceduleMoreThanOneException"></exception>
-    /// <exception cref="BLToEarlySuggestOptional"></exception>
-    /// <exception cref="BLSuggestOptional"></exception>
+    /// <exception cref="BO.BLCannotScheduleException"></exception>
+    /// <exception cref="BO.BLTooEarlyException"></exception>
+    /// <exception cref="BO.BLWrongStageException"></exception>
+    /// <exception cref="BO.BLDateSuggestionException"></exception>
     public void ManualScedule(int idOfTask, DateTime wantedTime, bool isConfirmed);
 
+    /// <summary>
     /// tihs method help us to add dependencies of new task that just been created 
     /// </summary>
     /// <param name="dependentTask"></param>
     /// <param name="dependsOnTask"></param>
-    /// <exception cref="BLWrongStageException"></exception>
-    /// <exception cref="BLCannotAddCircularDependencyException"></exception>
+    /// <exception cref="BO.BLWrongStageException"></exception>
+    /// <exception cref="BO.BLCannotAddCircularDependencyException"></exception>
+    /// <exception cref="BO.BLNotFoundException"></exception>
+    /// <exception cref="BO.BLAlreadyExistException"></exception>
     public void AddDependency(int dependentTask, int DependsOnTask);
+
+    /// <summary>
+    /// tihs method help us to delete dependencies 
+    /// </summary>
+    /// <param name="dependentTask"></param>
+    /// <param name="dependsOnTask"></param>
+    /// <exception cref="BO.BLWrongStageException"></exception>
+    /// <exception cref="BO.BLNotFoundException"></exception>
+    public void DeleteDependency(int dependentTask, int DependsOnTask);
+
 
     /// <summary>
     /// this method help us to change the status of the project from Planning to Scheduling. (2 to 3)

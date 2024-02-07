@@ -5,6 +5,7 @@ using DalTest;
 using DalApi;
 using DO;
 using System.Linq.Expressions;
+using System.Threading.Channels;
 
 public class BlTest
 {
@@ -57,20 +58,20 @@ public class BlTest
         Console.WriteLine("Choose method:\n1.Create.\n2.Read.\n3.ReadAll.\n4.Update.\n5.Delete.\n6.Assign task.\n7.Deassign task.\n8.finish task.\n9.Show hisTask.\n10.Show Potential tasks.");
 
         int choice = CheckIntInput(int.TryParse(Console.ReadLine(), out choice), choice);
-                switch (choice)
-                {
-                    case 1: CreateNewEngineer(); break;
-                    case 2: ReadEngineer(); break;
-                    case 3: ReadAllEngineer(); break;
-                    case 4: UpdateEngineer(); break;
-                    case 5: DeleteEngineer(); break;
-                    case 6: AssignEngineer(); break;
-                    case 7: DeassignEngineer(); break;
-                    case 8: FinishTaskEngineer(); break;
-                    case 9: ShowTaskEngineer(); break;
-                    case 10: ShowPotentialTaskEngineer(); break;
-                }
- 
+        switch (choice)
+        {
+            //            case 1: CreateNewEngineer(); break;
+            //            case 2: ReadEngineer(); break;
+            //            case 3: ReadAllEngineer(); break;
+            case 4: UpdateEngineer(); break;
+                //            case 5: DeleteEngineer(); break;
+                //            case 6: AssignEngineer(); break;
+                //            case 7: DeassignEngineer(); break;
+                //            case 8: FinishTaskEngineer(); break;
+                //            case 9: ShowTaskEngineer(); break;
+                //            case 10: ShowPotentialTaskEngineer(); break;
+        }
+
     }
 
     public static void TaskMenu()
@@ -106,7 +107,7 @@ public class BlTest
             int idToUpdate;
             idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);//sends to another method that gets the id from the user and  checks if the input is correct.
             
-            BO.Task oldTask = s_bl!.Task!.Read(idToUpdate);//prints the old details, if id not found so set to null
+            BO.Task oldTask = s_bl.Task.Read(idToUpdate);//prints the old details, if id not found so set to null
             
             Console.WriteLine(oldTask);
             
@@ -114,56 +115,82 @@ public class BlTest
             
             Random random = new Random(DateTime.Now.Millisecond);
 
-            string newName = Console.ReadLine() ?? oldTask.Alias; //if we got a correct new info-change to what the user wrote . else dont.
-            
-            string newDescription = Console.ReadLine() ?? oldTask.Description; //if we got a correct new info-change to what the user wrote . else dont.
+            string newName = Console.ReadLine();
+            newName  = newName! == "" ? oldTask.Alias : newName!; //if we got a correct new info-change to what the user wrote . else dont.
+
+            string newDescription = Console.ReadLine();
+            newDescription = newDescription == "" ? oldTask.Alias : newDescription; //if we got a correct new info-change to what the user wrote . else dont.
 
             int newDays;
             newDays = int.TryParse(Console.ReadLine(), out newDays) == true ? newDays : -1;
             TimeSpan newRequiredEffortTime = newDays>0  ? new TimeSpan(newDays) : new TimeSpan(random.Next());
             
-            BO.Status newStatus =;
+            BO.Status newStatus = BO.Status.Unscheduled;
             
             string? newDeliverables = Console.ReadLine() ?? oldTask.Deliverables!;
             
             string? newRemarks = Console.ReadLine() ?? oldTask.Remarks!;
             
             int newComplexityLevel;
-            
             newComplexityLevel = (int.TryParse(Console.ReadLine(), out newComplexityLevel) && newComplexityLevel >= 0 && newComplexityLevel < 5) ? newComplexityLevel : (int)oldTask.Complexity;  //if we got a correct new info-change to what the user wrote . else dont.
-            
-            BO.Task updatedTask = new BO.Task()
+
+            int id;
+            id = CheckIntInput(int.TryParse(Console.ReadLine(), out id), id); //request an int from the user and checks if it valid
+            List<BO.TaskInList> dependencies = new List<BO.TaskInList>();
+            while (id > 0)
             {
-                Id = idToUpdate,
-                Description = newDescription,
-                Alias = newName,
-                CreatedAtDate = DateTime.Now,
-                Status = newStatus,////////////////////////////
-                Dependencies = new List<BO.TaskInList?>(),
-                Milestone = null,
-                RequiredEffortTime = new TimeSpan(random.Next(1, 7)),
-                StartDate = null,
-                ScheduledDate = null,
-                ForecastDate = null,
-                DeadlineDate = null,
-                CompleteDate = null,
-                Deliverables = newDeliverables,
-                Remarks = newRemarks,
-                Engineer = null,
-                Complexity = (BO.EngineerExperience)newComplexityLevel
-            };
+                try
+                {
+                    BO.Task temp = s_bl.Task.Read(id);
+                    dependencies.Add(new TaskInList(temp.Id, temp.Description, temp.Alias, temp.Status));
+                }
+                catch (BLNotFoundException EX)
+                {
+
+                }
+                id = CheckIntInput(int.TryParse(Console.ReadLine(), out id), id); //request an int from the user and checks if it valid
+            }
+
+            BO.Task updatedTask = new BO.Task(
+                idToUpdate,
+                newDescription!,
+                newName,
+                oldTask.CreatedAtDate,
+                newStatus,////////////////////////////
+                dependencies,
+                null,
+                oldTask.RequiredEffortTime,
+                null,
+                null,
+                null,
+                null,
+                null,
+                newDeliverables,
+                newRemarks,
+                null,
+                (BO.EngineerExperience)newComplexityLevel
+            );
             
             s_bl!.Task!.Update(updatedTask);//update the new task
         }
-        catch (DalNotFoundException problem)
+        catch (BO.BLNotFoundException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BO.BLWrongStageException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BO.BLWrongInputException problem)
         {
             Console.WriteLine(problem.Message);
         }
 
     }
-    /// <summary>
-    /// this method gets from the user an id of engineer and a full details of engineer and updates the engineer with this id from the list with the new details. if not exist write a message.
-    /// </summary>
+
+    ///// <summary>
+    ///// this method gets from the user an id of engineer and a full details of engineer and updates the engineer with this id from the list with the new details. if not exist write a message.
+    ///// </summary>
     public static void UpdateEngineer()
     {
         try
@@ -173,44 +200,52 @@ public class BlTest
             int idToUpdate;
             idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);//sends to another method that gets the id from the user and  checks if the input is correct.
 
-            DO.Engineer? oldEngineer = s_dal!.Engineer!.Read(idToUpdate);//prints the old details, if id not found so set to null
+            BO.Engineer oldEngineer = s_bl.Engineer.ReadEngineer(idToUpdate);//prints the old details, if id not found so set to null
 
-            if (oldEngineer != null)//if we found the id in the list 
-            {
-                Console.WriteLine(oldEngineer);
+            Console.WriteLine(oldEngineer);
 
-                Console.WriteLine("Enter the following parameters: email address, salary, name and the complexity level:");
+            Console.WriteLine("Enter the following parameters: email address, salary, name and the complexity level:");
 
-                string newEmail = Console.ReadLine() ?? oldEngineer._email!; //if we got a correct new info-change to what the user wrote . else dont.
+            string newEmail = Console.ReadLine();
+            newEmail = newEmail! == "" ? oldEngineer.Email : newEmail!; //if we got a correct new info-change to what the user wrote . else dont.
 
-                double newCost;
-                newCost = double.TryParse(Console.ReadLine(), out newCost) ? newCost : oldEngineer._cost; //if we got a correct new info-change to what the user wrote . else dont.
+            double newCost;
+            newCost = double.TryParse(Console.ReadLine(), out newCost) ? newCost : oldEngineer.Cost; //if we got a correct new info-change to what the user wrote . else dont.
 
-                string newName = Console.ReadLine() ?? oldEngineer._name; //if we got a correct new info-change to what the user wrote . else dont.
+            string newName = Console.ReadLine();
+            newName = newEmail! == "" ? oldEngineer.Name : newName!; //if we got a correct new info-change to what the user wrote . else dont.
+            
+            int newComplexityLevel = -1;
+            newComplexityLevel = (int.TryParse(Console.ReadLine(), out newComplexityLevel) && newComplexityLevel >= 0 && newComplexityLevel < 5) ? newComplexityLevel : (int)oldEngineer.Level!; //if we got a correct new info-change to what the user wrote . else dont.
 
-                int newComplexityLevel = -1;
-                newComplexityLevel = (int.TryParse(Console.ReadLine(), out newComplexityLevel) && newComplexityLevel >= 0 && newComplexityLevel < 5) ? newComplexityLevel : (int)oldEngineer._level!; //if we got a correct new info-change to what the user wrote . else dont.
+            BO.Engineer updatedEngineer = new BO.Engineer(
+                idToUpdate,
+                newName,
+                newEmail,
+                (BO.EngineerExperience)newComplexityLevel,
+                newCost,
+                null
+                );//create a new engineer with the given details
 
-                DO.Engineer updatedEngineer = new DO.Engineer(idToUpdate, newCost, newEmail, newName, (DO.ComplexityLvls)newComplexityLevel, true);//create a new engineer with the given details
-
-                s_dal!.Engineer!.Update(updatedEngineer);//update the new engineer
-            }
-            else
-            {
-                throw new DalNotFoundException("id is not in the system");
-            }
-
+            s_bl!.Engineer!.UpdateEngineer(updatedEngineer);//update the new engineer
         }
-        catch (DalNotFoundException problem)
+        catch (BLNotFoundException problem)
         {
             Console.WriteLine(problem.Message);
         }
-
+        catch (BLWrongInputException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLCannotLowerLevelException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
     }
 
-    /// <summary>
-    /// gets an id of task from the user and delete it from the tasks list
-    /// </summary>
+    ///// <summary>
+    ///// gets an id of task from the user and delete it from the tasks list
+    ///// </summary>
     public static void DeleteTask()
     {
         try
@@ -220,111 +255,139 @@ public class BlTest
             int idToDelete;
             idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete); //request an int from the user and checks if it valid
 
-            s_dal!.Task!.Delete(idToDelete);
+            s_bl!.Task!.Delete(idToDelete);
         }
-        catch (DalNotFoundException problem)
+        catch (BLNotFoundException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLWrongIdException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLCannotDeleteHasDependencyException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLWrongStageException problem)
         {
             Console.WriteLine(problem.Message);
         }
     }
 
-    /// <summary>
-    /// gets an id of engineer from the user and delete it from the engineers list
-    /// </summary>
-    public static void DeleteEngineer()
-    {
-        try
-        {
-            Console.WriteLine("write the id of the Engineer you want to delete:");
+    ///// <summary>
+    ///// gets an id of engineer from the user and delete it from the engineers list
+    ///// </summary>
+    //public static void DeleteEngineer()
+    //{
+    //    try
+    //    {
+    //        Console.WriteLine("write the id of the Engineer you want to delete:");
 
-            int idToDelete;
-            idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete); //request an int from the user and checks if it valid
+    //        int idToDelete;
+    //        idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete); //request an int from the user and checks if it valid
 
-            s_dal!.Engineer!.Delete(idToDelete);
-        }
-        catch (DalNotFoundException problem)
-        {
-            Console.WriteLine(problem.Message);
-        }
-    }
+    //        s_dal!.Engineer!.Delete(idToDelete);
+    //    }
+    //    catch (DalNotFoundException problem)
+    //    {
+    //        Console.WriteLine(problem.Message);
+    //    }
+    //}
 
-    /// <summary>
-    /// gets an id of dependency from the user and delete it from the dependencys list
-    /// </summary>
+    ///// <summary>
+    ///// gets an id of dependency from the user and delete it from the dependencys list
+    ///// </summary>
     public static void DeleteDependency()
     {
         try
         {
-            Console.WriteLine("write the id of the Dependency you want to delete:");
+            Console.WriteLine("write the dependent task and the depends on task of the Dependency you want to delete:");
 
-            int idToDelete;
-            idToDelete = CheckIntInput(int.TryParse(Console.ReadLine(), out idToDelete), idToDelete); //request an int from the user and checks if it valid
+            int dependent;
+            dependent = CheckIntInput(int.TryParse(Console.ReadLine(), out dependent), dependent); //request an int from the user and checks if it valid
 
-            s_dal!.Dependency!.Delete(idToDelete);
+
+            int dependsOn;
+            dependsOn = CheckIntInput(int.TryParse(Console.ReadLine(), out dependsOn), dependsOn); //request an int from the user and checks if it valid
+
+            s_bl.Task.DeleteDependency(dependent, dependsOn);
         }
-        catch (DalNotFoundException problem)
+        catch (BLNotFoundException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLWrongStageException problem)
         {
             Console.WriteLine(problem.Message);
         }
     }
 
-    /// <summary>
-    /// gets from the user a replica of the tasks list an then prints all their data
-    /// </summary>
+    ///// <summary>
+    ///// gets from the user a replica of the tasks list an then prints all their data
+    ///// </summary>
     public static void ReadAllTask()
-    {
-        foreach (var item in s_dal!.Task!.ReadAll())
-        {
-            Console.WriteLine(item);
-        }
-    }
-
-    /// <summary>
-    /// gets from the user a replica of the engineers list an then prints all their data
-    /// /// </summary>
-    public static void ReadAllEngineer()
-    {
-        foreach (var item in s_dal!.Engineer!.ReadAll())
-        {
-            if (item!._isActive == true)
-            {
-                Console.WriteLine(item);
-
-            }
-        }
-    }
-
-    /// <summary>
-    /// gets an id from the user and if there is an engineer with that id it prints him, if there is not it will tell it to the user
-    /// </summary>
-    public static void ReadEngineer()
     {
         try
         {
-            Console.WriteLine("Write the id of the engineer you want to see:");
-
-            int inputId;
-            inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
-
-            Engineer newEngineer = s_dal!.Engineer!.Read(inputId)!;
-
-            if (newEngineer == null)
+            foreach (var item in s_bl.Task.ReadAll())
             {
-                throw new DalNotFoundException("id is not in the system"); //request an int from the user and checks if it valid
-
+                Console.WriteLine(item);
             }
-
-            Console.WriteLine(newEngineer);
         }
-        catch (DalNotFoundException problem)
+        catch(BO.BLEmptyDatabaseException ex)
         {
-            Console.WriteLine(problem.Message);
+            Console.WriteLine(ex.Message);
         }
+        
     }
 
-    /// <summary>
-    /// gets an id from the user and if there is an task with that id it prints him, if there is not it will tell it to the user
-    /// </summary>
+    ///// <summary>
+    ///// gets from the user a replica of the engineers list an then prints all their data
+    ///// /// </summary>
+    //public static void ReadAllEngineer()
+    //{
+    //    foreach (var item in s_dal!.Engineer!.ReadAll())
+    //    {
+    //        if (item!._isActive == true)
+    //        {
+    //            Console.WriteLine(item);
+
+    //        }
+    //    }
+    //}
+
+    ///// <summary>
+    ///// gets an id from the user and if there is an engineer with that id it prints him, if there is not it will tell it to the user
+    ///// </summary>
+    //public static void ReadEngineer()
+    //{
+    //    try
+    //    {
+    //        Console.WriteLine("Write the id of the engineer you want to see:");
+
+    //        int inputId;
+    //        inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
+
+    //        Engineer newEngineer = s_dal!.Engineer!.Read(inputId)!;
+
+    //        if (newEngineer == null)
+    //        {
+    //            throw new DalNotFoundException("id is not in the system"); //request an int from the user and checks if it valid
+
+    //        }
+
+    //        Console.WriteLine(newEngineer);
+    //    }
+    //    catch (DalNotFoundException problem)
+    //    {
+    //        Console.WriteLine(problem.Message);
+    //    }
+    //}
+
+    ///// <summary>
+    ///// gets an id from the user and if there is an task with that id it prints him, if there is not it will tell it to the user
+    ///// </summary>
     public static void ReadTask()
     {
         try
@@ -334,105 +397,184 @@ public class BlTest
             int inputId;
             inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
 
-            DO.Task newTask = s_dal!.Task!.Read(inputId)!;
-
-            if (newTask == null)
-            {
-                throw new DalNotFoundException("id is not in the system"); //request an int from the user and checks if it valid
-            }
+            BO.Task newTask = s_bl.Task.Read(inputId)!;
 
             Console.WriteLine(newTask);
         }
-        catch (DalNotFoundException problem)
+        catch (BO.BLNotFoundException problem)
         {
             Console.WriteLine(problem.Message);
         }
     }
 
-    /// <summary>
-    /// create new engineer and store it in the lists
-    /// </summary>
-    public static void CreateNewEngineer()
-    {
-        try
-        {
-            Console.WriteLine("enter the new id of the engineer:");
+    ///// <summary>
+    ///// create new engineer and store it in the lists
+    ///// </summary>
+    //public static void CreateNewEngineer()
+    //{
+    //    try
+    //    {
+    //        Console.WriteLine("enter the new id of the engineer:");
 
-            int newId;
-            newId = CheckIntInput(int.TryParse(Console.ReadLine(), out newId), newId); //request an int from the user and checks if it valid
+    //        int newId;
+    //        newId = CheckIntInput(int.TryParse(Console.ReadLine(), out newId), newId); //request an int from the user and checks if it valid
 
-            Engineer engToAdd = GenerateEngineerCreate(newId);
+    //        Engineer engToAdd = GenerateEngineerCreate(newId);
 
-            s_dal!.Engineer!.Create(engToAdd);
-        }
-        catch (DalAlreadyExistsException problem)
-        {
-            Console.WriteLine(problem.Message);
-        }
-    }
+    //        s_dal!.Engineer!.Create(engToAdd);
+    //    }
+    //    catch (DalAlreadyExistsException problem)
+    //    {
+    //        Console.WriteLine(problem.Message);
+    //    }
+    //}
 
     /// <summary>
     /// create new task and store it in the lists
     /// </summary>
     public static void CreateNewTask()
     {
-        DO.Task taskToAdd = GenerateTaskCreate();
-
-        s_dal!.Task!.Create(taskToAdd);
+        BO.Task taskToAdd = GenerateTaskCreate();
+        try
+        {
+            s_bl.Task.Create(taskToAdd);
+        }
+        catch (BLNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BO.BLWrongInputException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BLWrongStageException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
-    /// <summary>
-    /// create new dependency and store it in the lists
-    /// </summary>
+    ///// <summary>
+    ///// create new dependency and store it in the lists
+    ///// </summary>
     public static void CreateNewDependency()
     {
-        Dependency dependencyToAdd = GenerateDependencyCreate();
-
-        s_dal!.Dependency!.Create(dependencyToAdd);
-
+        Console.WriteLine("enter the dependent task and the depends on task");
+        int dependent;
+        dependent = CheckIntInput(int.TryParse(Console.ReadLine(), out dependent), dependent);//sends to another method that gets the id from the user and  checks if the input is correct.
+        int dependensOn;
+        dependensOn = CheckIntInput(int.TryParse(Console.ReadLine(), out dependensOn), dependensOn);//sends to another method that gets the id from the user and  checks if the input is correct.
+        try
+        {
+            s_bl.Task.AddDependency(dependent, dependensOn);
+        }
+        catch(BLNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch(BLWrongStageException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch(BLCannotAddCircularDependencyException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BLAlreadyExistException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
 
-    public static void AssignEngineer()
-    {
-        
-    }
+    //public static void AssignEngineer()
+    //{
+
+    //}
 
 
-    public static void DeassignEngineer()
-    {
+    //public static void DeassignEngineer()
+    //{
 
-    }
-
-
-    public static void FinishTaskEngineer()
-    {
-
-    }
+    //}
 
 
-    public static void ShowTaskEngineer()
-    {
+    //public static void FinishTaskEngineer()
+    //{
 
-    }
+    //}
 
 
-    public static void ShowPotentialTaskEngineer()
-    {
+    //public static void ShowTaskEngineer()
+    //{
 
-    }
+    //}
+
+
+    //public static void ShowPotentialTaskEngineer()
+    //{
+
+    //}
 
 
 
     public static void ManualScheduleTask()
     {
+        Console.WriteLine("enter the id of the task you want to schedule");
+
+        int taskId;
+        taskId = CheckIntInput(int.TryParse(Console.ReadLine(), out taskId), taskId);
+
+        Console.WriteLine("enter your option to the scheduled date");
+        DateTime optionalTime;
+        optionalTime = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out optionalTime), optionalTime);
+        try
+        {
+            s_bl.Task.ManualScedule(taskId, optionalTime, false);
+        }
+        catch (BLCannotScheduleException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BLTooEarlyException ex)
+        {
+            Console.WriteLine(ex.Message);
+            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
+            if (ans == "Y")
+            {
+                s_bl.Task.ManualScedule(taskId, ex.suggest, true);
+            }
+        }
+        catch(BLDateSuggestionException ex)
+        {
+            Console.WriteLine(ex.Message);
+            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
+            if (ans == "Y")
+            {
+                s_bl.Task.ManualScedule(taskId, ex.suggest, true);
+            }
+            else
+            {
+                s_bl.Task.ManualScedule(taskId, optionalTime, true);
+            }
+        }
+        catch(BO.BLWrongStageException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
 
     }
 
 
     public static void AutoScheduleTasks()
     {
-
+        try
+        {
+            s_bl.Task.AutoScedule();
+        }
+        catch (BLWrongStageException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     //METHODS THAT HELP US TO CREATE THE CRUD METHODS: 
@@ -544,64 +686,45 @@ public class BlTest
     /// request all the pameters from the user for new task, create him and return it
     /// </summary>
     /// <returns></returns>
-    public static DO.Task GenerateTaskCreate()
+    public static BO.Task GenerateTaskCreate()
     {
-        Console.WriteLine("Enter the following parameters: nickname, description, if it's milestone ('1' for yes and '0' to no), when it created, the scheduled Date to beginning, when it started, deadline date, complete date, deliverables, notes and the level of complexity, and the engineer's id:");
+        Console.WriteLine("Enter the following parameters: nickname, description, the required days if effort, deliverables, notes and the level of complexity:");
 
-        string newName = Console.ReadLine() ?? ""; //requst new name from the user + null check
+        string newName = Console.ReadLine(); //requst new name from the user + null check
 
-        string newDescription = Console.ReadLine() ?? ""; //requst new description from the user + null check
+        string newDescription = Console.ReadLine(); //requst new description from the user + null check
 
-        int isMilestone;
-        isMilestone = CheckIntInput(int.TryParse(Console.ReadLine(), out isMilestone), isMilestone); //request an int from the user and checks if it valid
-        bool newIsMilestone = isMilestone == 1 ? true : false;
+        int days;
+        days = CheckIntInput(int.TryParse(Console.ReadLine(), out days), days); //request an int from the user and checks if it valid
 
-        DateTime newCreatedTime;
-        newCreatedTime = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newCreatedTime), newCreatedTime); //requst new DateTime from the user + null check
+        string newDeliverables = Console.ReadLine(); //requst new name from the user + null check
 
-        DateTime newScheduledDate;
-        newScheduledDate = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newScheduledDate), newScheduledDate); //requst new DateTime from the user + null check
-
-        DateTime newStartedDate;
-        newStartedDate = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newStartedDate), newStartedDate); //requst new DateTime from the user + null check
-
-        DateTime newDeadlineTime;
-        newDeadlineTime = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newDeadlineTime), newDeadlineTime); //requst new DateTime from the user + null check
-
-        DateTime newCompletedDate;
-        newCompletedDate = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out newCompletedDate), newCompletedDate); //requst new DateTime from the user + null check
-
-        string newDeliverables = Console.ReadLine() ?? ""; //requst new name from the user + null check
-
-        string newRemarks = Console.ReadLine() ?? ""; //requst new name from the user + null check
+        string newRemarks = Console.ReadLine(); //requst new name from the user + null check
 
         int newComplexityLevel;
         newComplexityLevel = CheckIntInput(int.TryParse(Console.ReadLine(), out newComplexityLevel), newComplexityLevel);
         newComplexityLevel = CheckComplexityLevelInput((newComplexityLevel >= 0 && newComplexityLevel < 5), newComplexityLevel); //requst new complexity level from the user + validation check
 
-        int newEngineerId;
-        newEngineerId = CheckIntInput(int.TryParse(Console.ReadLine(), out newEngineerId), newEngineerId); //request an int from the user and checks if it valid
+        Console.WriteLine("enter all the id's of the tasks that he is depends on them, and then enter 0 (negative id will stop the process also):");
 
-        DO.Task newTask = new DO.Task(0, newCreatedTime, newScheduledDate - newCreatedTime, newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);
+        int id;
+        id = CheckIntInput(int.TryParse(Console.ReadLine(), out id), id); //request an int from the user and checks if it valid
+        List<BO.TaskInList> dependencies = new List<BO.TaskInList>();
+        while (id > 0)
+        {
+            try
+            {
+                BO.Task temp = s_bl.Task.Read(id);
+                dependencies.Add(new TaskInList(temp.Id, temp.Description, temp.Alias, temp.Status));
+            }
+            catch(BLNotFoundException EX)
+            {
+
+            }
+            id = CheckIntInput(int.TryParse(Console.ReadLine(), out id), id); //request an int from the user and checks if it valid
+        }
+        BO.Task newTask = new BO.Task(0, newDescription, newName, DateTime.Now, BO.Status.Unscheduled, dependencies, null, new TimeSpan(days), null, null, null, null, null, newDeliverables, newRemarks, null, (BO.EngineerExperience)newComplexityLevel);
         return newTask;
-    }
-
-    /// <summary>
-    /// request all the pameters from the dependency for new task, create him and return it
-    /// </summary>
-    /// <returns></returns>
-    public static DO.Dependency GenerateDependencyCreate()
-    {
-        Console.WriteLine("Enter the following parameters: DependentTask and DependsOnTask");
-
-        int dependentTask;
-        dependentTask = CheckIntInput(int.TryParse(Console.ReadLine(), out dependentTask), dependentTask); //request an int from the user and checks if it valid
-
-        int dependsOnTask;
-        dependsOnTask = CheckIntInput(int.TryParse(Console.ReadLine(), out dependsOnTask), dependsOnTask); //request an int from the user and checks if it valid
-
-        DO.Dependency newDependency = new DO.Dependency(0, dependentTask, dependsOnTask);
-        return newDependency;
     }
 
     /// <summary>

@@ -31,7 +31,8 @@ public class BLWrongCostException : BLWrongInputException
 }
 public class BLTooEarlyException : BLWrongInputException
 {
-    public BLTooEarlyException(DateTime OptionalDate) : base($"your date is too early and not valid, here is a suggestion for a good date:{OptionalDate} ") { }
+    public DateTime suggest;
+    public BLTooEarlyException(DateTime OptionalDate) : base($"your date is too early and not valid, here is a suggestion for a good date:{OptionalDate} do you confirm (Y) or want to quit? (N)") { suggest = OptionalDate; }
 }
 //---------------------------------------------------------------
 public class BLExistProbException : Exception
@@ -75,7 +76,7 @@ public class BLCannotDeleteHasTasksException : BLCannotDeleteException
 
 public class BLWrongStageException : Exception
 {
-    public BLWrongStageException(int currentStage, int WantedStage) : base($"cannot do stage {WantedStage} in {currentStage} stage") { }
+    public BLWrongStageException(int currentStage, int WantedStage) : base($"cannot do actions of stage {WantedStage} in {currentStage} stage") { }
 }
 
 public class BLCannotLowerLevelException : Exception
@@ -110,7 +111,8 @@ public class BLCannotScheduleException : Exception
 
 public class BLDateSuggestionException : Exception
 {
-    public BLDateSuggestionException(DateTime optionalDate) : base("your date is not the optimal option, here is a suggestion for a better date:)") { }
+    public DateTime suggest;
+    public BLDateSuggestionException(DateTime optionalDate) : base($"your date is not the optimal option, here is a suggestion for a better date {optionalDate}. enter Y t confirm and N else:)") { suggest = optionalDate; }
 }
 
 public class BLCannotAddCircularDependencyException : Exception

@@ -67,6 +67,10 @@ internal class EngineerImplementation : BlApi.IEngineer
         }
         try
         {
+            if(engineer.Email == "")
+            {
+                throw new FormatException();
+            }
             MailAddress mailAddress = new MailAddress(engineer.Email); //try to make an mailAdress entity, if the email adress id invalid then a format exception will be thrown.
         }
         catch(FormatException ex)
