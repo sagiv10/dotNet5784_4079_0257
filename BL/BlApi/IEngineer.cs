@@ -112,7 +112,6 @@ public interface IEngineer
     /// <exception cref="BLNoTaskAssignedException"></exception>
     /// <exception cref="BLNotFoundException"></exception>
     /// <exception cref="BLWrongStageException"></exception>
-
     public void FinishTask(int engineerId);
 
 }

@@ -150,7 +150,7 @@ public static class Initialization
         };
         for(int i=0; i<arrOfDependencies.Length;i=i+2)
         {
-            Dependency? newDependency = new Dependency(0, arrOfDependencies[i], arrOfDependencies[i + 1]);
+            Dependency? newDependency = new Dependency(0, arrOfDependencies[i + 1], arrOfDependencies[i]);
             s_dal!.Dependency.Create(newDependency);
         }
     }
@@ -166,6 +166,8 @@ public static class Initialization
         s_dal = Factory.Get; //choose the data source by the xml file - 'dal - config'
         XElement newNumbers = new XElement("config", new XElement("NextDependencyId", 1), new XElement("NextTaskId", 1));
         XMLTools.SaveListToXMLElement(newNumbers, "data-config");//save new running numberwhen they equal to 0 now
+        s_dal.Project.setStartingDate(null); //there is no starting date now
+        s_dal.Project.setProjectStatus(1); //going back to the planning stage
         s_dal.Engineer.DeleteAll(); //reset the engineer xml file
         s_dal.Task.DeleteAll(); //reset the task xml file
         s_dal.Dependency.DeleteAll(); //reset the dependency xml file

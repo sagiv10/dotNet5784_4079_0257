@@ -15,6 +15,10 @@ internal class ProjectImplementation : Iproject
     {
         XElement configRoot = XElement.Load(@"..\xml\data-config.xml"); //get the previous root
 
+        if(configRoot.Element("project-stage") == null)
+        {
+            configRoot.Add(new XElement("project-stage", 1));
+        }
         configRoot.Element("project-stage")!.Value = String.Format("{0}", newStatus); //change the field of the projectStatus
 
         configRoot.Save(@"..\xml\data-config.xml"); //save it
