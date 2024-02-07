@@ -179,9 +179,9 @@ internal class EngineerImplementation : BlApi.IEngineer
         }
     }
 
-    public void DeAssignTask(int id)
+    public void DeAssignTask(int idOfEng)
     {
-        if (id <= 0)
+        if (idOfEng <= 0)
         {
             throw new BLWrongIdException();
         }
@@ -191,14 +191,14 @@ internal class EngineerImplementation : BlApi.IEngineer
             throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 3);
         }
 
-        if (_dal.Engineer.Read(id) == null)
+        if (_dal.Engineer.Read(idOfEng) == null)
         {
-            throw new BLNotFoundException("engineer", id);
+            throw new BLNotFoundException("engineer", idOfEng);
         }
-        DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == id);
+        DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == idOfEng);
         if (hisTask == null)
         {
-            throw new BLDoesNotHasTaskException(id);
+            throw new BLDoesNotHasTaskException(idOfEng);
         }
         DO.Task unassignedTask = hisTask with { _engineerId = null };
         _dal.Task.Update(unassignedTask);
@@ -234,7 +234,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         try
         {
             ShowTask(engineerId); //try to see if the engineer alredy has a task assigned
-            throw new BLHasTaskException(engineerId); //if we got herethen he has a task assigned
+            throw new BLHasTaskException(engineerId); //if we got here then he has a task assigned
         }
         catch(BLDoesNotHasTaskException ex) //if we got here then the engineer doesnt have a task assigned
         {
@@ -305,9 +305,9 @@ internal class EngineerImplementation : BlApi.IEngineer
         return new BO.TaskInEngineer(hisTask._id, hisTask._alias);
     }
 
-    public void FinishTask(int id)
+    public void FinishTask(int idOfEng)
     {
-        if (id <= 0)
+        if (idOfEng <= 0)
         {
             throw new BLWrongIdException();
         }
@@ -316,14 +316,14 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 3);
         }
-        if (_dal.Engineer.Read(id) == null)
+        if (_dal.Engineer.Read(idOfEng) == null)
         {
-            throw new BLNotFoundException("engineer", id);
+            throw new BLNotFoundException("engineer", idOfEng);
         }
-        DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == id);
+        DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == idOfEng);
         if (hisTask == null)
         {
-            throw new BLDoesNotHasTaskException(id);
+            throw new BLDoesNotHasTaskException(idOfEng);
         }
         DO.Task doneTask = hisTask with { _completeDate = DateTime.Now};
         _dal.Task.Update(doneTask);

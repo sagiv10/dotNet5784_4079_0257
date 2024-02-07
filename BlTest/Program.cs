@@ -87,7 +87,7 @@ public class BlTest
             case 4: UpdateTask(); break;
             case 5: DeleteTask(); break;
             case 6: ManualScheduleTask(); break;
-            case 7: AotoScheduleTasks(); break;
+            case 7: AutoScheduleTasks(); break;
             case 8: CreateNewDependency(); break;
             case 9: DeleteDependency(); break;
 
@@ -112,42 +112,34 @@ public class BlTest
             {
                 Console.WriteLine(oldTask);
 
-                Console.WriteLine("Enter the following parameters: nickname, description, if it's milestone ('1' for yes and '0' to no), when it created, the scheduled Date to beginning, when it started, deadline date, complete date, deliverables, notes and the level of complexity, and the engineer's id:");
-
-                string newName = Console.ReadLine() ?? oldTask._alias; //if we got a correct new info-change to what the user wrote . else dont.
-
-                string newDescription = Console.ReadLine() ?? oldTask._description; //if we got a correct new info-change to what the user wrote . else dont.
-
-                int intIsMilestone;
-                intIsMilestone = (int.TryParse(Console.ReadLine(), out intIsMilestone)) ? intIsMilestone : ((oldTask._isMilestone!) ? 1 : 0); //if we got a correct new info-change to what the user wrote . else dont.
-                bool newIsMilestone = intIsMilestone == 1 ? true : false;
-
-                DateTime newCreatedTime;
-                newCreatedTime = DateTime.TryParse(Console.ReadLine(), out newCreatedTime) ? newCreatedTime : (DateTime)oldTask._createdAtDate!; //if we got a correct new info-change to what the user wrote . else dont.
-
-                DateTime? newScheduledDate = getNullableDateTimeInput();
-                newScheduledDate = (newScheduledDate != null) ? newScheduledDate : (DateTime?)oldTask._scheduledDate; //if we got a correct new info-change to what the user wrote . else dont.
-
-                DateTime? newStartedDate = getNullableDateTimeInput();
-                newStartedDate = (newStartedDate != null) ? newStartedDate : (DateTime?)oldTask._startDate; //if we got a correct new info-change to what the user wrote . else dont.
-
-                DateTime? newDeadlineTime = getNullableDateTimeInput();
-                newDeadlineTime = (newDeadlineTime != null) ? newDeadlineTime : (DateTime?)oldTask._deadlineDate; //if we got a correct new info-change to what the user wrote . else dont.
-
-                DateTime? newCompletedDate = getNullableDateTimeInput();
-                newCompletedDate = (newCompletedDate != null) ? newCompletedDate : (DateTime?)oldTask._completeDate; //if we got a correct new info-change to what the user wrote . else dont.
-
-                string? newDeliverables = Console.ReadLine() ?? oldTask._deliverables!;
-
-                string? newRemarks = Console.ReadLine() ?? oldTask._remarks!;
-
+                Console.WriteLine("Enter the following parameters: alias, description, deliverables, remarks and the level of complexity,");
+                string newName = Console.ReadLine() ?? oldTask.Alias; //if we got a correct new info-change to what the user wrote . else dont.
+                string newDescription = Console.ReadLine() ?? oldTask.Description; //if we got a correct new info-change to what the user wrote . else dont.
+                BO.Status newStatus =;
+                string? newDeliverables = Console.ReadLine() ?? oldTask.Deliverables!;
+                string? newRemarks = Console.ReadLine() ?? oldTask.Remarks!;
                 int newComplexityLevel;
-                newComplexityLevel = (int.TryParse(Console.ReadLine(), out newComplexityLevel) && newComplexityLevel >= 0 && newComplexityLevel < 5) ? newComplexityLevel : (int)oldTask._complexity;  //if we got a correct new info-change to what the user wrote . else dont.
-
-                int? newEngineerId = getNullableIntInput();
-                newEngineerId = (newEngineerId != null) ? newEngineerId : (int)oldTask._engineerId!; //if we got a correct new info-change to what the user wrote . else dont.
-
-                DO.Task updatedTask = new DO.Task(idToUpdate, newCreatedTime, (newScheduledDate != null) ? (TimeSpan)(newScheduledDate - newCreatedTime) : new TimeSpan(7), newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);//create a new task with the given details
+                newComplexityLevel = (int.TryParse(Console.ReadLine(), out newComplexityLevel) && newComplexityLevel >= 0 && newComplexityLevel < 5) ? newComplexityLevel : (int)oldTask.Complexity;  //if we got a correct new info-change to what the user wrote . else dont.
+                BO.Task updatedTask = new BO.Task()
+                {
+                    Id = idToUpdate,
+                    Description = newDescription,
+                    Alias = newName,
+                    CreatedAtDate = DateTime.Now,
+                    Status = newStatus,////////////////////////////
+                    Dependencies = new List<BO.TaskInList?>(),/////
+                    Milestone = null,
+                    RequiredEffortTime =,//////////////////////////
+                    StartDate = null,
+                    ScheduledDate = null,
+                    ForecastDate = null,
+                    DeadlineDate = null,
+                    CompleteDate = null,
+                    Deliverables = newDeliverables,
+                    Remarks = newRemarks,
+                    Engineer =,//////////////////////////////////////
+                    Complexity= (BO.EngineerExperience)newComplexityLevel
+                };
 
                 s_bl!.Task!.Update(updatedTask);//update the new task
             }
@@ -432,7 +424,7 @@ public class BlTest
     }
 
 
-    public static void AotoScheduleTasks()
+    public static void AutoScheduleTasks()
     {
 
     }

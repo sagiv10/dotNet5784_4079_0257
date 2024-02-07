@@ -255,7 +255,7 @@ internal class TaskImplementation : BlApi.ITask
         foreach (var dep in filteredIEN)
             _dal.Dependency.Delete(dep._id);
     }
-    public BO.Task? Read(int idOfWantedTask)
+    public BO.Task Read(int idOfWantedTask)
     {
         DO.Task? doTask = _dal.Task.Read(idOfWantedTask);//use read func from dal to get details of specific task
         if (doTask == null)
