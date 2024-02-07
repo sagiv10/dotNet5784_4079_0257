@@ -1,4 +1,4 @@
-﻿namespace BlTest;
+﻿namespace Bltest;
 using BO;
 using BlApi;
 using DalTest;
@@ -6,7 +6,7 @@ using DalApi;
 using DO;
 using System.Linq.Expressions;
 using System;
-using System.Threading.Channels;
+
 
 public class BlTest
 {
@@ -61,18 +61,51 @@ public class BlTest
         int choice = CheckIntInput(int.TryParse(Console.ReadLine(), out choice), choice);
         switch (choice)
         {
-            //            case 1: CreateNewEngineer(); break;
-            //            case 2: ReadEngineer(); break;
-            //            case 3: ReadAllEngineer(); break;
+            case 1: CreateNewEngineer(); break;
+            case 2: ReadEngineer(); break;
+            case 3: ReadAllEngineer(); break;
             case 4: UpdateEngineer(); break;
-                //            case 5: DeleteEngineer(); break;
-                //            case 6: AssignEngineer(); break;
-                //            case 7: DeassignEngineer(); break;
-                //            case 8: FinishTaskEngineer(); break;
-                //            case 9: ShowTaskEngineer(); break;
-                //            case 10: ShowPotentialTaskEngineer(); break;
+            case 5: DeleteEngineer(); break;
+            case 6: AssignEngineer(); break;
+            case 7: DeassignEngineer(); break;
+            case 8: FinishTaskEngineer(); break;
+            case 9: ShowTaskEngineer(); break;
+            case 10: ShowPotentialTaskEngineer(); break;
         }
 
+    }
+
+    private static void CreateNewEngineer()
+    {
+        try
+        {
+            Console.WriteLine("pls write id, name, email, level, and cost:");
+            int newId;
+            newId = CheckIntInput(int.TryParse(Console.ReadLine(), out newId), newId);//sends to another method that gets the id from the user and  checks if the input is correct.
+            string newName = Console.ReadLine();
+            string newEmail = Console.ReadLine();
+            int newComplexityLevel;
+            newComplexityLevel = CheckIntInput(int.TryParse(Console.ReadLine(), out newComplexityLevel), newComplexityLevel);
+            newComplexityLevel = CheckComplexityLevelInput((newComplexityLevel >= 0 && newComplexityLevel < 5), newComplexityLevel); //requst new complexity level from the user + validation check
+            double newCost = CheckDoubleInput(double.TryParse(Console.ReadLine(), out newCost), newCost);
+            BO.Engineer newEng = new BO.Engineer(
+                newId,
+                newName,
+                newEmail,
+                (BO.EngineerExperience)newComplexityLevel,
+                newCost,
+                null
+            );
+            s_bl.Engineer.CreateEngineer(newEng);
+        }
+        catch (BLWrongInputException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (BLAlreadyExistException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public static void TaskMenu()
@@ -269,6 +302,7 @@ public class BlTest
         catch (BLCannotDeleteHasDependencyException problem)
         {
             Console.WriteLine(problem.Message);
+        }
     }
 
     /// <summary>
@@ -337,23 +371,24 @@ public class BlTest
         }
         
     }
+    public static void ReadEngineer()
+    {
+        int inputId;
+        inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
 
-            int inputId;
-            inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
-                 
-            BO.Engineer newEngineer = s_bl!.Engineer!.ReadEngineer(inputId)!;
+        BO.Engineer newEngineer = s_bl!.Engineer!.ReadEngineer(inputId)!;
 
-            if (newEngineer == null)
-            {
-                throw new DalNotFoundException("id is not in the system"); //request an int from the user and checks if it valid
-            }
-            Console.WriteLine(newEngineer);
+        if (newEngineer == null)
+        {
+            throw new DalNotFoundException("id is not in the system"); //request an int from the user and checks if it valid
         }
+        Console.WriteLine(newEngineer);
         catch (DalNotFoundException problem)
         {
             Console.WriteLine(problem.Message);
         }
     }
+            
 
     ///// <summary>
     ///// gets an id from the user and if there is an task with that id it prints him, if there is not it will tell it to the user
@@ -401,6 +436,7 @@ public class BlTest
         }
     }
 
+    
     ///// <summary>
     ///// create new dependency and store it in the lists
     ///// </summary>
@@ -433,12 +469,6 @@ public class BlTest
         }
     }
 
-
-    //public static void AssignEngineer()
-    //{
-
-    //}
-
     public static void AssignEngineer()
     {
         try
@@ -458,7 +488,6 @@ public class BlTest
         }
     }
 
-    //}
 
     public static void DeassignEngineer()
     {
@@ -476,7 +505,7 @@ public class BlTest
         }
     }
 
-    //}
+
 
     public static void FinishTaskEngineer()
     {
@@ -515,7 +544,7 @@ public class BlTest
 
     //}
 
-    public static void ShowPotentialTaskEngineer(int idOfEngineer)
+    public static void ShowPotentialTaskEngineer()
     {
         try
         {
