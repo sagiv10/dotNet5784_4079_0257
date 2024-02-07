@@ -59,6 +59,7 @@ internal class TaskImplementation : BlApi.ITask
         return false;
 
     }
+
     /// <summary>
     /// this method creats new Task in the logic section by using a task from the do section
     /// </summary>
@@ -195,12 +196,10 @@ internal class TaskImplementation : BlApi.ITask
     /// <returns>dependency list</returns>
     private List<TaskInList> GetDependenciesFromDal(int idOfWantedTask)
     {
-        //change like that: all dependencies => only the dependent dependencies => only their id's => their correct tasks => their correct TaskInList
-        IEnumerable<DO.Dependency> listDependencies = _dal.Dependency.ReadAll(dependency => dependency!._dependentTask == idOfWantedTask);//use read func from dal to get details of specific task
-        IEnumerable<int> listID = listDependencies.Select(dependency => dependency._id);
-        IEnumerable<DO.Task> listTask = listID.Select(dependencyID => _dal.Task.Read(dependencyID)!);
-        IEnumerable<TaskInList> listTaskInList = listTask.Select(TaskEx => new TaskInList(TaskEx._id, TaskEx._description, TaskEx._alias, (Status)WhatStatus(TaskEx._scheduledDate, TaskEx._startDate, TaskEx._completeDate)));
-        return listTaskInList.ToList();
+        return (from dep in _dal.Dependency.ReadAll(d => d._dependentTask == idOfWantedTask)
+               let theTask = _dal.Task.Read((int)dep._dependsOnTask!)
+               select new TaskInList(theTask._id, theTask._description, theTask._alias, (BO.Status)WhatStatus(theTask._scheduledDate, theTask._startDate, theTask._completeDate))).ToList();
+
     }
 
     /// <summary>
@@ -386,6 +385,7 @@ internal class TaskImplementation : BlApi.ITask
         }
         _dal.Dependency.Create(new DO.Dependency(dependentTask, dependsOnTask));
     }
+
     /// <summary>
     /// this method sets up a schedule date together with the manager of the project. provide him all the information he needs in the time he sets up times to the tasks 
     /// </summary>

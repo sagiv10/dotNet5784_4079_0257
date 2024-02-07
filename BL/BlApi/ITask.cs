@@ -29,12 +29,16 @@ public interface ITask
     /// </summary>
     public void AutoScedule(DateTime startingDate);
 
+    public void ManualScedule(int idOfTask, DateTime wantedTime, bool isConfirmed);
+
     /// <summary>
     /// adds new dependency
     /// </summary>
     /// <param name="dependentTask"> the dependent task </param>
     /// <param name="DependsOnTask"> the depends on task </param>
     /// <exception cref="BLCannotAddCircularDependencyException"></exception>
+    public void AddDependency(int dependentTask, int DependsOnTask);
+
     public void AddDependency(int dependentTask, int DependsOnTask);
 
     /// <summary>
