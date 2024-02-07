@@ -61,16 +61,16 @@ public class BlTest
         int choice = CheckIntInput(int.TryParse(Console.ReadLine(), out choice), choice);
         switch (choice)
         {
-            //            case 1: CreateNewEngineer(); break;
-            //            case 2: ReadEngineer(); break;
-            //            case 3: ReadAllEngineer(); break;
+            case 1: CreateNewEngineer(); break;
+            case 2: ReadEngineer(); break;
+            case 3: ReadAllEngineer(); break;
             case 4: UpdateEngineer(); break;
-                //            case 5: DeleteEngineer(); break;
-                //            case 6: AssignEngineer(); break;
-                //            case 7: DeassignEngineer(); break;
-                //            case 8: FinishTaskEngineer(); break;
-                //            case 9: ShowTaskEngineer(); break;
-                //            case 10: ShowPotentialTaskEngineer(); break;
+            case 5: DeleteEngineer(); break;
+            case 6: AssignEngineer(); break;
+            case 7: DeassignEngineer(); break;
+            case 8: FinishTaskEngineer(); break;
+            case 9: ShowTaskEngineer(); break;
+            case 10: ShowPotentialTaskEngineer(); break;
         }
 
     }
@@ -269,6 +269,7 @@ public class BlTest
         catch (BLCannotDeleteHasDependencyException problem)
         {
             Console.WriteLine(problem.Message);
+        }
     }
 
     /// <summary>
@@ -285,7 +286,15 @@ public class BlTest
 
             s_bl!.Engineer!.DeleteEngineer(idToDelete);
         }
-        catch (BLWrongStageException problem)
+        catch (BLWrongIdException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLNotFoundException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLCannotDeleteHasTasksException problem)
         {
             Console.WriteLine(problem.Message);
         }
@@ -337,23 +346,7 @@ public class BlTest
         }
         
     }
-
-            int inputId;
-            inputId = CheckIntInput(int.TryParse(Console.ReadLine(), out inputId), inputId); //request an int from the user and checks if it valid
-                 
-            BO.Engineer newEngineer = s_bl!.Engineer!.ReadEngineer(inputId)!;
-
-            if (newEngineer == null)
-            {
-                throw new DalNotFoundException("id is not in the system"); //request an int from the user and checks if it valid
-            }
-            Console.WriteLine(newEngineer);
-        }
-        catch (DalNotFoundException problem)
-        {
-            Console.WriteLine(problem.Message);
-        }
-    }
+    
 
     ///// <summary>
     ///// gets an id from the user and if there is an task with that id it prints him, if there is not it will tell it to the user
@@ -433,12 +426,6 @@ public class BlTest
         }
     }
 
-
-    //public static void AssignEngineer()
-    //{
-
-    //}
-
     public static void AssignEngineer()
     {
         try
@@ -452,13 +439,29 @@ public class BlTest
 
             s_bl.Engineer.AssignTask(EngineerToAssignId,IdOfTaskToAssign);
         }
-        catch (DalAlreadyExistsException problem)
+        catch (BLWrongIdException problem)
         {
             Console.WriteLine(problem.Message);
         }
+        catch (BLNotFoundException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLHasTaskException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLWrongStageException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLNotAvialableTaskException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+
     }
 
-    //}
 
     public static void DeassignEngineer()
     {
@@ -470,13 +473,24 @@ public class BlTest
 
             s_bl.Engineer.DeAssignTask(EngineerToRemoveId);
         }
-        catch (DalAlreadyExistsException problem)
+        catch (BLWrongIdException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLNotFoundException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLDoesNotHasTaskException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLWrongStageException problem)
         {
             Console.WriteLine(problem.Message);
         }
     }
 
-    //}
 
     public static void FinishTaskEngineer()
     {
@@ -488,14 +502,23 @@ public class BlTest
 
             s_bl.Engineer.FinishTask(EngineerId);
         }
-        catch (DalAlreadyExistsException problem)
+        catch (BLWrongStageException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLWrongIdException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLHasTaskException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLNotFoundException problem)
         {
             Console.WriteLine(problem.Message);
         }
     }
-
-    //}
-
 
     public static void ShowTaskEngineer()
     {
@@ -507,13 +530,24 @@ public class BlTest
 
             s_bl.Engineer.ShowTask(EngineerId);
         }
-        catch (DalAlreadyExistsException problem)
+        catch (BLWrongStageException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLWrongIdException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLNotFoundException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLDoesNotHasTaskException problem)
         {
             Console.WriteLine(problem.Message);
         }
     }
 
-    //}
 
     public static void ShowPotentialTaskEngineer(int idOfEngineer)
     {
@@ -525,7 +559,15 @@ public class BlTest
 
             s_bl.Engineer.GetPotentialTasks(EngineerId);
         }
-        catch (DalAlreadyExistsException problem)
+        catch (BLWrongStageException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLWrongIdException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch ( BLNotFoundException problem)
         {
             Console.WriteLine(problem.Message);
         }
@@ -772,5 +814,12 @@ public class BlTest
             return result;
         }
     }
+    
 
+    public static void ReadAllEngineer()
+    {
+       foreach(var temp in s_bl.Engineer.ReadAllEngineers()){
+            Console.WriteLine(temp);
+        }
+    }
 }
