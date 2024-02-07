@@ -106,49 +106,53 @@ public class BlTest
 
             int idToUpdate;
             idToUpdate = CheckIntInput(int.TryParse(Console.ReadLine(), out idToUpdate), idToUpdate);//sends to another method that gets the id from the user and  checks if the input is correct.
+            
+            BO.Task oldTask = s_bl!.Task!.Read(idToUpdate);//prints the old details, if id not found so set to null
+            
+            Console.WriteLine(oldTask);
+            
+            Console.WriteLine("Enter the following parameters: alias, description, required amount of days, deliverables, remarks and the level of complexity,");
+            
+            Random random = new Random(DateTime.Now.Millisecond);
 
-            BO.Task? oldTask = s_bl!.Task!.Read(idToUpdate);//prints the old details, if id not found so set to null
-            if (oldTask != null)//if we found the id in the list 
+            string newName = Console.ReadLine() ?? oldTask.Alias; //if we got a correct new info-change to what the user wrote . else dont.
+            
+            string newDescription = Console.ReadLine() ?? oldTask.Description; //if we got a correct new info-change to what the user wrote . else dont.
+
+            int newDays;
+            newDays = int.TryParse(Console.ReadLine(), out newDays) == true ? newDays : -1;
+            TimeSpan newRequiredEffortTime = newDays>0  ? new TimeSpan(newDays) : new TimeSpan(random.Next());
+                        
+            string? newDeliverables = Console.ReadLine() ?? oldTask.Deliverables!;
+            
+            string? newRemarks = Console.ReadLine() ?? oldTask.Remarks!;
+            
+            int newComplexityLevel;
+            
+            newComplexityLevel = (int.TryParse(Console.ReadLine(), out newComplexityLevel) && newComplexityLevel >= 0 && newComplexityLevel < 5) ? newComplexityLevel : (int)oldTask.Complexity;  //if we got a correct new info-change to what the user wrote . else dont.
+            
+            BO.Task updatedTask = new BO.Task()
             {
-                Console.WriteLine(oldTask);
-
-                Console.WriteLine("Enter the following parameters: alias, description, deliverables, remarks and the level of complexity,");
-                Random random = new Random();
-                string newName = Console.ReadLine() ?? oldTask.Alias; //if we got a correct new info-change to what the user wrote . else dont.
-                string newDescription = Console.ReadLine() ?? oldTask.Description; //if we got a correct new info-change to what the user wrote . else dont.
-                BO.Status newStatus =;
-                string? newDeliverables = Console.ReadLine() ?? oldTask.Deliverables!;
-                string? newRemarks = Console.ReadLine() ?? oldTask.Remarks!;
-                int newComplexityLevel;
-                newComplexityLevel = (int.TryParse(Console.ReadLine(), out newComplexityLevel) && newComplexityLevel >= 0 && newComplexityLevel < 5) ? newComplexityLevel : (int)oldTask.Complexity;  //if we got a correct new info-change to what the user wrote . else dont.
-                BO.Task updatedTask = new BO.Task()
-                {
-                    Id = idToUpdate,
-                    Description = newDescription,
-                    Alias = newName,
-                    CreatedAtDate = DateTime.Now,
-                    Status = Status.Unscheduled,
-                    Dependencies = new List<BO.TaskInList?>(),
-                    Milestone = null,
-                    RequiredEffortTime = new TimeSpan(random.Next(1, 7)),
-                    StartDate = null,
-                    ScheduledDate = null,
-                    ForecastDate = null,
-                    DeadlineDate = null,
-                    CompleteDate = null,
-                    Deliverables = newDeliverables,
-                    Remarks = newRemarks,
-                    Engineer =null,
-                    Complexity= (BO.EngineerExperience)newComplexityLevel
-                };
-
-                s_bl!.Task!.Update(updatedTask);//update the new task
-            }
-            else
-            {
-                throw new DalNotFoundException("id is not in the system");
-
-            }
+                Id = idToUpdate,
+                Description = newDescription,
+                Alias = newName,
+                CreatedAtDate = DateTime.Now,
+                Status = Status.Unscheduled,
+                Dependencies = new List<BO.TaskInList?>(),
+                Milestone = null,
+                RequiredEffortTime = newRequiredEffortTime,
+                StartDate = null,
+                ScheduledDate = null,
+                ForecastDate = null,
+                DeadlineDate = null,
+                CompleteDate = null,
+                Deliverables = newDeliverables,
+                Remarks = newRemarks,
+                Engineer = null,
+                Complexity = (BO.EngineerExperience)newComplexityLevel
+            };
+            
+            s_bl!.Task!.Update(updatedTask);//update the new task
         }
         catch (DalNotFoundException problem)
         {
