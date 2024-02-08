@@ -6,6 +6,7 @@ using DO;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Net.Mail;
 using System.Xml.Linq;
 
@@ -277,7 +278,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             DO.Engineer engineer = _dal.Engineer.Read(id)!;
             return (from task in _dal.Task.ReadAll(t=> isEnabeled(t) && t._completeDate == null && t._complexity<=engineer._level && t._engineerId == null ) //all the missions that all there privious one has been done, in the right level, still undone and doesn't has alredy engineer
-                   select new BO.TaskInList(task._id, task._description, task._alias, BO.Status.Scheduled )).ToList();
+                   select new BO.TaskInList(task._id, task._description, task._alias, BO.Status.Scheduled )).OrderBy(t=>t.Id).ToList();
         }
         catch(DalNotFoundException ex)
         {

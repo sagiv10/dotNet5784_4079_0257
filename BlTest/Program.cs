@@ -141,6 +141,8 @@ public class BlTest
             int newComplexityLevel;
             newComplexityLevel = (int.TryParse(Console.ReadLine(), out newComplexityLevel) && newComplexityLevel >= 0 && newComplexityLevel < 5) ? newComplexityLevel : (int)oldTask.Complexity;  //if we got a correct new info-change to what the user wrote . else dont.
 
+            Console.WriteLine("enter all the id's of the tasks that he is depends on them, and then enter 0 (negative id will stop the process also):");
+
             int id;
             id = CheckIntInput(int.TryParse(Console.ReadLine(), out id), id); //request an int from the user and checks if it valid
             List<BO.TaskInList> dependencies = new List<BO.TaskInList>();
@@ -269,6 +271,10 @@ public class BlTest
             Console.WriteLine(problem.Message);
         }
         catch (BLWrongIdException problem)
+        {
+            Console.WriteLine(problem.Message);
+        }
+        catch (BLWrongStageException problem)
         {
             Console.WriteLine(problem.Message);
         }
