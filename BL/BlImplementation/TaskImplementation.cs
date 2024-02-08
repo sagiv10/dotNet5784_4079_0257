@@ -21,20 +21,17 @@ internal class TaskImplementation : BlApi.ITask
     private void autoSceduleTask(int taskId, DateTime formerForcastDate)
     {
         DO.Task theTask = _dal.Task.Read(taskId)!;
-        DO.Task sceduledTask;
         if (theTask._scheduledDate == null || formerForcastDate > theTask._scheduledDate) 
         {
+            DO.Task sceduledTask;
             sceduledTask = theTask with { _scheduledDate = formerForcastDate}; //when the new suggested date is later the previous one or when there is no previous one
+            _dal.Task.Update(sceduledTask);
+            foreach (var dep in _dal.Dependency.ReadAll(d => d._dependsOnTask == taskId)) //change all the task that depends on him
+            {
+                autoSceduleTask((int)dep!._dependentTask!, (DateTime)(sceduledTask._scheduledDate + sceduledTask._requiredEffortTime!));
+            }
         }
-        else
-        {
-            sceduledTask = theTask; //in case there is alredy leter date so keep him
-        }
-        _dal.Task.Update(sceduledTask);
-        foreach (var dep in _dal.Dependency.ReadAll(d => d._dependsOnTask == taskId)) //change all the task that depends on him
-        {
-            autoSceduleTask((int)dep!._dependentTask!, (DateTime)(sceduledTask._scheduledDate + sceduledTask._requiredEffortTime!));
-        }
+
     }
 
     /// <summary>
