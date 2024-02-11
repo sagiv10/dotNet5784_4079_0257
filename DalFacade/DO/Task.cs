@@ -36,7 +36,7 @@ public record Task
    bool _isActive=false
 )
 {
-    public Task() : this(0, DateTime.Now, new TimeSpan(7), false) { }
+    public Task() : this(0, DateTime.Now, new TimeSpan(7, 0, 0, 0), false) { }
     public bool ShouldSerialize_scheduledDate() { return _scheduledDate.HasValue; }
     public bool ShouldSerialize_startDate() { return _startDate.HasValue; }
     public bool ShouldSerialize_deadlineDate() { return _deadlineDate.HasValue; }
