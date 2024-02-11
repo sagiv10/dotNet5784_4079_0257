@@ -2,8 +2,8 @@
 <ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Task>
     <_id>1</_id>
-    <_createdAtDate>2024-02-11T20:45:42.4632996+02:00</_createdAtDate>
-    <_requiredEffortTime>P2D</_requiredEffortTime>
+    <_createdAtDate>2024-02-08T18:28:33.3996451+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000005S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Theoretical analysis of the engine</_alias>
     <_description>Conducting a detailed examination of the theoretical principles underlying the design and functionality of the rocket's propulsion system to ensure optimal performance and efficiency.</_description>
@@ -24,8 +24,8 @@
   </Task>
   <Task>
     <_id>2</_id>
-    <_createdAtDate>2024-02-11T20:45:42.4995121+02:00</_createdAtDate>
-    <_requiredEffortTime>P6D</_requiredEffortTime>
+    <_createdAtDate>2024-02-08T18:28:33.4352005+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000002S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Theoretical analysis of aerodynamics</_alias>
     <_description>Evaluating the theoretical aspects of airflow and forces acting on the rocket to design a streamlined shape that minimizes air resistance and enhances stability during flight.</_description>
@@ -34,9 +34,30 @@
     <_isActive>true</_isActive>
   </Task>
   <Task>
+    <_id>3</_id>
+    <_createdAtDate>2024-02-08T18:28:33.544595+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000002S</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Theoretical analysis of the structure</_alias>
+    <_description>Examining the theoretical foundations of the rocket's structural design to ensure it can withstand the stresses and forces experienced during launch and flight.</_description>
+    <_scheduledDate>2001-01-01T00:00:00</_scheduledDate>
+    <_complexity>Advanced</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>4</_id>
+    <_createdAtDate>2024-02-08T18:28:33.8659653+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000002S</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Building a theoretical skeleton of the engine</_alias>
+    <_description>Developing a preliminary conceptual framework for the rocket's propulsion system to guide the subsequent engineering and construction phases.</_description>
+    <_complexity>Expert</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
     <_id>5</_id>
-    <_createdAtDate>2024-02-11T20:45:42.5668469+02:00</_createdAtDate>
-    <_requiredEffortTime>P5D</_requiredEffortTime>
+    <_createdAtDate>2024-02-08T18:28:33.9450057+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000006S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Building a general theoretical skeleton</_alias>
     <_description>Creating an overarching conceptual framework that outlines the fundamental elements and connections within the entire rocket design.</_description>
@@ -46,8 +67,8 @@
   </Task>
   <Task>
     <_id>6</_id>
-    <_createdAtDate>2024-02-11T20:45:42.5881624+02:00</_createdAtDate>
-    <_requiredEffortTime>P5D</_requiredEffortTime>
+    <_createdAtDate>2024-02-08T18:28:33.9649814+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000001S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Finding suitable components</_alias>
     <_description>Identifying and selecting appropriate materials and parts required for the construction of the rocket, taking into account factors such as durability, weight, and compatibility.</_description>
@@ -57,8 +78,8 @@
   </Task>
   <Task>
     <_id>7</_id>
-    <_createdAtDate>2024-02-11T20:45:42.6103175+02:00</_createdAtDate>
-    <_requiredEffortTime>P4D</_requiredEffortTime>
+    <_createdAtDate>2024-02-08T18:28:34.0609971+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000003S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Component cost calculation</_alias>
     <_description>Estimating the financial investment required for acquiring all the necessary components for the rocket, considering factors such as manufacturing, transportation, and assembly costs.</_description>
@@ -68,8 +89,8 @@
   </Task>
   <Task>
     <_id>8</_id>
-    <_createdAtDate>2024-02-11T20:45:42.6268565+02:00</_createdAtDate>
-    <_requiredEffortTime>P3D</_requiredEffortTime>
+    <_createdAtDate>2024-02-08T18:28:34.2425383+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000004S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Ordering components</_alias>
     <_description>Initiating the procurement process to acquire the identified components and materials, ensuring timely delivery for the construction phase.</_description>
@@ -79,8 +100,8 @@
   </Task>
   <Task>
     <_id>9</_id>
-    <_createdAtDate>2024-02-11T20:45:42.6461473+02:00</_createdAtDate>
-    <_requiredEffortTime>P1D</_requiredEffortTime>
+    <_createdAtDate>2024-02-08T18:28:34.3574468+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000002S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Construction of a warhead</_alias>
     <_description>Assembling the explosive payload component of the rocket, ensuring precision and safety in handling and integration.</_description>
@@ -90,8 +111,8 @@
   </Task>
   <Task>
     <_id>10</_id>
-    <_createdAtDate>2024-02-11T20:45:42.6945255+02:00</_createdAtDate>
-    <_requiredEffortTime>P2D</_requiredEffortTime>
+    <_createdAtDate>2024-02-08T18:28:34.547151+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000002S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Construction of an exoskeleton</_alias>
     <_description>Building the outer protective structure of the rocket, providing support and shielding for internal components during launch and flight.</_description>
@@ -101,8 +122,8 @@
   </Task>
   <Task>
     <_id>11</_id>
-    <_createdAtDate>2024-02-11T20:45:42.7148018+02:00</_createdAtDate>
-    <_requiredEffortTime>P1D</_requiredEffortTime>
+    <_createdAtDate>2024-02-08T18:28:34.7572394+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000002S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Engine construction</_alias>
     <_description>Physically assembling and integrating the propulsion system components to create a functional rocket engine.</_description>
@@ -112,8 +133,8 @@
   </Task>
   <Task>
     <_id>12</_id>
-    <_createdAtDate>2024-02-11T20:45:42.7394571+02:00</_createdAtDate>
-    <_requiredEffortTime>P5D</_requiredEffortTime>
+    <_createdAtDate>2024-02-08T18:28:34.7878796+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000005S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Construction of a fuel tank</_alias>
     <_description>Building the container that holds the rocket's fuel, ensuring proper storage, stability, and controlled release during launch.</_description>
@@ -178,8 +199,8 @@
   </Task>
   <Task>
     <_id>13</_id>
-    <_createdAtDate>2024-02-11T20:45:42.7594898+02:00</_createdAtDate>
-    <_requiredEffortTime>P1D</_requiredEffortTime>
+    <_createdAtDate>2024-02-08T18:28:35.0236681+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000005S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Building the software skeleton of the missile</_alias>
     <_description>Developing the initial framework for the software that controls and coordinates various functions of the rocket.</_description>
@@ -189,8 +210,8 @@
   </Task>
   <Task>
     <_id>14</_id>
-    <_createdAtDate>2024-02-11T20:45:42.7777591+02:00</_createdAtDate>
-    <_requiredEffortTime>P4D</_requiredEffortTime>
+    <_createdAtDate>2024-02-08T18:28:35.0411857+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000004S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Writing the missile software</_alias>
     <_description>Creating and programming the software that governs the rocket's navigation, guidance, and communication systems.</_description>
@@ -199,9 +220,19 @@
     <_isActive>true</_isActive>
   </Task>
   <Task>
+    <_id>15</_id>
+    <_createdAtDate>2024-02-08T18:28:35.1799942+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000005S</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Building a communication component</_alias>
+    <_description>Constructing the communication subsystem that enables the rocket to send and receive data during its mission.</_description>
+    <_complexity>Master</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
     <_id>16</_id>
-    <_createdAtDate>2024-02-11T20:45:42.8241064+02:00</_createdAtDate>
-    <_requiredEffortTime>P5D</_requiredEffortTime>
+    <_createdAtDate>2024-02-08T18:28:35.2703958+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000001S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>A test for the missile software</_alias>
     <_description>Conducting a preliminary evaluation to verify the functionality and reliability of the rocket's software systems.</_description>
@@ -211,8 +242,8 @@
   </Task>
   <Task>
     <_id>17</_id>
-    <_createdAtDate>2024-02-11T20:45:42.8433839+02:00</_createdAtDate>
-    <_requiredEffortTime>P6D</_requiredEffortTime>
+    <_createdAtDate>2024-02-08T18:28:35.3860039+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000004S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Refactoring</_alias>
     <_description>Iteratively improving and optimizing the rocket's design, software, or components based on testing and feedback.</_description>
@@ -222,8 +253,8 @@
   </Task>
   <Task>
     <_id>18</_id>
-    <_createdAtDate>2024-02-11T20:45:42.8620159+02:00</_createdAtDate>
-    <_requiredEffortTime>P3D</_requiredEffortTime>
+    <_createdAtDate>2024-02-08T18:28:35.4389942+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000006S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Final testing of the software</_alias>
     <_description>Performing comprehensive tests to ensure the rocket's software operates as intended under various conditions.</_description>
@@ -232,9 +263,42 @@
     <_isActive>true</_isActive>
   </Task>
   <Task>
-    <_id>3</_id>
-    <_createdAtDate>2024-02-11T20:45:42.5277013+02:00</_createdAtDate>
-    <_requiredEffortTime>P5D</_requiredEffortTime>
+    <_id>19</_id>
+    <_createdAtDate>2024-02-08T18:28:35.7451499+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000003S</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Final assembly of the missile</_alias>
+    <_description>Integrating all components, including the structural, propulsion, software, and payload systems, to create the complete and functional rocket.</_description>
+    <_scheduledDate>2001-01-24T00:00:00</_scheduledDate>
+    <_complexity>Expert</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>20</_id>
+    <_createdAtDate>2024-02-08T18:28:35.8366265+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000005S</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Dry test of the operation of the components</_alias>
+    <_description>Conducting a thorough examination and simulation of the rocket's systems without using actual propellants to identify and address any potential issues.</_description>
+    <_scheduledDate>2001-01-29T00:00:00</_scheduledDate>
+    <_complexity>Master</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>21</_id>
+    <_createdAtDate>2024-02-08T18:28:35.9040234+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000006S</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Wet inspection of the components</_alias>
+    <_description>Verifying the rocket's systems and components under realistic conditions, often involving the use of actual propellants in a controlled environment.</_description>
+    <_scheduledDate>2001-01-29T00:00:00</_scheduledDate>
+    <_complexity>Beginner</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>22</_id>
+    <_createdAtDate>2024-02-08T18:28:36.0006455+02:00</_createdAtDate>
+    <_requiredEffortTime>PT0.0000001S</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Theoretical analysis of the structure</_alias>
     <_description>Examining the theoretical foundations of the rocket's structural design to ensure it can withstand the stresses and forces experienced during launch and flight.</_description>

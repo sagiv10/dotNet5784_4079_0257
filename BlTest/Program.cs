@@ -641,7 +641,10 @@ public class BlTest
             int EngineerId;
             EngineerId = CheckIntInput(int.TryParse(Console.ReadLine(), out EngineerId), EngineerId); //request an int from the user and checks if it valid 
 
-            Console.WriteLine(s_bl.Engineer.GetPotentialTasks(EngineerId));
+            foreach (var x in (s_bl.Engineer.GetPotentialTasks(EngineerId)))
+            {
+                Console.WriteLine(x);
+            }
         }
         catch (BLWrongStageException problem)
         {

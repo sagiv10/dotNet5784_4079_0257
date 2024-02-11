@@ -313,9 +313,6 @@ internal class TaskImplementation : BlApi.ITask
             throw new BO.BLWrongStageException(_dal.Project.getProjectStatus(), (int)BO.ProjectStatus.Sceduling);
         }
         DateTime startingDate = (DateTime)_dal.Project.getStartingDate()!;
-        _dal.Project.setStartingDate(startingDate); //saving the new starting date
-        _dal.Project.setProjectStatus((int)BO.ProjectStatus.Sceduling); //we are now at the Sceduling stage
-
         IEnumerable<int> basicTasks = from task in _dal.Task.ReadAll()     //all the task
                                       where !((_dal.Dependency.ReadAll(d => d._dependentTask == task._id)).Any()) //all the task that nothing depends on them
                                       select task._id; //all their ids
