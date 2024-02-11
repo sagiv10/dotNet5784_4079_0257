@@ -38,7 +38,15 @@ public class BlTest
                         Console.WriteLine("please enter a date to the start of the project:");
                         DateTime startingTime;
                         startingTime = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out startingTime), startingTime);
-                        s_bl.Task.StartSchedule(startingTime);
+                        try
+                        {
+                            s_bl.Task.StartSchedule(startingTime);
+
+                        }
+                        catch (BLWrongStageException problem)
+                        {
+                            Console.WriteLine(problem.Message);
+                        }
                         break;
                     case 0: break;
                     default: break;
@@ -586,7 +594,7 @@ public class BlTest
         {
             Console.WriteLine(problem.Message);
         }
-        catch (BLHasTaskException problem)
+        catch (BLDoesNotHasTaskException problem)
         {
             Console.WriteLine(problem.Message);
         }

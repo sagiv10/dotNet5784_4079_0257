@@ -90,7 +90,7 @@ internal class EngineerImplementation : BlApi.IEngineer
     private bool isEnabeled(DO.Task task)
     {
         return !((from dep in _dal.Dependency.ReadAll(d => d._dependentTask == task._id)
-               where _dal.Task.Read((int)dep._dependsOnTask!)!._completeDate != null
+               where _dal.Task.Read((int)dep._dependsOnTask!)!._completeDate == null
                select true).Any());
     }
 
@@ -200,7 +200,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw new BLNotFoundException("engineer", idOfEng);
         }
-        DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == idOfEng);
+        DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == idOfEng && t._completeDate == null);
         if (hisTask == null)
         {
             throw new BLDoesNotHasTaskException(idOfEng);
@@ -302,7 +302,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw new BLNotFoundException("engineer", id);
         }
-        DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == id);
+        DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == id && t._completeDate == null);
         if (hisTask == null)
         {
             throw new BLDoesNotHasTaskException(id);
@@ -325,7 +325,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw new BLNotFoundException("engineer", idOfEng);
         }
-        DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == idOfEng);
+        DO.Task? hisTask = _dal.Task.Read(t => t._engineerId == idOfEng && t._completeDate == null); //find the task that he is now working on it (and not worked brfore)
         if (hisTask == null)
         {
             throw new BLDoesNotHasTaskException(idOfEng);
