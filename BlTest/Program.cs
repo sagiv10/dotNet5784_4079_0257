@@ -23,7 +23,7 @@ public class BlTest
             int choice = 1;
             while (!(choice == 0))
             {
-                Console.WriteLine("Select an entity you want to check:\n0. exit from the menu.\n1. Engineer.\n2. Task.\n3. go on to the scheduling stage");
+                Console.WriteLine($"We are currently in the {(BO.ProjectStatus)s_bl.Task.getProjectStatus()} state.\nSelect an entity you want to check:\n0. exit from the menu.\n1. Engineer.\n2. Task.\n3. go on to the scheduling stage");
                 choice = CheckIntInput(int.TryParse(Console.ReadLine(), out choice), choice); //gets int from the user + validation
 
                 switch (choice)
@@ -138,7 +138,7 @@ public class BlTest
 
             int newDays;
             newDays = int.TryParse(Console.ReadLine(), out newDays) == true ? newDays : -1;
-            TimeSpan newRequiredEffortTime = newDays>0  ? new TimeSpan(newDays) : new TimeSpan(random.Next());
+            TimeSpan newRequiredEffortTime = newDays>0  ? new TimeSpan(newDays, 0, 0, 0) : new TimeSpan(random.Next(), 0, 0, 0);
             
             BO.Status newStatus = BO.Status.Unscheduled;
             
@@ -861,7 +861,7 @@ public class BlTest
             }
             id = CheckIntInput(int.TryParse(Console.ReadLine(), out id), id); //request an int from the user and checks if it valid
         }
-        BO.Task newTask = new BO.Task(0, newDescription, newName, DateTime.Now, BO.Status.Unscheduled, dependencies, null, new TimeSpan(days), null, null, null, null, null, newDeliverables, newRemarks, null, (BO.EngineerExperience)newComplexityLevel);
+        BO.Task newTask = new BO.Task(0, newDescription, newName, DateTime.Now, BO.Status.Unscheduled, dependencies, null, new TimeSpan(days, 0, 0, 0), null, null, null, null, null, newDeliverables, newRemarks, null, (BO.EngineerExperience)newComplexityLevel);
         return newTask;
     }
 

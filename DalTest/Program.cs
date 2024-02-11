@@ -154,7 +154,7 @@
                     int? newEngineerId = getNullableIntInput();
                     newEngineerId = (newEngineerId != null) ? newEngineerId : (int)oldTask._engineerId!; //if we got a correct new info-change to what the user wrote . else dont.
 
-                    DO.Task updatedTask = new DO.Task(idToUpdate, newCreatedTime, (newScheduledDate != null) ? (TimeSpan)(newScheduledDate - newCreatedTime) : new TimeSpan(7), newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);//create a new task with the given details
+                    DO.Task updatedTask = new DO.Task(idToUpdate, newCreatedTime, (newScheduledDate != null) ? (TimeSpan)(newScheduledDate - newCreatedTime) : new TimeSpan(7, 0, 0, 0), newIsMilestone, newName, newDescription, newScheduledDate, newStartedDate, newDeadlineTime, newCompletedDate, newDeliverables, newRemarks, (DO.ComplexityLvls)newComplexityLevel, newEngineerId, true);//create a new task with the given details
 
                     s_dal!.Task!.Update(updatedTask);//update the new task
                 }

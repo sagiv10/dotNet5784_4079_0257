@@ -101,4 +101,14 @@ public interface ITask
     /// <exception cref="BLWrongStageException"></exception>
     public void StartSchedule(DateTime StartingDateOfProject);
 
+    /// <summary>
+    /// helping method that gets the current progect status
+    /// </summary>
+    /// <returns>the current status of the project</returns>
+    public int getProjectStatus();
+
+    /// <summary>
+    /// helping method that get the current progect starting time
+    /// </summary>
+    public DateTime? getStartingDate();
 }

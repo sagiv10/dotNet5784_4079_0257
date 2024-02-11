@@ -420,7 +420,15 @@ internal class TaskImplementation : BlApi.ITask
         _dal.Project.setStartingDate(StartingDateOfProject);
     }
 
+    public int getProjectStatus()
+    {
+        return _dal.Project.getProjectStatus();
+    }
 
+    public DateTime? getStartingDate()
+    {
+        return _dal.Project.getStartingDate();
+    }
 }
 
 

@@ -7,7 +7,19 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Theoretical analysis of the engine</_alias>
     <_description>Conducting a detailed examination of the theoretical principles underlying the design and functionality of the rocket's propulsion system to ensure optimal performance and efficiency.</_description>
+    <_scheduledDate>2001-01-01T00:00:00</_scheduledDate>
     <_complexity>Beginner</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>4</_id>
+    <_createdAtDate>2024-02-08T18:25:13.6111926+02:00</_createdAtDate>
+    <_requiredEffortTime>P2D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Building a theoretical skeleton of the engine</_alias>
+    <_description>Developing a preliminary conceptual framework for the rocket's propulsion system to guide the subsequent engineering and construction phases.</_description>
+    <_scheduledDate>2001-01-03T00:00:00</_scheduledDate>
+    <_complexity>Expert</_complexity>
     <_isActive>true</_isActive>
   </Task>
   <Task>
@@ -17,6 +29,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Theoretical analysis of aerodynamics</_alias>
     <_description>Evaluating the theoretical aspects of airflow and forces acting on the rocket to design a streamlined shape that minimizes air resistance and enhances stability during flight.</_description>
+    <_scheduledDate>2001-01-01T00:00:00</_scheduledDate>
     <_complexity>BetterBeginner</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -27,6 +40,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Theoretical analysis of the structure</_alias>
     <_description>Examining the theoretical foundations of the rocket's structural design to ensure it can withstand the stresses and forces experienced during launch and flight.</_description>
+    <_scheduledDate>2001-01-01T00:00:00</_scheduledDate>
     <_complexity>Advanced</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -47,6 +61,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Building a general theoretical skeleton</_alias>
     <_description>Creating an overarching conceptual framework that outlines the fundamental elements and connections within the entire rocket design.</_description>
+    <_scheduledDate>2001-01-05T00:00:00</_scheduledDate>
     <_complexity>Master</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -57,6 +72,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Finding suitable components</_alias>
     <_description>Identifying and selecting appropriate materials and parts required for the construction of the rocket, taking into account factors such as durability, weight, and compatibility.</_description>
+    <_scheduledDate>2001-01-07T00:00:00</_scheduledDate>
     <_complexity>Beginner</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -67,6 +83,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Component cost calculation</_alias>
     <_description>Estimating the financial investment required for acquiring all the necessary components for the rocket, considering factors such as manufacturing, transportation, and assembly costs.</_description>
+    <_scheduledDate>2001-01-10T00:00:00</_scheduledDate>
     <_complexity>BetterBeginner</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -77,6 +94,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Ordering components</_alias>
     <_description>Initiating the procurement process to acquire the identified components and materials, ensuring timely delivery for the construction phase.</_description>
+    <_scheduledDate>2001-01-16T00:00:00</_scheduledDate>
     <_complexity>Advanced</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -87,6 +105,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Construction of a warhead</_alias>
     <_description>Assembling the explosive payload component of the rocket, ensuring precision and safety in handling and integration.</_description>
+    <_scheduledDate>2001-01-18T00:00:00</_scheduledDate>
     <_complexity>Expert</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -97,6 +116,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Construction of an exoskeleton</_alias>
     <_description>Building the outer protective structure of the rocket, providing support and shielding for internal components during launch and flight.</_description>
+    <_scheduledDate>2001-01-18T00:00:00</_scheduledDate>
     <_complexity>Master</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -107,6 +127,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Engine construction</_alias>
     <_description>Physically assembling and integrating the propulsion system components to create a functional rocket engine.</_description>
+    <_scheduledDate>2001-01-18T00:00:00</_scheduledDate>
     <_complexity>Beginner</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -117,7 +138,19 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Construction of a fuel tank</_alias>
     <_description>Building the container that holds the rocket's fuel, ensuring proper storage, stability, and controlled release during launch.</_description>
+    <_scheduledDate>2001-01-18T00:00:00</_scheduledDate>
     <_complexity>BetterBeginner</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>15</_id>
+    <_createdAtDate>2024-02-08T18:25:13.8109234+02:00</_createdAtDate>
+    <_requiredEffortTime>P5D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Building a communication component</_alias>
+    <_description>Constructing the communication subsystem that enables the rocket to send and receive data during its mission.</_description>
+    <_scheduledDate>2001-01-18T00:00:00</_scheduledDate>
+    <_complexity>Master</_complexity>
     <_isActive>true</_isActive>
   </Task>
   <Task>
@@ -127,6 +160,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Building the software skeleton of the missile</_alias>
     <_description>Developing the initial framework for the software that controls and coordinates various functions of the rocket.</_description>
+    <_scheduledDate>2001-01-05T00:00:00</_scheduledDate>
     <_complexity>Advanced</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -137,6 +171,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Writing the missile software</_alias>
     <_description>Creating and programming the software that governs the rocket's navigation, guidance, and communication systems.</_description>
+    <_scheduledDate>2001-01-07T00:00:00</_scheduledDate>
     <_complexity>Expert</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -157,6 +192,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>A test for the missile software</_alias>
     <_description>Conducting a preliminary evaluation to verify the functionality and reliability of the rocket's software systems.</_description>
+    <_scheduledDate>2001-01-10T00:00:00</_scheduledDate>
     <_complexity>Beginner</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -167,6 +203,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Refactoring</_alias>
     <_description>Iteratively improving and optimizing the rocket's design, software, or components based on testing and feedback.</_description>
+    <_scheduledDate>2001-01-15T00:00:00</_scheduledDate>
     <_complexity>BetterBeginner</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -177,6 +214,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Final testing of the software</_alias>
     <_description>Performing comprehensive tests to ensure the rocket's software operates as intended under various conditions.</_description>
+    <_scheduledDate>2001-01-21T00:00:00</_scheduledDate>
     <_complexity>Advanced</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -187,6 +225,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Final assembly of the missile</_alias>
     <_description>Integrating all components, including the structural, propulsion, software, and payload systems, to create the complete and functional rocket.</_description>
+    <_scheduledDate>2001-01-24T00:00:00</_scheduledDate>
     <_complexity>Expert</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -197,6 +236,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Dry test of the operation of the components</_alias>
     <_description>Conducting a thorough examination and simulation of the rocket's systems without using actual propellants to identify and address any potential issues.</_description>
+    <_scheduledDate>2001-01-29T00:00:00</_scheduledDate>
     <_complexity>Master</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -207,6 +247,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Wet inspection of the components</_alias>
     <_description>Verifying the rocket's systems and components under realistic conditions, often involving the use of actual propellants in a controlled environment.</_description>
+    <_scheduledDate>2001-01-29T00:00:00</_scheduledDate>
     <_complexity>Beginner</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -217,6 +258,7 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Dispatch</_alias>
     <_description>Launching the rocket into its intended trajectory or mission, marking the conclusion of the manufacturing and preparation phases.</_description>
+    <_scheduledDate>2001-02-04T00:00:00</_scheduledDate>
     <_complexity>BetterBeginner</_complexity>
     <_isActive>true</_isActive>
   </Task>
