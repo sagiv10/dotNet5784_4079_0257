@@ -19,10 +19,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0">select engineer expirience level:</Label>
             <!--SelectionOfEngineerExpirience-->
-            <ComboBox Grid.Column="1">HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-            </ComboBox>
+            <Label Grid.Column="0">select engineer expirience level:</Label>
+            <ComboBox Grid.Column="1">HorizontalAlignment="Stretch" VerticalAlignment="Stretch"</ComboBox>
         </Grid>
+        <!--List-->
+        <ListView Grid.Row="1"></ListView>
+        <!--AddButton-->
+        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
     </Grid>
 </Window>
