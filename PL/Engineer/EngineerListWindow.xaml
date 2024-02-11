@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
-        Title="EngineerListWindow" Height="640" Width="800">
+        Title="EngineerListWindow" Height="640" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <!--ExternalGrid-->
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
@@ -20,12 +21,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <!--SelectionOfEngineerExpirience-->
-            <Label Grid.Column="0">select engineer expirience level:</Label>
-            <ComboBox Grid.Column="1">HorizontalAlignment="Stretch" VerticalAlignment="Stretch"</ComboBox>
+            <Label Grid.Column="0">select engineer experience level:</Label>
+            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></ComboBox>
         </Grid>
         <!--List-->
-        <ListView Grid.Row="1"></ListView>
-        <!--AddButton-->
-        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList}"></ListView>
+            <!--AddButton-->
+            <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
     </Grid>
 </Window>
