@@ -7,6 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70*"/>
+            <RowDefinition Height="600*"/>
+            <RowDefinition Height="400*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Content="Handle Engineers" Grid.Column="1" Grid.Row="1" Margin="100" Click="HandleEngineersButton"></Button>
+        <Button Content="Initialize Data" Grid.Column="0" Grid.Row="1" Margin="100" Click="InitializeButton"></Button>
     </Grid>
 </Window>

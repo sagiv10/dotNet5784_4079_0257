@@ -25,7 +25,7 @@
             <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></ComboBox>
         </Grid>
         <!--List-->
-        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList}"></ListView>
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList, UpdateSourceTrigger=PropertyChanged}"></ListView>
             <!--AddButton-->
             <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
     </Grid>
