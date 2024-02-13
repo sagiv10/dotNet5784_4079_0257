@@ -33,7 +33,7 @@ class ConvertIdToAlias : IValueConverter
             BO.Task theTask = s_bl.Task.Read((int)value);
             return theTask.Alias;
         }
-        catch(BO.BLDoesNotHasTaskException)
+        catch(BO.BLNotFoundException)
         {
             return new string("no task is maching this id");
         }
