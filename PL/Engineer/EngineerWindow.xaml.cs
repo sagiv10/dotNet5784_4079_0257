@@ -31,7 +31,7 @@ namespace PL.Engineer
         }
         // Using a DependencyProperty as the backing store for Engineer.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty EngineerProperty =
-            DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(BO.Engineer), new PropertyMetadata(0));
+            DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
 
 
 
