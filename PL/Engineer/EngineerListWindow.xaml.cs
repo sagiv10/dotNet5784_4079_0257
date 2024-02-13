@@ -53,6 +53,8 @@ namespace PL.Engineer
         {
             BO.Engineer? SpecificEngineerFromList = (sender as ListView)?.SelectedItem as BO.Engineer;
             new EngineerWindow(SpecificEngineerFromList!.Id).ShowDialog();
+            //this third line is happananing only after the user pushes the add/update button and closes the mini window! :
+            EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
         }
     }
 }
