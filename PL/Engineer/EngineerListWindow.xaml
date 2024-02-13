@@ -3,10 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Engineer"
-        mc:Ignorable="d"
+        xmlns:local="clr-namespace:PL"
+    mc:Ignorable="d"
         Title="EngineerListWindow" Height="640" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Window.Resources>
+        <local:ComplexityLevelCollection x:Key="ComplexityLevelCollectionKey" />
+    </Window.Resources>
     <!--ExternalGrid-->
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
@@ -22,7 +25,10 @@
             </Grid.ColumnDefinitions>
             <!--SelectionOfEngineerExpirience-->
             <Label Grid.Column="0">select engineer experience level:</Label>
-            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></ComboBox>
+            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+            ItemsSource="{Binding Source={StaticResource ComplexityLevelCollectionKey}}"
+                      SelectedValue="{Binding Path=chosenLevel , Mode=TwoWay}" SelectionChanged="readListAgain">
+            </ComboBox>
         </Grid>
         <!--List-->
         <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList, UpdateSourceTrigger=PropertyChanged}"></ListView>

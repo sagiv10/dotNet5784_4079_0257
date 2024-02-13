@@ -8,15 +8,22 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70*"/>
+            <RowDefinition Height="70*" />
             <RowDefinition Height="600*"/>
             <RowDefinition Height="400*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="40"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Content="Handle Engineers" Grid.Column="1" Grid.Row="1" Margin="100" Click="HandleEngineersButton"></Button>
-        <Button Content="Initialize Data" Grid.Column="0" Grid.Row="1" Margin="100" Click="InitializeButton"></Button>
+        <StackPanel Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="50" >
+            <Label HorizontalAlignment="Center">what would you like to do?</Label>
+            <Button Content="Initialize Data" Margin="10" Click="InitializeButton"></Button>
+            <Button Content="Handle Engineers" Margin="10" Click="HandleEngineersButton"></Button>
+        </StackPanel>
+        
+        <Button Grid.Row="0" Grid.Column="3" Click="baruchHashem" Background="White" BorderThickness="0" >בס"ד</Button>
     </Grid>
 </Window>
