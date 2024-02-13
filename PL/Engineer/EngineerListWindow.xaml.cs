@@ -30,7 +30,7 @@ namespace PL.Engineer
         }
 
         public static readonly DependencyProperty EngineerListProperty = 
-            DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("EngineerList1"/*how to call me in the xaml code */, typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
 
 
         public EngineerListWindow()
