@@ -44,5 +44,10 @@ namespace PL.Engineer
         {
             EngineerList = s_bl.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All);
         }
+
+        private void OpenCreateWindow(object sender, RoutedEventArgs e)
+        {
+            new EngineerWindow().ShowDialog();
+        }
     }
 }

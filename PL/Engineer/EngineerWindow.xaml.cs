@@ -22,7 +22,7 @@ namespace PL.Engineer
 
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-        private windowStage stage;
+        public bool Stage; //will be true if we are in create mode and will be false if we are in update mode
 
         public BO.Engineer Engineer
         {
@@ -37,8 +37,7 @@ namespace PL.Engineer
 
         public EngineerWindow(int id=0)
         {
-            stage = (id == 0) ? windowStage.Add : windowStage.Update;
-            InitializeComponent();
+            Stage = (id == 0);
             if (id != 0)
             {
                 try
@@ -68,11 +67,16 @@ namespace PL.Engineer
                         )
                     ); ;
             }
+            InitializeComponent();
+
         }
 
         private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if (Stage) //if we are at create Mode
+            {
 
+            }
         }
     }
 }

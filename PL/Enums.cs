@@ -16,7 +16,7 @@ internal class ComplexityLevelCollection :IEnumerable
     public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
 
 }
-enum ComplexityCollection
+public enum ComplexityCollection
 {
     None,
     Beginner,
@@ -26,9 +26,3 @@ enum ComplexityCollection
     Master
 }
 
-
-enum windowStage
-{
-    Add,
-    Update
-}
