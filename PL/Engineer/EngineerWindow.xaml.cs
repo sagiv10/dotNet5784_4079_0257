@@ -74,7 +74,7 @@ namespace PL.Engineer
             {
                 try
                 {
-                    if(Engineer.Task.Id==0)
+                    if (Engineer.Task!.Id == 0)
                     {
                         s_bl.Engineer.CreateEngineer(Engineer);
                     }
@@ -85,15 +85,15 @@ namespace PL.Engineer
                     }
                     this.Close();
                 }
-                catch(BO.BLWrongInputException ex)
+                catch (BO.BLWrongInputException ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
-                catch(BLAlreadyExistException ex)
+                catch (BLAlreadyExistException ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
-                catch(BO.BLNotFoundException ex)
+                catch (BO.BLNotFoundException ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
@@ -112,8 +112,32 @@ namespace PL.Engineer
             }
             else
             {
-
+                try
+                {
+                    s_bl.Engineer.UpdateEngineer(Engineer);
+                }
+                catch (BO.BLWrongIdException ex) //somehow we got into negative id!
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.BLWrongEmailException ex) //if the id is not found
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.BLWrongCostException ex) //if the id is not found
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.BLNotFoundException ex) //if the id is not found
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.BLCannotLowerLevelException ex) //if the id is not found
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
+
         }
     }
 }
