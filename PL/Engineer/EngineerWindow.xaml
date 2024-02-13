@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
-        Title="EngineerWindow" Height="450" Width="800">
+        DataContext="{Binding Engineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}"
+        Title="EngineerWindow" Height="450" Width="600">
     <Window.Resources>
         <!--3 Styls for each type:-->
         <Style x:Key="labelStyle"

@@ -25,3 +25,10 @@ enum ComplexityCollection
     Expert,
     Master
 }
+
+
+enum windowStage
+{
+    Add,
+    Update
+}
