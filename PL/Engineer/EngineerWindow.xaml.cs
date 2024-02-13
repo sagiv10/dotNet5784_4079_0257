@@ -31,12 +31,13 @@ namespace PL.Engineer
         }
         // Using a DependencyProperty as the backing store for Engineer.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty EngineerProperty =
-            DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(BO.Engineer), new PropertyMetadata(0));
+            DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
 
 
 
         public EngineerWindow(int id=0)
         {
+            InitializeComponent();
             Stage = (id == 0);
             if (id != 0)
             {
@@ -61,11 +62,9 @@ namespace PL.Engineer
                     "",
                     BO.EngineerExperience.Beginner,
                     0.0,
-                    new BO.TaskInEngineer(0,"")//builds en empty TaskInEngineer to show his details in the singleShow window
-                    ); ;
+                    new BO.TaskInEngineer(0, "")//builds en empty TaskInEngineer to show his details in the singleShow window
+                    );
             }
-            InitializeComponent();
-
         }
 
         private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
