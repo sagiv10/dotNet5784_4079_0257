@@ -21,7 +21,7 @@ public interface ITask
     /// </summary>
     /// <param name="idOfWantedTask"></param>
     /// <returns>bo task </returns>
-    /// <exception cref="BLNotFoundException"></exception>
+    /// <exception cref="BO.BLNotFoundException"></exception>
     public BO.Task Read(int idOfWantedTask); //getting the details of specific task 
     /// <summary>
     /// get filter of task and returnes the first task that anwsers this filter

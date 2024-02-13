@@ -21,6 +21,27 @@ class ConvertIdToContent : IValueConverter
     }
 
 
-    //--------------------------------------------------
-
 }
+
+class ConvertIdToAlias : IValueConverter
+{
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        try
+        {
+            BO.Task theTask = s_bl.Task.Read((int)value);
+            return theTask.Alias;
+        }
+        catch(BO.BLDoesNotHasTaskException)
+        {
+            return new string("no task is maching this id");
+        }
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+

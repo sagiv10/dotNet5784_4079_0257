@@ -66,6 +66,6 @@ ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         <TextBox Grid.Column="1" Grid.Row="6" Style="{StaticResource TextBoxStyle}" Text="{Binding Task.Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
         <TextBlock Grid.Column="1" Grid.Row="7" Text="{Binding Task.Id}"></TextBlock>
         <!--Buttons:-->
-        <Button Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Margin="200,10,200,10" Content="{Binding Id}">add</Button>
+        <Button Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Margin="200,10,200,10" Content="{Binding Id}"></Button>
     </Grid>
 </Window>
