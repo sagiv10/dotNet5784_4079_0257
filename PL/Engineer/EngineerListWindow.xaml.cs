@@ -37,7 +37,6 @@ namespace PL.Engineer
         {
             InitializeComponent();
             EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
-
         }
 
         private void readListAgain(object sender, SelectionChangedEventArgs e)
@@ -48,6 +47,12 @@ namespace PL.Engineer
         private void OpenCreateWindow(object sender, RoutedEventArgs e)
         {
             new EngineerWindow().ShowDialog();
+        }
+
+        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            BO.Engineer? SpecificEngineerFromList = (sender as ListView)?.SelectedItem as BO.Engineer;
+            new EngineerWindow(SpecificEngineerFromList!.Id).ShowDialog();
         }
     }
 }
