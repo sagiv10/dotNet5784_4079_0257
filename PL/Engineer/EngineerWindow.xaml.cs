@@ -77,11 +77,13 @@ namespace PL.Engineer
                     if (Engineer.Task!.Id == 0)
                     {
                         s_bl.Engineer.CreateEngineer(Engineer);
+                        MessageBox.Show("engineer created succesfully!");
                     }
                     else
                     {
                         s_bl.Engineer.AssignTask(Engineer.Id, Engineer.Task!.Id);
                         s_bl.Engineer.CreateEngineer(Engineer);
+                        MessageBox.Show("engineer created succesfully!");
                     }
                     this.Close();
                 }
@@ -115,6 +117,9 @@ namespace PL.Engineer
                 try
                 {
                     s_bl.Engineer.UpdateEngineer(Engineer);
+                    MessageBox.Show("engineer updated succesfully!");
+                    this.Close();
+
                 }
                 catch (BO.BLWrongIdException ex) //somehow we got into negative id!
                 {
