@@ -1,75 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfEngineer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Engineer>
-    <_id>9</_id>
-    <_cost>28185.85</_cost>
+    <_id>218346105</_id>
+    <_cost>30845.36</_cost>
     <_email>reuven@gmail.com</_email>
     <_name>Reuven</_name>
     <_level>Beginner</_level>
     <_isActive>true</_isActive>
   </Engineer>
   <Engineer>
-    <_id>361321235</_id>
-    <_cost>26651.79</_cost>
+    <_id>354029564</_id>
+    <_cost>18746.4</_cost>
     <_email>shimon@gmail.com</_email>
     <_name>Shimon</_name>
     <_level>BetterBeginner</_level>
     <_isActive>true</_isActive>
   </Engineer>
   <Engineer>
-    <_id>297556404</_id>
-    <_cost>19045.81</_cost>
+    <_id>389563766</_id>
+    <_cost>23382.71</_cost>
     <_email>levi@gmail.com</_email>
     <_name>Levi</_name>
     <_level>Advanced</_level>
     <_isActive>true</_isActive>
   </Engineer>
   <Engineer>
-    <_id>371168051</_id>
-    <_cost>35004.5</_cost>
+    <_id>209871730</_id>
+    <_cost>21499.77</_cost>
     <_email>yehuda@gmail.com</_email>
     <_name>Yehuda</_name>
     <_level>Expert</_level>
     <_isActive>true</_isActive>
   </Engineer>
   <Engineer>
-    <_id>281132713</_id>
-    <_cost>19465.85</_cost>
+    <_id>270698030</_id>
+    <_cost>26250.16</_cost>
     <_email>yisachar@gmail.com</_email>
     <_name>Yisachar</_name>
     <_level>Master</_level>
-    <_isActive>true</_isActive>
-  </Engineer>
-  <Engineer>
-    <_id>2000</_id>
-    <_cost>30</_cost>
-    <_email>sagivmaoz@gmail.com</_email>
-    <_name>sagiv</_name>
-    <_level>Advanced</_level>
-    <_isActive>true</_isActive>
-  </Engineer>
-  <Engineer>
-    <_id>1</_id>
-    <_cost>300</_cost>
-    <_email>sagivmaoz@gmail.com</_email>
-    <_name>sagiv</_name>
-    <_level>Beginner</_level>
-    <_isActive>true</_isActive>
-  </Engineer>
-  <Engineer>
-    <_id>12</_id>
-    <_cost>20.9</_cost>
-    <_email>eitan9611@gmail.com</_email>
-    <_name>eitan</_name>
-    <_level>Expert</_level>
-    <_isActive>true</_isActive>
-  </Engineer>
-  <Engineer>
-    <_id>30</_id>
-    <_cost>30</_cost>
-    <_email>sagivmaoz@gmail.com</_email>
-    <_name>s</_name>
-    <_level>Beginner</_level>
     <_isActive>true</_isActive>
   </Engineer>
 </ArrayOfEngineer>
