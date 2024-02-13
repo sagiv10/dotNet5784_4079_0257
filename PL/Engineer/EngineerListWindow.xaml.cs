@@ -35,7 +35,6 @@ namespace PL.Engineer
 
             InitializeComponent();
             EngineerList = s_bl?.Engineer.ReadAllEngineers()!;
-
         }
     }
 }
