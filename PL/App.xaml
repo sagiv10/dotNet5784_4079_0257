@@ -6,6 +6,6 @@
     
     <Application.Resources>
         <local:ConvertIdToContent x:Key="ConvertIdToContentKey"/>
-
+        <local:ConvertIdToAlias x:Key="IdAliasKey"/>
     </Application.Resources>
 </Application>
