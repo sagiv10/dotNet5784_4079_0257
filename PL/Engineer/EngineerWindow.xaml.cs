@@ -71,8 +71,55 @@ namespace PL.Engineer
         {
             if (Stage) //if we are at create Mode
             {
-
+                try
+                {
+                    s_bl.Engineer.CreateEngineer(Engineer);
+                }
+                catch (BO.BLWrongIdException ex) //somehow we got into negative id!
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.BLWrongEmailException ex) //if the id is not found
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.BLWrongCostException ex) //if the id is not found
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.BLAlreadyExistException ex) //if the id is not found
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
+            else
+            {
+                try
+                {
+                    s_bl.Engineer.UpdateEngineer(Engineer);
+                }
+                catch (BO.BLWrongIdException ex) //somehow we got into negative id!
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.BLWrongEmailException ex) //if the id is not found
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.BLWrongCostException ex) //if the id is not found
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.BLNotFoundException ex) //if the id is not found
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.BLCannotLowerLevelException ex) //if the id is not found
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+
         }
     }
 }
