@@ -19,6 +19,20 @@ namespace PL.Engineer
     /// </summary>
     public partial class EngineerWindow : Window
     {
+
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
+        public BO.Engineer Engineer
+        {
+            get { return (BO.Engineer)GetValue(EngineerProperty); }
+            set { SetValue(EngineerProperty, value); }
+        }
+        // Using a DependencyProperty as the backing store for Engineer.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty EngineerProperty =
+            DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(BO.Engineer), new PropertyMetadata(0));
+
+
+
         public EngineerWindow()
         {
             InitializeComponent();
