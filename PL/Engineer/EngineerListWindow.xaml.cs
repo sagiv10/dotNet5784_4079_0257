@@ -20,6 +20,9 @@ namespace PL.Engineer
     public partial class EngineerListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
+        public BO.EngineerExperience chosenLevel { get; set; } = BO.EngineerExperience.All;
+
         public IEnumerable<BO.Engineer> EngineerList
         {
             get { return (IEnumerable<BO.Engineer>)GetValue(EngineerListProperty); }
@@ -32,10 +35,14 @@ namespace PL.Engineer
 
         public EngineerListWindow()
         {
-
             InitializeComponent();
-            EngineerList = s_bl?.Engineer.ReadAllEngineers()!;
+            EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
 
+        }
+
+        private void readListAgain(object sender, SelectionChangedEventArgs e)
+        {
+            EngineerList = s_bl.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All);
         }
     }
 }

@@ -8,7 +8,8 @@ namespace BO
         BetterBeginner,
         Advanced,
         Expert,
-        Master
+        Master,
+        All
     }
     public enum Status
     {

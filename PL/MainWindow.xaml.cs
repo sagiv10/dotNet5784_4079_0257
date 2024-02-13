@@ -37,5 +37,10 @@ namespace PL
         {
             new EngineerListWindow().Show();
         }
+
+        private void baruchHashem(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("!ברוך ה");
+        }
     }
 }
