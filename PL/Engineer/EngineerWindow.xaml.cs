@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -70,6 +71,46 @@ namespace PL.Engineer
         private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
         {
             if (Stage) //if we are at create Mode
+            {
+                try
+                {
+                    if(Engineer.Task.Id==0)
+                    {
+                        s_bl.Engineer.CreateEngineer(Engineer);
+                    }
+                    else
+                    {
+                        s_bl.Engineer.AssignTask(Engineer.Id, Engineer.Task!.Id);
+                        s_bl.Engineer.CreateEngineer(Engineer);
+                    }
+                    this.Close();
+                }
+                catch(BO.BLWrongInputException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch(BLAlreadyExistException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch(BO.BLNotFoundException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.BLHasTaskException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.BLNotAvialableTaskException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (BO.BLWrongStageException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
             {
 
             }

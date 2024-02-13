@@ -40,4 +40,36 @@
     <_level>Master</_level>
     <_isActive>true</_isActive>
   </Engineer>
+  <Engineer>
+    <_id>2000</_id>
+    <_cost>30</_cost>
+    <_email>sagivmaoz@gmail.com</_email>
+    <_name>sagiv</_name>
+    <_level>Advanced</_level>
+    <_isActive>true</_isActive>
+  </Engineer>
+  <Engineer>
+    <_id>1</_id>
+    <_cost>300</_cost>
+    <_email>sagivmaoz@gmail.com</_email>
+    <_name>sagiv</_name>
+    <_level>Beginner</_level>
+    <_isActive>true</_isActive>
+  </Engineer>
+  <Engineer>
+    <_id>12</_id>
+    <_cost>20.9</_cost>
+    <_email>eitan9611@gmail.com</_email>
+    <_name>eitan</_name>
+    <_level>Expert</_level>
+    <_isActive>true</_isActive>
+  </Engineer>
+  <Engineer>
+    <_id>30</_id>
+    <_cost>30</_cost>
+    <_email>sagivmaoz@gmail.com</_email>
+    <_name>s</_name>
+    <_level>Beginner</_level>
+    <_isActive>true</_isActive>
+  </Engineer>
 </ArrayOfEngineer>
