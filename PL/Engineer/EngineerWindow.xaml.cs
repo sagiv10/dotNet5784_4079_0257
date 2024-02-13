@@ -54,7 +54,7 @@ namespace PL.Engineer
                     MessageBox.Show(ex.Message);
                 }
             }
-            else
+            else //if the id is 0 we need an empty task
             {
                 Engineer = new BO.Engineer(
                     id,
@@ -62,8 +62,11 @@ namespace PL.Engineer
                     "",
                     BO.EngineerExperience.Beginner,
                     0.0,
-                    null
-                    );
+                    new BO.TaskInEngineer(
+                        0,
+                        ""
+                        )
+                    ); ;
             }
         }
 
