@@ -62,13 +62,14 @@ namespace PL.Engineer
                     "",
                     BO.EngineerExperience.Beginner,
                     0.0,
-                    new BO.TaskInEngineer(
-                        0,
-                        ""
-                        )
+                    new BO.TaskInEngineer(0,"")//builds en empty TaskInEngineer to show his details in the singleShow window
                     ); ;
             }
         }
 
+        private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
