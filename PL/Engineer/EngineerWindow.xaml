@@ -64,8 +64,9 @@ ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         <TextBox Grid.Column="1" Grid.Row="4" Style="{StaticResource TextBoxStyle}" Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
         <TextBox Grid.Column="1" Grid.Row="5" Style="{StaticResource TextBoxStyle}" Text="{Binding Task.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
         <TextBox Grid.Column="1" Grid.Row="6" Style="{StaticResource TextBoxStyle}" Text="{Binding Task.Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
-        <TextBlock Grid.Column="1" Grid.Row="7" Text="{Binding Task.Id}"></TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="7" Text="{Binding Task.Id, Converter={StaticResource IdAliasKey}}"></TextBlock>
         <!--Buttons:-->
-        <Button Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Margin="200,10,200,10" Content="{Binding Id}"></Button>
+        <Button Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2" Margin="200,10,200,10" Content="{Binding Id,Mode=OneTime, Converter={StaticResource ConvertIdToContentKey}}" Click="btnAddUpdate_Click"/>
+
     </Grid>
 </Window>
