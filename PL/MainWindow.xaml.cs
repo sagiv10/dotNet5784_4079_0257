@@ -39,6 +39,7 @@ namespace PL
 
         private void baruchHashem(object sender, RoutedEventArgs e)
         {
+
             MessageBox.Show("!ברוך ה");
         }
     }
