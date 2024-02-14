@@ -73,7 +73,7 @@ internal class TaskImplementation : BlApi.ITask
         DO.Task? doTaskToCheck = _dal.Task.Read(newTask.Id);//get task to check if exist
         if(doTaskToCheck != null)
             throw new NotImplementedException();
-        foreach (var dep in newTask.Dependencies){ AddDependency(newTask.Id, dep!.Id); }
+        foreach (var dep in newTask.Dependencies){ AddDependency(newTask.Id, dep!.Id); } //
         DO.Task? doTaskToCreate = BOToDOTask(newTask);
         _dal.Task.Create(doTaskToCreate!);
         return newTask.Id;
@@ -190,7 +190,7 @@ internal class TaskImplementation : BlApi.ITask
     }
 
     /// <summary>
-    /// helping method to calcualte the status of specific task
+    /// helping method to calcualte the status of specific task 
     /// </summary>
     /// <param name="scheduledDate"></param>
     /// <param name="startDate"></param>
