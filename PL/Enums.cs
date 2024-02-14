@@ -16,9 +16,16 @@ internal class ComplexityLevelCollection :IEnumerable
     public IEnumerator GetEnumerator() => s_enums.GetEnumerator();
 
 }
+internal class RealComplexityLevelCollection : IEnumerable
+{
+    static readonly IEnumerable<BO.EngineerExperience> s_real_enums =
+            (Enum.GetValues(typeof(ComplexityCollection)) as IEnumerable<BO.EngineerExperience>)!;
+
+    public IEnumerator GetEnumerator() => s_real_enums.GetEnumerator();
+
+}
 public enum ComplexityCollection
 {
-    None,
     Beginner,
     Amature,
     Advanced,

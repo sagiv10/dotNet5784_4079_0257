@@ -22,6 +22,15 @@ namespace PL
                 DalTest.Initialization.Do();
             }
         }
+        private void Reset(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("are you sure you want to reset the data base?", //the messege
+                "Reset confirm", //title
+                MessageBoxButton.YesNo) == MessageBoxResult.Yes) //if the user answered 'yes'
+            {
+                DalTest.Initialization.Reset();
+            }
+        }
 
         private void HandleEngineersButton(object sender, RoutedEventArgs e)
         {

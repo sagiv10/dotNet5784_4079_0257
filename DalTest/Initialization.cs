@@ -163,6 +163,13 @@ public static class Initialization
     /// <exception cref="NullReferenceException"></exception>
     public static void Do()
     {
+        Reset();
+        createEngineer(); //create  the new engineers
+        createTask(); //create  the new tasks
+        createDependency(); //create  the new dependencies
+    }   
+    public static void Reset()
+    {
         s_dal = Factory.Get; //choose the data source by the xml file - 'dal - config'
         XElement newNumbers = new XElement("config", new XElement("NextDependencyId", 1), new XElement("NextTaskId", 1));
         XMLTools.SaveListToXMLElement(newNumbers, "data-config");//save new running numberwhen they equal to 0 now
@@ -171,8 +178,5 @@ public static class Initialization
         s_dal.Engineer.DeleteAll(); //reset the engineer xml file
         s_dal.Task.DeleteAll(); //reset the task xml file
         s_dal.Dependency.DeleteAll(); //reset the dependency xml file
-        createEngineer(); //create  the new engineers
-        createTask(); //create  the new tasks
-        createDependency(); //create  the new dependencies
-    }   
+    }
 }
