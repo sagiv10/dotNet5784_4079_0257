@@ -73,10 +73,10 @@ internal class TaskImplementation : BlApi.ITask
         DO.Task? doTaskToCheck = _dal.Task.Read(newTask.Id);//get task to check if exist
         if(doTaskToCheck != null)
             throw new NotImplementedException();
-        foreach (var dep in newTask.Dependencies){ AddDependency(newTask.Id, dep!.Id); }
         DO.Task? doTaskToCreate = BOToDOTask(newTask);
-        _dal.Task.Create(doTaskToCreate!);
-        return newTask.Id;
+        int newId = _dal.Task.Create(doTaskToCreate!);
+        foreach (var dep in newTask.Dependencies!){ AddDependency(newId, dep!.Id); }
+        return newId;
     }
 
     /// <summary>

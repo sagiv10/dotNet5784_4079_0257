@@ -47,6 +47,8 @@ namespace PL.Engineer
         private void OpenCreateWindow(object sender, RoutedEventArgs e)
         {
             new EngineerWindow().ShowDialog();
+            EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
+
         }
 
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
