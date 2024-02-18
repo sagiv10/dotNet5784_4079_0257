@@ -1,4 +1,5 @@
 ﻿using PL.Engineer;
+using PL.Task;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,9 @@ namespace PL.Manager
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ShowTaskList(object sender, RoutedEventArgs e)
         {
-
+            new TaskListWindow().Show();
         }
 
         private void ShowEngineerList(object sender, RoutedEventArgs e)

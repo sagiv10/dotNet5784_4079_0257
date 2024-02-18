@@ -29,7 +29,7 @@ namespace PL
 
         private void DecideButton(object sender, RoutedEventArgs e)
         {
-            new TaskListWindow().ShowDialog();
+            new ManagerChoose().ShowDialog();
         }
     }
 }
