@@ -190,7 +190,7 @@ internal class TaskImplementation : BlApi.ITask
     }
 
     /// <summary>
-    /// helping method to calcualte the status of specific task
+    /// helping method to calcualte the status of specific task 
     /// </summary>
     /// <param name="scheduledDate"></param>
     /// <param name="startDate"></param>

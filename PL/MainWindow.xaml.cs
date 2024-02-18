@@ -1,5 +1,7 @@
 ﻿using PL.Engineer;
 using System.Windows;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace PL
 {
@@ -11,6 +13,8 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
+            //ImageBrush imageBrush = new ImageBrush(new BitmapImage(new Uri("C:\\Users\\User\\Desktop\\minip\\dotNet5784_4079_0257\\WhatsApp Image 2024-02-15 at 00.12.46_679e48d8.jpg", UriKind.RelativeOrAbsolute)));
+            //this.Background = imageBrush;
         }
 
         private void InitializeButton(object sender, RoutedEventArgs e)
