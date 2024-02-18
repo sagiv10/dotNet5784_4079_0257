@@ -36,11 +36,13 @@ namespace PL.Engineer
 
 
 
-        public EngineerWindow(int id=0)
+        public EngineerWindow(int id=0)//this method runs every time we open the window
         {
             InitializeComponent();
+            ImageBrush imageBrush = new ImageBrush(new BitmapImage(new Uri("C:\\Users\\User\\Desktop\\minip\\dotNet5784_4079_0257\\PL\\Engineer\\Photos\\output-onlinepngtools (3).png", UriKind.RelativeOrAbsolute)));
+            this.Background = imageBrush;
             Stage = (id == 0);
-            if (id != 0)
+            if (id != 0)//if id isn't default so get all details
             {
                 try
                 {
@@ -55,7 +57,7 @@ namespace PL.Engineer
                     MessageBox.Show(ex.Message);
                 }
             }
-            else //if the id is 0 we need an empty task
+            else //if the id is 0 
             {
                 Engineer = new BO.Engineer(
                     id,
@@ -70,7 +72,7 @@ namespace PL.Engineer
 
         private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
         {
-            if (Stage) //if we are at create Mode
+            if (Stage) //if we are at create Mode and id=0
             {
                 try
                 {
@@ -81,7 +83,8 @@ namespace PL.Engineer
                     }
                     else
                     {
-                        s_bl.Engineer.AssignTask(Engineer.Id, Engineer.Task!.Id);
+                        
+                        //s_bl.Engineer.AssignTask(Engineer.Id, Engineer.Task!.Id);
                         s_bl.Engineer.CreateEngineer(Engineer);
                         MessageBox.Show("engineer created succesfully!");
                     }

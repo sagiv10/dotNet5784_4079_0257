@@ -14,6 +14,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Engineer\Photos\2163271.png" />
+    <None Remove="Engineer\Photos\3820241.png" />
+    <None Remove="Engineer\Photos\email.png" />
+    <None Remove="Engineer\Photos\money-bag-and-dollar-coin-icon-vector-26836619-removebg-preview.png" />
+    <None Remove="Engineer\Photos\name.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Engineer\Photos\2163271.png" />
+    <Resource Include="Engineer\Photos\3820241.png" />
+    <Resource Include="Engineer\Photos\email.png" />
+    <Resource Include="Engineer\Photos\name.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
     <ProjectReference Include="..\DalTest\DalTest.csproj" />
   </ItemGroup>
