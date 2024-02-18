@@ -13,12 +13,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.Manager
+namespace PL.Task
 {
     /// <summary>
     /// Interaction logic for ManagerWindow.xaml
     /// </summary>
-    public partial class ManagerWindow : Window
+    public partial class TaskListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public IEnumerable<BO.TaskInList> TaskInList_List
@@ -28,16 +28,11 @@ namespace PL.Manager
         }
 
         public static readonly DependencyProperty TaskInList_ListProperty/*how to call me in the xaml code */ =
-            DependencyProperty.Register("TaskInList_ListProperty", typeof(IEnumerable<BO.TaskInList>), typeof(ManagerWindow), new PropertyMetadata(null));
-        public ManagerWindow()
+            DependencyProperty.Register("TaskInList_ListProperty", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
+        public TaskListWindow()
         {
             InitializeComponent();
             TaskInList_List = s_bl?.Task.ReadAll()!;
-        }
-
-        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
         }
     }
 }

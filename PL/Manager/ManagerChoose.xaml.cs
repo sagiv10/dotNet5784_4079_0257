@@ -1,6 +1,4 @@
 ﻿using PL.Engineer;
-using PL.Manager;
-using PL.Task;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,21 +13,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL
+namespace PL.Manager
 {
     /// <summary>
-    /// Interaction logic for ManagerOrEngineer.xaml
+    /// Interaction logic for ManagerChoose.xaml
     /// </summary>
-    public partial class ManagerOrEngineer : Window
+    public partial class ManagerChoose : Window
     {
-        public ManagerOrEngineer()
+        public ManagerChoose()
         {
             InitializeComponent();
         }
 
-        private void DecideButton(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new TaskWindow().ShowDialog();
+
+        }
+
+        private void ShowEngineerList(object sender, RoutedEventArgs e)
+        {
+            new EngineerListWindow().Show();
         }
     }
 }
