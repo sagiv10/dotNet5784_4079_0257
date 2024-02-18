@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70*" />
@@ -24,6 +23,7 @@
             <Button Content="Initialize Data" Margin="10" Click="InitializeButton"></Button>
             <Button Content="Reset Data" Margin="10" Click="Reset"></Button>
             <Button Content="Handle Engineers" Margin="10" Click="HandleEngineersButton"></Button>
+            <Button Content="Choose manager or engineer" Margin="10" Click="ShowDecideWindow"></Button>
         </StackPanel>
         
         <Button Grid.Row="0" Grid.Column="3" Click="baruchHashem" Background="White" BorderThickness="0" >בס"ד</Button>

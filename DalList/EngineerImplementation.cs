@@ -18,10 +18,11 @@ internal class EngineerImplementation : IEngineer
         {
             if (ifExists._isActive == false)//if we didnt found him and its ok to add him 
             {
+                
                 Engineer updatedEngineer = item with { _isActive = true };
                 int theIndex = DataSource.Config.FindIndexEngineer(ifExists._id);
                 DataSource.Engineers.RemoveAt(theIndex);
-                DataSource.Engineers.Add(updatedEngineer);
+                DataSource.Engineers.Add(updatedEngineer); 
                 return item._id;
             }
             if(ifExists._isActive ==true ) // if we found him and we cant add him

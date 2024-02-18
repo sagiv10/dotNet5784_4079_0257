@@ -29,8 +29,8 @@ namespace PL.Engineer
             set { SetValue(EngineerListProperty, value); }
         }
 
-        public static readonly DependencyProperty EngineerListProperty = 
-            DependencyProperty.Register("EngineerList"/*how to call me in the xaml code */, typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty EngineerListProperty/*how to call me in the xaml code */ = 
+            DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
 
 
         public EngineerListWindow()
@@ -48,7 +48,6 @@ namespace PL.Engineer
         {
             new EngineerWindow().ShowDialog();
             EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
-
         }
 
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
