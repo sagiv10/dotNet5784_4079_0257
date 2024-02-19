@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using PL.Manager;
 
 namespace PL
 {
@@ -44,9 +45,13 @@ namespace PL
 
             MessageBox.Show("!ברוך ה");
         }
-        private void ShowDecideWindow(object sender, RoutedEventArgs e)
+        private void ManagerPicked(object sender, RoutedEventArgs e)
         {
-            new ManagerOrEngineer().Show();
+            new ManagerChoose().ShowDialog();
+        }
+        private void EngineerPicked(object sender, RoutedEventArgs e)
+        {
+            new ManagerChoose().ShowDialog();
         }
     }
 }

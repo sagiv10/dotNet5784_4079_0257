@@ -40,8 +40,6 @@ namespace PL.Engineer
         public EngineerWindow(int id=0)//this method runs every time we open the window
         {
             InitializeComponent();
-            ImageBrush imageBrush = new ImageBrush(new BitmapImage(new Uri("C:\\Users\\User\\Desktop\\minip\\dotNet5784_4079_0257\\PL\\Engineer\\Photos\\output-onlinepngtools (3).png", UriKind.RelativeOrAbsolute)));
-            this.Background = imageBrush;
             Stage = (id == 0);
             if (id != 0)//if id isn't default so get all details
             {
@@ -49,13 +47,9 @@ namespace PL.Engineer
                 {
                     Engineer = s_bl.Engineer.ReadEngineer(id);
                 }
-                catch (BO.BLWrongIdException ex) //somehow we got into negative id!
+                catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
-                }
-                catch (BO.BLNotFoundException ex) //if the id is not found
-                {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, ex.GetType().Name);
                 }
             }
             else //if the id is 0 
@@ -91,30 +85,11 @@ namespace PL.Engineer
                     }
                     this.Close();
                 }
-                catch (BO.BLWrongInputException ex)
+                catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, ex.GetType().Name);
                 }
-                catch (BLAlreadyExistException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                catch (BO.BLNotFoundException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                catch (BO.BLHasTaskException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                catch (BO.BLNotAvialableTaskException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                catch (BO.BLWrongStageException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                
             }
             else
             {
@@ -125,25 +100,9 @@ namespace PL.Engineer
                     this.Close();
 
                 }
-                catch (BO.BLWrongIdException ex) //somehow we got into negative id!
+                catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
-                }
-                catch (BO.BLWrongEmailException ex) //if the id is not found
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                catch (BO.BLWrongCostException ex) //if the id is not found
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                catch (BO.BLNotFoundException ex) //if the id is not found
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                catch (BO.BLCannotLowerLevelException ex) //if the id is not found
-                {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, ex.GetType().Name);
                 }
             }
 

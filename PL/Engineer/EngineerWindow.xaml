@@ -7,9 +7,6 @@
         mc:Ignorable="d"
         DataContext="{Binding Engineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}"
         Title="EngineerWindow" Height="350" Width="500">
-    <Window.Background>
-        <ImageBrush ImageSource="C:\Users\User\Desktop\minip\dotNet5784_4079_0257\PL\Engineer\Photos\output-onlinepngtools (3).png" Opacity="0.95"/>
-    </Window.Background>
     <Window.Resources>
         <local:RealComplexityLevelCollection x:Key="ComplexityLevelCollectionKey" />
         <!--3 Styls for each type:-->

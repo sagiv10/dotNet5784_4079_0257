@@ -8,5 +8,7 @@
         <local:ConvertIdToContent x:Key="ConvertIdToContentKey"/>
         <local:ConvertIdToAlias x:Key="IdAliasKey"/>
         <local:ConvertIdToBool x:Key="IdBoolKey"/>
+        <local:ConvertTaskInEngineerToIdString x:Key="TaskStringIdKey"/>
+        <local:ConvertStringToWelcomeString x:Key="WelcomeBeforeKey"/>
     </Application.Resources>
 </Application>
