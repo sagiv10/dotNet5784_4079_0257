@@ -58,7 +58,7 @@ internal class EngineerImplementation : BlApi.IEngineer
     /// <exception cref="BLWrongCostInputException"></exception>
     private void checkEngineerInput(BO.Engineer engineer)
     {
-        if (engineer.Id < 0)
+        if (engineer.Id <= 0)
         {
             throw new BLWrongIdException();
         }
