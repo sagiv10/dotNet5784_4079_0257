@@ -3,23 +3,57 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Task"
+        xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="TaskListWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Window.Resources>
+        <local:StatusCollection x:Key="StatusCollectionKey"/>
+    </Window.Resources>
     <Grid ShowGridLines="True">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <!--Internal, Upper Grid-->
-        <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                
+                <!-- First row for addDependency button -->
+                <RowDefinition Height="50"/>
+                
+                <!-- Second row for removeDependency button -->
+                <RowDefinition Height="50"/>
+                
+                <!-- Upper part with ComboBox -->
+                <RowDefinition Height="50"/>
+                
+                <!-- Middle part with ListView -->
+                <RowDefinition Height="200"/>
+                
+                <!-- Lower part with AddButton -->
+                <RowDefinition Height="50"/>
+                
+            </Grid.RowDefinitions>
+
+            <!--AddButton:-->
+            <Button Content="add dependency" Click="addDependencyClick"
+            Grid.Row="0"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30"
+            ></Button>
+            <!--AddButton:-->
+            <Button Content="remove dependency" Click="removeDependencyClick"
+            Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30"
+            ></Button>
+            <!--ChangeStatusComboBox:-->
+            <ComboBox 
+                    ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}"
+                    SelectedValue="{Binding Path=chosenStatus , Mode=TwoWay}" SelectionChanged="ReadListAgain"
+                    Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200"/>
+            <!--ListView:-->
+            <ListView MouseDoubleClick="ShowSpecificTask" 
+                      ItemsSource="{Binding Path=TaskInList_ListProperty, UpdateSourceTrigger=PropertyChanged}"
+                      Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"> 
+            </ListView>
+            <!--AddButton:-->
+            <Button Content="Add new task" Click="AddTaskClick"
+                    Grid.Row="4"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30"
+            ></Button>
+            
         </Grid>
-            <ListView  Margin="5" Grid.Row="1" ItemsSource="{Binding Path=TaskInList_ListProperty, UpdateSourceTrigger=PropertyChanged}"></ListView>
     </Grid>
 </Window>
