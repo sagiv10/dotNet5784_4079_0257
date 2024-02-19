@@ -26,7 +26,7 @@
             <!--SelectionOfEngineerExpirience-->
             <Label Grid.Column="0">select engineer experience level:</Label>
             <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-            ItemsSource="{Binding Source={StaticResource ComplexityLevelCollectionKey}}"
+                      ItemsSource="{Binding Source={StaticResource ComplexityLevelCollectionKey}}"
                       SelectedValue="{Binding Path=chosenLevel , Mode=TwoWay}" SelectionChanged="readListAgain">
             </ComboBox>
         </Grid>
