@@ -54,21 +54,8 @@ namespace PL.Task
                     MessageBox.Show("dependency removed succesfully!");
                 }
             }
-            catch (BO.BLWrongStageException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (BO.BLCannotAddCircularDependencyException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (BO.BLNotFoundException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (BLAlreadyExistException ex)
-            {
-                MessageBox.Show(ex.Message);
+            catch (Exception ex){
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     

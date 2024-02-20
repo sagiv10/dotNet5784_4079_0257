@@ -87,9 +87,9 @@ namespace PL.Engineer
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, ex.GetType().Name);
+                    MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                
+
             }
             else
             {
@@ -102,7 +102,7 @@ namespace PL.Engineer
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, ex.GetType().Name);
+                    MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 

@@ -34,16 +34,16 @@ namespace PL.Engineer
 
         public EngineerMenu(int id = 0)
         {
-            InitializeComponent();
             try
             {
                 Engineer = s_bl.Engineer.ReadEngineer(id);
             }
-            catch(Exception ex) //if somhow the engineer is not exists
+            catch (Exception ex) //if somhow the engineer is not exists
             {
-                MessageBox.Show(ex.Message, ex.GetType().Name);
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
                 this.Close(); //close this window
             }
+            InitializeComponent();
         }
     }
 }

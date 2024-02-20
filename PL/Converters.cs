@@ -134,13 +134,44 @@ class ConvertStringToWelcomeString : IValueConverter
     /// <returns></returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return "Welcome" + (string)value;
+        return "Welcome " + (string)value + "!";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }
+}
+
+class ConvertIntToString : IValueConverter
+{
+    /// <summary>
+    /// return int instead of string
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        int num;
+        return int.TryParse((String)value, out num) ? num : 0;
+    }
+    /// <summary>
+    /// make an int string
+    /// </summary>
+    /// <param name="value">the int </param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return ((int)value).ToString();
+    }
+    
 }
 
 
