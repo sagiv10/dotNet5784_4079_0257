@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        DataContext="{Binding IsAddProperty, RelativeSource={RelativeSource Self}, Mode=TwoWay}"
-        Title="AddRemoveDependency" Height="450" Width="800">
-    <Window.Resources>
+        Title="AddRemoveDependency" Height="450" Width="800"
+        DataContext="{Binding IsAdd, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+    <!--<Window.Resources>
         <local:TasksIdsCollection x:Key="TasksidsCollectionKey"/>
-    </Window.Resources>
+    </Window.Resources>-->
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
 
@@ -30,12 +30,12 @@
             <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
-        <!--_dependentTask comboBox-->
+        <!--_dependentTask comboBox--><!--
         <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Source={StaticResource TasksidsCollectionKey}}" 
         SelectedValue="{Binding Level , Mode=TwoWay, NotifyOnValidationError=true,ValidatesOnExceptions=true}"  />
-        <!--_dependsOnTask comboBox-->
+        --><!--_dependsOnTask comboBox--><!--
         <ComboBox Grid.Column="0" Grid.Row="0" ItemsSource="{Binding Source={StaticResource TasksidsCollectionKey}}" 
-        SelectedValue="{Binding Level , Mode=TwoWay, NotifyOnValidationError=true,ValidatesOnExceptions=true}"  />
+        SelectedValue="{Binding Level , Mode=TwoWay, NotifyOnValidationError=true,ValidatesOnExceptions=true}"  />-->
 
         <!--AddRemove Button-->
         <Button Click="AddRemoveClick" Content="{Binding Mode=OneTime, Converter={StaticResource ConvertBoolToContentKey}}"

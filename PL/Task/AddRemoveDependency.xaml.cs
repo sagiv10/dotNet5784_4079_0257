@@ -28,15 +28,15 @@ namespace PL.Task
             get { return (bool)GetValue(IsAddProperty); }
             set { SetValue(IsAddProperty, value); }
         }
-        //by using the data context we able to use this property in our xaml code:
-        public static readonly DependencyProperty IsAddProperty/*how to call me in the xaml code */ =
-            DependencyProperty.Register("IsAddProperty", typeof(bool), typeof(AddRemoveDependency), new PropertyMetadata(null));
-        
+
+        public static readonly DependencyProperty IsAddProperty =
+            DependencyProperty.Register("IsAdd", typeof(bool), typeof(AddRemoveDependency), new PropertyMetadata(false));
+
         public AddRemoveDependency(bool _isAdd = false) //if id==0 -> add, else -> remove.             
         {                                                
             InitializeComponent();
-           
-            IsAdd = (_isAdd);
+            DataContext = this; // the data context is all the vars in this window
+            IsAdd = _isAdd;
         }
 
         private void AddRemoveClick(object sender, RoutedEventArgs e)

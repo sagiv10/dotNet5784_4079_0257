@@ -115,5 +115,5 @@ public interface ITask
     /// help method for the pl stage that returnes all the id's
     /// </summary>
     /// <returns>list that contatin all id's</returns>
-    public List<BO.Task> GetAllTasks();
+    public List<int> GetAllTasks();
 }
