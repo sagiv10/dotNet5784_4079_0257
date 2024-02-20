@@ -25,8 +25,10 @@
             </Grid.ColumnDefinitions>
             <Label Margin="59,30,0,0" Grid.Row="0" Grid.Column="0" FontSize="30">your task's id:</Label>
             <Label Margin="100,30,0,0" Grid.Row="1" Grid.Column="0" FontSize="30">the task:</Label>
-            <TextBlock Margin="31,30,10,0" Grid.Row="0" Grid.Column="1" FontSize="30"></TextBlock>
-            <Label Margin="27,20,10,10" Grid.Row="1" Grid.Column="1" FontSize="30" Content="{Binding }"></Label>
+            <TextBlock Margin="31,40,10,83" Grid.Row="0" Grid.Column="1" FontSize="20" Text="{Binding Task, Converter ={StaticResource InnerTaskIdKey} }" TextWrapping="Wrap" Grid.RowSpan="2" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock Margin="27,45,10,-15" Grid.Row="1" Grid.Column="1" FontSize="15" Text="{Binding Task, Converter={StaticResource InnerTaskAliasKey}}" TextWrapping="Wrap"></TextBlock>
         </Grid>
+        <Button Content="Button" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="69" Width="241" Margin="0,48,0,0" Click="Assign_ShowTask"/>
+        <TextBlock HorizontalAlignment="Left" Height="69" Margin="209,48,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="392" Visibility="{Binding }"/>
     </Grid>
 </Window>

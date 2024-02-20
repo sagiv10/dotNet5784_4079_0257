@@ -37,11 +37,11 @@ class ConvertBoolToContent : IValueConverter
 
 }
 
-class ConvertIdToAlias : IValueConverter
+class ConvertInnerTaskToAlias : IValueConverter
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
     /// <summary>
-    /// if the task id is exists then return his alias, an error message else
+    /// if the inner task exists then return his alias, an error message else
     /// </summary>
     /// <param name="value">the id of the task</param>
     /// <param name="targetType"></param>
@@ -50,17 +50,42 @@ class ConvertIdToAlias : IValueConverter
     /// <returns></returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        try
+        if (value != null)
         {
-            BO.Task theTask = s_bl.Task.Read((int)value);
-            return theTask.Alias;
+            return ((BO.TaskInEngineer)value).Alias;
         }
-        catch(BO.BLNotFoundException)
+        else
         {
-            return new string("no task is maching this id");
+            return new string("");
         }
     }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 
+class ConvertInnerTaskToId : IValueConverter
+{
+    /// <summary>
+    /// if the task is exists then return his id, an error message else
+    /// </summary>
+    /// <param name="value">the inner task</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value != null)
+        {
+            return ((BO.TaskInEngineer)value).Id.ToString();
+        }
+        else
+        {
+            return new string("no task assigned yet");
+        }
+    }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();

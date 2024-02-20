@@ -21,6 +21,14 @@ namespace PL.Engineer
     public partial class EngineerMenu : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        BO.ProjectStatus currentStatus
+        {
+            get { return (BO.ProjectStatus)GetValue(currentStatusProperty); }
+            set { SetValue(currentStatusProperty, value); }
+        }
+        // Using a DependencyProperty as the backing store for Engineer.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty currentStatusProperty =
+            DependencyProperty.Register("currentStatus", typeof(BO.ProjectStatus), typeof(EngineerMenu), new PropertyMetadata(null));
 
         //the engineer of this window
         public BO.Engineer Engineer
@@ -30,7 +38,7 @@ namespace PL.Engineer
         }
         // Using a DependencyProperty as the backing store for Engineer.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty EngineerProperty =
-            DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerMenu), new PropertyMetadata(null));
 
         public EngineerMenu(int id = 0)
         {
@@ -43,7 +51,14 @@ namespace PL.Engineer
                 MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
                 this.Close(); //close this window
             }
+            currentStatus = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
             InitializeComponent();
         }
+
+        private void Assign_ShowTask(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }
