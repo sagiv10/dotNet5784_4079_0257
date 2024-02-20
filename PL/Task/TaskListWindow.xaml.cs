@@ -31,10 +31,17 @@ namespace PL.Task
 
         public static readonly DependencyProperty TaskInList_ListProperty/*how to call me in the xaml code */ =
             DependencyProperty.Register("TaskInList_ListProperty", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
-        public TaskListWindow()
+        public TaskListWindow(bool isManager, int engineerId=0)
         {
             InitializeComponent();
-            TaskInList_List = s_bl?.Task.ReadAll()!;
+            if (isManager)
+            {
+                TaskInList_List = s_bl?.Task.ReadAll()!;
+            }
+            else
+            {
+                TaskInList_List = s_bl?.Engineer.GetPotentialTasks(engineerId)!;
+            }
         }
 
         private void ShowSpecificTask(object sender, MouseButtonEventArgs e)//sender has the details of which task we been sent from. 

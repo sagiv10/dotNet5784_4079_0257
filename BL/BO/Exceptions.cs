@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿using System.Runtime.Intrinsics.Arm;
+
+namespace BO;
 
 [Serializable]
 public class BLNotFoundException : Exception
@@ -119,6 +121,11 @@ public class BLCannotAddCircularDependencyException : Exception
 {
     public BLCannotAddCircularDependencyException(int dep, int depOn) : base($"cannot create dependency between {dep} and {depOn} due to circular dependency creation") { }
 }
+public class BLCannotAddTheIdentityDependency:Exception
+{
+    public BLCannotAddTheIdentityDependency(): base($"the task cannot be dependent on itself! =_= ") { }
+}
+    
 
 
 

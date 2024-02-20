@@ -28,7 +28,7 @@ namespace PL.Manager
 
         private void ShowTaskList(object sender, RoutedEventArgs e)
         {
-            new TaskListWindow().Show();
+            new TaskListWindow(true).Show();
         }
 
         private void ShowEngineerList(object sender, RoutedEventArgs e)

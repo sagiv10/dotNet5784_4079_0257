@@ -326,6 +326,10 @@ internal class TaskImplementation : BlApi.ITask
     }
     public void AddDependency(int dependentTask, int dependsOnTask)
     {
+        if(dependsOnTask == dependentTask)
+        {
+            throw new BLCannotAddTheIdentityDependency();
+        }
         if(_dal.Task.Read(dependsOnTask) == null)
         {
             throw new BLNotFoundException("task", dependsOnTask);
@@ -347,7 +351,7 @@ internal class TaskImplementation : BlApi.ITask
         {
             throw new BLAlreadyExistException("dependency", _dal.Dependency.Read(d => d._dependsOnTask == dependsOnTask && d._dependentTask == dependentTask)!._id);
         }
-        _dal.Dependency.Create(new DO.Dependency(dependentTask, dependsOnTask));
+        _dal.Dependency.Create(new DO.Dependency(0,dependentTask, dependsOnTask));
     }
 
     public void DeleteDependency(int dependentTask, int dependsOnTask)
