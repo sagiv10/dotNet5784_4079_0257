@@ -28,7 +28,7 @@ namespace PL.Task
             get { return (bool)GetValue(IsAddProperty); }
             set { SetValue(IsAddProperty, value); }
         }
-
+        //by using the data context we able to use this property in our xaml code:
         public static readonly DependencyProperty IsAddProperty/*how to call me in the xaml code */ =
             DependencyProperty.Register("IsAddProperty", typeof(bool), typeof(AddRemoveDependency), new PropertyMetadata(null));
         

@@ -19,8 +19,6 @@ class ConvertIdToContent : IValueConverter
     {
         throw new NotImplementedException();
     }
-
-
 }
 class ConvertBoolToContent : IValueConverter
 {
