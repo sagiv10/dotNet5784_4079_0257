@@ -134,21 +134,6 @@ internal class TaskImplementation : BlApi.ITask
             (BO.EngineerExperience)doTask._complexity
         );
     }
-    /// <summary>
-    /// this method helps us to handle with dependencies in the pl stage.
-    /// </summary>
-    /// <returns>all the id's of the tasks</returns>
-    public List<int> getIdOfAllTasks()
-    {
-        List<int> idList=new List<int>();
-        List<DO.Task> TasksList = new List<DO.Task>();
-        TasksList = _dal.Task.ReadAll().ToList();
-        foreach (var _task in TasksList)
-        {
-            idList.Add(_task._id);
-        }
-        return idList;
-    }
 
     /// <summary>
     /// helping method to calculate the forecast field 
@@ -341,6 +326,10 @@ internal class TaskImplementation : BlApi.ITask
     }
     public void AddDependency(int dependentTask, int dependsOnTask)
     {
+        if(dependsOnTask == dependentTask)
+        {
+            throw new BLCannotAddTheIdentityDependency();
+        }
         if(_dal.Task.Read(dependsOnTask) == null)
         {
             throw new BLNotFoundException("task", dependsOnTask);
@@ -362,7 +351,7 @@ internal class TaskImplementation : BlApi.ITask
         {
             throw new BLAlreadyExistException("dependency", _dal.Dependency.Read(d => d._dependsOnTask == dependsOnTask && d._dependentTask == dependentTask)!._id);
         }
-        _dal.Dependency.Create(new DO.Dependency(dependentTask, dependsOnTask));
+        _dal.Dependency.Create(new DO.Dependency(0,dependentTask, dependsOnTask));
     }
 
     public void DeleteDependency(int dependentTask, int dependsOnTask)
@@ -443,6 +432,21 @@ internal class TaskImplementation : BlApi.ITask
     public DateTime? getStartingDate()
     {
         return _dal.Project.getStartingDate();
+    }
+    /// <summary>
+    /// this method helps us to handle with dependencies in the pl stage.
+    /// </summary>
+    /// <returns>all the id's of the tasks</returns>
+    public List<int> GetAllTasks()
+    {
+        List<int> idList = new List<int>();
+        List<DO.Task> TasksList = new List<DO.Task>();
+        TasksList = _dal.Task.ReadAll().ToList();
+        foreach (var _task in TasksList)
+        {
+            idList.Add(_task._id);
+        }
+        return idList;
     }
 }
 

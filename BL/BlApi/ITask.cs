@@ -111,4 +111,9 @@ public interface ITask
     /// helping method that get the current progect starting time
     /// </summary>
     public DateTime? getStartingDate();
+    /// <summary>
+    /// help method for the pl stage that returnes all the id's
+    /// </summary>
+    /// <returns>list that contatin all id's</returns>
+    public List<int> GetAllTasks();
 }

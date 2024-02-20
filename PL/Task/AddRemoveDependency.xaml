@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:task="clr-namespace:PL.Task"
         mc:Ignorable="d"
-        DataContext="{Binding IsAddProperty, RelativeSource={RelativeSource Self}, Mode=TwoWay}"
         Title="AddRemoveDependency" Height="450" Width="800">
+    <!--DataContext="{Binding IsAdd, RelativeSource={RelativeSource Self}, Mode=TwoWay}">-->
+    <Window.Resources>
+        <local:TasksIdsCollection x:Key="TasksidsCollectionKey"/>
+    </Window.Resources>
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
 
@@ -27,7 +31,15 @@
             <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
-        <Button Click="AddRemoveClick" Content="{Binding Mode=OneTime, Converter={StaticResource ConvertBoolToContentKey}}"
+        <!--_dependentTask comboBox-->
+        <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Source={StaticResource TasksidsCollectionKey}}" 
+                                               SelectedValue="{Binding IdOfDependentTask , RelativeSource={RelativeSource AncestorType={x:Type task:AddRemoveDependency}}, Mode=TwoWay, NotifyOnValidationError=true,ValidatesOnExceptions=true}"  />
+        <!--_dependsOnTask comboBox-->
+        <ComboBox Grid.Column="0" Grid.Row="0" ItemsSource="{Binding Source={StaticResource TasksidsCollectionKey}}" 
+                                               SelectedValue="{Binding IdOfDependsOnTask , RelativeSource={RelativeSource AncestorType={x:Type task:AddRemoveDependency}}, Mode=TwoWay, NotifyOnValidationError=true,ValidatesOnExceptions=true}"  />
+
+        <!--AddRemove Button-->
+        <Button Click="AddRemoveClick" Content="{Binding IsAdd, RelativeSource={RelativeSource AncestorType={x:Type task:AddRemoveDependency}}, Converter={StaticResource ConvertBoolToContentKey}}"
         Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="30"
         ></Button>
 
