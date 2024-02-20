@@ -51,7 +51,7 @@ namespace PL
         }
         private void EngineerPicked(object sender, RoutedEventArgs e)
         {
-            new ManagerChoose().ShowDialog();
+            new EngineerIdEntering().ShowDialog();
         }
     }
 }

@@ -13,6 +13,20 @@
             <RowDefinition Height="3*"></RowDefinition>
             <RowDefinition Height="3*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label FontSize="20" Content="{Binding Path=Name, Converter={StaticResource WelcomeBeforeKey} }"></Label>
+        <Label FontSize="40" Grid.Row="0" HorizontalAlignment="Center" Content="{Binding Path=Name, Converter={StaticResource WelcomeBeforeKey} }"></Label>
+        <Grid Grid.Row="1" HorizontalAlignment="Center" Width="600">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Margin="59,30,0,0" Grid.Row="0" Grid.Column="0" FontSize="30">your task's id:</Label>
+            <Label Margin="100,30,0,0" Grid.Row="1" Grid.Column="0" FontSize="30">the task:</Label>
+            <TextBlock Margin="31,30,10,0" Grid.Row="0" Grid.Column="1" FontSize="30"></TextBlock>
+            <Label Margin="27,20,10,10" Grid.Row="1" Grid.Column="1" FontSize="30" Content="{Binding }"></Label>
+        </Grid>
     </Grid>
 </Window>
