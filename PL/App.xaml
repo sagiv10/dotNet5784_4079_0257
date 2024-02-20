@@ -12,5 +12,7 @@
         <local:ConvertTaskInEngineerToIdString x:Key="TaskStringIdKey"/>
         <local:ConvertStringToWelcomeString x:Key="WelcomeBeforeKey"/>
         <local:ConvertIntToString x:Key="IntStringKey"/>
+        <!--<local:TasksIdsCollection x:Key="TasksidsCollectionKey"/>-->
+
     </Application.Resources>
 </Application>

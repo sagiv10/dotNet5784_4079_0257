@@ -22,7 +22,21 @@ namespace PL.Task
     public partial class AddRemoveDependency : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        public int IdOfDependentTask
+        {
+            get { return (int)GetValue(IdOfDependentTaskProperty); }
+            set { SetValue(IdOfDependentTaskProperty, value); }
+        }
+        public static readonly DependencyProperty IdOfDependentTaskProperty =
+            DependencyProperty.Register("IdOfDependentTaskProperty", typeof(int), typeof(AddRemoveDependency), new PropertyMetadata(0));
+        public int IdOfDependsOnTask
+        {
+            get { return (int)GetValue(IdOfDependsOnTaskProperty); }
+            set { SetValue(IdOfDependsOnTaskProperty, value); }
+        }
 
+        public static readonly DependencyProperty IdOfDependsOnTaskProperty =
+            DependencyProperty.Register("IdOfDependsOnTaskProperty", typeof(int), typeof(AddRemoveDependency), new PropertyMetadata(0));
         public bool IsAdd
         {
             get { return (bool)GetValue(IsAddProperty); }
@@ -35,7 +49,6 @@ namespace PL.Task
         public AddRemoveDependency(bool _isAdd = false) //if id==0 -> add, else -> remove.             
         {                                                
             InitializeComponent();
-            DataContext = this; // the data context is all the vars in this window
             IsAdd = _isAdd;
         }
 
@@ -45,12 +58,12 @@ namespace PL.Task
             {
                 if (IsAdd)//if we in add mode
                 {
-                    //s_bl.Task.AddDependency(/*getfromfirstcheckbox*/,/*getformsecondcheckbox*/);
+                    s_bl.Task.AddDependency(IdOfDependentTask,IdOfDependsOnTask);
                     MessageBox.Show("dependency created succesfully!");
                 }
                 else     //if we in remove mode
                 {
-                    //s_bl.Task.DeleteDependency(/*getfromfirstcheckbox*/,/*getformsecondcheckbox*/);
+                    s_bl.Task.DeleteDependency(IdOfDependentTask,IdOfDependsOnTask);
                     MessageBox.Show("dependency removed succesfully!");
                 }
             }
