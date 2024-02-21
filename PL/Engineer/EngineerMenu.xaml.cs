@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using PL.Task;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,8 @@ namespace PL.Engineer
     public partial class EngineerMenu : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        BO.ProjectStatus currentStatus
+
+        public BO.ProjectStatus CurrentStatus
         {
             get { return (BO.ProjectStatus)GetValue(currentStatusProperty); }
             set { SetValue(currentStatusProperty, value); }
@@ -51,13 +53,20 @@ namespace PL.Engineer
                 MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
                 this.Close(); //close this window
             }
-            currentStatus = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
+            CurrentStatus = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
             InitializeComponent();
         }
 
         private void Assign_ShowTask(object sender, RoutedEventArgs e)
         {
-
+            if(Engineer.Task != null)
+            {
+                new TaskWindow(Engineer.Task.Id).ShowDialog();
+            }
+            else
+            {
+                new TaskListWindow(false, Engineer.Id).ShowDialog();
+            }
         }
 
     }
