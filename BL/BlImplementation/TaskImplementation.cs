@@ -75,7 +75,19 @@ internal class TaskImplementation : BlApi.ITask
             throw new NotImplementedException();
         DO.Task? doTaskToCreate = BOToDOTask(newTask);
         int newId = _dal.Task.Create(doTaskToCreate!);
-        foreach (var dep in newTask.Dependencies!){ AddDependency(newId, dep!.Id); }
+        try
+        { //try to insert all the dependencies
+            foreach (var dep in newTask.Dependencies!) { AddDependency(newId, dep!.Id); }
+        }
+        catch(Exception ex) //we couldn't add the dependency - so now we will erase all the dependencied we added and delete the new task
+        {
+            foreach (var dep in _dal.Dependency.ReadAll(d => d._dependsOnTask == newId)!) //delete all the dependencied we added
+            {
+                _dal.Dependency.Delete(dep._id);
+            }
+            _dal.Dependency.Delete(newId); //delete the new Task
+            throw ex;
+        }
         return newId;
     }
 

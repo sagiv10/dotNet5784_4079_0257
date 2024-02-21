@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace PL;
@@ -198,5 +199,79 @@ class ConvertIntToString : IValueConverter
     }
     
 }
+
+class ConvertStageToNotVisibility : IValueConverter
+{
+    /// <summary>
+    /// if we are at the Execution stage then the button should be visible
+    /// </summary>
+    /// <param name="value">the status</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if ((BO.ProjectStatus)value == BO.ProjectStatus.Execution)
+        {
+            return Visibility.Collapsed;    
+        }
+        return Visibility.Visible;
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertStageToVisibility : IValueConverter
+{
+    /// <summary>
+    /// if we are at the Execution stage then the button should not be visible
+    /// </summary>
+    /// <param name="value">the status</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if ((BO.ProjectStatus)value == BO.ProjectStatus.Execution)
+        {
+            return Visibility.Visible;
+        }
+        return Visibility.Collapsed;
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertTaskToContent : IValueConverter
+{
+    /// <summary>
+    /// if the engineer will have no task then the button will be Assign, and if the engineer has task the button will show it
+    /// </summary>
+    /// <param name="value">the task the engineer has</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if ((BO.TaskInEngineer)value == null)
+        {
+            return "Assign Task";
+        }
+        return "Show Task";
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+
 
 

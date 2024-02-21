@@ -28,7 +28,8 @@
             <TextBlock Margin="31,40,10,83" Grid.Row="0" Grid.Column="1" FontSize="20" Text="{Binding Task, Converter ={StaticResource InnerTaskIdKey} }" TextWrapping="Wrap" Grid.RowSpan="2" HorizontalAlignment="Center"></TextBlock>
             <TextBlock Margin="27,45,10,-15" Grid.Row="1" Grid.Column="1" FontSize="15" Text="{Binding Task, Converter={StaticResource InnerTaskAliasKey}}" TextWrapping="Wrap"></TextBlock>
         </Grid>
-        <Button Content="Button" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="69" Width="241" Margin="0,48,0,0" Click="Assign_ShowTask"/>
-        <TextBlock HorizontalAlignment="Left" Height="69" Margin="209,48,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="392" Visibility="{Binding }"/>
+
+        <Button Content="{Binding Task, Converter={StaticResource InnerTaskContentKey}}" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="69" Width="241" Margin="0,48,0,0" Click="Assign_ShowTask" Visibility="{Binding CurrentStatus, Mode=OneWay, Converter={StaticResource ExequtionStageVisibilityKey}, RelativeSource={RelativeSource AncestorType={x:Type local:EngineerMenu}}}"/>
+        <TextBlock HorizontalAlignment="Center" Height="80" Margin="0,70,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Cannot assign or show tasks in this current stage!" VerticalAlignment="Top" Width="392" TextAlignment="Center" FontSize="30" Visibility="{Binding CurrentStatus, Mode=OneWay, Converter={StaticResource ExequtionStageinVisibilityKey}, RelativeSource={RelativeSource AncestorType={x:Type local:EngineerMenu}}}"/>
     </Grid>
 </Window>

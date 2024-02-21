@@ -13,6 +13,9 @@
         <local:ConvertTaskInEngineerToIdString x:Key="TaskStringIdKey"/>
         <local:ConvertStringToWelcomeString x:Key="WelcomeBeforeKey"/>
         <local:ConvertIntToString x:Key="IntStringKey"/>
+        <local:ConvertStageToVisibility x:Key="ExequtionStageVisibilityKey"/>
+        <local:ConvertStageToNotVisibility x:Key="ExequtionStageinVisibilityKey"/>
+        <local:ConvertTaskToContent x:Key="InnerTaskContentKey"/>
         <!--<local:TasksIdsCollection x:Key="TasksidsCollectionKey"/>-->
 
     </Application.Resources>

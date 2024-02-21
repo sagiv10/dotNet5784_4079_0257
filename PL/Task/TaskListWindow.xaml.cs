@@ -46,9 +46,8 @@ namespace PL.Task
 
         private void ShowSpecificTask(object sender, MouseButtonEventArgs e)//sender has the details of which task we been sent from. 
         {
-            BO.Task? SpecificTaskFromList = (sender as ListView)?.SelectedItem as BO.Task; //get inside "SpecificTaskFromList" the details from the sender about which task we clicked on.
-            //new SpecificTaskWindow/*GO SAGIV!*/(SpecificTaskFromList!.Id).ShowDialog();//open the window of showing specifc task with the details from last line.
-            //this third line is happananing only after the user pushes the assign/de-assign button and closes the mini window! :
+            BO.TaskInList? SpecificTaskFromList = (sender as ListView)!.SelectedItem as BO.TaskInList; //get inside "SpecificTaskFromList" the details from the sender about which task we clicked on.
+            new TaskWindow(SpecificTaskFromList!.Id).ShowDialog();//open the window of showing specifc task with the details from last line.
             TaskInList_List = s_bl?.Task.ReadAll(e => e.Status == chosenStatus || chosenStatus == BO.Status.Unscheduled)!;
         }
 
@@ -58,7 +57,7 @@ namespace PL.Task
         }
         private void AddTaskClick(object sender, RoutedEventArgs e)
         {
-            //new SpecificTaskWindow/*GO SAGIV!*/().ShowDialog();//open the window of showing specifc task without details. (because we want to add new task)
+            new TaskWindow(0).ShowDialog();//open the window of showing specifc task without details. (because we want to add new task)
         }
         private void addDependencyClick(object sender, RoutedEventArgs e) 
         {
