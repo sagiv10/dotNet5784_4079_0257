@@ -54,7 +54,7 @@
                 <ListView ItemsSource="{Binding Dependencies}"></ListView>
             </StackPanel>
         </ListViewItem>
-        <ListViewItem VerticalAlignment="Stretch">
+        <ListViewItem VerticalAlignment="Stretch" Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageinVisibilityKey}}">
             <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
                 <Label Width="500">add dependendies:</Label>
                 <ListBox SelectionMode="Multiple" ItemsSource="{Binding PotentialTasks, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" SelectedItem="{Binding NewDependsOnTasks, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}">
