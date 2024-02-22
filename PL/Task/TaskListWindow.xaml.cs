@@ -22,6 +22,7 @@ namespace PL.Task
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public BO.Status chosenStatus { get; set; } = BO.Status.Unscheduled;
+        public BO.EngineerExperience chosenComplexity { get; set; } = BO.EngineerExperience.All;
 
         public IEnumerable<BO.TaskInList> TaskInList_List
         {
@@ -53,7 +54,7 @@ namespace PL.Task
 
         private void ReadListAgain(object sender, SelectionChangedEventArgs e)//this method happans after everytime we change the combobox. (to update the view of the shown list) 
         {
-            TaskInList_List = s_bl?.Task.ReadAll(e => e.Status == chosenStatus || chosenStatus == BO.Status.Unscheduled)!;
+            TaskInList_List = s_bl?.Task.ReadAll((e => e.Status == chosenStatus && e.Complexity == chosenComplexity))!; //|| chosenStatus == BO.Status.Unscheduled) && (e => e.level == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
         }
         private void AddTaskClick(object sender, RoutedEventArgs e)
         {
