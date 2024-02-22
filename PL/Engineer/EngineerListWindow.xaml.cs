@@ -64,27 +64,40 @@ namespace PL.Engineer
         {
             Button button = sender as Button;
             BO.Engineer SpecificEngineerFromList = button?.CommandParameter as BO.Engineer;
-
             if (SpecificEngineerFromList != null)
             {
                 new ChooseIdToAssign(SpecificEngineerFromList).ShowDialog();
+                this.Close();
+                new EngineerListWindow().ShowDialog();
+
             }
-            //s_bl.Engineer.AssignTask(SpecificEngineerFromList!.Id,)
         }
 
         private void DeAssignTaskClick(object sender, RoutedEventArgs e)
         {
+            Button button = sender as Button;
+            BO.Engineer SpecificEngineerFromList = button?.CommandParameter as BO.Engineer;
+            if (SpecificEngineerFromList != null)
+            {
+                s_bl.Engineer.DeAssignTask(SpecificEngineerFromList.Id);
+                MessageBox.Show("the task has be de-assgined succesfully!");
+                this.Close();
+                new EngineerListWindow().ShowDialog();
 
+            }
         }
 
         private void FinishTaskClick(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void DeleteEngineerFromTaskClick(object sender, RoutedEventArgs e)
-        {
-
+            Button button = sender as Button;
+            BO.Engineer SpecificEngineerFromList = button?.CommandParameter as BO.Engineer;
+            if (SpecificEngineerFromList != null)
+            {
+                s_bl.Engineer.FinishTask(SpecificEngineerFromList.Id);
+                MessageBox.Show("the task has been finished succesfully!");
+                this.Close();
+                new EngineerListWindow().ShowDialog();
+            }
         }
     }
 }
