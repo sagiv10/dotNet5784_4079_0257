@@ -17,5 +17,7 @@
         <local:ConvertStageToNotVisibility x:Key="ExequtionStageinVisibilityKey"/>
         <local:ConvertTaskToContent x:Key="InnerTaskContentKey"/>
         <local:ConvertCollectionToList x:Key="ToListKey"/>
+        <local:ConvertTaskToBool x:Key="ConvertTaskToBoolKey"/>
+        <local:ConvertTaskToBoolDeAssign x:Key="ConvertTaskToBoolDeAssignKey"/>
     </Application.Resources>
 </Application>

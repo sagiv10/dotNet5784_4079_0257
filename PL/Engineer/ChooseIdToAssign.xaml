@@ -5,11 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
-        Title="ChooseIdToAssign" Height="100" Width="232">
-    <Grid>
+        Title="ChooseIdToAssign" Height="500" Width="500">
+    <Grid ShowGridLines="True">
+        <Grid.RowDefinitions>
+
+            <!-- Middle part with checkboxes -->
+            <RowDefinition Height="350"/>
+
+            <!-- Lower part with AddRemoveButton -->
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
         <!--ComboBoxOfIdToAssign:-->
-        <ComboBox Grid.Column="1" Grid.Row="0" 
-                  ItemsSource="{Binding ListOfAllTasksWithoutEngineer, RelativeSource={RelativeSource AncestorType={x:Type local:ChooseIdToAssign}}}" 
+        <ComboBox Grid.Column="0" Grid.Row="0" 
+                  ItemsSource="{Binding ListOfAllTasksIDWithoutEngineer, RelativeSource={RelativeSource AncestorType={x:Type local:ChooseIdToAssign}}}" 
                   SelectedValue="{Binding IdToAssign , RelativeSource={RelativeSource AncestorType={x:Type local:ChooseIdToAssign}}, Mode=TwoWay, NotifyOnValidationError=true,ValidatesOnExceptions=true}"  />
+        <Button Grid.Row="1" Grid.Column="0" Click="AssignClick"></Button>
     </Grid>
 </Window>

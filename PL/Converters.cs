@@ -169,6 +169,52 @@ class ConvertStringToWelcomeString : IValueConverter
         throw new NotImplementedException();
     }
 }
+class ConvertTaskToBool : IValueConverter
+{
+    /// <summary>
+    /// put an welcome before the engineer's name
+    /// </summary>
+    /// <param name="value">the Engineer name </param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value == null)
+            return true;
+        else
+            return false;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+class ConvertTaskToBoolDeAssign : IValueConverter
+{
+    /// <summary>
+    /// put an welcome before the engineer's name
+    /// </summary>
+    /// <param name="value">the Engineer name </param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value == null)
+            return false;
+        else
+            return true;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 
 class ConvertIntToString : IValueConverter
 {
