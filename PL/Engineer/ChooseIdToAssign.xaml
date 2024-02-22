@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
-        Title="ChooseIdToAssign" Height="450" Width="800">
+        Title="ChooseIdToAssign" Height="100" Width="232">
     <Grid>
-        
+        <!--ComboBoxOfIdToAssign:-->
+        <ComboBox Grid.Column="1" Grid.Row="0" 
+                  ItemsSource="{Binding ListOfAllTasksWithoutEngineer, RelativeSource={RelativeSource AncestorType={x:Type local:ChooseIdToAssign}}}" 
+                  SelectedValue="{Binding IdToAssign , RelativeSource={RelativeSource AncestorType={x:Type local:ChooseIdToAssign}}, Mode=TwoWay, NotifyOnValidationError=true,ValidatesOnExceptions=true}"  />
     </Grid>
 </Window>

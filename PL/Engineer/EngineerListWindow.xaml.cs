@@ -62,9 +62,14 @@ namespace PL.Engineer
 
         private void AssignTaskClick(object sender, RoutedEventArgs e)
         {
-            //BO.Engineer? SpecificEngineerFromList = (sender as ListView)?.SelectedItem as BO.Engineer;
-            //new ChooseIdToRemove(SpecificEngineerFromList);
-            ////s_bl.Engineer.AssignTask(SpecificEngineerFromList!.Id,)
+            Button button = sender as Button;
+            BO.Engineer SpecificEngineerFromList = button?.CommandParameter as BO.Engineer;
+
+            if (SpecificEngineerFromList != null)
+            {
+                new ChooseIdToAssign(SpecificEngineerFromList).ShowDialog();
+            }
+            //s_bl.Engineer.AssignTask(SpecificEngineerFromList!.Id,)
         }
 
         private void DeAssignTaskClick(object sender, RoutedEventArgs e)

@@ -7,10 +7,6 @@
         xmlns:task="clr-namespace:PL.Task"
         mc:Ignorable="d"
         Title="AddRemoveDependency" Height="450" Width="800">
-    <!--DataContext="{Binding IsAdd, RelativeSource={RelativeSource Self}, Mode=TwoWay}">-->
-    <Window.Resources>
-        <local:TasksIdsCollection x:Key="TasksidsCollectionKey"/>
-    </Window.Resources>
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
 
