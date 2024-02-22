@@ -72,15 +72,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <!--method4:DeleteEngineerFromTask:-->
-                    <GridViewColumn>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="Delete" Click="DeleteEngineerFromTaskClick" CommandParameter="{Binding}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
+    
                 </GridView>
             </ListView.View>
         </ListView>

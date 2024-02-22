@@ -99,10 +99,5 @@ namespace PL.Engineer
                 new EngineerListWindow().ShowDialog();
             }
         }
-
-        private void DeleteEngineerFromTaskClick(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
