@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
-        Title="ChooseIdToAssign" Height="450" Width="800">
+        Title="ChooseIdToAssign" Height="100" Width="232">
     <Grid>
         <!--ComboBoxOfIdToAssign:-->
         <ComboBox Grid.Column="1" Grid.Row="0" 
