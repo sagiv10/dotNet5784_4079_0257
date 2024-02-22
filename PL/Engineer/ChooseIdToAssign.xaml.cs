@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.Task;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,24 @@ namespace PL.Engineer
     /// </summary>
     public partial class ChooseIdToAssign : Window
     {
-        public ChooseIdToAssign()
+        public List<int> ListOfAllTasksWithoutEngineer
+        {
+            get { return (List<int>)GetValue(ListOfAllTasksWithoutEngineerProperty); }
+            set { SetValue(ListOfAllTasksWithoutEngineerProperty, value); }
+        }
+        public static readonly DependencyProperty ListOfAllTasksWithoutEngineerProperty =
+        DependencyProperty.Register("ListOfAllTasksWithoutEngineer", typeof(List<int>), typeof(ChooseIdToAssign), new PropertyMetadata(null));
+
+        public int IdToAssign
+        {
+            get { return (int)GetValue(IdToAssignProperty); }
+            set { SetValue(IdToAssignProperty, value); }
+        }
+        public static readonly DependencyProperty IdToAssignProperty =
+            DependencyProperty.Register("IdToAssign", typeof(int), typeof(ChooseIdToAssign), new PropertyMetadata(0));
+
+
+        public ChooseIdToAssign(BO.Engineer? eng)
         {
             InitializeComponent();
         }
