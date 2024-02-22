@@ -35,5 +35,24 @@ namespace PL.Manager
         {
             new EngineerListWindow().Show();
         }
+
+        private void InitializeButton(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("are you sure you want to initialize the data base?", //the messege
+                "Initialization confirm", //title
+                MessageBoxButton.YesNo) == MessageBoxResult.Yes) //if the user answered 'yes'
+            {
+                DalTest.Initialization.Do();
+            }
+        }
+        private void Reset(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("are you sure you want to reset the data base?", //the messege
+                "Reset confirm", //title
+                MessageBoxButton.YesNo) == MessageBoxResult.Yes) //if the user answered 'yes'
+            {
+                DalTest.Initialization.Reset();
+            }
+        }
     }
 }
