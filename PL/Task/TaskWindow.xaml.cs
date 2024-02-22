@@ -177,11 +177,11 @@ public partial class TaskWindow : Window
                 Task.RequiredEffortTime = TimeSpan.FromDays(NumDays + NumMonths * 30 + NumWeeks * 7);
                 int newId = s_bl.Task.Create(Task);
 
-                int ifAdded = AddDependencies(NewDependsOnTasks, newId, NewDependsOnTasks.Count);
+                int ifAdded = s_bl.Task.AddDependencies(NewDependsOnTasks, newId, NewDependsOnTasks.Count);
                 if(ifAdded != NewDependsOnTasks.Count) //if not all the dependencies has added, that's means that an error accured and all the proccess failed 
                 {
-                    DeleteDependencies(NewDependsOnTasks, newId, ifAdded); //delete all the dependencies we did added
-                    MessageBox.Show("could not add your dependencies", "Dependencies add problem", MessageBoxButton.OK, MessageBoxImage.Error);
+                    s_bl.Task.DeleteDependencies(NewDependsOnTasks, newId, ifAdded); //delete all the dependencies we did added
+                    MessageBox.Show("could not add your dependencies due to circular dependency", "Dependencies add problem", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
             }
@@ -196,20 +196,20 @@ public partial class TaskWindow : Window
         }
         else //then we are updating
         {
-            int ifAdded = AddDependencies(NewDependsOnTasks, Task.Id, NewDependsOnTasks.Count);
+            int ifAdded = s_bl.Task.AddDependencies(NewDependsOnTasks, Task.Id, NewDependsOnTasks.Count);
             if (ifAdded != NewDependsOnTasks.Count) //if not all the dependencies has added, that's means that an error accured and all the proccess failed 
             {
-                DeleteDependencies(NewDependsOnTasks, Task.Id, ifAdded);//delete all the dependencies we did added
-                MessageBox.Show("could not add your dependencies", "Dependencies add problem", MessageBoxButton.OK, MessageBoxImage.Error);
+                s_bl.Task.DeleteDependencies(NewDependsOnTasks, Task.Id, ifAdded);//delete all the dependencies we did added
+                MessageBox.Show("could not add your dependencies due to circular dependency", "Dependencies add problem", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            int ifDeleted = DeleteDependencies(DeletedDependencies, Task.Id, DeletedDependencies.Count);
+            int ifDeleted = s_bl.Task.DeleteDependencies(DeletedDependencies, Task.Id, DeletedDependencies.Count);
             if(ifDeleted != DeletedDependencies.Count)
             {
-                DeleteDependencies(NewDependsOnTasks, Task.Id, ifAdded);//delete all the dependencies we did added
-                AddDependencies(DeletedDependencies, Task.Id, DeletedDependencies.Count); //add all the dependencies we deleted
-                MessageBox.Show("could not add your dependencies", "Dependencies add problem", MessageBoxButton.OK, MessageBoxImage.Error);
+                s_bl.Task.DeleteDependencies(NewDependsOnTasks, Task.Id, ifAdded);//delete all the dependencies we did added
+                s_bl.Task.AddDependencies(DeletedDependencies, Task.Id, DeletedDependencies.Count); //add all the dependencies we deleted
+                MessageBox.Show("could not add your dependencies due to circular dependency", "Dependencies add problem", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -220,8 +220,8 @@ public partial class TaskWindow : Window
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error); //update our task
-                DeleteDependencies(NewDependsOnTasks, Task.Id, ifAdded);//delete all the dependencies we did added
-                AddDependencies(DeletedDependencies, Task.Id, DeletedDependencies.Count); //add all the dependencies we deleted
+                s_bl.Task.DeleteDependencies(NewDependsOnTasks, Task.Id, ifAdded);//delete all the dependencies we did added
+                s_bl.Task.AddDependencies(DeletedDependencies, Task.Id, DeletedDependencies.Count); //add all the dependencies we deleted
                 return;
             }
             MessageBox.Show("the task updated seccesfully!", " you are amazing!", MessageBoxButton.OK);
@@ -229,51 +229,7 @@ public partial class TaskWindow : Window
         }
     }
 
-    /// <summary>
-    /// helping method that adds the list of dependenciecies to the marked value. if an error accures then stop the adding
-    /// </summary>
-    /// <param name="dependendsOns"> list of depends on ids</param>
-    /// <param name="dependentId"> the dependent task</param>
-    /// <returns> untill where the method added </returns>
-    private int AddDependencies(List<int> dependendsOns, int dependentId, int endIndex)
-    {
-        int i = 0;
-        for(; i < endIndex; i++)
-        {
-            try
-            {
-                s_bl.Task.AddDependency(dependentId, dependendsOns[i]);
-            }
-            catch(Exception)
-            {
-                return i;
-            }
-        }
-        return i;
-    }
 
-    /// <summary>
-    /// helping method that delete the list of dependenciecies to the marked value. if an error accures then stop the deleting
-    /// </summary>
-    /// <param name="dependendsOns"> list of depends on ids</param>
-    /// <param name="dependentId"> the dependent task</param>
-    /// <returns> untill where the method deleted </returns>
-    private int DeleteDependencies(List<int> dependendsOns, int dependentId, int endIndex)
-    {
-        int i = 0;
-        for (; i < endIndex; i++)
-        {
-            try
-            {
-                s_bl.Task.DeleteDependency(dependentId, dependendsOns[i]);
-            }
-            catch (Exception)
-            {
-                return i;
-            }
-        }
-        return i;
-    }
 
     /// <summary>
     /// helping mathod that helps to artificially bind the selectedItems of an listBox to our list because you cant bind it naturally

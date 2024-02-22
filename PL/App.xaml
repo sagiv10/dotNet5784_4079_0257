@@ -13,9 +13,12 @@
         <local:ConvertTaskInEngineerToIdString x:Key="TaskStringIdKey"/>
         <local:ConvertStringToWelcomeString x:Key="WelcomeBeforeKey"/>
         <local:ConvertIntToString x:Key="IntStringKey"/>
-        <local:ConvertStageToVisibility x:Key="ExequtionStageVisibilityKey"/>
-        <local:ConvertStageToNotVisibility x:Key="ExequtionStageinVisibilityKey"/>
+        <local:ConvertStageToCollapsity x:Key="ExequtionStageCollapcityKey"/>
+        <local:ConvertStageToNotCollapsity x:Key="ExequtionStageinCollapcityKey"/>
+        <local:ConvertStageToVisability x:Key="ExequtionStageVisibilityKey"/>
+        <local:ConvertStageToNotVisability x:Key="ExequtionStageinVisibilityKey"/>
         <local:ConvertTaskToContent x:Key="InnerTaskContentKey"/>
         <local:ConvertCollectionToList x:Key="ToListKey"/>
+        <local:ConvertStageToMessage x:Key="StageMessageKey"/>
     </Application.Resources>
 </Application>

@@ -1,4 +1,5 @@
 ﻿using PL.Engineer;
+using PL.Schedule;
 using PL.Task;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,21 @@ namespace PL.Manager
     /// </summary>
     public partial class ManagerChoose : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
+
+        public BO.ProjectStatus Stage
+        {
+            get { return (BO.ProjectStatus)GetValue(StageProperty); }
+            set { SetValue(StageProperty, value); }
+        }
+
+        public static readonly DependencyProperty StageProperty/*how to call me in the xaml code */ =
+            DependencyProperty.Register("Stage", typeof(BO.ProjectStatus), typeof(ManagerChoose), new PropertyMetadata(null));
+
         public ManagerChoose()
         {
+            Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
             InitializeComponent();
         }
 
@@ -52,6 +66,21 @@ namespace PL.Manager
                 MessageBoxButton.YesNo) == MessageBoxResult.Yes) //if the user answered 'yes'
             {
                 DalTest.Initialization.Reset();
+                Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
+            }
+        }
+
+        private void Schedile_Button(object sender, RoutedEventArgs e)
+        {
+            if(Stage == BO.ProjectStatus.Sceduling)
+            {
+                new ScheduleWindow().ShowDialog();
+            }
+
+            if (Stage == BO.ProjectStatus.Planning)
+            {
+                new StartScheduleWindow().ShowDialog();
+                Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
             }
         }
     }

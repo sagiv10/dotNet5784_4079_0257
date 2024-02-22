@@ -220,12 +220,9 @@ internal class TaskImplementation : BlApi.ITask
         { return 3; }//done
         //IF WE WANT TAKE CARE OF JEOPARDY 
     }
-    /// <summary>
-    /// this method calculates the best date for task to happan, returns it.
-    /// </summary>
-    /// <param name="TaskId"></param>
-    /// <returns>date time </returns>
-    private DateTime findOptionalDate(int TaskId)
+
+
+    public DateTime findOptionalDate(int TaskId)
     {
         IEnumerable<DateTime> formerDates = from dep in _dal.Dependency.ReadAll(d => d._dependentTask == TaskId)
                                      let hisTask = _dal.Task.Read((int)dep._dependsOnTask!)
@@ -388,36 +385,30 @@ internal class TaskImplementation : BlApi.ITask
 
     public void ManualScedule(int idOfTask, DateTime wantedTime, bool isConfirmed)
     {
-        if (isConfirmed == false)
+
+        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Sceduling)//if we are in the wrong stage
+            throw new BLWrongStageException(_dal.Project.getProjectStatus(), (int)BO.ProjectStatus.Sceduling);
+
+        IEnumerable<int> nullDates = from dep in _dal.Dependency.ReadAll(d => d._dependentTask == idOfTask)
+                                     let hisTask = _dal.Task.Read((int)dep._dependsOnTask!)
+                                     where hisTask._scheduledDate == null
+                                     select hisTask._id;
+        if (nullDates.Count() == 1)
         {
-            if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Sceduling)//if we are in the wrong stage
-                throw new BLWrongStageException(_dal.Project.getProjectStatus(), (int)BO.ProjectStatus.Sceduling);
-          
-            IEnumerable<int> nullDates = from dep in _dal.Dependency.ReadAll(d => d._dependentTask == idOfTask)
-                                         let hisTask = _dal.Task.Read((int)dep._dependsOnTask!)
-                                         where hisTask._scheduledDate == null
-                                         select hisTask._id;
-            if (nullDates.Count() == 1)
-            {
-                throw new BLCannotScheduleOneFormerUnscheduledException(nullDates.FirstOrDefault());
-            }
-            if (nullDates.Count() > 1)
-            {
-                throw new BLCannotScheduleMoreTanOneFormerUnscheduledException(nullDates.Count());
-            }
-            DateTime optionalDate = findOptionalDate(idOfTask);
-            if (optionalDate > wantedTime) //the time the manager want to start is too soon
-            {
-                throw new BLTooEarlyException(optionalDate);
-            }
-            if (optionalDate < wantedTime)
-            {
-                throw new BLDateSuggestionException(optionalDate);
-            }
+            throw new BLCannotScheduleOneFormerUnscheduledException(nullDates.FirstOrDefault());
+        }
+        if (nullDates.Count() > 1)
+        {
+            throw new BLCannotScheduleMoreTanOneFormerUnscheduledException(nullDates.Count());
+        }
+        DateTime optionalDate = findOptionalDate(idOfTask); //just to see if somehow we entered wrong time
+        if (optionalDate > wantedTime) //the time the manager want to start is too soon
+        {
+            throw new BLTooEarlyException(optionalDate);
         }
         DO.Task updatedTask = _dal.Task.Read(idOfTask)! with { _scheduledDate = wantedTime };
         _dal.Task.Update(updatedTask);
-        if(_dal.Task.ReadAll(t=>t._scheduledDate == null).Count() == 0)
+        if(_dal.Task.ReadAll(t=>t._scheduledDate == null).Count() == 0) //if all the tasks has been updated:
         {
             _dal.Project.setProjectStatus((int)BO.ProjectStatus.Execution);
         }
@@ -455,6 +446,42 @@ internal class TaskImplementation : BlApi.ITask
             idList.Add(_task._id);
         }
         return idList;
+    }
+
+
+    public int AddDependencies(List<int> dependendsOns, int dependentId, int endIndex)
+    {
+        int i = 0;
+        for (; i < endIndex; i++)
+        {
+            try
+            {
+                AddDependency(dependentId, dependendsOns[i]);
+            }
+            catch (Exception)
+            {
+                return i;
+            }
+        }
+        return i;
+    }
+
+
+    public int DeleteDependencies(List<int> dependendsOns, int dependentId, int endIndex)
+    {
+        int i = 0;
+        for (; i < endIndex; i++)
+        {
+            try
+            {
+                DeleteDependency(dependentId, dependendsOns[i]);
+            }
+            catch (Exception)
+            {
+                return i;
+            }
+        }
+        return i;
     }
 }
 

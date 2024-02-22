@@ -115,4 +115,27 @@ public interface ITask
     /// </summary>
     /// <returns>list that contatin all id's</returns>
     public List<int> GetAllTasks();
+
+    /// <summary>
+    /// this method calculates the best date for task to happen and returns it.
+    /// </summary>
+    /// <param name="TaskId"></param>
+    /// <returns>date time </returns>
+    public DateTime findOptionalDate(int TaskId);
+
+    /// <summary>
+    /// helping method that delete the list of dependenciecies to the marked value. if an error accures then stop the deleting
+    /// </summary>
+    /// <param name="dependendsOns"> list of depends on ids</param>
+    /// <param name="dependentId"> the dependent task</param>
+    /// <returns> untill where the method deleted </returns>
+    public int DeleteDependencies(List<int> dependendsOns, int dependentId, int endIndex);
+
+    /// <summary>
+    /// helping method that adds the list of dependenciecies to the marked value. if an error accures then stop the adding
+    /// </summary>
+    /// <param name="dependendsOns"> list of depends on ids</param>
+    /// <param name="dependentId"> the dependent task</param>
+    /// <returns> untill where the method added </returns>
+    public int AddDependencies(List<int> dependendsOns, int dependentId, int endIndex);
 }
