@@ -267,7 +267,7 @@ internal class TaskImplementation : BlApi.ITask
         }
         IEnumerable<DO.Dependency> filteredIEN = _dal.Dependency.ReadAll(cond => cond._dependentTask==idOfTaskToDelete);
         foreach (var dep in filteredIEN)
-            _dal.Dependency.Delete(dep._id);
+            _dal.Dependency.Delete(dep._id); //delete all his dependencies
     }
     public BO.Task Read(int idOfWantedTask)
     {
@@ -297,14 +297,10 @@ internal class TaskImplementation : BlApi.ITask
             AllBOTasks = AllBOTasks.Where(TaskEx => filter(TaskEx));//FILTER
         }
         IEnumerable<TaskInList> TasksInList = AllBOTasks.Select((BOtaskInList => new TaskInList(BOtaskInList!.Id, BOtaskInList.Description, BOtaskInList.Alias, BOtaskInList.Status)));//make to task in list to return properly
-        return TasksInList;
+        return TasksInList.OrderBy(t=>t.Id);
     }
     public void Update(BO.Task item)
     {
-        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
-        {
-            throw new BLWrongStageException(_dal.Project.getProjectStatus(), (int)BO.ProjectStatus.Planning);
-        }
         IEnumerable<DO.Task> AllDOTasks = _dal.Task.ReadAll();
         DO.Task? check = AllDOTasks.FirstOrDefault(task => item.Id == task._id);
         if (check == null)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace PL;
@@ -271,6 +272,37 @@ class ConvertTaskToContent : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+class ConvertCollectionToList : IValueConverter
+{
+    /// <summary>
+    /// return the listBox selected values as an list
+    /// </summary>
+    /// <param name="value">the selected items</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns>list of them</returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (IEnumerable<int>)value;
+
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value == null)
+        {
+            return new List<int>();
+        }
+        else {
+            List<int> addedList = new List<int>();
+            addedList.Add((int)value);
+            return addedList;
+        }
+    }
+}
+
 
 
 

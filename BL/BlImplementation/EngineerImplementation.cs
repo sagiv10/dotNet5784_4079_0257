@@ -135,7 +135,7 @@ internal class EngineerImplementation : BlApi.IEngineer
     public List<BO.Engineer> ReadAllEngineers(Func<BO.Engineer, bool>? filter = null)
     {
         return (from engineer in _dal.Engineer.ReadAll((filter != null) ? en => filter(DoToBoEngineer(en)) : null)
-               select DoToBoEngineer(engineer)).ToList();
+               select DoToBoEngineer(engineer)).OrderBy(e => e.Id).ToList();
     }
 
     public BO.Engineer ReadEngineer(int id)

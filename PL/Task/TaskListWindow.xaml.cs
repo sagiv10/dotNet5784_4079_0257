@@ -58,6 +58,7 @@ namespace PL.Task
         private void AddTaskClick(object sender, RoutedEventArgs e)
         {
             new TaskWindow(0).ShowDialog();//open the window of showing specifc task without details. (because we want to add new task)
+            TaskInList_List = s_bl.Task.ReadAll();
         }
         private void addDependencyClick(object sender, RoutedEventArgs e) 
         {

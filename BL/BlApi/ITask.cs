@@ -35,24 +35,23 @@ public interface ITask
     /// </summary>
     /// <param name="filter"></param>
     /// <returns>list of TaskInList</returns>
-    /// <exception cref="BLEmptyDatabaseException"></exception>
+    /// <exception cref="BO.BLEmptyDatabaseException"></exception>
     public IEnumerable<BO.TaskInList> ReadAll(Func<BO.Task, bool>? filter = null); //returns the task list from dal
     /// <summary>
     /// this method gets bo task and updates an existing task using the update from do 
     /// </summary>
     /// <param name="item"></param>
-    /// <exception cref="BLWrongStageException"></exception>
-    /// <exception cref="BLNotFoundException"></exception>
-    /// <exception cref="BLWrongAliasException"></exception>
+    /// <exception cref="BO.BLWrongStageException"></exception>
+    /// <exception cref="BO.BLNotFoundException"></exception>
+    /// <exception cref="BO.BLWrongAliasException"></exception>
     public void Update(BO.Task item); //Updates task
     /// <summary>
     /// this method deletes specific task from the logic section using the delete from dal section 
     /// </summary>
     /// <param name="idOfTaskToDelete"></param>
-    /// <exception cref="BLWrongIdException"></exception>
-    /// <exception cref="BLNotFoundException"></exception>
-    /// <exception cref="BLWrongStageException"></exception>
-    /// <exception cref="BLCannotDeleteHasDependencyException"></exception>
+    /// <exception cref="BO.BLWrongIdException"></exception>
+    /// <exception cref="BO.BLNotFoundException"></exception>
+    /// <exception cref="BO.BLCannotDeleteHasDependencyException"></exception>
     public void Delete(int idOfTaskToDelete); //Deletes an task by its Id
 
     /// <summary>
