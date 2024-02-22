@@ -22,6 +22,13 @@ namespace PL.Task
     public partial class AddRemoveDependency : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        public List<int> ListOfAllTasksRightNow
+        {
+            get { return (List<int>)GetValue(ListOfAllTasksRightNowProperty); }
+            set { SetValue(ListOfAllTasksRightNowProperty, value); }
+        }
+        public static readonly DependencyProperty ListOfAllTasksRightNowProperty =
+            DependencyProperty.Register("ListOfAllTasksRightNowProperty", typeof(List<int>), typeof(AddRemoveDependency), new PropertyMetadata(null));
         public int IdOfDependentTask
         {
             get { return (int)GetValue(IdOfDependentTaskProperty); }
@@ -47,7 +54,8 @@ namespace PL.Task
             DependencyProperty.Register("IsAdd", typeof(bool), typeof(AddRemoveDependency), new PropertyMetadata(false));
 
         public AddRemoveDependency(bool _isAdd = false) //if id==0 -> add, else -> remove.             
-        {                                                
+        {
+            ListOfAllTasksRightNow = s_bl.Task.GetAllTasks();
             InitializeComponent();
             IsAdd = _isAdd;
         }

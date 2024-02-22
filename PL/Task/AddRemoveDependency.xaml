@@ -32,10 +32,10 @@
 
         </Grid.ColumnDefinitions>
         <!--_dependentTask comboBox-->
-        <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Source={StaticResource TasksidsCollectionKey}}" 
+        <ComboBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding ListOfAllTasksRightNow, RelativeSource={RelativeSource AncestorType={x:Type task:AddRemoveDependency}}}" 
                                                SelectedValue="{Binding IdOfDependentTask , RelativeSource={RelativeSource AncestorType={x:Type task:AddRemoveDependency}}, Mode=TwoWay, NotifyOnValidationError=true,ValidatesOnExceptions=true}"  />
         <!--_dependsOnTask comboBox-->
-        <ComboBox Grid.Column="0" Grid.Row="0" ItemsSource="{Binding Source={StaticResource TasksidsCollectionKey}}" 
+        <ComboBox Grid.Column="0" Grid.Row="0" ItemsSource="{Binding ListOfAllTasksRightNow, RelativeSource={RelativeSource AncestorType={x:Type task:AddRemoveDependency}}}"
                                                SelectedValue="{Binding IdOfDependsOnTask , RelativeSource={RelativeSource AncestorType={x:Type task:AddRemoveDependency}}, Mode=TwoWay, NotifyOnValidationError=true,ValidatesOnExceptions=true}"  />
 
         <!--AddRemove Button-->

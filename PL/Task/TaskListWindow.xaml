@@ -9,6 +9,7 @@
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
         <local:StatusCollection x:Key="StatusCollectionKey"/>
+        <local:ComplexityLevelCollection x:Key="ComplexityCollectionKey"/>
     </Window.Resources>
     <Grid ShowGridLines="True">
         <Grid>
@@ -43,7 +44,13 @@
             <ComboBox 
                     ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}"
                     SelectedValue="{Binding Path=chosenStatus , Mode=TwoWay}" SelectionChanged="ReadListAgain"
-                    Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200"/>
+                    Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="200"/>
+            <!--ChangeStatusComboBox:-->
+            <ComboBox 
+                    ItemsSource="{Binding Source={StaticResource ComplexityCollectionKey}}"
+                    SelectedValue="{Binding Path=chosenComplexity , Mode=TwoWay}" SelectionChanged="ReadListAgain"
+                    Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200"/>
+            <!--ListView:-->
             <!--ListView:-->
             <ListView MouseDoubleClick="ShowSpecificTask" 
                       ItemsSource="{Binding Path=TaskInList_ListProperty, UpdateSourceTrigger=PropertyChanged}"

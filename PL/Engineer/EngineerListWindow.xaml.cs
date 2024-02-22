@@ -53,10 +53,33 @@ namespace PL.Engineer
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             BO.Engineer? SpecificEngineerFromList = (sender as ListView)?.SelectedItem as BO.Engineer;
+            if (SpecificEngineerFromList== null)//for case someone taps on the blank spaces in the window that doesnt have value in their line. 
+                return;
             new EngineerWindow(SpecificEngineerFromList!.Id).ShowDialog();
             //this third line is happananing only after the user pushes the add/update button and closes the mini window! :
             EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
         }
 
+        private void AssignTaskClick(object sender, RoutedEventArgs e)
+        {
+            BO.Engineer? SpecificEngineerFromList = (sender as ListView)?.SelectedItem as BO.Engineer;
+            new ChooseIdToRemove(SpecificEngineerFromList);
+            //s_bl.Engineer.AssignTask(SpecificEngineerFromList!.Id,)
+        }
+
+        private void DeAssignTaskClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FinishTaskClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteEngineerFromTaskClick(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
