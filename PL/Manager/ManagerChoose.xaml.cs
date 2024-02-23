@@ -57,6 +57,7 @@ namespace PL.Manager
                 MessageBoxButton.YesNo) == MessageBoxResult.Yes) //if the user answered 'yes'
             {
                 DalTest.Initialization.Do();
+                Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
             }
         }
         private void Reset(object sender, RoutedEventArgs e)
@@ -75,6 +76,7 @@ namespace PL.Manager
             if(Stage == BO.ProjectStatus.Sceduling)
             {
                 new ScheduleWindow().ShowDialog();
+                Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
             }
 
             if (Stage == BO.ProjectStatus.Planning)

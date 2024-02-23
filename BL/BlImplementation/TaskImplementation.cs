@@ -383,24 +383,13 @@ internal class TaskImplementation : BlApi.ITask
     }
 
 
-    public void ManualScedule(int idOfTask, DateTime wantedTime, bool isConfirmed)
+    public void ManualScedule(int idOfTask, DateTime wantedTime)
     {
 
         if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Sceduling)//if we are in the wrong stage
             throw new BLWrongStageException(_dal.Project.getProjectStatus(), (int)BO.ProjectStatus.Sceduling);
 
-        IEnumerable<int> nullDates = from dep in _dal.Dependency.ReadAll(d => d._dependentTask == idOfTask)
-                                     let hisTask = _dal.Task.Read((int)dep._dependsOnTask!)
-                                     where hisTask._scheduledDate == null
-                                     select hisTask._id;
-        if (nullDates.Count() == 1)
-        {
-            throw new BLCannotScheduleOneFormerUnscheduledException(nullDates.FirstOrDefault());
-        }
-        if (nullDates.Count() > 1)
-        {
-            throw new BLCannotScheduleMoreTanOneFormerUnscheduledException(nullDates.Count());
-        }
+       
         DateTime optionalDate = findOptionalDate(idOfTask); //just to see if somehow we entered wrong time
         if (optionalDate > wantedTime) //the time the manager want to start is too soon
         {
@@ -482,6 +471,22 @@ internal class TaskImplementation : BlApi.ITask
             }
         }
         return i;
+    }
+
+    public void CheckPreviousTasks(int taskId)
+    {
+        IEnumerable<int> nullDates = from dep in _dal.Dependency.ReadAll(d => d._dependentTask == taskId)
+                                     let hisTask = _dal.Task.Read((int)dep._dependsOnTask!)
+                                     where hisTask._scheduledDate == null
+                                     select hisTask._id;
+        if (nullDates.Count() >= 1) //if the other task didn't even scheduled:
+        {
+            string ids = "";
+            foreach (int i in nullDates) { ids += i.ToString() + ", "; }  //all the ids of the dependent tasks
+            ids = ids.Substring(0, ids.Length - 2); //delete the two last letters
+            ids += ".";
+            throw new BLCannotScheduleMoreOrOneFormerUnscheduledException(ids);
+        }
     }
 }
 

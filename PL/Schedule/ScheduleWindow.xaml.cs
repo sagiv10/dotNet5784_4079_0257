@@ -37,5 +37,30 @@ namespace PL.Schedule
                      select task.Id).ToList();
             InitializeComponent();
         }
+
+        private void ScheduleOne(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                s_bl.Task.CheckPreviousTasks((int)((Button)sender).CommandParameter);
+                new ScheduleOneTaskWindow((int)((Button)sender).CommandParameter).ShowDialog();
+                Tasks = (from BO.TaskInList task in s_bl.Task.ReadAll(t => t.ScheduledDate == null)
+                         select task.Id).ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
+        }
+
+        private void AutoScheduleAll(object sender, RoutedEventArgs e)
+        {
+            if(MessageBox.Show("this action will schedule automatically all your tasks, even those you alredy scheduled. proceed anyway?", "auto schedule confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                s_bl.Task.AutoScedule();
+                this.Close();
+            }
+        }
     }
 }

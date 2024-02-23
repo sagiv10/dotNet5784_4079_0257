@@ -65,12 +65,9 @@ public interface ITask
     /// </summary>
     /// <param name="idOfTask"></param>
     /// <param name="wantedTime"></param>
-    /// <param name="isConfirmed">if the manager still want his date, even that his date isnt the earliest. if the method is being called from one of the throws=T, if just sent from GUI=F</param>
-    /// <exception cref="BO.BLCannotScheduleException"></exception>
     /// <exception cref="BO.BLTooEarlyException"></exception>
     /// <exception cref="BO.BLWrongStageException"></exception>
-    /// <exception cref="BO.BLDateSuggestionException"></exception>
-    public void ManualScedule(int idOfTask, DateTime wantedTime, bool isConfirmed);
+    public void ManualScedule(int idOfTask, DateTime wantedTime);
 
     /// <summary>
     /// tihs method help us to add dependencies of new task that just been created 
@@ -138,4 +135,12 @@ public interface ITask
     /// <param name="dependentId"> the dependent task</param>
     /// <returns> untill where the method added </returns>
     public int AddDependencies(List<int> dependendsOns, int dependentId, int endIndex);
+
+    /// <summary>
+    /// helping method that checks if all the previous tasks was alredy scheduled. if not then it will throw the right exception
+    /// </summary>
+    /// <param name="taskId"> the task</param>
+    /// <returns> untill where the method added </returns>
+    public void CheckPreviousTasks(int taskId);
+
 }

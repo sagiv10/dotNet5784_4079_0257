@@ -96,14 +96,10 @@ public class BLNotAvialableTaskException : Exception
     public BLNotAvialableTaskException(int engineerId, int taskId) : base($"the task with id {taskId} is not avialable to be assigned to engineer with id {engineerId}") { }
 }
 
-public class BLCannotScheduleOneFormerUnscheduledException : BLCannotScheduleException
-{
-    public BLCannotScheduleOneFormerUnscheduledException(int taskId) : base($"cannot schedule the task because the task with id: {taskId} need to be scheduled before") { }
-}
 
-public class BLCannotScheduleMoreTanOneFormerUnscheduledException : BLCannotScheduleException
+public class BLCannotScheduleMoreOrOneFormerUnscheduledException : BLCannotScheduleException
 {
-    public BLCannotScheduleMoreTanOneFormerUnscheduledException(int numOfTasks) : base($"cannot schedule the task because there is {numOfTasks} tasks that need to be scheduled before") { }
+    public BLCannotScheduleMoreOrOneFormerUnscheduledException(string ids) : base($"cannot schedule the task because the following tasks that need to be scheduled before: \n" + ids) { }
 }
 
 public class BLCannotScheduleException : Exception
