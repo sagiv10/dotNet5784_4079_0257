@@ -99,5 +99,23 @@ namespace PL.Engineer
                 new EngineerListWindow().ShowDialog();
             }
         }
+        private void DeleteTaskClick(object sender, RoutedEventArgs e)
+        {
+            Button button = (sender as Button)!;
+            BO.Engineer SpecificEngineerFromList = (button!.CommandParameter as BO.Engineer)!;
+            if (SpecificEngineerFromList != null)
+            {
+                try
+                {
+                    s_bl.Engineer.DeleteEngineer(SpecificEngineerFromList.Id);
+                    MessageBox.Show("the task has been finished succesfully!");
+                    EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
     }
 }

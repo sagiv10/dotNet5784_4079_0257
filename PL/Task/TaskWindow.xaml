@@ -6,110 +6,144 @@
         xmlns:local="clr-namespace:PL.Task"
         xmlns:local2="clr-namespace:PL"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         DataContext="{Binding Task, RelativeSource={RelativeSource Self}, Mode=TwoWay}"
 
-        Title="TaskWindow" Height="350" Width="500">
+        Title="TaskWindow" Height="350" Width="527">
     <Window.Resources>
+        <!--for the enum of the level combo box-->
         <local2:RealComplexityLevelCollection x:Key="ComplexityLevelCollectionKey" />
     </Window.Resources>
     <ScrollViewer>
         <ListView>
+            <!--the id field-->
             <ListViewItem>
                 <StackPanel Orientation="Horizontal">
                     <Label Width="250">id:</Label>
-                    <TextBox Text="{Binding Id}" IsEnabled="False" Height="21" Width="250"></TextBox>
+                    <TextBox Text="{Binding Id}" IsEnabled="False" Height="21" Width="200"></TextBox>
                 </StackPanel>
             </ListViewItem>
+            <!--the name field-->
             <ListViewItem>
                 <StackPanel Orientation="Horizontal">
                     <Label Width="250">name:</Label>
-                    <TextBox Text="{Binding Alias, Mode=TwoWay}" Height="21" Width="250" TextWrapping="Wrap"></TextBox>
+                    <TextBox Text="{Binding Alias, Mode=TwoWay}" Height="21" Width="200" TextWrapping="Wrap"></TextBox>
                 </StackPanel>
             </ListViewItem>
+            <!--the description field-->
             <ListViewItem>
                 <StackPanel Orientation="Horizontal">
                     <Label Width="250">description:</Label>
-                    <TextBox Text="{Binding Description, Mode=TwoWay}" Height="21" Width="250" TextWrapping="Wrap"></TextBox>
+                    <TextBox Text="{Binding Description, Mode=TwoWay}" Height="21" Width="200" TextWrapping="Wrap"></TextBox>
                 </StackPanel>
             </ListViewItem>
+            <!--status field-->
             <ListViewItem>
                 <StackPanel Orientation="Horizontal">
                     <Label Width="250">the status of the task::</Label>
-                    <TextBox Text="{Binding Status}" IsEnabled="False" Height="21" Width="250"></TextBox>
+                    <TextBox Text="{Binding Status}" IsEnabled="False" Height="21" Width="200"></TextBox>
                 </StackPanel>
             </ListViewItem>
+            <!--headdins to the required effort of time comboBoxes-->
+            <ListViewItem Height="18">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Height="19" Margin="250,0,0,0" TextWrapping="Wrap" Text="Days:" HorizontalAlignment="Center" Width="55"/>
+                    <TextBlock Height="19" TextWrapping="Wrap" Text="Weeks:" Width="55"/>
+                    <TextBlock Height="19"  TextWrapping="Wrap" Text="Months:" Width="55"/>
+                </StackPanel>
+            </ListViewItem>
+            <!--the required effort time field-->
             <ListViewItem>
                 <StackPanel Orientation="Horizontal">
                     <Label Width="250">requierd time of effort:</Label>
-                    <ComboBox ItemsSource="{Binding DaysRange, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Mode=TwoWay}" SelectedItem="{Binding NumDays, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Mode=OneWayToSource}" Width="40"></ComboBox>
-                    <ComboBox ItemsSource="{Binding WeeksRange, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" SelectedItem="{Binding NumWeeks, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Mode=OneWayToSource}" Width="39"></ComboBox>
-                    <TextBox Text="{Binding NumMonths, RelativeSource={RelativeSource AncestorType={x:Type  local:TaskWindow}}, Mode=OneWayToSource}" Width="31"></TextBox>
+                    <!--choosing days-->
+                    <ComboBox ItemsSource="{Binding DaysRange, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Mode=TwoWay}" SelectedItem="{Binding NumDays, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Mode=OneWayToSource}" Width="55"></ComboBox>
+                    <!--choose num of weeks-->
+                    <ComboBox ItemsSource="{Binding WeeksRange, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" SelectedItem="{Binding NumWeeks, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Mode=OneWayToSource}" Width="55"></ComboBox>
+                    <!--choose num of months-->
+                    <TextBox Text="{Binding NumMonths, RelativeSource={RelativeSource AncestorType={x:Type  local:TaskWindow}}, Mode=OneWayToSource}" Width="55"></TextBox>
                 </StackPanel>
             </ListViewItem>
+            <!--level field-->
             <ListViewItem>
                 <StackPanel Orientation="Horizontal">
                     <Label Width="250">the level of the task:</Label>
-                    <ComboBox ItemsSource="{Binding Source={StaticResource ComplexityLevelCollectionKey}}" SelectedItem="{Binding Complexity, Mode=TwoWay}"></ComboBox>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource ComplexityLevelCollectionKey}}" SelectedItem="{Binding Complexity, Mode=TwoWay}" Width="55"></ComboBox>
                 </StackPanel>
             </ListViewItem>
+            <!--the currend dependencies-->
             <ListViewItem Width="514">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
-                    <Label Width="250">current dependencies:</Label>
-                    <ListView ItemsSource="{Binding Dependencies}"></ListView>
+                    <Label Width="147" Margin="40,0,0,0">current dependencies:</Label>
+                    <ListView Margin="30,0,0,0" ItemsSource="{Binding Dependencies}" Width="430" ></ListView>
                 </StackPanel>
             </ListViewItem>
-            <ListViewItem VerticalAlignment="Stretch" Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageCollapcityKey}}">
-                <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
-                    <Label Width="401">add dependendies:</Label>
-                    <ListBox SelectionMode="Multiple" ItemsSource="{Binding PotentialTasks, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" SelectionChanged="updateListAdd">
-                    </ListBox>
+            <!--add and delete dependencies headdings-->
+            <ListViewItem Width="514" Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageCollapcityKey}}">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
+                    <Label Width="250">add dependendies:</Label>
                     <Label>delete dependencies:</Label>
-                    <ListBox SelectionMode="Multiple" ItemsSource="{Binding DepensOnTasks, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" SelectionChanged="updateListDelete">
+                </StackPanel>
+            </ListViewItem>
+            <!--add and delete dependencies lists-->
+            <ListViewItem VerticalAlignment="Stretch" Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageCollapcityKey}}">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
+                    <ListBox SelectionMode="Multiple" ItemsSource="{Binding PotentialTasks, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" SelectionChanged="updateListAdd" Width="249">
+                    </ListBox>
+                    <ListBox SelectionMode="Multiple" ItemsSource="{Binding DepensOnTasks, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" SelectionChanged="updateListDelete" RenderTransformOrigin="0.5,0.5" Width="250">
                     </ListBox>
                 </StackPanel>
             </ListViewItem>
+            <!--creation time-->
             <ListViewItem>
                 <StackPanel Orientation="Horizontal">
                     <Label Width="250">created at:</Label>
-                    <TextBox Text="{Binding CreatedAtDate}" IsEnabled="False" Height="21" Width="250"></TextBox>
+                    <TextBox Text="{Binding CreatedAtDate}" IsEnabled="False" Height="21" Width="200"></TextBox>
                 </StackPanel>
             </ListViewItem>
-            <ListViewItem Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageinCollapcityKey}}">
-                <StackPanel Orientation="Horizontal">
-                    <Label Width="250">started at:</Label>
-                    <TextBox IsEnabled="False" Text="{Binding StartDate}"></TextBox>
-                </StackPanel>
-            </ListViewItem>
+            <!--scheduled time-->
             <ListViewItem Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageinCollapcityKey}}">
                 <StackPanel Orientation="Horizontal" >
                     <Label Width="250">scheduled to start at:</Label>
-                    <TextBox IsEnabled="False" Text="{Binding ScheduledDate}"></TextBox>
+                    <TextBox IsEnabled="False" Width="200" Text="{Binding ScheduledDate}"></TextBox>
                 </StackPanel>
             </ListViewItem>
+            <!--starting time-->
+            <ListViewItem Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageinCollapcityKey}}">
+                <StackPanel Orientation="Horizontal">
+                    <Label Width="250" >started at:</Label>
+                    <TextBox IsEnabled="False" Width="200" Text="{Binding StartDate}"></TextBox>
+                </StackPanel>
+            </ListViewItem>
+            <!--forcast time-->
             <ListViewItem Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageinCollapcityKey}}">
                 <StackPanel Orientation="Horizontal" >
                     <Label Width="250">supposed to end at:</Label>
-                    <TextBox IsEnabled="False" Text="{Binding ForecastDate}"></TextBox>
+                    <TextBox IsEnabled="False" Width="200" Text="{Binding ForecastDate}"></TextBox>
                 </StackPanel>
             </ListViewItem>
+            <!--compleation date-->
             <ListViewItem Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageinCollapcityKey}}">
                 <StackPanel Orientation="Horizontal">
                     <Label Width="250">completed at:</Label>
-                    <TextBox IsEnabled="False" Text="{Binding CompleteDate}"></TextBox>
+                    <TextBox IsEnabled="False" Width="200" Text="{Binding CompleteDate}"></TextBox>
                 </StackPanel>
             </ListViewItem>
+            <!--deliverables field-->
             <ListViewItem>
                 <StackPanel Orientation="Horizontal">
                     <Label Width="250">deliverables:</Label>
-                    <TextBox Text="{Binding Deliverables, Mode=TwoWay}" Height="21" Width="250" TextWrapping="Wrap"></TextBox>
+                    <TextBox Text="{Binding Deliverables, Mode=TwoWay}" Height="21" Width="200" TextWrapping="Wrap"></TextBox>
                 </StackPanel>
             </ListViewItem>
+            <!--remarks field-->
             <ListViewItem>
                 <StackPanel Orientation="Horizontal">
                     <Label Width="250">remarks:</Label>
-                    <TextBox Text="{Binding Remarks, Mode=TwoWay}" Height="21" Width="250" TextWrapping="Wrap"></TextBox>
+                    <TextBox Text="{Binding Remarks, Mode=TwoWay}" Height="21" Width="200" TextWrapping="Wrap"></TextBox>
                 </StackPanel>
             </ListViewItem>
+            <!--update/add button-->
             <ListViewItem HorizontalAlignment="Center">
                 <Button HorizontalAlignment="Center" Content="{Binding Id,Converter={StaticResource ConvertIdToContentKey}, Mode=OneTime}" Height="22" Width="48" Click="Add_Update_Button"></Button>
             </ListViewItem>

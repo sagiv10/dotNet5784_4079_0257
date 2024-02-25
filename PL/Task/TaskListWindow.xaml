@@ -14,51 +14,45 @@
     <Grid ShowGridLines="True">
         <Grid>
             <Grid.RowDefinitions>
-                
-                <!-- First row for addDependency button -->
-                <RowDefinition Height="50"/>
-                
-                <!-- Second row for removeDependency button -->
-                <RowDefinition Height="50"/>
-                
+
                 <!-- Upper part with ComboBox -->
                 <RowDefinition Height="50"/>
                 
                 <!-- Middle part with ListView -->
-                <RowDefinition Height="200"/>
+                <RowDefinition Height="300"/>
                 
-                <!-- Lower part with AddButton -->
+                <!-- Lower part with Add, Add Dependency and Delete Dependency Buttons -->
                 <RowDefinition Height="50"/>
                 
             </Grid.RowDefinitions>
 
             <!--AddButton:-->
             <Button Content="add dependency" Click="addDependencyClick"
-            Grid.Row="0"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30"
+            Grid.Row="2"  Margin="100,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="100" Height="30"
             ></Button>
             <!--AddButton:-->
             <Button Content="remove dependency" Click="removeDependencyClick"
-            Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30"
+            Grid.Row="2" Margin="0,0,100,0" HorizontalAlignment="Right"  VerticalAlignment="Center" Width="100" Height="30"
             ></Button>
             <!--ChangeStatusComboBox:-->
             <ComboBox 
                     ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}"
                     SelectedValue="{Binding Path=chosenStatus , Mode=TwoWay}" SelectionChanged="ReadListAgain"
-                    Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="200"/>
+                    Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="200"/>
             <!--ChangeStatusComboBox:-->
             <ComboBox 
                     ItemsSource="{Binding Source={StaticResource ComplexityCollectionKey}}"
                     SelectedValue="{Binding Path=chosenComplexity , Mode=TwoWay}" SelectionChanged="ReadListAgain"
-                    Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200"/>
+                    Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200"/>
             <!--ListView:-->
             <!--ListView:-->
             <ListView MouseDoubleClick="ShowSpecificTask" 
                       ItemsSource="{Binding Path=TaskInList_ListProperty, UpdateSourceTrigger=PropertyChanged}"
-                      Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"> 
+                      Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"> 
             </ListView>
             <!--AddButton:-->
             <Button Content="Add new task" Click="AddTaskClick"
-                    Grid.Row="4"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30"
+                    Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30"
             ></Button>
             
         </Grid>

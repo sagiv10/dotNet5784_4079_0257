@@ -212,12 +212,12 @@ internal class TaskImplementation : BlApi.ITask
     {
         if (scheduledDate == null)//Unscheduled
         { return 0; }
-        if (DateTime.Now < scheduledDate)//Scheduled
+        if (startDate == null)//Scheduled
         { return 1; }
-        if (DateTime.Now < completeDate)//OnTrack
+        if (completeDate == null)//OnTrack
         { return 2; }
         else
-        { return 3; }//done
+        { return 4; }//done
         //IF WE WANT TAKE CARE OF JEOPARDY 
     }
 

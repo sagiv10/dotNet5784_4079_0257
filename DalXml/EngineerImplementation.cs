@@ -95,13 +95,15 @@ internal class EngineerImplementation : IEngineer
         List<Engineer>? engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml); //get the list from the xml file
         if (filter == null)
         {
-            IEnumerable<Engineer> newList = engineers.Select(item => item);
+            IEnumerable<Engineer> newList = from DO.Engineer e in engineers
+                                            where e._isActive == true
+                                            select e;
             //XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml); //save the new list in the xml file
             return newList;
         }
         else
         {
-            IEnumerable<Engineer> newList = engineers.Where(item => filter(item!));
+            IEnumerable<Engineer> newList = engineers.Where(item => filter(item!) && item._isActive);
             //XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml); //save the new list in the xml file
             return newList;
         }

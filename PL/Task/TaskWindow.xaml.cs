@@ -1,4 +1,5 @@
-﻿using PL.Engineer;
+﻿using BO;
+using PL.Engineer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -133,6 +134,7 @@ public partial class TaskWindow : Window
 
     public TaskWindow(int id = 0)
     {
+        Status = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
         DaysRange = Enumerable.Range(0, 7).ToList();
         WeeksRange = Enumerable.Range(0, 4).ToList();
         NumDays = 7;
