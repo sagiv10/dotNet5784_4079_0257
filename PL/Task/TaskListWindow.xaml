@@ -43,7 +43,7 @@
             <!--ChangeStatusComboBox:-->
             <ComboBox 
                     ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}"
-                    SelectedValue="{Binding Path=chosenStatus , Mode=TwoWay}" SelectionChanged="ReadListAgain"
+                    SelectedValue="{Binding Path=chosenStatusProperty , Mode=TwoWay}" SelectionChanged="ReadListAgain"
                     Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="200"/>
             <!--ChangeStatusComboBox:-->
             <ComboBox 

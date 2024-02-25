@@ -67,8 +67,7 @@ namespace PL.Engineer
             if (SpecificEngineerFromList != null)
             {
                 new ChooseIdToAssign(SpecificEngineerFromList).ShowDialog();
-                this.Close();
-                new EngineerListWindow().ShowDialog();
+                EngineerList  = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
 
             }
         }
@@ -79,10 +78,16 @@ namespace PL.Engineer
             BO.Engineer SpecificEngineerFromList = button?.CommandParameter as BO.Engineer;
             if (SpecificEngineerFromList != null)
             {
-                s_bl.Engineer.DeAssignTask(SpecificEngineerFromList.Id);
-                MessageBox.Show("the task has be de-assgined succesfully!");
-                this.Close();
-                new EngineerListWindow().ShowDialog();
+                try
+                {
+                    s_bl.Engineer.DeAssignTask(SpecificEngineerFromList.Id);
+                    MessageBox.Show("the task has be de-assgined succesfully!");
+                    EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
 
             }
         }
@@ -93,10 +98,13 @@ namespace PL.Engineer
             BO.Engineer SpecificEngineerFromList = button?.CommandParameter as BO.Engineer;
             if (SpecificEngineerFromList != null)
             {
-                s_bl.Engineer.FinishTask(SpecificEngineerFromList.Id);
-                MessageBox.Show("the task has been finished succesfully!");
-                this.Close();
-                new EngineerListWindow().ShowDialog();
+                try
+                {
+                    s_bl.Engineer.FinishTask(SpecificEngineerFromList.Id);
+                    MessageBox.Show("the task has been finished succesfully!");
+                    EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
+                }
+                catch(Exception ex) { MessageBox.Show(ex.Message);}
             }
         }
     }

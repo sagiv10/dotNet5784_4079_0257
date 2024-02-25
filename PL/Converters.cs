@@ -247,7 +247,7 @@ class ConvertIntToString : IValueConverter
     
 }
 
-class ConvertStageToNotVisibility : IValueConverter
+class ConvertStageToCollapsity : IValueConverter
 {
     /// <summary>
     /// if we are at the Execution stage then the button should be visible
@@ -271,7 +271,7 @@ class ConvertStageToNotVisibility : IValueConverter
     }
 }
 
-class ConvertStageToVisibility : IValueConverter
+class ConvertStageToNotCollapsity : IValueConverter
 {
     /// <summary>
     /// if we are at the Execution stage then the button should not be visible
@@ -346,6 +346,86 @@ class ConvertCollectionToList : IValueConverter
             addedList.Add((int)value);
             return addedList;
         }
+    }
+}
+
+class ConvertStageToMessage : IValueConverter
+{
+    /// <summary>
+    /// return the proper nessage
+    /// </summary>
+    /// <param name="value">the currennt Stage</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns>message</returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if((BO.ProjectStatus)value == BO.ProjectStatus.Planning)
+        {
+            return "Start scheduling tasks";
+        }
+        if ((BO.ProjectStatus)value == BO.ProjectStatus.Sceduling)
+        {
+            return "Schedule Task";
+        }
+        else
+        {
+            return "nulllllllllll";
+        }
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertStageToVisability : IValueConverter
+{
+    /// <summary>
+    /// if we are at the Execution stage then the button should not be visible
+    /// </summary>
+    /// <param name="value">the status</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if ((BO.ProjectStatus)value == BO.ProjectStatus.Execution)
+        {
+            return Visibility.Visible;
+        }
+        return Visibility.Hidden;
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertStageToNotVisability : IValueConverter
+{
+    /// <summary>
+    /// if we are at the Execution stage then the button should not be invisible
+    /// </summary>
+    /// <param name="value">the status</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if ((BO.ProjectStatus)value == BO.ProjectStatus.Execution)
+        {
+            return Visibility.Hidden;
+        }
+        return Visibility.Visible;
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }
 

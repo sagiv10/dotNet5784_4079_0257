@@ -58,7 +58,7 @@
                     <ListView ItemsSource="{Binding Dependencies}"></ListView>
                 </StackPanel>
             </ListViewItem>
-            <ListViewItem VerticalAlignment="Stretch" Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageinVisibilityKey}}">
+            <ListViewItem VerticalAlignment="Stretch" Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageCollapcityKey}}">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
                     <Label Width="401">add dependendies:</Label>
                     <ListBox SelectionMode="Multiple" ItemsSource="{Binding PotentialTasks, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" SelectionChanged="updateListAdd">
@@ -74,26 +74,26 @@
                     <TextBox Text="{Binding CreatedAtDate}" IsEnabled="False" Height="21" Width="250"></TextBox>
                 </StackPanel>
             </ListViewItem>
-            <ListViewItem>
-                <StackPanel Orientation="Horizontal" Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageinVisibilityKey}}">
+            <ListViewItem Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageinCollapcityKey}}">
+                <StackPanel Orientation="Horizontal">
                     <Label Width="250">started at:</Label>
                     <TextBox IsEnabled="False" Text="{Binding StartDate}"></TextBox>
                 </StackPanel>
             </ListViewItem>
-            <ListViewItem>
-                <StackPanel Orientation="Horizontal" Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageinVisibilityKey}}">
+            <ListViewItem Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageinCollapcityKey}}">
+                <StackPanel Orientation="Horizontal" >
                     <Label Width="250">scheduled to start at:</Label>
                     <TextBox IsEnabled="False" Text="{Binding ScheduledDate}"></TextBox>
                 </StackPanel>
             </ListViewItem>
-            <ListViewItem>
-                <StackPanel Orientation="Horizontal" Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageinVisibilityKey}}">
+            <ListViewItem Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageinCollapcityKey}}">
+                <StackPanel Orientation="Horizontal" >
                     <Label Width="250">supposed to end at:</Label>
                     <TextBox IsEnabled="False" Text="{Binding ForecastDate}"></TextBox>
                 </StackPanel>
             </ListViewItem>
-            <ListViewItem>
-                <StackPanel Orientation="Horizontal" Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageinVisibilityKey}}">
+            <ListViewItem Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource ExequtionStageinCollapcityKey}}">
+                <StackPanel Orientation="Horizontal">
                     <Label Width="250">completed at:</Label>
                     <TextBox IsEnabled="False" Text="{Binding CompleteDate}"></TextBox>
                 </StackPanel>
