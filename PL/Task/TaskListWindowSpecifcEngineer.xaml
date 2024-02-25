@@ -20,8 +20,8 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="assign me this this task!"
-                                IsEnabled="{Binding Task, Converter={StaticResource ConvertTaskToBoolKey}}" 
                                 Click="AssignMeToThisTaskClick" 
+                                IsEnabled="{Binding Path=IsTaken, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TaskListWindowSpecifcEngineer}}}"
                                 CommandParameter="{Binding}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

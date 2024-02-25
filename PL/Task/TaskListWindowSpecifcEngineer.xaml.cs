@@ -21,7 +21,7 @@ namespace PL.Task
     public partial class TaskListWindowSpecifcEngineer : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public int id { get; set; }
+        public int idOfThisEngineer { get; set; }
         public IEnumerable<BO.TaskInList> TaskInList_List
         {
             get { return (IEnumerable<BO.TaskInList>)GetValue(TaskInList_ListProperty); }
@@ -29,21 +29,32 @@ namespace PL.Task
         }
         public static readonly DependencyProperty TaskInList_ListProperty/*how to call me in the xaml code */ =
         DependencyProperty.Register("TaskInList_ListProperty", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindowSpecifcEngineer), new PropertyMetadata(null));
+        public bool IsNotTaken
+        {
+            get { return (bool)GetValue(IsTakenProperty); }
+            set { SetValue(IsTakenProperty, value); }
+        }
+        public static readonly DependencyProperty IsTakenProperty/*how to call me in the xaml code */ =
+        DependencyProperty.Register("IsTakenProperty", typeof(bool), typeof(TaskListWindowSpecifcEngineer), new PropertyMetadata(true));
         public TaskListWindowSpecifcEngineer(int _id)
         {
             TaskInList_List = s_bl.Engineer.GetPotentialTasks(_id);
-            id = _id;
+            IsNotTaken = (s_bl.Engineer.ReadEngineer(_id).Task == null);
+            idOfThisEngineer = _id;
             InitializeComponent();
         }
 
         private void AssignMeToThisTaskClick(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
-            BO.Engineer SpecificEngineerFromList = button?.CommandParameter as BO.Engineer;
-            if (SpecificEngineerFromList != null)
+            BO.TaskInList SpecificTaskFromList = button?.CommandParameter as BO.TaskInList;
+            if (SpecificTaskFromList != null)
             {
-                new ChooseIdToAssign(SpecificEngineerFromList).ShowDialog();
-                TaskInList_List = s_bl.Engineer.GetPotentialTasks(id);
+                s_bl.Engineer.AssignTask(idOfThisEngineer, SpecificTaskFromList.Id);
+                IsNotTaken = false;
+                TaskInList_List = s_bl.Engineer.GetPotentialTasks(idOfThisEngineer);
+                MessageBox.Show($"assign of engineer with id:{idOfThisEngineer} to task:{SpecificTaskFromList.Alias} has succeeded!");
+                this.Close();
             }
         }
     }
