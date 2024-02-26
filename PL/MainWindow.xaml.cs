@@ -81,5 +81,10 @@ namespace PL
         {
             new EngineerIdEntering().ShowDialog();
         }
+
+        private void ResetClock(object sender, RoutedEventArgs e)
+        {
+            ProjectCurrentDate = DateTime.Now;
+        }
     }
 }
