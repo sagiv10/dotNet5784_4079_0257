@@ -132,7 +132,7 @@ public partial class TaskWindow : Window
 
 
 
-    public TaskWindow(int id = 0)
+    public TaskWindow(bool isManager, int id = 0)
     {
         Status = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
         DaysRange = Enumerable.Range(0, 7).ToList();

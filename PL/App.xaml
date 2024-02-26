@@ -6,6 +6,7 @@
     
     <Application.Resources>
         <local:ConvertIdToContent x:Key="ConvertIdToContentKey"/>
+        <local:ConvertPlanningToEnabled x:Key="ConvertPlanningToEnabledKey"/>
         <local:ConvertBoolToContent x:Key="ConvertBoolToContentKey"/>
         <local:ConvertInnerTaskToAlias x:Key="InnerTaskAliasKey"/>
         <local:ConvertInnerTaskToId x:Key="InnerTaskIdKey"/>

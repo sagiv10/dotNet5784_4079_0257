@@ -62,7 +62,7 @@ namespace PL.Engineer
         {
             if(Engineer.Task != null)
             {
-                new TaskWindow(Engineer.Task.Id).ShowDialog();
+                new TaskWindow(false, Engineer.Task.Id).ShowDialog();
                 Engineer = s_bl.Engineer.ReadEngineer(Engineer.Id);
 
             }

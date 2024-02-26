@@ -22,6 +22,28 @@ class ConvertIdToContent : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+class ConvertPlanningToEnabled : IValueConverter
+{
+    /// <summary>
+    /// converts the planning state to enabled
+    /// </summary>
+    /// <param name="value"> the state </param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (BO.ProjectStatus)value == BO.ProjectStatus.Planning ? true : false;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
 class ConvertBoolToContent : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
