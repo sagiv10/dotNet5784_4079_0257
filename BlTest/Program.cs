@@ -672,7 +672,7 @@ public class BlTest
         optionalTime = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out optionalTime), optionalTime);
         try
         {
-            s_bl.Task.ManualScedule(taskId, optionalTime, false);
+            s_bl.Task.ManualScedule(taskId, optionalTime/*, false*/);
         }
         catch (BLCannotScheduleException ex)
         {
@@ -684,7 +684,7 @@ public class BlTest
             string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
             if (ans == "Y")
             {
-                s_bl.Task.ManualScedule(taskId, ex.suggest, true);
+                s_bl.Task.ManualScedule(taskId, ex.suggest/*, true*/);
             }
         }
         catch(BLDateSuggestionException ex)
@@ -693,11 +693,11 @@ public class BlTest
             string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
             if (ans == "Y")
             {
-                s_bl.Task.ManualScedule(taskId, ex.suggest, true);
+                s_bl.Task.ManualScedule(taskId, ex.suggest/*, true*/);
             }
             else
             {
-                s_bl.Task.ManualScedule(taskId, optionalTime, true);
+                s_bl.Task.ManualScedule(taskId, optionalTime/*, true*/);
             }
         }
         catch(BO.BLWrongStageException ex)

@@ -67,7 +67,7 @@ namespace PL.Engineer
             }
             else
             {
-                new TaskListWindow(false, Engineer.Id).ShowDialog();
+                new TaskListWindowSpecifcEngineer(Engineer.Id).ShowDialog();
                 Engineer = s_bl.Engineer.ReadEngineer(Engineer.Id);
             }
         }

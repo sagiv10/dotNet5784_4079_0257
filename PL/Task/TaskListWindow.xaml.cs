@@ -21,17 +21,30 @@ namespace PL.Task
     public partial class TaskListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public BO.Status chosenStatus { get; set; } = BO.Status.Unscheduled;
-        public BO.EngineerExperience chosenComplexity { get; set; } = BO.EngineerExperience.All;
-
+        //------------------------------------------------------------------------------------
+        //Dependency Properties:
+        public BO.Status chosenStatus
+        {
+            get { return (BO.Status)GetValue(chosenStatusProperty); }
+            set { SetValue(chosenStatusProperty, value); }
+        }
+        public static readonly DependencyProperty chosenStatusProperty/*how to call me in the xaml code */ =
+        DependencyProperty.Register("chosenStatusProperty", typeof(BO.Status), typeof(TaskListWindow), new PropertyMetadata(null));
+        public BO.EngineerExperience chosenComplexity
+        {
+            get { return (BO.EngineerExperience)GetValue(chosenComplexityProperty); }
+            set { SetValue(chosenComplexityProperty, value); }
+        }
+        public static readonly DependencyProperty chosenComplexityProperty/*how to call me in the xaml code */ =
+        DependencyProperty.Register("chosenComplexityProperty", typeof(BO.EngineerExperience), typeof(TaskListWindow), new PropertyMetadata(null));
         public IEnumerable<BO.TaskInList> TaskInList_List
         {
             get { return (IEnumerable<BO.TaskInList>)GetValue(TaskInList_ListProperty); }
             set { SetValue(TaskInList_ListProperty, value); }
         }
-
         public static readonly DependencyProperty TaskInList_ListProperty/*how to call me in the xaml code */ =
-            DependencyProperty.Register("TaskInList_ListProperty", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
+        DependencyProperty.Register("TaskInList_ListProperty", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
+        //-------------------------------------------------------------------------------------
         public TaskListWindow(bool isManager, int engineerId=0)
         {
             InitializeComponent();
@@ -56,7 +69,9 @@ namespace PL.Task
 
         private void ReadListAgain(object sender, SelectionChangedEventArgs e)//this method happans after everytime we change the combobox. (to update the view of the shown list) 
         {
-            TaskInList_List = s_bl?.Task.ReadAll((e => e.Status == chosenStatus && e.Complexity == chosenComplexity))!; //|| chosenStatus == BO.Status.Unscheduled) && (e => e.level == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
+            IEnumerable <BO.TaskInList> tempList = s_bl?.Task.ReadAll(e => e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All)!;
+            tempList =tempList.Where(x => x.Status==chosenStatus || chosenStatus == BO.Status.Unscheduled);
+            TaskInList_List = tempList;
         }
         private void AddTaskClick(object sender, RoutedEventArgs e)
         {

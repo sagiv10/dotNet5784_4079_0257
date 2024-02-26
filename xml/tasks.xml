@@ -89,6 +89,39 @@
     <_isActive>true</_isActive>
   </Task>
   <Task>
+    <_id>20</_id>
+    <_createdAtDate>2024-02-25T21:45:40.843323+02:00</_createdAtDate>
+    <_requiredEffortTime>P3D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Dry test of the operation of the components</_alias>
+    <_description>Conducting a thorough examination and simulation of the rocket's systems without using actual propellants to identify and address any potential issues.</_description>
+    <_scheduledDate>2024-03-14T00:00:00</_scheduledDate>
+    <_complexity>Master</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>21</_id>
+    <_createdAtDate>2024-02-25T21:45:40.858729+02:00</_createdAtDate>
+    <_requiredEffortTime>P5D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Wet inspection of the components</_alias>
+    <_description>Verifying the rocket's systems and components under realistic conditions, often involving the use of actual propellants in a controlled environment.</_description>
+    <_scheduledDate>2024-03-14T00:00:00</_scheduledDate>
+    <_complexity>Beginner</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>22</_id>
+    <_createdAtDate>2024-02-25T21:45:40.8713393+02:00</_createdAtDate>
+    <_requiredEffortTime>P4D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Dispatch</_alias>
+    <_description>Launching the rocket into its intended trajectory or mission, marking the conclusion of the manufacturing and preparation phases.</_description>
+    <_scheduledDate>2024-03-19T00:00:00</_scheduledDate>
+    <_complexity>BetterBeginner</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
     <_id>10</_id>
     <_createdAtDate>2024-02-26T01:10:15.6759415+02:00</_createdAtDate>
     <_requiredEffortTime>P1D</_requiredEffortTime>
