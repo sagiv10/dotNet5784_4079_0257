@@ -41,7 +41,11 @@ namespace PL
 
         public MainWindow()
         {
-            ProjectCurrentDate = DateTime.Now;
+            if(s_bl.Task.getCurrentDate() == null)
+            {
+                s_bl.Task.SetCurrentDate(DateTime.Now);
+            }
+            ProjectCurrentDate = (DateTime)s_bl.Task.getCurrentDate()!; //now the starting date will always exist
             InitializeComponent();
         }
 
@@ -83,9 +87,25 @@ namespace PL
             new EngineerIdEntering().ShowDialog();
         }
 
-        private void ResetClockClick(object sender, RoutedEventArgs e)
+        private void ResetClock(object sender, RoutedEventArgs e)
         {
-            ProjectCurrentDate = s_bl.Engineer.ResetClock();  //returnes dateTime.now
+            ProjectCurrentDate = DateTime.Now; //reset the clock to now
+            s_bl.Task.SetCurrentDate(ProjectCurrentDate);
+        }
+        private void AddWeekClick(object sender, RoutedEventArgs e)
+        {
+            ProjectCurrentDate = ProjectCurrentDate.AddDays(7); //add 7 days - week
+            s_bl.Task.SetCurrentDate(ProjectCurrentDate);
+        }
+        private void AddDayClick(object sender, RoutedEventArgs e)
+        {
+            ProjectCurrentDate = ProjectCurrentDate.AddDays(1); //add 1 day
+            s_bl.Task.SetCurrentDate(ProjectCurrentDate);
+        }
+        private void AddMonthClick(object sender, RoutedEventArgs e)
+        {
+            ProjectCurrentDate = ProjectCurrentDate.AddMonths(1); //add 1 month
+            s_bl.Task.SetCurrentDate(ProjectCurrentDate);
         }
     }
 }

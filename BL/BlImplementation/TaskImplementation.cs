@@ -488,6 +488,16 @@ internal class TaskImplementation : BlApi.ITask
             throw new BLCannotScheduleMoreOrOneFormerUnscheduledException(ids);
         }
     }
+
+    public DateTime? getCurrentDate()
+    {
+        return _dal.Project.GetCurrentDate();
+    }
+
+    public void SetCurrentDate(DateTime newDate)
+    {
+        _dal.Project.SetCurrentDate(newDate);
+    }
 }
 
 
