@@ -47,8 +47,23 @@
             <!--ListView:-->
             <!--ListView:-->
             <ListView MouseDoubleClick="ShowSpecificTask" 
-                      ItemsSource="{Binding Path=TaskInList_ListProperty, UpdateSourceTrigger=PropertyChanged}"
-                      Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"> 
+                      ItemsSource="{Binding Path=TaskInList_List, UpdateSourceTrigger=PropertyChanged}"
+                      Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding}"></GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="delete"
+                                    IsEnabled="{Binding Task, Converter={StaticResource ConvertTaskToBoolKey}}" 
+                                    Click="DeleteTaskClick" 
+                                    CommandParameter="{Binding}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
             </ListView>
             <!--AddButton:-->
             <Button Content="Add new task" Click="AddTaskClick"

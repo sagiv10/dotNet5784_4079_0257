@@ -71,13 +71,15 @@ internal class TaskImplementation : ITask
     {
         if (filter == null)
         {
-            IEnumerable<DO.Task> newList = DataSource.Tasks.Select(item => item);
+            IEnumerable<DO.Task> newList = from DO.Task t in DataSource.Tasks
+                                           where t._isActive
+                                           select t;
             return newList;
         }
         else
         {
             //////////////////////////////////////////////////////////
-            IEnumerable<DO.Task?> newList = DataSource.Tasks.Where(item => filter(item!));
+            IEnumerable<DO.Task?> newList = DataSource.Tasks.Where(item => filter(item!) && item._isActive);
             return newList;
         }
     }

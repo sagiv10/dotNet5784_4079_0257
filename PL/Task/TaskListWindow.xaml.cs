@@ -1,4 +1,5 @@
-﻿using PL.Engineer;
+﻿using BO;
+using PL.Engineer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,33 +30,43 @@ namespace PL.Task
             set { SetValue(chosenStatusProperty, value); }
         }
         public static readonly DependencyProperty chosenStatusProperty/*how to call me in the xaml code */ =
-        DependencyProperty.Register("chosenStatusProperty", typeof(BO.Status), typeof(TaskListWindow), new PropertyMetadata(null));
+        DependencyProperty.Register("chosenStatus", typeof(BO.Status), typeof(TaskListWindow), new PropertyMetadata(null));
+
+        /// <summary>
+        /// the stage of the project property
+        /// </summary>
+        public BO.ProjectStatus Status
+        {
+            get { return (BO.ProjectStatus)GetValue(StatusProperty); }
+            set { SetValue(StatusProperty, value); }
+        }
+        public static readonly DependencyProperty StatusProperty/*how to call me in the xaml code */ =
+        DependencyProperty.Register("Status", typeof(BO.ProjectStatus), typeof(TaskListWindow), new PropertyMetadata(null));
+
         public BO.EngineerExperience chosenComplexity
         {
             get { return (BO.EngineerExperience)GetValue(chosenComplexityProperty); }
             set { SetValue(chosenComplexityProperty, value); }
         }
         public static readonly DependencyProperty chosenComplexityProperty/*how to call me in the xaml code */ =
-        DependencyProperty.Register("chosenComplexityProperty", typeof(BO.EngineerExperience), typeof(TaskListWindow), new PropertyMetadata(null));
+        DependencyProperty.Register("chosenComplexity", typeof(BO.EngineerExperience), typeof(TaskListWindow), new PropertyMetadata(null));
+        
         public IEnumerable<BO.TaskInList> TaskInList_List
         {
             get { return (IEnumerable<BO.TaskInList>)GetValue(TaskInList_ListProperty); }
             set { SetValue(TaskInList_ListProperty, value); }
         }
         public static readonly DependencyProperty TaskInList_ListProperty/*how to call me in the xaml code */ =
-        DependencyProperty.Register("TaskInList_ListProperty", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
+        DependencyProperty.Register("TaskInList_List", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
+        
         //-------------------------------------------------------------------------------------
-        public TaskListWindow(bool isManager, int engineerId=0)
+        public TaskListWindow()
         {
+            chosenComplexity = EngineerExperience.All;
+            chosenStatus = BO.Status.All;
+            Status = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
+            TaskInList_List = s_bl.Task.ReadAll();
             InitializeComponent();
-            if (isManager)
-            {
-                TaskInList_List = s_bl?.Task.ReadAll()!;
-            }
-            else
-            {
-                TaskInList_List = s_bl?.Engineer.GetPotentialTasks(engineerId)!;
-            }
         }
 
         private void ShowSpecificTask(object sender, MouseButtonEventArgs e)//sender has the details of which task we been sent from. 
@@ -64,19 +75,18 @@ namespace PL.Task
             if (SpecificTaskFromList == null)
                 return;
             new TaskWindow(SpecificTaskFromList!.Id).ShowDialog();//open the window of showing specifc task with the details from last line.
-            TaskInList_List = s_bl?.Task.ReadAll(e => e.Status == chosenStatus || chosenStatus == BO.Status.Unscheduled)!;
+            TaskInList_List = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All)&&(e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
         }
 
         private void ReadListAgain(object sender, SelectionChangedEventArgs e)//this method happans after everytime we change the combobox. (to update the view of the shown list) 
         {
-            IEnumerable <BO.TaskInList> tempList = s_bl?.Task.ReadAll(e => e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All)!;
-            tempList =tempList.Where(x => x.Status==chosenStatus || chosenStatus == BO.Status.Unscheduled);
+            IEnumerable <BO.TaskInList> tempList = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
             TaskInList_List = tempList;
         }
         private void AddTaskClick(object sender, RoutedEventArgs e)
         {
             new TaskWindow(0).ShowDialog();//open the window of showing specifc task without details. (because we want to add new task)
-            TaskInList_List = s_bl.Task.ReadAll();
+            TaskInList_List = s_bl.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All));
         }
         private void addDependencyClick(object sender, RoutedEventArgs e) 
         {
@@ -85,6 +95,21 @@ namespace PL.Task
         private void removeDependencyClick(object sender, RoutedEventArgs e)
         {
             new AddRemoveDependency(false/*indicates we are in remove mode*/).ShowDialog();//open the window of the remove of dependency
+        }
+
+        //delete an task in case the user pressed on his button
+        private void DeleteTaskClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                s_bl.Task.Delete(((BO.TaskInList)((Button)sender).CommandParameter).Id); //delete him
+                MessageBox.Show("Task seccessfully deleted!");
+                TaskInList_List = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

@@ -17,7 +17,8 @@ namespace BO
         Scheduled,
         OnTrack,
         InJeopardy,
-        Done
+        Done,
+        All
     }
 
     public enum ProjectStatus

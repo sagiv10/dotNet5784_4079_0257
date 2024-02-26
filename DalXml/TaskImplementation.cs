@@ -73,13 +73,12 @@ internal class TaskImplementation : ITask
         List<Task> ListToWorkWith = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);//get the list from the xml file to work with it
         if (filter == null)
         {
-            IEnumerable<DO.Task> newList = ListToWorkWith.Select(item => item);
-            //XMLTools.SaveListToXMLSerializer<Task>(ListToWorkWith, s_tasks_xml);//save the changes we did in the list we got in the start
+            IEnumerable<DO.Task> newList = ListToWorkWith.Where(item => item._isActive);
             return newList;
         }
         else
         {
-            IEnumerable<DO.Task> newList = ListToWorkWith.Where(item => filter(item!));
+            IEnumerable<DO.Task> newList = ListToWorkWith.Where(item => filter(item!) && item._isActive);
             //XMLTools.SaveListToXMLSerializer<Task>(ListToWorkWith, s_tasks_xml);//save the changes we did in the list we got in the start
             return newList;
         }
