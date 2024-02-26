@@ -25,7 +25,7 @@
             <LineBreak/>
             <Run Text="{Binding ProjectCurrentDate, StringFormat='hh:mm:ss'}"/>
         </TextBlock>
-        <Button Content="ResetClock" Width="70" Height="40" Click="ResetClock" Grid.Column="1" Grid.Row="1" Margin="58,149,232,55"/>
+        <Button Content="ResetClock" Height="30" Click="ResetClock" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Margin="32,0,229,162" Grid.RowSpan="2" />
 
         <StackPanel Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="50" >
             <Label HorizontalAlignment="Center">what would you like to do?</Label>
