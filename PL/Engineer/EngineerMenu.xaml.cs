@@ -57,6 +57,7 @@ namespace PL.Engineer
             InitializeComponent();
         }
 
+        //if we want to assign task to him or show his task
         private void Assign_ShowTask(object sender, RoutedEventArgs e)
         {
             if(Engineer.Task != null)
@@ -72,5 +73,32 @@ namespace PL.Engineer
             }
         }
 
+        private void FinishClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                s_bl.Engineer.FinishTask(Engineer.Id);
+                MessageBox.Show("good job for finishing your task!:)", "well done!");
+                Engineer = s_bl.Engineer.ReadEngineer(Engineer.Id);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void DeAssignClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                s_bl.Engineer.DeAssignTask(Engineer.Id);
+                MessageBox.Show("maybe next time:(", "you are disappointment");
+                Engineer = s_bl.Engineer.ReadEngineer(Engineer.Id);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

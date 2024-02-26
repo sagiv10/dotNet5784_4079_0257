@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using PL.Manager;
+using PL.Schedule;
 
 namespace PL
 {
@@ -11,8 +12,35 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// the time to the clock
+        /// </summary>
+        public DateTime ProjectCurrentDate
+        {
+            get { return (DateTime)GetValue(ProjectCurrentDateProperty); }
+            set { SetValue(ProjectCurrentDateProperty, value); }
+        }
+        // Using a DependencyProperty as the backing store for Task.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ProjectCurrentDateProperty =
+            DependencyProperty.Register("ProjectCurrentDate", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(null));
+
+        /// <summary>
+        /// the Stage of the project
+        /// </summary>
+        public BO.ProjectStatus CurrentStatus
+        {
+            get { return (BO.ProjectStatus)GetValue(CurrentStatusProperty); }
+            set { SetValue(CurrentStatusProperty, value); }
+        }
+        // Using a DependencyProperty as the backing store for Task.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentStatusProperty =
+            DependencyProperty.Register("CurrentStatus", typeof(BO.ProjectStatus), typeof(MainWindow), new PropertyMetadata(null));
+
+
+
         public MainWindow()
         {
+            ProjectCurrentDate = DateTime.Now;
             InitializeComponent();
         }
 

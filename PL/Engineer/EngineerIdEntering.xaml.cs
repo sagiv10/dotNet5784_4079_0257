@@ -31,7 +31,7 @@ namespace PL.Engineer
             DependencyProperty.Register("Engineer", typeof(int), typeof(EngineerIdEntering), new PropertyMetadata(null));
         public EngineerIdEntering()
         {
-            Id = 333298924;
+            Id = 0;
             InitializeComponent();
         }
         private void CloseWindow(object sender, RoutedEventArgs e)

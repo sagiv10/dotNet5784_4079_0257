@@ -11,21 +11,21 @@
         <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=TaskInList_List, UpdateSourceTrigger=PropertyChanged}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" />
-                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" />
-                    <GridViewColumn Header="Alias" DisplayMemberBinding="{Binding Alias}" />
-                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" />
                     <!--method1:assignMeToThisTask:-->
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="assign me this this task!"
-                                Click="AssignMeToThisTaskClick" 
-                                IsEnabled="{Binding Path=IsTaken, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TaskListWindowSpecifcEngineer}}}"
-                                CommandParameter="{Binding}" />
+                                           Click="AssignMeToThisTaskClick" 
+                                            IsEnabled="{Binding Path=IsTaken, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TaskListWindowSpecifcEngineer}}}"
+                                            CommandParameter="{Binding}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" />
+                    <GridViewColumn Header="Alias" DisplayMemberBinding="{Binding Alias}" />
+                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" />
                     <!--method2:de-assignTask:--><!--
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>

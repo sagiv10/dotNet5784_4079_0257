@@ -30,7 +30,7 @@
             <Button Content="add dependency" Click="addDependencyClick"
             Grid.Row="2"  Margin="100,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="100" Height="30"
             ></Button>
-            <!--AddButton:-->
+            <!--removeButton:-->
             <Button Content="remove dependency" Click="removeDependencyClick"
             Grid.Row="2" Margin="0,0,100,0" HorizontalAlignment="Right"  VerticalAlignment="Center" Width="100" Height="30"
             ></Button>
@@ -51,7 +51,6 @@
                       Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding}"></GridViewColumn>
                         <GridViewColumn>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -62,6 +61,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding}"></GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>

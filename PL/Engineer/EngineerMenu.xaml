@@ -31,5 +31,7 @@
 
         <Button Content="{Binding Task, Converter={StaticResource InnerTaskContentKey}}" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="69" Width="241" Margin="0,48,0,0" Click="Assign_ShowTask" Visibility="{Binding CurrentStatus, Mode=OneWay, Converter={StaticResource ExequtionStageVisibilityKey}, RelativeSource={RelativeSource AncestorType={x:Type local:EngineerMenu}}}"/>
         <TextBlock HorizontalAlignment="Center" Height="80" Margin="0,70,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Cannot assign or show tasks in this current stage!" VerticalAlignment="Top" Width="392" TextAlignment="Center" FontSize="30" Visibility="{Binding CurrentStatus, Mode=OneWay, Converter={StaticResource ExequtionStageinVisibilityKey}, RelativeSource={RelativeSource AncestorType={x:Type local:EngineerMenu}}}"/>
+        <Button Content="give up on your task" VerticalAlignment="Top" Height="69" Width="241" HorizontalAlignment="Left" Margin="20,48,0,0" Grid.Row="2" Visibility="{Binding Task, Converter={StaticResource TaskVisibilityKey}}" Click="DeAssignClick"/>
+        <Button Content="finish your task" VerticalAlignment="Top" Height="69" Width="241" HorizontalAlignment="Right" Margin="0,48,20,0" Grid.Row="2" Visibility="{Binding Task, Converter={StaticResource TaskVisibilityKey}}" Click="FinishClick" />
     </Grid>
 </Window>
