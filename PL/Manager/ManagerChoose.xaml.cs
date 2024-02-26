@@ -85,5 +85,10 @@ namespace PL.Manager
                 Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
             }
         }
+
+        private void OpenGanttWindowClick(object sender, RoutedEventArgs e)
+        {
+            new ganttChart().ShowDialog();
+        }
     }
 }

@@ -1,0 +1,39 @@
+﻿<Window x:Class="PL.Manager.ganttChart"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Manager"
+        mc:Ignorable="d"
+        Title="ganttChart" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Window.Resources>
+        <!--<local:DateToPositionConverter x:Key="DateToPositionConverter"/>-->
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Gantt Chart" HorizontalAlignment="Center" FontSize="24" Margin="0,10"/>
+        <ItemsControl MouseDoubleClick="ShowDetailsOfTaskClick" Grid.Row="1" ItemsSource="{Binding TasksList}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Name}" Grid.Column="0"/>
+                        <Rectangle Grid.Column="1" 
+                                   Fill="LightBlue" 
+                                   Margin="2"
+                                   HorizontalAlignment="Left"
+                                   Width="{Binding Path=RequiredEffortTime}" 
+                                   Height="20"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</Window>
