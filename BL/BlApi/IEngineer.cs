@@ -113,5 +113,7 @@ public interface IEngineer
     /// <exception cref="BO.BLNotFoundException"></exception>
     /// <exception cref="BO.BLWrongStageException"></exception>
     public void FinishTask(int engineerId);
+    public DateTime ResetClock();
+
 
 }
