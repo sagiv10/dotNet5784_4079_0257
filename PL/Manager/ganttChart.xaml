@@ -3,13 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Manager"
+        xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="ganttChart" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-    <Window.Resources>
-        --><!--<local:DateToPositionConverter x:Key="DateToPositionConverter"/>--><!--
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -21,15 +18,22 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Hea Width="Auto"/>
+                            <ColumnDefinition Width="300"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Name}" Grid.Column="0"/>
+                        <TextBlock Text="{Binding Alias}" Grid.Column="0"/>
                         <Rectangle Grid.Column="1" 
                                    Fill="LightBlue" 
-                                   Margin="2"
+                                   Margin="2,0,0,0"
                                    HorizontalAlignment="Left"
-                                   Width="{Binding Path=RequiredEffortTime}" 
+                                   Width="{Binding Path=RequiredEffortTime.Days, Converter={StaticResource ConvertMultiplyToWidthKey}}" 
+                                   Height="20"/>
+                        
+                        <Rectangle Grid.Column="2" 
+                                   Fill="LightBlue" 
+                                   Margin="2,0,0,0"
+                                   HorizontalAlignment="Left"
+                                   Width="{Binding Path=RequiredEffortTime.Days, Converter={StaticResource ConvertMultiplyToWidthKey}}" 
                                    Height="20"/>
                     </Grid>
                 </DataTemplate>

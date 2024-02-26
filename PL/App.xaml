@@ -24,5 +24,6 @@
         <local:ConvertTaskToBoolDeAssign x:Key="ConvertTaskToBoolDeAssignKey"/>
         <local:ConvertStageToMessage x:Key="StageMessageKey"/>
         <local:ConvertTaskToVisability x:Key="TaskVisibilityKey"/>
+        <local:ConvertMultiplyToWidth x:Key="ConvertMultiplyToWidthKey"/>
     </Application.Resources>
 </Application>
