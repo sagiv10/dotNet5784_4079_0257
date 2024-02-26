@@ -39,45 +39,49 @@
                     <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" />
                     <GridViewColumn Header="ComplexityLevel" DisplayMemberBinding="{Binding Level}" />
                     <GridViewColumn Header="Cost" DisplayMemberBinding="{Binding Cost}" />
-                    <!--method1:assignTask:-->
+                    <!--method1:deleteTask:-->
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="delete"
+                                Click="DeleteTaskClick"
+                                CommandParameter="{Binding}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!--method2:assignTask:-->
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="assign"
+                                        Visibility="{Binding Stage, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource ExequtionStageVisibilityKey}}"
                                         IsEnabled="{Binding Task, Converter={StaticResource ConvertTaskToBoolKey}}" 
                                         Click="AssignTaskClick" 
                                         CommandParameter="{Binding}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <!--method2:de-assignTask:-->
+                    <!--method3:de-assignTask:-->
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="de-assign"
-                                        IsEnabled="{Binding Task, Converter={StaticResource ConvertTaskToBoolDeAssignKey}}"
                                         Click="DeAssignTaskClick"
+                                        Visibility="{Binding Stage, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource ExequtionStageVisibilityKey}}"
+                                         IsEnabled="{Binding Task, Converter={StaticResource ConvertTaskToBoolDeAssignKey}}" 
                                         CommandParameter="{Binding}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <!--method3:finishTask:-->
+                    <!--method4:finishTask:-->
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="finish"
+                                        Visibility="{Binding Stage, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource ExequtionStageVisibilityKey}}"
                                         IsEnabled="{Binding Task, Converter={StaticResource ConvertTaskToBoolDeAssignKey}}" 
                                         Click="FinishTaskClick"
                                         CommandParameter="{Binding}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="delete"
-                    Click="DeleteTaskClick"
-                    CommandParameter="{Binding}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

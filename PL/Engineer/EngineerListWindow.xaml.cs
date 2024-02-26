@@ -32,11 +32,21 @@ namespace PL.Engineer
         public static readonly DependencyProperty EngineerListProperty/*how to call me in the xaml code */ = 
             DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
 
+        //the stage of the project
+        public BO.ProjectStatus Stage
+        {
+            get { return (BO.ProjectStatus)GetValue(StageProperty); }
+            set { SetValue(StageProperty, value); }
+        }
+
+        public static readonly DependencyProperty StageProperty/*how to call me in the xaml code */ =
+            DependencyProperty.Register("Stage", typeof(BO.ProjectStatus), typeof(EngineerListWindow), new PropertyMetadata(null));
 
         public EngineerListWindow()
         {
+            EngineerList = s_bl?.Engineer.ReadAllEngineers()!;
+            Stage = (BO.ProjectStatus)s_bl!.Task.getProjectStatus();
             InitializeComponent();
-            EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
         }
 
         private void readListAgain(object sender, SelectionChangedEventArgs e)
