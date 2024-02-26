@@ -93,7 +93,10 @@ internal class EngineerImplementation : BlApi.IEngineer
                where _dal.Task.Read((int)dep._dependsOnTask!)!._completeDate == null
                select true).Any());
     }
-
+    public DateTime ResetClock()
+    {
+        return DateTime.Now;
+    }
     public void CreateEngineer(BO.Engineer newEngineer)
     {
         try

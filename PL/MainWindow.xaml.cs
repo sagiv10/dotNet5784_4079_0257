@@ -12,6 +12,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         /// <summary>
         /// the time to the clock
         /// </summary>
@@ -82,9 +83,9 @@ namespace PL
             new EngineerIdEntering().ShowDialog();
         }
 
-        private void ResetClock(object sender, RoutedEventArgs e)
+        private void ResetClockClick(object sender, RoutedEventArgs e)
         {
-            ProjectCurrentDate = DateTime.Now;
+            ProjectCurrentDate = s_bl.Engineer.ResetClock();  //returnes dateTime.now
         }
     }
 }
