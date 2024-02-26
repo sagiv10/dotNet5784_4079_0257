@@ -30,7 +30,7 @@ namespace PL.Manager
         }
         // Using a DependencyProperty as the backing store for Engineer.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TasksListProperty =
-        DependencyProperty.Register("TasksListProperty", typeof(List<BO.Task>), typeof(ganttChart), new PropertyMetadata(null));
+        DependencyProperty.Register("TasksList", typeof(List<BO.Task>), typeof(ganttChart), new PropertyMetadata(null));
         public ganttChart()
         {
             //the making of taskList from list of TaskInList:
