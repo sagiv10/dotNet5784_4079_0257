@@ -275,4 +275,17 @@
     <_complexity>Advanced</_complexity>
     <_isActive>true</_isActive>
   </Task>
+  <Task>
+    <_id>1</_id>
+    <_createdAtDate>2024-02-26T01:52:24.7413251+02:00</_createdAtDate>
+    <_requiredEffortTime>P3D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Theoretical analysis of the engine</_alias>
+    <_description>Conducting a detailed examination of the theoretical principles underlying the design and functionality of the rocket's propulsion system to ensure optimal performance and efficiency.</_description>
+    <_scheduledDate>0001-01-01T00:00:00</_scheduledDate>
+    <_startDate>2024-02-26T01:52:56.2960433+02:00</_startDate>
+    <_complexity>Beginner</_complexity>
+    <_engineerId>211372820</_engineerId>
+    <_isActive>true</_isActive>
+  </Task>
 </ArrayOfTask>
