@@ -107,6 +107,17 @@ public interface ITask
     /// helping method that get the current progect starting time
     /// </summary>
     public DateTime? getStartingDate();
+
+    /// <summary>
+    /// helping method that get the current time
+    /// </summary>
+    public DateTime? getCurrentDate();
+
+    /// <summary>
+    /// helping method that set the current time
+    /// </summary>
+    public void SetCurrentDate(DateTime newDate);
+
     /// <summary>
     /// help method for the pl stage that returnes all the id's
     /// </summary>

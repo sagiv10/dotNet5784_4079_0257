@@ -12,6 +12,8 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
         /// <summary>
         /// the time to the clock
         /// </summary>
@@ -40,7 +42,11 @@ namespace PL
 
         public MainWindow()
         {
-            ProjectCurrentDate = DateTime.Now;
+            if(s_bl.Task.getCurrentDate() == null)
+            {
+                s_bl.Task.SetCurrentDate(DateTime.Now);
+            }
+            ProjectCurrentDate = (DateTime)s_bl.Task.getCurrentDate()!; //now the starting date will always exist
             InitializeComponent();
         }
 
@@ -84,7 +90,23 @@ namespace PL
 
         private void ResetClock(object sender, RoutedEventArgs e)
         {
-            ProjectCurrentDate = DateTime.Now;
+            ProjectCurrentDate = DateTime.Now; //reset the clock to now
+            s_bl.Task.SetCurrentDate(ProjectCurrentDate);
+        }
+        private void AddWeekClick(object sender, RoutedEventArgs e)
+        {
+            ProjectCurrentDate = ProjectCurrentDate.AddDays(7); //add 7 days - week
+            s_bl.Task.SetCurrentDate(ProjectCurrentDate);
+        }
+        private void AddDayClick(object sender, RoutedEventArgs e)
+        {
+            ProjectCurrentDate = ProjectCurrentDate.AddDays(1); //add 1 day
+            s_bl.Task.SetCurrentDate(ProjectCurrentDate);
+        }
+        private void AddMonthClick(object sender, RoutedEventArgs e)
+        {
+            ProjectCurrentDate = ProjectCurrentDate.AddMonths(1); //add 1 month
+            s_bl.Task.SetCurrentDate(ProjectCurrentDate);
         }
     }
 }

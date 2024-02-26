@@ -1,13 +1,22 @@
-﻿
-namespace Dal;
+﻿namespace Dal;
 using DalApi;
 using System;
 
 internal class ProjectImplementation : Iproject
 {
+    public DateTime? GetCurrentDate()
+    {
+        return DataSource.Config.currentDate!;
+    }
+
     public DateTime? getStartingDate()
     {
         return DataSource.Config.startingDate;
+    }
+
+    public void SetCurrentDate(DateTime? currentDate)
+    {
+        DataSource.Config.startingDate = currentDate;
     }
 
     public void setStartingDate(DateTime? start)
