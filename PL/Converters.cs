@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PL;
 
@@ -44,6 +45,27 @@ class ConvertTimeSpanToNumDays : IValueConverter
         throw new NotImplementedException();
     }
 }
+class DateToStringConverter : IValueConverter
+{
+    /// <summary>
+    /// converts the number of days of timeSpan to string describe its amount of days
+    /// </summary>
+    /// <param name="value"> the TimeSpan </param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return ((DateTime)value).ToString("yyyy-MM-dd");
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
 
 class ConvertPlanningToEnabled : IValueConverter
 {
@@ -302,7 +324,7 @@ class ConvertIntToString : IValueConverter
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         int num;
-        return int.TryParse((String)value, out num) ? num : 0;
+        return int.TryParse((string)value, out num) ? num : 0;
     }
     /// <summary>
     /// make an int string
