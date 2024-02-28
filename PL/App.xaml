@@ -28,5 +28,6 @@
         <local:ConvertStageToMessage x:Key="StageMessageKey"/>
         <local:ConvertTaskToVisability x:Key="TaskVisibilityKey"/>
         <local:ConvertMultiplyToWidth x:Key="ConvertMultiplyToWidthKey"/>
+        <local:ConvertTaskToColor x:Key="TaskToColorKey"/>
     </Application.Resources>
 </Application>

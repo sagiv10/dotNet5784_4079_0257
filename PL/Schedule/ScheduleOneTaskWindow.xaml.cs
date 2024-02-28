@@ -59,6 +59,7 @@ namespace PL.Schedule
         {
             Task = taskId;
             FirstOptionalDate = s_bl.Task.findOptionalDate(taskId);
+            ChosenDate = FirstOptionalDate;
             InitializeComponent();
         }
 

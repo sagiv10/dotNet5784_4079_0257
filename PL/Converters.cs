@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace PL;
 
@@ -551,6 +552,39 @@ class ConvertTaskToVisability : IValueConverter
             return Visibility.Hidden;
         }
         return Visibility.Visible;
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertTaskToColor : IValueConverter
+{
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    /// <summary>
+    /// get the right color to each task
+    /// </summary>
+    /// <param name="value">the id of the task</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns> the color </returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        double precent = s_bl.Task.GetPrecentage((int)value);
+        if(0 <= precent && precent <0.33) {
+            return Brushes.Green;
+        }
+        if (0.33 <= precent && precent < 0.66)
+        {
+            return Brushes.Yellow;
+        }
+        if (0.66 <= precent && precent < 1)
+        {
+            return Brushes.Orange;
+        }
+        return Brushes.Red;
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {

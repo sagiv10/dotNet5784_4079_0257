@@ -498,6 +498,24 @@ internal class TaskImplementation : BlApi.ITask
     {
         _dal.Project.SetCurrentDate(newDate);
     }
+
+    public double GetPrecentage(int TaskId)
+    {
+        DateTime currentTime = (DateTime)_dal.Project.GetCurrentDate()!; //the time is not null right now because this function will be called only in the execution stage
+        DO.Task theTask = _dal.Task.Read(TaskId)!;
+        DateTime scheduledTime = (DateTime)theTask._scheduledDate!;//the scheduled time is not null right now because this function will be called only in the execution stage
+        if (currentTime < scheduledTime) //if the task was nott supposed to start
+        {
+            return 0;
+        }
+        DateTime forcastTime = scheduledTime + theTask._requiredEffortTime;
+        if (currentTime > forcastTime) //the task was supposed to end
+        {
+            return 1;
+        }
+        double requiredDays = (theTask._requiredEffortTime).Days, passedDays = (currentTime - scheduledTime).Days;
+        return passedDays / requiredDays;  //days that has past / days that the task has
+    }
 }
 
 
