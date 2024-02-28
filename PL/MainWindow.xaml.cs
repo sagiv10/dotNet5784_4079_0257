@@ -56,6 +56,7 @@ namespace PL
                 MessageBoxButton.YesNo) == MessageBoxResult.Yes) //if the user answered 'yes'
             {
                 DalTest.Initialization.Do();
+                ProjectCurrentDate = (DateTime)s_bl.Task.getCurrentDate()!; //get the new time we got from the init function
             }
         }
         private void Reset(object sender, RoutedEventArgs e)
@@ -65,6 +66,7 @@ namespace PL
                 MessageBoxButton.YesNo) == MessageBoxResult.Yes) //if the user answered 'yes'
             {
                 DalTest.Initialization.Reset();
+                ProjectCurrentDate = (DateTime)s_bl.Task.getCurrentDate()!; //get the new time we got from the reset function
             }
         }
 

@@ -142,7 +142,7 @@ class ConvertMultiplyToWidth : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return (int)value*30;
+        return (int)value*10;
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -156,7 +156,7 @@ class ConvertMultiplyAndFindStartTime : IValueConverter
     {
         DateTime startDate = (DateTime)s_bl.Task.getStartingDate()!;
         DateTime currentScheduled = (DateTime)value;
-        return ((currentScheduled-startDate).Days*30)!;//value=scheduledTime;
+        return ((currentScheduled-startDate).Days*10)!;//value=scheduledTime;
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
