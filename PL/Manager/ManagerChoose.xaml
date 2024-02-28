@@ -22,6 +22,6 @@
         <Button  Grid.Row="0" Grid.Column="0" Content="Initialize Data" Margin="10" Click="InitializeButton"></Button>
         <Button  Grid.Row="0" Grid.Column="1" Content="Reset Data" Margin="10" Click="Reset"></Button>
         <Button  Grid.Row="2" Grid.Column="0" Content="{Binding Converter={StaticResource StageMessageKey}}" Visibility="{Binding Converter={StaticResource ExequtionStageinVisibilityKey}}" Margin="10" Click="Schedile_Button" ></Button>
-        <Button  Grid.Row="2" Grid.Column="1" Content="Gunt" Margin="10" Click="OpenGanttWindowClick"></Button>
+        <Button  Grid.Row="2" Grid.Column="0" Content="Gunt" Visibility="{Binding Converter={StaticResource ExequtionStageVisibilityKey}}" Margin="10" Click="OpenGanttWindowClick"></Button>
     </Grid>
 </Window>

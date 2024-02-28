@@ -43,7 +43,9 @@ namespace PL.Manager
 
         private void ShowDetailsOfTaskClick(object sender, MouseButtonEventArgs e)
         {
-            //new TaskWindow(//id in the button of the line)
+            Button button = sender as Button;
+            BO.Task SpecificTaskFromList = button?.CommandParameter as BO.Task;
+            new TaskWindow(SpecificTaskFromList.Id);
         }
     }
 }

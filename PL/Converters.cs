@@ -10,6 +10,7 @@ using System.Windows.Data;
 
 namespace PL;
 
+
 class ConvertIdToContent : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -99,6 +100,20 @@ class ConvertMultiplyToWidth : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return (int)value*30;
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+class ConvertMultiplyAndFindStartTime : IValueConverter
+{
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        DateTime startDate = (DateTime)s_bl.Task.getStartingDate()!;
+        DateTime currentScheduled = (DateTime)value;
+        return ((currentScheduled-startDate).Days*30)!;//value=scheduledTime;
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -443,6 +458,8 @@ class ConvertStageToNotVisability : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+
 
 class ConvertTaskToVisability : IValueConverter
 {
