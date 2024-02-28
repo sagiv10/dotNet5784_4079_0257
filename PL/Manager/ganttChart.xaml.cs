@@ -47,6 +47,7 @@ namespace PL.Manager
             TasksList = (from tempTaskInList in TasksInList_Tasks
                         select s_bl.Task.Read(tempTaskInList.Id)).ToList();
             InitializeComponent();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
 
         private void ShowDetailsOfTaskClick(object sender, MouseButtonEventArgs e)

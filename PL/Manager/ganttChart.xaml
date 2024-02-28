@@ -7,9 +7,10 @@
         xmlns:ganttBehind="clr-namespace:PL.Manager"
         mc:Ignorable="d"
         Title="ganttChart" Height="450" Width="800"
+        WindowState="Maximized"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-    <Grid >
+    <Grid  >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
                 <RowDefinition Height="40"/>
@@ -25,12 +26,12 @@
                 <DataTemplate>
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="45"/>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Id}" ToolTip="{Binding Description}"  Grid.Column="0"/>
+                            <TextBlock Text="{Binding Id}" ToolTip="{Binding Description}"  Grid.Column="0" FontSize="18"/>
                             <Rectangle
                                    Grid.Column="1" 
                                    Fill="White" 
