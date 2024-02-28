@@ -38,9 +38,9 @@
             <!--ChangeStatusComboBox:-->
             <ComboBox 
                     ItemsSource="{Binding Source={StaticResource StatusCollectionKey}}"
-                    SelectedValue="{Binding Path=chosenStatusProperty , Mode=TwoWay}" SelectionChanged="ReadListAgain"
+                    SelectedValue="{Binding Path=chosenStatus , Mode=TwoWay}" SelectionChanged="ReadListAgain"
                     Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="200"/>
-            <!--ChangeStatusComboBox:-->
+            <!--ChangeComplexityComboBox:-->
             <ComboBox 
                     ItemsSource="{Binding Source={StaticResource ComplexityCollectionKey}}"
                     SelectedValue="{Binding Path=chosenComplexity , Mode=TwoWay}" SelectionChanged="ReadListAgain"
