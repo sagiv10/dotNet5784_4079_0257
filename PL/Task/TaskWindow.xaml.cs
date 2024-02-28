@@ -34,6 +34,18 @@ public partial class TaskWindow : Window
     public static readonly DependencyProperty TaskProperty =
         DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow), new PropertyMetadata(null));
 
+    /// <summary>
+    /// to inducate who is the one who entering the window
+    /// </summary>
+    public bool isManager
+    {
+        get { return (bool)GetValue(isManagerProperty); }
+        set { SetValue(isManagerProperty, value); }
+    }
+    // Using a DependencyProperty as the backing store for Task.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty isManagerProperty =
+        DependencyProperty.Register("isManager", typeof(bool), typeof(TaskWindow), new PropertyMetadata(null));
+
     public BO.ProjectStatus Status //so we could track the stage of the project for visual changes
     {
         get { return (BO.ProjectStatus)GetValue(StatusProperty); }
@@ -132,7 +144,7 @@ public partial class TaskWindow : Window
 
 
 
-    public TaskWindow(int id = 0)
+    public TaskWindow(bool isManager, int id = 0)
     {
         Status = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
         DaysRange = Enumerable.Range(0, 7).ToList();

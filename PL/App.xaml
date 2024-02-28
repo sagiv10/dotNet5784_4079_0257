@@ -6,6 +6,8 @@
     
     <Application.Resources>
         <local:ConvertIdToContent x:Key="ConvertIdToContentKey"/>
+        <local:ConvertTimeSpanToNumDays x:Key="ConvertTimeSpanToStringDaysKey"/>
+        <local:ConvertPlanningToEnabled x:Key="ConvertPlanningToEnabledKey"/>
         <local:ConvertBoolToContent x:Key="ConvertBoolToContentKey"/>
         <local:ConvertInnerTaskToAlias x:Key="InnerTaskAliasKey"/>
         <local:ConvertInnerTaskToId x:Key="InnerTaskIdKey"/>
@@ -13,10 +15,12 @@
         <local:ConvertTaskInEngineerToIdString x:Key="TaskStringIdKey"/>
         <local:ConvertStringToWelcomeString x:Key="WelcomeBeforeKey"/>
         <local:ConvertIntToString x:Key="IntStringKey"/>
-        <local:ConvertStageToCollapsity x:Key="ExequtionStageCollapcityKey"/>
-        <local:ConvertStageToNotCollapsity x:Key="ExequtionStageinCollapcityKey"/>
-        <local:ConvertStageToVisability x:Key="ExequtionStageVisibilityKey"/>
-        <local:ConvertStageToNotVisability x:Key="ExequtionStageinVisibilityKey"/>
+        <local:ConvertExecutionToCollapsity x:Key="ExequtionStageCollapcityKey"/>
+        <local:ConvertExecutionToNotCollapsity x:Key="ExequtionStageinCollapcityKey"/>
+        <local:ConvertPlanningToVisability x:Key="PlanningStageVisibilityKey"/>
+        <local:ConvertExecutionToVisability x:Key="ExequtionStageVisibilityKey"/>
+        <local:ConvertPlanningToNotVisability x:Key="PlanningStageinVisibilityKey"/>
+        <local:ConvertExecutionToNotVisability x:Key="ExequtionStageinVisibilityKey"/>
         <local:ConvertTaskToContent x:Key="InnerTaskContentKey"/>
         <local:ConvertCollectionToList x:Key="ToListKey"/>
         <local:ConvertTaskToBool x:Key="ConvertTaskToBoolKey"/>

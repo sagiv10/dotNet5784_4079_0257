@@ -74,7 +74,7 @@ namespace PL.Task
             BO.TaskInList? SpecificTaskFromList = (sender as ListView)!.SelectedItem as BO.TaskInList; //get inside "SpecificTaskFromList" the details from the sender about which task we clicked on.
             if (SpecificTaskFromList == null)
                 return;
-            new TaskWindow(SpecificTaskFromList!.Id).ShowDialog();//open the window of showing specifc task with the details from last line.
+            new TaskWindow(true, SpecificTaskFromList!.Id).ShowDialog();//open the window of showing specifc task with the details from last line.
             TaskInList_List = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All)&&(e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
         }
 
@@ -85,7 +85,7 @@ namespace PL.Task
         }
         private void AddTaskClick(object sender, RoutedEventArgs e)
         {
-            new TaskWindow(0).ShowDialog();//open the window of showing specifc task without details. (because we want to add new task)
+            new TaskWindow(true, 0).ShowDialog();//open the window of showing specifc task without details. (because we want to add new task)
             TaskInList_List = s_bl.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All));
         }
         private void addDependencyClick(object sender, RoutedEventArgs e) 

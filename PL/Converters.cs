@@ -23,6 +23,49 @@ class ConvertIdToContent : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+class ConvertTimeSpanToNumDays : IValueConverter
+{
+    /// <summary>
+    /// converts the number of days of timeSpan to string describe its amount of days
+    /// </summary>
+    /// <param name="value"> the TimeSpan </param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (((TimeSpan)value).Days).ToString() + " days.";
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertPlanningToEnabled : IValueConverter
+{
+    /// <summary>
+    /// converts the planning state to enabled
+    /// </summary>
+    /// <param name="value"> the state </param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (BO.ProjectStatus)value == BO.ProjectStatus.Planning ? true : false;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
 class ConvertBoolToContent : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -92,9 +135,8 @@ class ConvertInnerTaskToId : IValueConverter
         throw new NotImplementedException();
     }
 }
-/// <summary>
-/// 
-/// </summary>
+
+
 class ConvertMultiplyToWidth : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -277,7 +319,7 @@ class ConvertIntToString : IValueConverter
     
 }
 
-class ConvertStageToCollapsity : IValueConverter
+class ConvertExecutionToCollapsity : IValueConverter
 {
     /// <summary>
     /// if we are at the Execution stage then the button should be visible
@@ -301,7 +343,7 @@ class ConvertStageToCollapsity : IValueConverter
     }
 }
 
-class ConvertStageToNotCollapsity : IValueConverter
+class ConvertExecutionToNotCollapsity : IValueConverter
 {
     /// <summary>
     /// if we are at the Execution stage then the button should not be visible
@@ -411,7 +453,7 @@ class ConvertStageToMessage : IValueConverter
     }
 }
 
-class ConvertStageToVisability : IValueConverter
+class ConvertExecutionToVisability : IValueConverter
 {
     /// <summary>
     /// if we are at the Execution stage then the button should not be visible
@@ -435,7 +477,31 @@ class ConvertStageToVisability : IValueConverter
     }
 }
 
-class ConvertStageToNotVisability : IValueConverter
+class ConvertPlanningToVisability : IValueConverter
+{
+    /// <summary>
+    /// if we are at the Planning stage then the button should not be visible
+    /// </summary>
+    /// <param name="value">the status</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if ((BO.ProjectStatus)value == BO.ProjectStatus.Planning)
+        {
+            return Visibility.Visible;
+        }
+        return Visibility.Hidden;
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertExecutionToNotVisability : IValueConverter
 {
     /// <summary>
     /// if we are at the Execution stage then the button should not be invisible
@@ -448,6 +514,30 @@ class ConvertStageToNotVisability : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if ((BO.ProjectStatus)value == BO.ProjectStatus.Execution)
+        {
+            return Visibility.Hidden;
+        }
+        return Visibility.Visible;
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertPlanningToNotVisability : IValueConverter
+{
+    /// <summary>
+    /// if we are at the Planning stage then the button should not be invisible
+    /// </summary>
+    /// <param name="value">the status</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if ((BO.ProjectStatus)value == BO.ProjectStatus.Planning)
         {
             return Visibility.Hidden;
         }
@@ -484,8 +574,3 @@ class ConvertTaskToVisability : IValueConverter
         throw new NotImplementedException();
     }
 }
-
-
-
-
-

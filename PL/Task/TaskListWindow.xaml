@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:local2="clr-namespace:PL.Task"
         mc:Ignorable="d"
         Title="TaskListWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
@@ -27,11 +28,11 @@
             </Grid.RowDefinitions>
 
             <!--AddButton:-->
-            <Button Content="add dependency" Click="addDependencyClick"
+            <Button Content="add dependency" IsEnabled="{Binding Status, Converter={StaticResource ConvertPlanningToEnabledKey}}" Click="addDependencyClick"
             Grid.Row="2"  Margin="100,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="100" Height="30"
             ></Button>
             <!--removeButton:-->
-            <Button Content="remove dependency" Click="removeDependencyClick"
+            <Button Content="remove dependency" IsEnabled="{Binding Status, Converter={StaticResource ConvertPlanningToEnabledKey}}" Click="removeDependencyClick"
             Grid.Row="2" Margin="0,0,100,0" HorizontalAlignment="Right"  VerticalAlignment="Center" Width="100" Height="30"
             ></Button>
             <!--ChangeStatusComboBox:-->
@@ -55,7 +56,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Content="delete"
-                                    IsEnabled="{Binding Task, Converter={StaticResource ConvertTaskToBoolKey}}" 
+                                    IsEnabled="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type  local2:TaskListWindow}}, Converter={StaticResource ConvertPlanningToEnabledKey}}" 
                                     Click="DeleteTaskClick" 
                                     CommandParameter="{Binding}" />
                                 </DataTemplate>
@@ -67,8 +68,8 @@
             </ListView>
             <!--AddButton:-->
             <Button Content="Add new task" Click="AddTaskClick"
-                    Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="30"
-            ></Button>
+                    Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" IsEnabled="{Binding Status, Converter={StaticResource ConvertPlanningToEnabledKey}}" Height="30">
+            </Button>
             
         </Grid>
     </Grid>
