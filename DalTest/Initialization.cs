@@ -95,7 +95,7 @@ public static class Initialization
         };
         for (int i=0;i<AliasOfTasks.Length;i++)
         {
-            Task? newTask = new Task(0, DateTime.Now, new TimeSpan(s_rand.Next(1,7), 0, 0, 0), false,AliasOfTasks[i], DescriptionOfTasks[i], null, null, null , null, null, null,_arrOfCmplx[i%5], null, true) ;
+            Task? newTask = new Task(0, DateTime.Now, new TimeSpan(s_rand.Next(5,14), 0, 0, 0), false,AliasOfTasks[i], DescriptionOfTasks[i], null, null, null , null, null, null,_arrOfCmplx[i%5], null, true) ;
             s_dal!.Task.Create(newTask);
         }
     }

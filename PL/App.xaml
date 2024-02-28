@@ -30,5 +30,6 @@
         <local:ConvertTaskToVisability x:Key="TaskVisibilityKey"/>
         <local:ConvertMultiplyToWidth x:Key="ConvertMultiplyToWidthKey"/>
         <local:ConvertMultiplyAndFindStartTime x:Key="ConvertMultiplyAndFindStartTimeKey"/>
+        <local:ConvertTaskToColor x:Key="TaskToColorKey"/>
     </Application.Resources>
 </Application>

@@ -154,4 +154,10 @@ public interface ITask
     /// <returns> untill where the method added </returns>
     public void CheckPreviousTasks(int taskId);
 
+    /// <summary>
+    /// for the gunt - get the precentage of the time has past since the task has started - if the task's scheduled task hasn't happened yet the method will return 0
+    /// </summary>
+    /// <param name="TaskId"> the task's id </param>
+    /// <returns>the precentage of the time has past</returns>
+    public double GetPrecentage(int TaskId);
 }
