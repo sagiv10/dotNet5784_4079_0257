@@ -5,6 +5,7 @@
              StartupUri="MainWindow.xaml">
     
     <Application.Resources>
+        <local:DateToStringConverter x:Key="DateToStringConverter"/>
         <local:ConvertIdToContent x:Key="ConvertIdToContentKey"/>
         <local:ConvertTimeSpanToNumDays x:Key="ConvertTimeSpanToStringDaysKey"/>
         <local:ConvertPlanningToEnabled x:Key="ConvertPlanningToEnabledKey"/>

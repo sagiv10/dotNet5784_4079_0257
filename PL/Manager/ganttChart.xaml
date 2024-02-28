@@ -4,42 +4,57 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:ganttBehind="clr-namespace:PL.Manager"
         mc:Ignorable="d"
         Title="ganttChart" Height="450" Width="800"
+        WindowState="Maximized"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-    <Grid >
+    <Grid  >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Gantt Chart" HorizontalAlignment="Center" FontSize="24" Margin="0,10"/>
+        <TextBlock Text="Gantt Chart" HorizontalAlignment="Center" FontSize="24" Margin="0,10" Grid.Row="0"/>
+            <TextBlock Grid.Row="1" HorizontalAlignment="Center" FontSize="24"  FontStyle="Italic">
+                  <Run Text="Start Date:"/>
+                  <Run Text="{Binding StartDateOfProject, Converter={StaticResource DateToStringConverter}}"/>
+            </TextBlock>
         <!--the tasks list and bars - the size is reletive to the days it should take-->
-        <ItemsControl  Grid.Row="1" ItemsSource="{Binding TasksList}">
+            <ItemsControl  Grid.Row="2" ItemsSource="{Binding TasksList}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding Alias}" Grid.Column="0"/>
-                        <Rectangle
+                            <TextBlock Text="{Binding Id}" ToolTip="{Binding Description}"  Grid.Column="0" FontSize="18"/>
+                            <Rectangle
                                    Grid.Column="1" 
                                    Fill="White" 
                                    Margin="2,0,0,0"
                                    HorizontalAlignment="Left"
                                    Width="{Binding Path=ScheduledDate, Converter={StaticResource ConvertMultiplyAndFindStartTimeKey}}" 
-                                   Height="20"/>
+                                   Height="20">
+                                   <Rectangle.ToolTip>
+                                            <ToolTip Content="{Binding Description}" />
+                                   </Rectangle.ToolTip>
+                            </Rectangle>
 
                         <Rectangle Grid.Column="2" 
                                    Fill="{Binding Id, Converter={StaticResource TaskToColorKey}}"  
                                    Margin="2,0,0,0"
                                    HorizontalAlignment="Left"
                                    Width="{Binding Path=RequiredEffortTime.Days, Converter={StaticResource ConvertMultiplyToWidthKey}}" 
-                                   Height="20"/>
+                                   Height="20">
+                                       <Rectangle.ToolTip>
+                <ToolTip Content="{Binding Description}" />
+           </Rectangle.ToolTip>
+</Rectangle>
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
