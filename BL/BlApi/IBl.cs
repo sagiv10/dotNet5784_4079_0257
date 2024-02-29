@@ -1,4 +1,4 @@
-﻿namespace BlApi;
+﻿    namespace BlApi;
 
 public interface IBl
 {
@@ -6,5 +6,11 @@ public interface IBl
 
     public ITask Task { get; }
 
-
+    #region
+    public DateTime Clock { get; }
+    public void AddDays(int days);
+    public void AddWeeks(int days);
+    public void AddYear(int days);
+    public void ResetClock();
+    #endregion
 }

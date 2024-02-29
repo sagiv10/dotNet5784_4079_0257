@@ -32,7 +32,7 @@
                 <Rectangle Height="20" Width="20" Fill="Yellow" Stroke="Black" StrokeThickness="2"></Rectangle>
                 <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="starting to be dangarous:" />
                 <Rectangle Height="20" Width="20" Fill="Orange" Stroke="Black" StrokeThickness="2"></Rectangle>
-                <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="to late:" />
+                <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="too late:" />
                 <Rectangle Height="20" Width="20" Fill="Red" Stroke="Black" StrokeThickness="2"></Rectangle>
                 <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="finished:" />
                 <Rectangle Height="20" Width="20" Fill="Magenta" Stroke="Black" StrokeThickness="2"></Rectangle>
@@ -48,7 +48,9 @@
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Id}" ToolTip="{Binding Description}"  Grid.Column="0" FontSize="18"/>
+                            <Border BorderBrush="Black" BorderThickness="4" Margin="2">
+                                <TextBlock Text="{Binding Id}" ToolTip="{Binding Description}" FontSize="18" HorizontalAlignment="Center"/>
+                            </Border>
                             <Rectangle
                                    Grid.Column="1" 
                                    Fill="White" 
