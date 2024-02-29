@@ -40,4 +40,20 @@
     <_level>Master</_level>
     <_isActive>true</_isActive>
   </Engineer>
+  <Engineer>
+    <_id>327147218</_id>
+    <_cost>35480.88</_cost>
+    <_email>reuven@gmail.com</_email>
+    <_name>Reuven</_name>
+    <_level>Beginner</_level>
+    <_isActive>false</_isActive>
+  </Engineer>
+  <Engineer>
+    <_id>385457733</_id>
+    <_cost>27215.37</_cost>
+    <_email>levi@gmail.com</_email>
+    <_name>Levi</_name>
+    <_level>Advanced</_level>
+    <_isActive>false</_isActive>
+  </Engineer>
 </ArrayOfEngineer>

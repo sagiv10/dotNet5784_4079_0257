@@ -111,6 +111,50 @@
     <_isActive>true</_isActive>
   </Task>
   <Task>
+    <_id>19</_id>
+    <_createdAtDate>2024-02-29T15:25:23.4922044+02:00</_createdAtDate>
+    <_requiredEffortTime>P8D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Final assembly of the missile</_alias>
+    <_description>Integrating all components, including the structural, propulsion, software, and payload systems, to create the complete and functional rocket.</_description>
+    <_scheduledDate>2024-05-06T00:00:00</_scheduledDate>
+    <_complexity>Expert</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>20</_id>
+    <_createdAtDate>2024-02-29T15:25:23.5131593+02:00</_createdAtDate>
+    <_requiredEffortTime>P10D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Dry test of the operation of the components</_alias>
+    <_description>Conducting a thorough examination and simulation of the rocket's systems without using actual propellants to identify and address any potential issues.</_description>
+    <_scheduledDate>2024-05-14T00:00:00</_scheduledDate>
+    <_complexity>Master</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>22</_id>
+    <_createdAtDate>2024-02-29T15:25:23.552595+02:00</_createdAtDate>
+    <_requiredEffortTime>P10D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Dispatch</_alias>
+    <_description>Launching the rocket into its intended trajectory or mission, marking the conclusion of the manufacturing and preparation phases.</_description>
+    <_scheduledDate>2024-05-24T00:00:00</_scheduledDate>
+    <_complexity>BetterBeginner</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>21</_id>
+    <_createdAtDate>2024-02-29T15:25:23.5310396+02:00</_createdAtDate>
+    <_requiredEffortTime>P5D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Wet inspection of the components</_alias>
+    <_description>Verifying the rocket's systems and components under realistic conditions, often involving the use of actual propellants in a controlled environment.</_description>
+    <_scheduledDate>2024-05-14T00:00:00</_scheduledDate>
+    <_complexity>Beginner</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
     <_id>12</_id>
     <_createdAtDate>2024-02-29T16:47:31.3515646+02:00</_createdAtDate>
     <_requiredEffortTime>P12D</_requiredEffortTime>

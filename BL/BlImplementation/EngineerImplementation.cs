@@ -126,7 +126,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw new BLNotFoundException("engineer", id);
         }
-        if(_dal.Task.ReadAll(t => t._engineerId == id && t._completeDate == null).Count() != 0)
+        if(_dal.Task.ReadAll(t => t._engineerId == id).Count() != 0) //if he was working or finished one task:
         {
             throw new BLCannotDeleteHasTasksException(id); //if this did not thrown yet  it means that he has assigned task
         }
