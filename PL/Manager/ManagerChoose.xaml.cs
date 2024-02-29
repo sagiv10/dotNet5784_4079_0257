@@ -86,9 +86,7 @@ namespace PL.Manager
             }
         }
 
-        private void OpenGanttWindowClick(object sender, RoutedEventArgs e)
-        {
-            new ganttChart().ShowDialog();
-        }
+        private void OpenGanttWindowClick(object sender, RoutedEventArgs e) => new ganttChart().ShowDialog();
+     
     }
 }

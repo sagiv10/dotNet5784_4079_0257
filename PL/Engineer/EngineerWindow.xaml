@@ -78,7 +78,7 @@
         <Image Source="\Engineer\Photos\name.png"     Margin="237,10,224,10"  Grid.Row="1" Grid.ColumnSpan="2"/>
         <Image Source="\Engineer\Photos\email.png"    Margin="237,10,224,10"  Grid.Row="2" Grid.ColumnSpan="2"/>
         <Image Source="\Engineer\Photos\2163271.png"  Margin="237,10,224,10"  Grid.Row="3" Grid.ColumnSpan="2"/>
-        <Image Source="\Engineer\Photos\cost.png"     Margin="225,53,212,53"  Opacity="1" Grid.Row="3" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+        <Image Source="\Engineer\Photos\cost.png"     Margin="225,53,212,53"  Opacity="1" Grid.Row="3" Grid.ColumnSpan="2"/>
         <Image Source="\Engineer\Photos\3820241.png"  Margin="156,10,55,10"   Grid.Row="5"/>
         <!--Buttons:-->
         <Button Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="200,10,200,10" Content="{Binding Id,Mode=OneTime, Converter={StaticResource ConvertIdToContentKey}}" Click="btnAddUpdate_Click"/>

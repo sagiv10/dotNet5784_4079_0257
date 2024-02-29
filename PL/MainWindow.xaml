@@ -25,9 +25,9 @@
             <LineBreak/>
             <Run Text="{Binding ProjectCurrentDate, StringFormat='hh:mm:ss'}"/>
         </TextBlock>
-        <Button Content="Add week" Height="30" Click="AddWeekClick" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Margin="100,0,185,162" Grid.RowSpan="2" Width="75"/>
-        <Button Content="ResetClock" Height="30" Click="ResetClock" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Margin="275,0,10,162" Width="75" Grid.RowSpan="2" />
-        <Button Content="Add Day" Height="30" Click="AddDayClick" Grid.Row="1" VerticalAlignment="Bottom" Margin="10,0,275,162" Grid.RowSpan="2" Grid.Column="1" Width="75"/>
+        <Button Content="Add week" Height="30" Click="AddWeekClick" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Grid.RowSpan="2" Width="80" Margin="100,0,180,162"/>
+        <Button Content="ResetClock" Height="30" Click="ResetClock" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Margin="285,0,0,162" Width="75" Grid.RowSpan="2" />
+        <Button Content="Add Day" Height="30" Click="AddDayClick" Grid.Row="1" VerticalAlignment="Bottom" Margin="0,0,285,162" Grid.RowSpan="2" Grid.Column="1" Width="75"/>
         <Button Content="Add Month" Height="30" Click="AddMonthClick" Grid.Row="1" VerticalAlignment="Bottom" Margin="189,0,96,162" Grid.RowSpan="2" Grid.Column="1" Width="75" />
 
         <StackPanel Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="50" >
