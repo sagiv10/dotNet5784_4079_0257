@@ -151,7 +151,7 @@ internal class TaskImplementation : BlApi.ITask
             doTask._completeDate,
             doTask._deliverables,
             doTask._remarks,
-            CheckIfEngineerFromTaskIsExist(doTask._engineerId),
+            (doTask._completeDate != null)? null : CheckIfEngineerFromTaskIsExist(doTask._engineerId),
             (BO.EngineerExperience)doTask._complexity
         );
     }
@@ -191,7 +191,7 @@ internal class TaskImplementation : BlApi.ITask
         DO.Engineer? doEngineer = _dal.Engineer.Read((int)idOfEngineer!);//use read func from dal to get details of specific task
         if(doEngineer == null)
         {
-            throw new BLNotFoundException("task", (int)idOfEngineer!);
+            throw new BLNotFoundException("Engineer", (int)idOfEngineer!);
         }
         BO.EngineerInTask eng = new BO.EngineerInTask() { Id = (int)doEngineer!._id, Name = doEngineer._name };
         return eng;

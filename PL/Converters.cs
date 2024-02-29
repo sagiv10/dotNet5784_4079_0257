@@ -616,7 +616,7 @@ class ConvertTaskToColor : IValueConverter
         {
             return Brushes.Cyan; //color of not started yet
         }
-        if(0 < precent && precent <0.33) { //on the first third
+        if(0 <= precent && precent <0.33) { //on the first third
 
             return Brushes.Green; //color of on track
         }
