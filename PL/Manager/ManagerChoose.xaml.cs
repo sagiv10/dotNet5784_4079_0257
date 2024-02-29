@@ -75,7 +75,7 @@ namespace PL.Manager
 
         private void Schedile_Button(object sender, RoutedEventArgs e)
         {
-            if(Stage == BO.ProjectStatus.Sceduling)
+            if (Stage == BO.ProjectStatus.Sceduling)
             {
                 new ScheduleWindow().ShowDialog();
                 Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
@@ -87,8 +87,22 @@ namespace PL.Manager
                 Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
             }
         }
+        //three different buttons in the same place:
+        private void OpenGanttWindowClick(object sender, RoutedEventArgs e)
+        {
+            new ganttChart().ShowDialog();
+            Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
+        }
+        private void OpenScheduleClick(object sender, RoutedEventArgs e)
+        {
+            new ScheduleWindow().ShowDialog();
+            Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
+        }
+        private void OpenStartScheduleClick(object sender, RoutedEventArgs e)
+        {
+            new StartScheduleWindow().ShowDialog();
+            Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
 
-        private void OpenGanttWindowClick(object sender, RoutedEventArgs e) => new ganttChart().ShowDialog();
-     
+        }
     }
 }
