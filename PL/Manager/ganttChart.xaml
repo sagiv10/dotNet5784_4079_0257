@@ -46,6 +46,7 @@
                                 <ColumnDefinition Width="45"/>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Border BorderBrush="Black" BorderThickness="4" Margin="2">
@@ -73,6 +74,7 @@
                                     <ToolTip Content="{Binding Description}" />
                                 </Rectangle.ToolTip>
                             </Rectangle>
+                            <Ellipse Fill="Red" Width="10" Height="10"/>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

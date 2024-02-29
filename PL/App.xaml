@@ -26,7 +26,7 @@
         <local:ConvertCollectionToList x:Key="ToListKey"/>
         <local:ConvertTaskToBool x:Key="ConvertTaskToBoolKey"/>
         <local:ConvertTaskToBoolDeAssign x:Key="ConvertTaskToBoolDeAssignKey"/>
-        <local:ConvertStageToMessage x:Key="StageMessageKey"/>
+
         <local:ConvertTaskToVisability x:Key="TaskVisibilityKey"/>
         <local:ConvertMultiplyToWidth x:Key="ConvertMultiplyToWidthKey"/>
         <local:ConvertMultiplyAndFindStartTime x:Key="ConvertMultiplyAndFindStartTimeKey"/>
