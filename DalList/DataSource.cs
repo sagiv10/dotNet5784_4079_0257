@@ -20,8 +20,6 @@ internal static class DataSource
 
         internal static DateTime? startingDate = null;  
 
-        internal static DateTime? currentDate = null; 
-
         internal static int projectStatus = 1;
 
         /// <summary>

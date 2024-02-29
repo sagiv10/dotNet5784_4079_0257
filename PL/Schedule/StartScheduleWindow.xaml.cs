@@ -32,6 +32,7 @@ namespace PL.Schedule
             DependencyProperty.Register("ChosenDate", typeof(DateTime), typeof(StartScheduleWindow), new PropertyMetadata(null));
         public StartScheduleWindow()
         {
+            ChosenDate = s_bl.Clock; //the default value will be the clock time
             InitializeComponent();
         }
 

@@ -32,9 +32,6 @@
 
         <StackPanel Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="50" >
             <Label HorizontalAlignment="Center">what would you like to do?</Label>
-            <Button Content="Initialize Data" Margin="10" Click="InitializeButton"></Button>
-            <Button Content="Reset Data" Margin="10" Click="Reset"></Button>
-            <Button Content="Handle Engineers" Margin="10" Click="HandleEngineersButton"></Button>
             <StackPanel Orientation="Horizontal" Margin="10">
                 <Button Width="105" Click="ManagerPicked">Manager</Button>
                 <Button Content="Engineer" Width="105" Click="EngineerPicked"/>

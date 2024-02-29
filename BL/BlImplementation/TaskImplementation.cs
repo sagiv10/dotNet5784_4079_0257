@@ -10,7 +10,10 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 internal class TaskImplementation : BlApi.ITask
-{ 
+{
+    private readonly IBl _bl;
+    internal TaskImplementation(IBl bl) => _bl = bl;
+
     private DalApi.IDal _dal = DalApi.Factory.Get;//with this field we can access to the methods of task in dal. the way to use the method is being chosen inside factory.
     /// <summary>
     /// helping method to create new taskInList
@@ -498,19 +501,9 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
-    public DateTime? getCurrentDate()
-    {
-        return _dal.Project.GetCurrentDate();
-    }
-
-    public void SetCurrentDate(DateTime newDate)
-    {
-        _dal.Project.SetCurrentDate(newDate);
-    }
-
     public double GetPrecentage(int TaskId)
     { 
-        DateTime currentTime = (DateTime)_dal.Project.GetCurrentDate()!; //the time is not null right now because this function will be called only in the execution stage
+        DateTime currentTime = _bl.Clock!; //the time is not null right now because this function will be called only in the execution stage
         DO.Task theTask = _dal.Task.Read(TaskId)!;
         if (theTask._completeDate != null) //then it finished
         {

@@ -12,6 +12,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         /// <summary>
         /// the time to the clock
@@ -41,38 +42,9 @@ namespace PL
 
         public MainWindow()
         {
-            if(s_bl.Task.getCurrentDate() == null)
-            {
-                s_bl.Task.SetCurrentDate(DateTime.Now);
-            }
-            ProjectCurrentDate = (DateTime)s_bl.Task.getCurrentDate()!; //now the starting date will always exist
+
+            ProjectCurrentDate = s_bl.Clock; //now the starting date will always exist
             InitializeComponent();
-        }
-
-        private void InitializeButton(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("are you sure you want to initialize the data base?", //the messege
-                "Initialization confirm", //title
-                MessageBoxButton.YesNo) == MessageBoxResult.Yes) //if the user answered 'yes'
-            {
-                DalTest.Initialization.Do();
-                ProjectCurrentDate = (DateTime)s_bl.Task.getCurrentDate()!; //get the new time we got from the init function
-            }
-        }
-        private void Reset(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("are you sure you want to reset the data base?", //the messege
-                "Reset confirm", //title
-                MessageBoxButton.YesNo) == MessageBoxResult.Yes) //if the user answered 'yes'
-            {
-                DalTest.Initialization.Reset();
-                ProjectCurrentDate = (DateTime)s_bl.Task.getCurrentDate()!; //get the new time we got from the reset function
-            }
-        }
-
-        private void HandleEngineersButton(object sender, RoutedEventArgs e)
-        {
-            new EngineerListWindow().Show();
         }
 
         private void baruchHashem(object sender, RoutedEventArgs e)
@@ -83,6 +55,7 @@ namespace PL
         private void ManagerPicked(object sender, RoutedEventArgs e)
         {
             new ManagerChoose().ShowDialog();
+            ProjectCurrentDate = s_bl.Clock;
         }
         private void EngineerPicked(object sender, RoutedEventArgs e)
         {
@@ -92,22 +65,22 @@ namespace PL
         private void ResetClock(object sender, RoutedEventArgs e)
         {
             ProjectCurrentDate = DateTime.Now; //reset the clock to now
-            s_bl.Task.SetCurrentDate(ProjectCurrentDate);
+            s_bl.ResetClock(); //get the new time we got from the init function
         }
         private void AddWeekClick(object sender, RoutedEventArgs e)
         {
             ProjectCurrentDate = ProjectCurrentDate.AddDays(7); //add 7 days - week
-            s_bl.Task.SetCurrentDate(ProjectCurrentDate);
+            s_bl.AddWeek();
         }
         private void AddDayClick(object sender, RoutedEventArgs e)
         {
             ProjectCurrentDate = ProjectCurrentDate.AddDays(1); //add 1 day
-            s_bl.Task.SetCurrentDate(ProjectCurrentDate);
+            s_bl.AddDay();
         }
         private void AddMonthClick(object sender, RoutedEventArgs e)
         {
             ProjectCurrentDate = ProjectCurrentDate.AddMonths(1); //add 1 month
-            s_bl.Task.SetCurrentDate(ProjectCurrentDate);
+            s_bl.AddMonth();
         }
     }
 }

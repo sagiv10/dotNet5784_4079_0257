@@ -12,6 +12,8 @@ using System.Xml.Linq;
 
 internal class EngineerImplementation : BlApi.IEngineer
 {
+    private readonly IBl _bl;
+    internal EngineerImplementation(IBl bl) => _bl = bl;
     private DalApi.IDal _dal = DalApi.Factory.Get;
 
     /// <summary>
@@ -92,10 +94,6 @@ internal class EngineerImplementation : BlApi.IEngineer
         return !((from dep in _dal.Dependency.ReadAll(d => d._dependentTask == task._id)
                where _dal.Task.Read((int)dep._dependsOnTask!)!._completeDate == null
                select true).Any());
-    }
-    public DateTime ResetClock()
-    {
-        return DateTime.Now;
     }
     public void CreateEngineer(BO.Engineer newEngineer)
     {
@@ -260,7 +258,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         DO.Task assignedTask = theTask with
         {
             _engineerId = engineerId,
-            _startDate = theTask._startDate ?? DateTime.Now //if this is the first time we assigned this task then the startDate is now!!
+            _startDate = theTask._startDate ?? _bl.Clock //if this is the first time we assigned this task then the startDate is now!!
         };
         _dal.Task.Update(assignedTask);
     }
@@ -333,7 +331,7 @@ internal class EngineerImplementation : BlApi.IEngineer
         {
             throw new BLDoesNotHasTaskException(idOfEng);
         }
-        DO.Task doneTask = hisTask with { _completeDate = DateTime.Now};
+        DO.Task doneTask = hisTask with { _completeDate = _bl.Clock};
         _dal.Task.Update(doneTask);
     }
 }

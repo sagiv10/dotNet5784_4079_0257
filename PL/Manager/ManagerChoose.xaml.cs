@@ -58,6 +58,7 @@ namespace PL.Manager
             {
                 DalTest.Initialization.Do();
                 Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
+                s_bl.ResetClock();
             }
         }
         private void Reset(object sender, RoutedEventArgs e)
@@ -68,6 +69,7 @@ namespace PL.Manager
             {
                 DalTest.Initialization.Reset();
                 Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
+                s_bl.ResetClock();
             }
         }
 

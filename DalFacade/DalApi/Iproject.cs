@@ -23,13 +23,4 @@ public interface Iproject
     /// </summary>
     public DateTime? getStartingDate();
 
-    /// <summary>
-    /// helping method that change the dal-config xml file into the current time
-    /// </summary>
-    public void SetCurrentDate(DateTime? currentDate);
-
-    /// <summary>
-    /// helping method that gets the dal-config xml file into the current time
-    /// </summary>
-    public DateTime? GetCurrentDate();
-}
+ }

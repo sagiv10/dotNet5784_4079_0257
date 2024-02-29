@@ -8,9 +8,10 @@ public interface IBl
 
     #region
     public DateTime Clock { get; }
-    public void AddDays(int days);
-    public void AddWeeks(int days);
-    public void AddYear(int days);
+    public void AddDay();
+    public void AddWeek();
+    public void AddMonth();
+    public void AddYear();
     public void ResetClock();
     #endregion
 }

@@ -155,7 +155,7 @@ public partial class TaskWindow : Window
         if (id == 0)
         {
             Stage = true;
-            Task = new BO.Task(0, "", "", DateTime.Now ,BO.Status.Unscheduled,new List<BO.TaskInList>(),null, TimeSpan.FromDays(7), null,null,null,null,null,"","",null,BO.EngineerExperience.Beginner);
+            Task = new BO.Task(0, "", "", s_bl.Clock ,BO.Status.Unscheduled,new List<BO.TaskInList>(),null, TimeSpan.FromDays(7), null,null,null,null,null,"","",null,BO.EngineerExperience.Beginner);
         }
         else
         {

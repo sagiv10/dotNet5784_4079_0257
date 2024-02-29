@@ -15,7 +15,7 @@
             <ColumnDefinition Width="277*"/>
         </Grid.ColumnDefinitions>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="15" Text="pick a date to the start of the project:" VerticalAlignment="Top" Width="254" Height="21" Margin="10,21,0,0" Grid.ColumnSpan="3"/>
-        <DatePicker HorizontalAlignment="Left" Margin="189,21,0,40" Width="33" Grid.Column="2" Text="" SelectedDate="{Binding ChosenDate, Mode=OneWayToSource}"/>
+        <DatePicker HorizontalAlignment="Left" Margin="189,21,0,40" Width="33" Grid.Column="2" Text="" SelectedDate="{Binding ChosenDate, Mode=TwoWay}"/>
         
         <Button Grid.Column="2" Content="Confirm" HorizontalAlignment="Left" Height="25" Margin="63,63,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.504,0.455" Click="StartSchedule"/>
 

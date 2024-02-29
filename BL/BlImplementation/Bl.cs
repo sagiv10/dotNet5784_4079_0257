@@ -10,30 +10,35 @@ namespace BlImplementation
 {
     internal class Bl : IBl
     {
-        public IEngineer Engineer =>  new EngineerImplementation();
-        public ITask Task =>  new TaskImplementation();
-
+        public IEngineer Engineer => new EngineerImplementation(this);
+        public ITask Task => new TaskImplementation(this);//we dont use clock there
+        #region
         private static DateTime s_Clock = DateTime.Now.Date;
         public DateTime Clock { get { return s_Clock; } private set { s_Clock = value; } }
 
-        public void AddDays(int days)
+        public void AddDay()
         {
-            throw new NotImplementedException();
+            s_Clock = Clock.AddDays(1);
         }
 
-        public void AddWeeks(int days)
+        public void AddWeek()
         {
-            throw new NotImplementedException();
+            s_Clock = Clock.AddDays(7);
+        }
+        public void AddMonth()
+        {
+            s_Clock = Clock.AddMonths(1);
         }
 
-        public void AddYear(int days)
+        public void AddYear()
         {
-            throw new NotImplementedException();
+            s_Clock = Clock.AddYears(1);
         }
 
         public void ResetClock()
         {
-            throw new NotImplementedException();
+            s_Clock = DateTime.Now;
         }
+        #endregion
     }
 }
