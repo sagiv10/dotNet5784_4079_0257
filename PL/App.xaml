@@ -26,10 +26,11 @@
         <local:ConvertCollectionToList x:Key="ToListKey"/>
         <local:ConvertTaskToBool x:Key="ConvertTaskToBoolKey"/>
         <local:ConvertTaskToBoolDeAssign x:Key="ConvertTaskToBoolDeAssignKey"/>
-
         <local:ConvertTaskToVisability x:Key="TaskVisibilityKey"/>
         <local:ConvertMultiplyToWidth x:Key="ConvertMultiplyToWidthKey"/>
         <local:ConvertMultiplyAndFindStartTime x:Key="ConvertMultiplyAndFindStartTimeKey"/>
         <local:ConvertTaskToColor x:Key="TaskToColorKey"/>
+        <local:ConvertNotNullToVisibility x:Key="NotNullToVisibilityKey"/>
+        <local:ConvertDateToMargin x:Key="DateToMarginKey"/> 
     </Application.Resources>
 </Application>
