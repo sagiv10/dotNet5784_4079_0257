@@ -36,6 +36,8 @@
                 <Rectangle Height="20" Width="20" Fill="Red" Stroke="Black" StrokeThickness="2"></Rectangle>
                 <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="finished:" />
                 <Rectangle Height="20" Width="20" Fill="Magenta" Stroke="Black" StrokeThickness="2"></Rectangle>
+                <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="the time finished:" />
+                <Ellipse Height="20" Width="20" Fill="Black"></Ellipse>
             </StackPanel>
             <!--the tasks list and bars - the size is reletive to the days it should take-->
             <ItemsControl  Margin="0,50,0,0" Grid.Row="3" ItemsSource="{Binding TasksList}">
