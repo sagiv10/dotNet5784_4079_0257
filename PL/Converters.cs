@@ -653,3 +653,60 @@ class ConvertTaskToColor : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+
+class ConvertDateToMargin : IValueConverter
+{
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    /// <summary>
+    /// get the right Margin for each task
+    /// </summary>
+    /// <param name="value">the time should be bounded to the margin</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns> the margin </returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        DateTime startDate = (DateTime)s_bl.Task.getStartingDate()!;
+        DateTime? theDate = (DateTime?)value; //the time is not null because we are in the execution stage
+        if (theDate == null)
+        {
+            return new Thickness(0, 0, 0, 0);
+        }
+        else //then there is a finish date
+        {
+            int numDays = ((DateTime)theDate - startDate).Days + 2;
+            return new Thickness(numDays * 10, 0, 0, 0); //so the relate to the witdh will be 10/10
+        }
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertNotNullToVisibility : IValueConverter
+{
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    /// <summary>
+    /// if the item is null then the item will not be visible
+    /// </summary>
+    /// <param name="value">the time should be bounded to the margin</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns> bool </returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if(value == null)
+        {
+            return Visibility.Hidden;
+        }
+        return Visibility.Visible;
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}

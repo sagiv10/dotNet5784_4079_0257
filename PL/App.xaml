@@ -30,5 +30,7 @@
         <local:ConvertMultiplyToWidth x:Key="ConvertMultiplyToWidthKey"/>
         <local:ConvertMultiplyAndFindStartTime x:Key="ConvertMultiplyAndFindStartTimeKey"/>
         <local:ConvertTaskToColor x:Key="TaskToColorKey"/>
+        <local:ConvertNotNullToVisibility x:Key="NotNullToVisibilityKey"/>
+        <local:ConvertDateToMargin x:Key="DateToMarginKey"/> 
     </Application.Resources>
 </Application>
