@@ -1,59 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfEngineer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Engineer>
-    <_id>271516267</_id>
-    <_cost>29540.23</_cost>
+    <_id>259379894</_id>
+    <_cost>22810.36</_cost>
     <_email>reuven@gmail.com</_email>
     <_name>Reuven</_name>
     <_level>Beginner</_level>
     <_isActive>true</_isActive>
   </Engineer>
   <Engineer>
-    <_id>268055546</_id>
-    <_cost>15307.94</_cost>
+    <_id>317916813</_id>
+    <_cost>18573.69</_cost>
     <_email>shimon@gmail.com</_email>
     <_name>Shimon</_name>
     <_level>BetterBeginner</_level>
     <_isActive>true</_isActive>
   </Engineer>
   <Engineer>
-    <_id>357232749</_id>
-    <_cost>29727.06</_cost>
+    <_id>383354282</_id>
+    <_cost>23492.7</_cost>
     <_email>levi@gmail.com</_email>
     <_name>Levi</_name>
     <_level>Advanced</_level>
     <_isActive>true</_isActive>
   </Engineer>
   <Engineer>
-    <_id>227279611</_id>
-    <_cost>11968.12</_cost>
+    <_id>261187369</_id>
+    <_cost>29972.2</_cost>
     <_email>yehuda@gmail.com</_email>
     <_name>Yehuda</_name>
     <_level>Expert</_level>
     <_isActive>true</_isActive>
   </Engineer>
   <Engineer>
-    <_id>307589916</_id>
-    <_cost>10068.06</_cost>
+    <_id>380271350</_id>
+    <_cost>12939.45</_cost>
     <_email>yisachar@gmail.com</_email>
     <_name>Yisachar</_name>
     <_level>Master</_level>
     <_isActive>true</_isActive>
-  </Engineer>
-  <Engineer>
-    <_id>327147218</_id>
-    <_cost>35480.88</_cost>
-    <_email>reuven@gmail.com</_email>
-    <_name>Reuven</_name>
-    <_level>Beginner</_level>
-    <_isActive>false</_isActive>
-  </Engineer>
-  <Engineer>
-    <_id>385457733</_id>
-    <_cost>27215.37</_cost>
-    <_email>levi@gmail.com</_email>
-    <_name>Levi</_name>
-    <_level>Advanced</_level>
-    <_isActive>false</_isActive>
   </Engineer>
 </ArrayOfEngineer>

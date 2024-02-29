@@ -444,38 +444,6 @@ class ConvertCollectionToList : IValueConverter
     }
 }
 
-class ConvertStageToMessage : IValueConverter
-{
-    /// <summary>
-    /// return the proper nessage
-    /// </summary>
-    /// <param name="value">the currennt Stage</param>
-    /// <param name="targetType"></param>
-    /// <param name="parameter"></param>
-    /// <param name="culture"></param>
-    /// <returns>message</returns>
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        if((BO.ProjectStatus)value == BO.ProjectStatus.Planning)
-        {
-            return "Start scheduling tasks";
-        }
-        if ((BO.ProjectStatus)value == BO.ProjectStatus.Sceduling)
-        {
-            return "Schedule Task";
-        }
-        else
-        {
-            return "nulllllllllll";
-        }
-    }
-
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-}
-
 class ConvertExecutionToVisability : IValueConverter
 {
     /// <summary>
@@ -513,6 +481,30 @@ class ConvertPlanningToVisability : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if ((BO.ProjectStatus)value == BO.ProjectStatus.Planning)
+        {
+            return Visibility.Visible;
+        }
+        return Visibility.Hidden;
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertScheduleToVisability : IValueConverter
+{
+    /// <summary>
+    /// if we are at the Schedule stage then the button should not be visible
+    /// </summary>
+    /// <param name="value">the status</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if ((BO.ProjectStatus)value == BO.ProjectStatus.Sceduling)
         {
             return Visibility.Visible;
         }
@@ -572,7 +564,29 @@ class ConvertPlanningToNotVisability : IValueConverter
     }
 }
 
-
+class ConvertScheduleToNotVisability : IValueConverter
+{
+    /// <summary>
+    /// if we are at the Schedule stage then the button should not be invisible
+    /// </summary>
+    /// <param name="value">the status</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if ((BO.ProjectStatus)value == BO.ProjectStatus.Sceduling)
+        {
+            return Visibility.Hidden;
+        }
+        return Visibility.Visible;
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 
 class ConvertTaskToVisability : IValueConverter
 {

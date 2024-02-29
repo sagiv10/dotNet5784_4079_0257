@@ -24,9 +24,9 @@
             </TextBlock>
             <StackPanel  Orientation="Horizontal" Grid.Row="2">
                 <TextBlock HorizontalAlignment="Left" FontSize="20" Text="Colors:" FontStyle="Italic" Width="100"/>
-                <TextBlock  Margin="0,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="not started:" />
+                <TextBlock  Margin="0,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="not supposed to start:" />
                 <Rectangle Height="20" Width="20" Fill="Cyan" Stroke="Black" StrokeThickness="2"></Rectangle>
-                <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="on track:" />
+                <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="at the beggining of the time:" />
                 <Rectangle Height="20" Width="20" Fill="Green" Stroke="Black" StrokeThickness="2"></Rectangle>
                 <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="on the middle of the time:" />
                 <Rectangle Height="20" Width="20" Fill="Yellow" Stroke="Black" StrokeThickness="2"></Rectangle>
