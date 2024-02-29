@@ -43,7 +43,7 @@ namespace PL.Manager
         {
             StartDateOfProject = (DateTime)s_bl.Task.getStartingDate()!;
             //the making of taskList from list of TaskInList:
-            List<BO.TaskInList> TasksInList_Tasks = s_bl.Task.ReadAll().ToList();
+            List<BO.TaskInList> TasksInList_Tasks = s_bl.Task.ReadAllByDependencies();
             TasksList = (from tempTaskInList in TasksInList_Tasks
                         select s_bl.Task.Read(tempTaskInList.Id)).ToList();
             InitializeComponent();

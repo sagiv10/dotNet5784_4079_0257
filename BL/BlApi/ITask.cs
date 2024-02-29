@@ -160,4 +160,10 @@ public interface ITask
     /// <param name="TaskId"> the task's id </param>
     /// <returns>the precentage of the time has past</returns>
     public double GetPrecentage(int TaskId);
+
+    /// <summary>
+    /// read all the tasks by the dependencies order  - for the gunt
+    /// </summary>
+    /// <returns> the 'sorted' array</returns>
+    public List<BO.TaskInList> ReadAllByDependencies();
 }

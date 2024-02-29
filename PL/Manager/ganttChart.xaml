@@ -10,28 +10,44 @@
         WindowState="Maximized"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-    <Grid  >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+        <Grid  >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="40"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="Gantt Chart" HorizontalAlignment="Center" FontSize="24" Margin="0,10" Grid.Row="0"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Gantt Chart" HorizontalAlignment="Center" FontSize="24" Margin="0,10" Grid.Row="0"/>
             <TextBlock Grid.Row="1" HorizontalAlignment="Center" FontSize="24"  FontStyle="Italic">
                   <Run Text="Start Date:"/>
                   <Run Text="{Binding StartDateOfProject, Converter={StaticResource DateToStringConverter}}"/>
             </TextBlock>
-        <!--the tasks list and bars - the size is reletive to the days it should take-->
-            <ItemsControl  Grid.Row="2" ItemsSource="{Binding TasksList}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="45"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+            <StackPanel  Orientation="Horizontal" Grid.Row="2">
+                <TextBlock HorizontalAlignment="Left" FontSize="20" Text="Colors:" FontStyle="Italic" Width="100"/>
+                <TextBlock  Margin="0,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="not started:" />
+                <Rectangle Height="20" Width="20" Fill="Cyan" Stroke="Black" StrokeThickness="2"></Rectangle>
+                <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="on track:" />
+                <Rectangle Height="20" Width="20" Fill="Green" Stroke="Black" StrokeThickness="2"></Rectangle>
+                <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="on the middle of the time:" />
+                <Rectangle Height="20" Width="20" Fill="Yellow" Stroke="Black" StrokeThickness="2"></Rectangle>
+                <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="starting to be dangarous:" />
+                <Rectangle Height="20" Width="20" Fill="Orange" Stroke="Black" StrokeThickness="2"></Rectangle>
+                <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="to late:" />
+                <Rectangle Height="20" Width="20" Fill="Red" Stroke="Black" StrokeThickness="2"></Rectangle>
+                <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="finished:" />
+                <Rectangle Height="20" Width="20" Fill="Magenta" Stroke="Black" StrokeThickness="2"></Rectangle>
+            </StackPanel>
+            <!--the tasks list and bars - the size is reletive to the days it should take-->
+            <ItemsControl  Margin="0,50,0,0" Grid.Row="3" ItemsSource="{Binding TasksList}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="45"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding Id}" ToolTip="{Binding Description}"  Grid.Column="0" FontSize="18"/>
                             <Rectangle
                                    Grid.Column="1" 
@@ -40,25 +56,25 @@
                                    HorizontalAlignment="Left"
                                    Width="{Binding Path=ScheduledDate, Converter={StaticResource ConvertMultiplyAndFindStartTimeKey}}" 
                                    Height="20">
-                                   <Rectangle.ToolTip>
-                                            <ToolTip Content="{Binding Description}" />
-                                   </Rectangle.ToolTip>
+                                <Rectangle.ToolTip>
+                                    <ToolTip Content="{Binding Description}" />
+                                </Rectangle.ToolTip>
                             </Rectangle>
 
-                        <Rectangle Grid.Column="2" 
+                            <Rectangle Grid.Column="2" 
                                    Fill="{Binding Id, Converter={StaticResource TaskToColorKey}}"  
                                    Margin="2,0,0,0"
                                    HorizontalAlignment="Left"
                                    Width="{Binding Path=RequiredEffortTime.Days, Converter={StaticResource ConvertMultiplyToWidthKey}}" 
                                    Height="20">
-                                       <Rectangle.ToolTip>
-                <ToolTip Content="{Binding Description}" />
-           </Rectangle.ToolTip>
-</Rectangle>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </Grid>
+                                <Rectangle.ToolTip>
+                                    <ToolTip Content="{Binding Description}" />
+                                </Rectangle.ToolTip>
+                            </Rectangle>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
     </ScrollViewer>
 </Window>

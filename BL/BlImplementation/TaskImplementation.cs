@@ -10,8 +10,17 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 internal class TaskImplementation : BlApi.ITask
-{
+{ 
     private DalApi.IDal _dal = DalApi.Factory.Get;//with this field we can access to the methods of task in dal. the way to use the method is being chosen inside factory.
+    /// <summary>
+    /// helping method to create new taskInList
+    /// </summary>
+    /// <param name="task"> DO task </param>
+    /// <returns> the task as TaskInList </returns>
+    private BO.TaskInList MakeTaskInList(DO.Task task)
+    {
+        return new TaskInList(task._id, task._description, task._alias, (BO.Status)WhatStatus(task._scheduledDate, task._startDate, task._completeDate));
+    }
 
     /// <summary>
     /// reqursive helping method for the AutoScedule method
@@ -197,7 +206,7 @@ internal class TaskImplementation : BlApi.ITask
     {
         return (from dep in _dal.Dependency.ReadAll(d => d._dependentTask == idOfWantedTask)
                let theTask = _dal.Task.Read((int)dep._dependsOnTask!)
-               select new TaskInList(theTask._id, theTask._description, theTask._alias, (BO.Status)WhatStatus(theTask._scheduledDate, theTask._startDate, theTask._completeDate))).ToList();
+               select MakeTaskInList(theTask)).ToList();
 
     }
 
@@ -500,13 +509,17 @@ internal class TaskImplementation : BlApi.ITask
     }
 
     public double GetPrecentage(int TaskId)
-    {
+    { 
         DateTime currentTime = (DateTime)_dal.Project.GetCurrentDate()!; //the time is not null right now because this function will be called only in the execution stage
         DO.Task theTask = _dal.Task.Read(TaskId)!;
+        if (theTask._completeDate != null) //then it finished
+        {
+            return 2;
+        }
         DateTime scheduledTime = (DateTime)theTask._scheduledDate!;//the scheduled time is not null right now because this function will be called only in the execution stage
         if (currentTime < scheduledTime) //if the task was nott supposed to start
         {
-            return 0;
+            return -1;
         }
         DateTime forcastTime = scheduledTime + theTask._requiredEffortTime;
         if (currentTime > forcastTime) //the task was supposed to end
@@ -515,6 +528,39 @@ internal class TaskImplementation : BlApi.ITask
         }
         double requiredDays = (theTask._requiredEffortTime).Days, passedDays = (currentTime - scheduledTime).Days;
         return passedDays / requiredDays;  //days that has past / days that the task has
+    }
+
+    public List<BO.TaskInList> ReadAllByDependencies()
+    {
+        List<BO.TaskInList> sortedList = new List<BO.TaskInList>();
+        List<BO.TaskInList> tempTasks = (from task in _dal.Task.ReadAll()     //all the task
+                                         where !((_dal.Dependency.ReadAll(d => d._dependentTask == task._id)).Any()) //all the task that nothing depends on them
+                                         select MakeTaskInList(task)).ToList(); //get all the 'basic' tasks
+        BO.TaskInList temp;
+        while(tempTasks.Count > 0)
+        {
+            temp = tempTasks[0];
+            tempTasks.RemoveAt(0);
+            if (!sortedList.Any(t => t.Id == temp.Id)) //if we haven't handlled this task before 
+            {
+                bool flag = true;
+                foreach(var dependsOnTask in GetDependenciesFromDal(temp.Id)) { //check if all the previous tasks has alredy entered to the list
+                    if (!sortedList.Any(t=>t.Id == dependsOnTask.Id)) //if we haven't handeled this task alredy - then it should be handled before
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag == true)
+                {
+                    //add all the tasks that depends on him to the 'handle' array
+                    tempTasks.AddRange((from DO.Dependency dep in _dal.Dependency.ReadAll(d => d._dependsOnTask == temp.Id)
+                                        select MakeTaskInList(_dal.Task.Read((int)dep._dependentTask!)!)).ToList());
+                    sortedList.Add(temp);
+                }
+            }
+        }
+        return sortedList;
     }
 }
 

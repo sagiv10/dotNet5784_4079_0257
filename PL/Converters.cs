@@ -612,18 +612,27 @@ class ConvertTaskToColor : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         double precent = s_bl.Task.GetPrecentage((int)value);
-        if(0 <= precent && precent <0.33) {
-            return Brushes.Green;
-        }
-        if (0.33 <= precent && precent < 0.66)
+        if(precent < 0) //hasn't started yet
         {
-            return Brushes.Yellow;
+            return Brushes.Cyan; //color of not started yet
         }
-        if (0.66 <= precent && precent < 1)
+        if(0 < precent && precent <0.33) { //on the first third
+
+            return Brushes.Green; //color of on track
+        }
+        if (0.33 <= precent && precent < 0.66) //on the second third
         {
-            return Brushes.Orange;
+            return Brushes.Yellow; //color of getting dangerous
         }
-        return Brushes.Red;
+        if (0.66 <= precent && precent < 1) //on the third third
+        {
+            return Brushes.Orange; //color of dangerous
+        }
+        if(precent == 1) //way out of track
+        {
+            return Brushes.Red; //color of to late
+        }
+        return Brushes.Magenta; //color of to late
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
