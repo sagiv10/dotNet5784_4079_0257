@@ -15,7 +15,7 @@
             <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
         <Label HorizontalAlignment="Center" Grid.Row="0" Content="enter the engineer's id:"></Label>
-        <TextBox HorizontalAlignment="Center" Width="230" Grid.Row="1" Text="{Binding Id, Converter={StaticResource IntStringKey}}"></TextBox>
+        <TextBox HorizontalAlignment="Center" Width="230" Grid.Row="1" Text="{Binding Id}"></TextBox>
         <Grid Grid.Row="2" Margin="0,20,0,0" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition ></ColumnDefinition>

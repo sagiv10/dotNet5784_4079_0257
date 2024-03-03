@@ -555,6 +555,12 @@ internal class TaskImplementation : BlApi.ITask
         }
         return sortedList;
     }
+
+    public int ParseToInt(string integer, string field)
+    {
+        int finalNum;
+        return int.TryParse(integer, out finalNum ) ? finalNum : throw new BO.BLWrongInputException("you entered wrong input when number should be entered to " + field + "!");
+    }
 }
 
 

@@ -55,7 +55,14 @@ namespace PL.Task
 
         public AddRemoveDependency(bool _isAdd = false) //if id==0 -> add, else -> remove.             
         {
-            ListOfAllTasksRightNow = s_bl.Task.GetAllTasks();
+            try
+            {
+                ListOfAllTasksRightNow = s_bl.Task.GetAllTasks();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             InitializeComponent();
             IsAdd = _isAdd;
         }

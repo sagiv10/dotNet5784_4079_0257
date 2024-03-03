@@ -113,14 +113,14 @@ public partial class TaskWindow : Window
         DependencyProperty.Register("WeeksRange", typeof(List<int>), typeof(TaskWindow), new PropertyMetadata(null));
 
     //to save the deleted dependencies
-    public int NumMonths
+    public string NumMonths
     {
-        get { return (int)GetValue(NumMonthsProperty); }
+        get { return (string)GetValue(NumMonthsProperty); }
         set { SetValue(NumMonthsProperty, value); }
     }
     // Using a DependencyProperty as the backing store for Task.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty NumMonthsProperty =
-        DependencyProperty.Register("NumMonths", typeof(int), typeof(TaskWindow), new PropertyMetadata(null));
+        DependencyProperty.Register("NumMonths", typeof(string), typeof(TaskWindow), new PropertyMetadata(null));
 
     //to save the deleted dependencies
     public int NumDays
@@ -150,7 +150,7 @@ public partial class TaskWindow : Window
         DaysRange = Enumerable.Range(0, 7).ToList();
         WeeksRange = Enumerable.Range(0, 4).ToList();
         NumDays = 7;
-        NumMonths = 0;
+        NumMonths = "0";
         NumWeeks = 0;
         if (id == 0)
         {
@@ -188,7 +188,9 @@ public partial class TaskWindow : Window
         {
             try
             {
-                Task.RequiredEffortTime = TimeSpan.FromDays(NumDays + NumMonths * 30 + NumWeeks * 7);
+                int RealNumMonths = -1; //the number the month will be
+
+                Task.RequiredEffortTime = TimeSpan.FromDays(NumDays + s_bl.Task.ParseToInt(NumMonths, "month number") * 30 + NumWeeks * 7);
                 int newId = s_bl.Task.Create(Task);
 
                 int ifAdded = s_bl.Task.AddDependencies(NewDependsOnTasks, newId, NewDependsOnTasks.Count);
