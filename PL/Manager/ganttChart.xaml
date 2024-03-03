@@ -12,9 +12,10 @@
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <Grid ShowGridLines="True" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="30"/>
+                <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Gantt Chart" HorizontalAlignment="Center" FontSize="24" Margin="0,10" Grid.Row="0"/>
@@ -39,8 +40,12 @@
                 <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="the time finished:" />
                 <Ellipse Height="20" Width="20" Fill="Black"></Ellipse>
             </StackPanel>
+            <Image Source="C:\Users\User\Desktop\minip\dotNet5784_4079_0257\PL\Engineer\Photos\sign.jpg"
+       Margin="{Binding Path=CurrentDate, Converter={StaticResource DateToMarginUpdateKey}}"
+       Grid.Row="3" HorizontalAlignment="Left" Width="50" Height="50"/>
+
             <!--the tasks list and bars - the size is reletive to the days it should take-->
-            <ItemsControl  Margin="0,50,0,0" Grid.Row="3" ItemsSource="{Binding TasksList}">
+            <ItemsControl  Grid.Row="4" ItemsSource="{Binding TasksList}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="5">
@@ -60,7 +65,19 @@
                                    Width="{Binding Path=RequiredEffortTime.Days, Converter={StaticResource ConvertMultiplyToWidthKey}}" 
                                    Height="20">
                                 <Rectangle.ToolTip>
-                                    <ToolTip Content="{Binding Description}" />
+                                    <ToolTip>
+                                        <ToolTip.Content>
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0} and the schedule date is: {1}">
+                                                        <Binding Path="Description" />
+                                                        <Binding Path="ScheduledDate" Converter="{StaticResource DateToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </ToolTip.Content>
+                                    </ToolTip>
+
                                 </Rectangle.ToolTip>
                             </Rectangle>
                             <Ellipse Visibility="{Binding Path=CompleteDate, Converter={StaticResource NotNullToVisibilityKey}}" Grid.Column="1" Margin="{Binding Path=CompleteDate, Converter={StaticResource DateToMarginKey}}" HorizontalAlignment="Left" Fill="Black" Width="10" Height="10"/>

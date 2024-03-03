@@ -685,6 +685,38 @@ class ConvertDateToMargin : IValueConverter
         throw new NotImplementedException();
     }
 }
+class ConvertDateToMarginUpdate : IValueConverter
+{
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    /// <summary>
+    /// get the right Margin for each task
+    /// </summary>
+    /// <param name="value">the time should be bounded to the margin</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns> the margin </returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        DateTime startDate = (DateTime)s_bl.Task.getStartingDate()!;
+        DateTime? theDate = (DateTime?)value; //the time is not null because we are in the execution stage
+        if (theDate == null)
+        {
+            return new Thickness(0, 0, 0, 0);
+        }
+        else 
+        {
+            int numDays = ((DateTime)theDate - startDate).Days + 4;//8 to save the scale same as the margin of the rectangles
+            return new Thickness(numDays * 15, 0, 0, 0); //so the relate to the witdh will be 15/15
+        }
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+    
+}
+
 
 class ConvertNotNullToVisibility : IValueConverter
 {

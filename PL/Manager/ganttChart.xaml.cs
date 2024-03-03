@@ -1,4 +1,5 @@
-﻿using PL.Engineer;
+﻿using BlApi;
+using PL.Engineer;
 using PL.Task;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ namespace PL.Manager
     public partial class ganttChart : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        
+
 
         public List<BO.Task> TasksList
         {
@@ -39,8 +42,17 @@ namespace PL.Manager
         // Using a DependencyProperty as the backing store for Engineer.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty StartDateOfProjectProperty =
         DependencyProperty.Register("StartDateOfProject", typeof(DateTime), typeof(ganttChart), new PropertyMetadata(null));
+        public DateTime CurrentDate
+        {
+            get { return (DateTime)GetValue(CurrentDateProperty); }
+            set { SetValue(CurrentDateProperty, value); }
+        }
+        // Using a DependencyProperty as the backing store for Engineer.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty CurrentDateProperty =
+        DependencyProperty.Register("CurrentDate", typeof(DateTime), typeof(ganttChart), new PropertyMetadata(null));
         public ganttChart()
         {
+            CurrentDate = s_bl.Clock;
             StartDateOfProject = (DateTime)s_bl.Task.getStartingDate()!;
             //the making of taskList from list of TaskInList:
             List<BO.TaskInList> TasksInList_Tasks = s_bl.Task.ReadAllByDependencies();
@@ -48,13 +60,6 @@ namespace PL.Manager
                         select s_bl.Task.Read(tempTaskInList.Id)).ToList();
             InitializeComponent();
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-        }
-
-        private void ShowDetailsOfTaskClick(object sender, MouseButtonEventArgs e)
-        {
-            //Button button = sender as Button;
-            //BO.Task SpecificTaskFromList = button?.CommandParameter as BO.Task;
-            //new TaskWindow(SpecificTaskFromList.Id);
         }
     }
 }
