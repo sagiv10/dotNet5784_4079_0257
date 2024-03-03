@@ -21,17 +21,17 @@ namespace PL.Engineer
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-        public int Id
+        public string Id
         {
-            get { return (int)GetValue(IdProperty); }
+            get { return (string)GetValue(IdProperty); }
             set { SetValue(IdProperty, value); }
         }
         // Using a DependencyProperty as the backing store for Engineer.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IdProperty =
-            DependencyProperty.Register("Engineer", typeof(int), typeof(EngineerIdEntering), new PropertyMetadata(null));
+            DependencyProperty.Register("Engineer", typeof(string), typeof(EngineerIdEntering), new PropertyMetadata(null));
         public EngineerIdEntering()
         {
-            Id = 0;
+            Id = "0";
             InitializeComponent();
         }
         private void CloseWindow(object sender, RoutedEventArgs e)
@@ -42,8 +42,9 @@ namespace PL.Engineer
         {
             try
             {
-                s_bl.Engineer.ReadEngineer(Id);
-                new EngineerMenu(Id).Show();
+                int realId = s_bl.Task.ParseToInt(Id, "Id");
+                s_bl.Engineer.ReadEngineer(realId);
+                new EngineerMenu(realId).Show();
                 this.Close();
             }
             catch (Exception ex)

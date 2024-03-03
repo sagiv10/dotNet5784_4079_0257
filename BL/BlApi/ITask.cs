@@ -156,4 +156,11 @@ public interface ITask
     /// </summary>
     /// <returns> the 'sorted' array</returns>
     public List<BO.TaskInList> ReadAllByDependencies();
+
+    /// <summary>
+    /// transform string into number, if the string is wrong then it throw exception with yhe wrong filled field
+    /// </summary>
+    /// <returns> the right int</returns>
+    /// <exception cref="BO.BLWrongIdException"></exception>
+    public int ParseToInt(string integer, string field);
 }

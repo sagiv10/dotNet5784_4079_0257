@@ -90,11 +90,25 @@ namespace PL.Task
         }
         private void addDependencyClick(object sender, RoutedEventArgs e) 
         {
-            new AddRemoveDependency(true/*indicates we are in add mode*/).ShowDialog();//open the window of the add of dependency
+            if (TaskInList_List.Count() == 0) //if there is no tasks in the database
+            {
+                MessageBox.Show("there is no tasks to create dependencies for!", "no task error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                new AddRemoveDependency(true/*indicates we are in add mode*/).ShowDialog();//open the window of the add of dependency
+            }
         }
         private void removeDependencyClick(object sender, RoutedEventArgs e)
         {
-            new AddRemoveDependency(false/*indicates we are in remove mode*/).ShowDialog();//open the window of the remove of dependency
+            if(TaskInList_List.Count() == 0) //if there is no tasks in the database
+            {
+                MessageBox.Show("there is no tasks to delete their dependencies!", "no task error", MessageBoxButton.OK, MessageBoxImage.Error);  
+            }
+            else
+            {
+                new AddRemoveDependency(false/*indicates we are in remove mode*/).ShowDialog();//open the window of the remove of dependency
+            }
         }
 
         //delete an task in case the user pressed on his button

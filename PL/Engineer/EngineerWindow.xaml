@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        DataContext="{Binding Engineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="EngineerWindow" Height="350" Width="500">
     <Window.Resources>
         <local:RealComplexityLevelCollection x:Key="ComplexityLevelCollectionKey" />
@@ -67,11 +67,11 @@
         VerticalAlignment="Center" Width="120"
         HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"
         -->
-        <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource TextBoxStyle}" IsEnabled="{Binding  Path=Id, Mode=OneTime, Converter={StaticResource IdBoolKey}}" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" />
-        <TextBox Grid.Column="1" Grid.Row="1" Style="{StaticResource TextBoxStyle}" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" />
-        <TextBox Grid.Column="1" Grid.Row="2" Style="{StaticResource TextBoxStyle}" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" FontSize="15" Margin="0,15,0,14" Width="184"/>
+        <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource TextBoxStyle}" IsEnabled="{Binding  Engineer.Id, Mode=OneTime, Converter={StaticResource IdBoolKey}}" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" />
+        <TextBox Grid.Column="1" Grid.Row="1" Style="{StaticResource TextBoxStyle}" Text="{Binding Engineer.Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" />
+        <TextBox Grid.Column="1" Grid.Row="2" Style="{StaticResource TextBoxStyle}" Text="{Binding Engineer.Email, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" FontSize="15" Margin="0,15,0,14" Width="184"/>
         <ComboBox Grid.Column="1" Grid.Row="3" Style="{StaticResource ComboBoxStyle}" ItemsSource="{Binding Source={StaticResource ComplexityLevelCollectionKey}}" 
-         SelectedValue="{Binding Level , Mode=TwoWay, NotifyOnValidationError=true,ValidatesOnExceptions=true}"  />
+         SelectedValue="{Binding Engineer.Level , Mode=TwoWay, NotifyOnValidationError=true,ValidatesOnExceptions=true}"  />
         <TextBox Grid.Column="1" Grid.Row="4" Style="{StaticResource TextBoxStyle}" Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  />
         <!--ICONS:-->
         <Image Source="\Engineer\Photos\id.png"       Margin="237,10,224,10"  Grid.Row="0" Grid.ColumnSpan="2"/>
@@ -81,6 +81,6 @@
         <Image Source="\Engineer\Photos\cost.png"     Margin="225,53,212,53"  Opacity="1" Grid.Row="3" Grid.ColumnSpan="2"/>
         <Image Source="\Engineer\Photos\3820241.png"  Margin="156,10,55,10"   Grid.Row="5"/>
         <!--Buttons:-->
-        <Button Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="200,10,200,10" Content="{Binding Id,Mode=OneTime, Converter={StaticResource ConvertIdToContentKey}}" Click="btnAddUpdate_Click"/>
+        <Button Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="200,10,200,10" Content="{Binding Engineer.Id,Mode=OneTime, Converter={StaticResource ConvertIdToContentKey}}" Click="btnAddUpdate_Click"/>
     </Grid>
 </Window>
