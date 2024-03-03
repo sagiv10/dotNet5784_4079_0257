@@ -164,7 +164,7 @@ class ConvertMultiplyToWidth : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return (int)value*10;
+        return (int)value*15;
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -178,7 +178,7 @@ class ConvertMultiplyAndFindStartTime : IValueConverter
     {
         DateTime startDate = (DateTime)s_bl.Task.getStartingDate()!;
         DateTime currentScheduled = (DateTime)value;
-        return ((currentScheduled-startDate).Days*10)!;//value=scheduledTime;
+        return ((currentScheduled-startDate).Days*15)!;//value=scheduledTime;
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -677,7 +677,7 @@ class ConvertDateToMargin : IValueConverter
         else //then there is a finish date
         {
             int numDays = ((DateTime)theDate - startDate).Days + 2;
-            return new Thickness(numDays * 10, 0, 0, 0); //so the relate to the witdh will be 10/10
+            return new Thickness(numDays * 15, 0, 0, 0); //so the relate to the witdh will be 15/15
         }
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

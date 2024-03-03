@@ -33,7 +33,7 @@ internal class TaskImplementation : BlApi.ITask
     private void autoSceduleTask(int taskId, DateTime formerForcastDate)
     {
         DO.Task theTask = _dal.Task.Read(taskId)!;
-        if (theTask._scheduledDate == null || formerForcastDate > theTask._scheduledDate) 
+        if (theTask._scheduledDate == null || formerForcastDate >= theTask._scheduledDate) 
         {
             DO.Task sceduledTask;
             sceduledTask = theTask with { _scheduledDate = formerForcastDate}; //when the new suggested date is later the previous one or when there is no previous one
