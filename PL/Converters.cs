@@ -742,3 +742,32 @@ class ConvertNotNullToVisibility : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+class ConvertDataToMessage : IValueConverter
+{
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    /// <summary>
+    ///returns the right message to the user
+    /// </summary>
+    /// <param name="value">the task</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        BO.Task task = s_bl.Task.Read(((int)value)); //get the task
+        string message = "";
+        message += task.Alias + "\n"; //add to the message the alias and dates
+        message += task.ScheduledDate.ToString() + " - " + task.ForecastDate.ToString();
+        if(task.CompleteDate != null) //if he has a complete date  -then add it too
+        {
+            message += "\nended at: " + task.CompleteDate.ToString();
+        }
+        return message;
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}

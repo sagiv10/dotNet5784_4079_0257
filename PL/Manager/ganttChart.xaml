@@ -67,13 +67,7 @@
                                 <Rectangle.ToolTip>
                                     <ToolTip>
                                         <ToolTip.Content>
-                                            <TextBlock>
-                                                <TextBlock.Text>
-                                                    <MultiBinding StringFormat="{}{0} and the schedule date is: {1}">
-                                                        <Binding Path="Description" />
-                                                        <Binding Path="ScheduledDate" Converter="{StaticResource DateToStringConverter}" />
-                                                    </MultiBinding>
-                                                </TextBlock.Text>
+                                            <TextBlock Text="{Binding Path =Id, Converter={StaticResource AliasDatesStringKey}}">
                                             </TextBlock>
                                         </ToolTip.Content>
                                     </ToolTip>

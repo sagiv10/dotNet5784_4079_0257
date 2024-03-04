@@ -33,5 +33,6 @@
         <local:ConvertNotNullToVisibility x:Key="NotNullToVisibilityKey"/>
         <local:ConvertDateToMargin x:Key="DateToMarginKey"/>
         <local:ConvertDateToMarginUpdate x:Key="DateToMarginUpdateKey"/>
+        <local:ConvertDataToMessage x:Key="AliasDatesStringKey"/>
     </Application.Resources>
 </Application>
