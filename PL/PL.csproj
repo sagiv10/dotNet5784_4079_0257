@@ -16,16 +16,24 @@
   <ItemGroup>
     <None Remove="Engineer\Photos\2163271.png" />
     <None Remove="Engineer\Photos\3820241.png" />
+    <None Remove="Engineer\Photos\cost.png" />
     <None Remove="Engineer\Photos\email.png" />
+    <None Remove="Engineer\Photos\here.png" />
+    <None Remove="Engineer\Photos\id.png" />
     <None Remove="Engineer\Photos\money-bag-and-dollar-coin-icon-vector-26836619-removebg-preview.png" />
     <None Remove="Engineer\Photos\name.png" />
+    <None Remove="Engineer\Photos\sign.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Engineer\Photos\2163271.png" />
     <Resource Include="Engineer\Photos\3820241.png" />
+    <Resource Include="Engineer\Photos\cost.png" />
     <Resource Include="Engineer\Photos\email.png" />
+    <Resource Include="Engineer\Photos\here.png" />
+    <Resource Include="Engineer\Photos\id.png" />
     <Resource Include="Engineer\Photos\name.png" />
+    <Resource Include="Engineer\Photos\sign.jpg" />
   </ItemGroup>
 
   <ItemGroup>

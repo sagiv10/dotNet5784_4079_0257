@@ -15,7 +15,7 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Gantt Chart" HorizontalAlignment="Center" FontSize="24" Margin="0,10" Grid.Row="0"/>
@@ -40,11 +40,11 @@
                 <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="the time finished:" />
                 <Ellipse Height="20" Width="20" Fill="Black"></Ellipse>
             </StackPanel>
-            <Image Source="..\PL\Engineer\Photos\sign.jpg"
+            <Image Source="\Engineer\Photos\here.png"
        Margin="{Binding Path=CurrentDate, Converter={StaticResource DateToMarginUpdateKey}}"
-       Grid.Row="3" HorizontalAlignment="Left" Width="50" Height="50"/>
+       Grid.Row="3" HorizontalAlignment="Left" Width="60" Height="60"/>
 
-            <!--the tasks list and bars - the size is reletive to the days it should take-->
+            <!--the tasks list and bars - the size is reletive to the days it should take-->    
             <ItemsControl  Grid.Row="4" ItemsSource="{Binding TasksList}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
