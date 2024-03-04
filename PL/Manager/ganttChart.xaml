@@ -40,7 +40,7 @@
                 <TextBlock Margin="20,0,5,0" HorizontalAlignment="Left" FontSize="20" Text="the time finished:" />
                 <Ellipse Height="20" Width="20" Fill="Black"></Ellipse>
             </StackPanel>
-            <Image Source="C:\Users\User\Desktop\minip\dotNet5784_4079_0257\PL\Engineer\Photos\sign.jpg"
+            <Image Source="..\PL\Engineer\Photos\sign.jpg"
        Margin="{Binding Path=CurrentDate, Converter={StaticResource DateToMarginUpdateKey}}"
        Grid.Row="3" HorizontalAlignment="Left" Width="50" Height="50"/>
 
