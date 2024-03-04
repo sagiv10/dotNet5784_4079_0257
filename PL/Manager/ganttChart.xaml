@@ -74,7 +74,16 @@
 
                                 </Rectangle.ToolTip>
                             </Rectangle>
-                            <Ellipse Visibility="{Binding Path=CompleteDate, Converter={StaticResource NotNullToVisibilityKey}}" Grid.Column="1" Margin="{Binding Path=CompleteDate, Converter={StaticResource DateToMarginKey}}" HorizontalAlignment="Left" Fill="Black" Width="10" Height="10"/>
+                            <Ellipse Visibility="{Binding Path=CompleteDate, Converter={StaticResource NotNullToVisibilityKey}}" Grid.Column="1" Margin="{Binding Path=CompleteDate, Converter={StaticResource DateToMarginKey}}" HorizontalAlignment="Left" Fill="Black" Width="10" Height="10">
+                                <Ellipse.ToolTip>
+                                    <ToolTip>
+                                        <ToolTip.Content>
+                                            <TextBlock Text="{Binding Path =CompleteDate}">
+                                            </TextBlock>
+                                        </ToolTip.Content>
+                                    </ToolTip>
+                                </Ellipse.ToolTip>
+                            </Ellipse>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
