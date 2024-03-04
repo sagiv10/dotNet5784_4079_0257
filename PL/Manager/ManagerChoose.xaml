@@ -6,28 +6,54 @@
         mc:Ignorable="d"
         DataContext="{Binding Stage, RelativeSource={RelativeSource Mode=Self}}"
         Title="ManagerChoose" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="CircleButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2335DC" />
+            <Setter Property="Foreground" Value="#79E9DF" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Window.Background>
         <ImageBrush ImageSource="\Engineer\Photos\open.jpg" Stretch="UniformToFill"/>
     </Window.Background>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="120*"/>
-            <RowDefinition Height="120*"/>
+            <RowDefinition Height="240*"/>
             <RowDefinition Height="120*"/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="1" Grid.Column="0" Margin="10" Click="ShowEngineerList"  Height="40" Width="200">EngineerListWindow</Button>
-        <Image Source="\Engineer\Photos\engineerList.png" Margin="-62,39,214,39"  Grid.Row="1"/>
-        <Button Grid.Row="1" Grid.Column="1" Margin="10" Click="ShowTaskList"  Height="40" Width="100"   >TaskListWindow</Button>
-        <Button  Grid.Row="0" Grid.Column="0" Content="Initialize Data" Margin="10" Click="InitializeButton"  Height="40" Width="100"></Button>
-        <Button  Grid.Row="0" Grid.Column="1" Content="Reset Data" Margin="10" Click="Reset"  Height="40" Width="100"></Button>
-        <Button  Grid.Row="2" Grid.Column="0" Content="start schedule" Visibility="{Binding Converter={StaticResource PlanningStageVisibilityKey}}" Margin="10" Click="OpenStartScheduleClick"  Height="40" Width="100"></Button>
-        <Button  Grid.Row="2" Grid.Column="0" Content="schedule" Visibility="{Binding Converter={StaticResource ExequtionStageinVisibilityKey}}" Margin="10" Click="OpenScheduleClick"  Height="40" Width="100" ></Button>
-        <Button  Grid.Row="2" Grid.Column="0" Content="Gantt Chart" Visibility="{Binding Converter={StaticResource ExequtionStageVisibilityKey}}" Margin="10" Click="OpenGanttWindowClick"  Height="40" Width="100"></Button>
-        <Image Source="\Engineer\Photos\ganttIcon.png" Margin="-17,40,169,40"  Grid.Row="2"/>
+        <Button Grid.Column="0" Margin="162,217,438,32" Click="ShowEngineerList"  Style="{StaticResource CircleButtonStyle}">EngineerListWindow</Button>
+        <Image Source="\Engineer\Photos\engineerList.png" Margin="91,201,643,18" Grid.Column="0"/>
+        <Button Margin="560,217,120,32" Click="ShowTaskList" Style="{StaticResource CircleButtonStyle}">TaskListWindow</Button>
+        <Image Source="\Engineer\Photos\taskList.png" Margin="486,203,240,18"/>
+        <Button  Grid.Row="0" Grid.Column="0" Content="Initialize Data" Margin="560,111,140,135" Click="InitializeButton" Style="{StaticResource CircleButtonStyle}" ></Button>
+        <Image Source="\Engineer\Photos\initialize.png" Margin="136,94,608,132"  Grid.Row="0" Grid.Column="0"/>
+        <Button  Grid.Row="0" Content="Reset Data" Margin="197,106,482,145" Click="Reset"  Style="{StaticResource CircleButtonStyle}"/>
+        <Image Source="\Engineer\Photos\resetData.png" Margin="502,55,245,79"  Grid.Row="0"/>
+        <Button  Grid.Row="1" Grid.Column="0" Content="start schedule" Visibility="{Binding Converter={StaticResource PlanningStageVisibilityKey}}" Margin="367,49,314,58" Click="OpenStartScheduleClick" Style="{StaticResource CircleButtonStyle}" ></Button>
+        <Button  Grid.Row="1" Grid.Column="0" Content="schedule" Visibility="{Binding Converter={StaticResource ExequtionStageinVisibilityKey}}" Margin="367,49,314,58" Click="OpenScheduleClick" Style="{StaticResource CircleButtonStyle}"  ></Button>
+        <Button  Grid.Row="1" Grid.Column="0" Content="Gantt Chart" Visibility="{Binding Converter={StaticResource ExequtionStageVisibilityKey}}" Margin="367,48,314,59" Click="OpenGanttWindowClick" Style="{StaticResource CircleButtonStyle}" ></Button>
+        <Image Source="\Engineer\Photos\ganttIcon.png" Margin="292,35,421,45"  Grid.Row="1" Visibility="{Binding Converter={StaticResource ExequtionStageVisibilityKey}}"/>
 
     </Grid>
 </Window>
