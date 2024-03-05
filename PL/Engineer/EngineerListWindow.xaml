@@ -4,12 +4,134 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
-    mc:Ignorable="d"
+    mc:Ignorable="d" 
         Title="EngineerListWindow" Height="640" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
+        <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Background" Value="#2335DC"/>
+            <Setter Property="Foreground" Value="DarkRed"/>
+            <Setter Property="BorderBrush" Value="#2335DC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="6,3,6,3"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                            <Grid>
+                                <ToggleButton x:Name="ToggleButton" 
+                                              Grid.Column="1"
+                                              Focusable="false"
+                                              IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                              ClickMode="Press"/>
+                                <ContentPresenter x:Name="ContentSite"
+                                                  IsHitTestVisible="False"
+                                                  Content="{TemplateBinding SelectionBoxItem}"
+                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                  Margin="6,3,6,3"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left">
+                                    <ContentPresenter.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                        </Style>
+                                    </ContentPresenter.Resources>
+                                </ContentPresenter>
+                                <Popup x:Name="Popup"
+                                       Placement="Bottom"
+                                       IsOpen="{TemplateBinding IsDropDownOpen}"
+                                       AllowsTransparency="True"
+                                       Focusable="False"
+                                       PopupAnimation="Slide">
+                                    <Grid x:Name="DropDown"
+                                          SnapsToDevicePixels="True"
+                                          MinWidth="{TemplateBinding ActualWidth}"
+                                          MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                        <Border x:Name="DropDownBorder"
+                                                Background="White"
+                                                BorderThickness="1"
+                                                BorderBrush="#888888"/>
+                                        <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <local:ComplexityLevelCollection x:Key="ComplexityLevelCollectionKey" />
+        <Style x:Key="labelStyle"
+       TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="0,5,0,0"></Setter>
+            <Setter Property="FontSize" Value="20"></Setter>
+            <!--<Setter Property="Width" Value="50"></Setter>-->
+        </Style>
+        <Style x:Key="CircleLabelStyle" BasedOn="{StaticResource labelStyle}" TargetType="Label">
+            <Setter Property="Background" Value="#2335DC" />
+            <Setter Property="Foreground" Value="#79E9DF" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Label">
+                        <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontWeight" Value="Bold"  />
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="0" Color="Black" Opacity="0.5" BlurRadius="10"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CircleButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#7AA0E3" />
+            <Setter Property="Foreground" Value="Black" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                             BorderBrush="{TemplateBinding BorderBrush}"
+                             BorderThickness="{TemplateBinding BorderThickness}"
+                             CornerRadius="20">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <ContentPresenter.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                        </Style>
+                                    </ContentPresenter.Resources>
+                                </ContentPresenter>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        <Style x:Key="ComboBoxItemStyle" TargetType="ComboBoxItem">
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
     </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="\Engineer\Photos\list.jpg" Opacity="0.7" Stretch="UniformToFill"/>
+    </Window.Background>
     <!--ExternalGrid-->
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
@@ -24,17 +146,49 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <!--SelectionOfEngineerExpirience-->
-            <Label Grid.Column="0">select engineer experience level:</Label>
+            <Label Grid.Column="0" Style="{StaticResource CircleLabelStyle}" Width="316" Margin="0,5,0,0" >select engineer experience level:</Label>
             <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                       ItemsSource="{Binding Source={StaticResource ComplexityLevelCollectionKey}}"
-                      SelectedValue="{Binding Path=chosenLevel , Mode=TwoWay}" SelectionChanged="readListAgain">
+                      SelectedValue="{Binding Path=chosenLevel , Mode=TwoWay}" SelectionChanged="readListAgain" Style="{StaticResource ComboBoxStyle}"
+                      ItemContainerStyle="{StaticResource ComboBoxItemStyle}">
+
             </ComboBox>
+           
         </Grid>
         <!--UpdateButtonByList-->
-        <ListView MouseDoubleClick="ListView_MouseDoubleClick" Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList, UpdateSourceTrigger=PropertyChanged}">
+        <ListView MouseDoubleClick="ListView_MouseDoubleClick" Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList, UpdateSourceTrigger=PropertyChanged}" >
+            <ListView.Background>
+                <ImageBrush ImageSource="\Engineer\Photos\insideList.jpg" />
+            </ListView.Background>
+            <ListView.Resources>
+                <Style TargetType="{x:Type GridViewColumnHeader}">
+                    <Setter Property="Background" Value="#2BA5D4"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="BorderBrush" Value="#2335DC"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="Padding" Value="6,3,6,3"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                                <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+                <Style TargetType="Button" BasedOn="{StaticResource CircleButtonStyle}" />
+            </ListView.Resources>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn  Header="ID" DisplayMemberBinding="{Binding Id}" />
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
                     <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" />
                     <GridViewColumn Header="ComplexityLevel" DisplayMemberBinding="{Binding Level}" />
@@ -44,8 +198,10 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="delete"
-                                Click="DeleteTaskClick"
-                                CommandParameter="{Binding}" />
+                                        Width="65"
+                                        Height="45"
+                        Click="DeleteTaskClick"
+                        CommandParameter="{Binding}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -54,10 +210,12 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="assign"
-                                        Visibility="{Binding Stage, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource ExequtionStageVisibilityKey}}"
-                                        IsEnabled="{Binding Task, Converter={StaticResource ConvertTaskToBoolKey}}" 
-                                        Click="AssignTaskClick" 
-                                        CommandParameter="{Binding}" />
+                                Visibility="{Binding Stage, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource ExequtionStageVisibilityKey}}"
+                                IsEnabled="{Binding Task, Converter={StaticResource ConvertTaskToBoolKey}}" 
+                                Click="AssignTaskClick"
+                                        Width="65"
+                                        Height="45"
+                                CommandParameter="{Binding}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -66,10 +224,12 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="de-assign"
-                                        Click="DeAssignTaskClick"
-                                        Visibility="{Binding Stage, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource ExequtionStageVisibilityKey}}"
-                                         IsEnabled="{Binding Task, Converter={StaticResource ConvertTaskToBoolDeAssignKey}}" 
-                                        CommandParameter="{Binding}" />
+                                Click="DeAssignTaskClick"
+                                        Width="65"
+                                        Height="45"
+                                Visibility="{Binding Stage, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource ExequtionStageVisibilityKey}}"
+                                 IsEnabled="{Binding Task, Converter={StaticResource ConvertTaskToBoolDeAssignKey}}" 
+                                CommandParameter="{Binding}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -78,17 +238,19 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="finish"
-                                        Visibility="{Binding Stage, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource ExequtionStageVisibilityKey}}"
-                                        IsEnabled="{Binding Task, Converter={StaticResource ConvertTaskToBoolDeAssignKey}}" 
-                                        Click="FinishTaskClick"
-                                        CommandParameter="{Binding}" />
-                            </DataTemplate>
+                                Visibility="{Binding Stage, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource ExequtionStageVisibilityKey}}"
+                                IsEnabled="{Binding Task, Converter={StaticResource ConvertTaskToBoolDeAssignKey}}" 
+                                Click="FinishTaskClick"
+                                        Width="65"
+                                        Height="45"
+                                CommandParameter="{Binding}" />
+                            </DataTemplate>         
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
         <!--AddButton-->
-        <Button Content="Add" Background="Gray" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="OpenCreateWindow"/>
+        <Button Content="Add" Background="Gray" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="OpenCreateWindow" Style="{StaticResource CircleButtonStyle}"/>
     </Grid>
 </Window>
