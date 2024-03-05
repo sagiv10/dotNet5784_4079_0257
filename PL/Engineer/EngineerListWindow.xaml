@@ -4,12 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
-    mc:Ignorable="d"
+    mc:Ignorable="d" 
         Title="EngineerListWindow" Height="640" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
         <local:ComplexityLevelCollection x:Key="ComplexityLevelCollectionKey" />
-    </Window.Resources>
+            <Style x:Key="CircleButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="#2335DC" />
+                <Setter Property="Foreground" Value="#79E9DF" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                             BorderBrush="{TemplateBinding BorderBrush}"
+                             BorderThickness="{TemplateBinding BorderThickness}"
+                             CornerRadius="20">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <ContentPresenter.Resources>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                        </Style>
+                                    </ContentPresenter.Resources>
+                                </ContentPresenter>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="\Engineer\Photos\list.jpg" Opacity="0.7" Stretch="UniformToFill"/>
+    </Window.Background>
     <!--ExternalGrid-->
     <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
@@ -31,7 +56,10 @@
             </ComboBox>
         </Grid>
         <!--UpdateButtonByList-->
-        <ListView MouseDoubleClick="ListView_MouseDoubleClick" Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList, UpdateSourceTrigger=PropertyChanged}">
+        <ListView MouseDoubleClick="ListView_MouseDoubleClick" Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList, UpdateSourceTrigger=PropertyChanged}" >
+            <ListView.Background>
+                <ImageBrush ImageSource="\Engineer\Photos\insideList.jpg" />
+            </ListView.Background>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" />
@@ -60,7 +88,7 @@
                                         CommandParameter="{Binding}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    </GridViewColumn>                               
                     <!--method3:de-assignTask:-->
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
@@ -89,6 +117,6 @@
             </ListView.View>
         </ListView>
         <!--AddButton-->
-        <Button Content="Add" Background="Gray" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="OpenCreateWindow"/>
+        <Button Content="Add" Background="Gray" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="OpenCreateWindow" Style="{StaticResource CircleButtonStyle}"/>
     </Grid>
 </Window>
