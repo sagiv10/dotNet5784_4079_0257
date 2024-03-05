@@ -41,7 +41,7 @@
                 <Ellipse Height="20" Width="20" Fill="Black"></Ellipse>
             </StackPanel>
             <Image Source="\Engineer\Photos\here.png"
-       Margin="{Binding Path=CurrentDate, Converter={StaticResource DateToMarginUpdateKey}}"
+                Margin="{Binding Path=CurrentDate, Converter={StaticResource DateToMarginUpdateKey}}"
        Grid.Row="3" HorizontalAlignment="Left" Width="60" Height="60"/>
 
             <!--the tasks list and bars - the size is reletive to the days it should take-->    

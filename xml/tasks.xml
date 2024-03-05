@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Task>
-    <_id>1</_id>
-    <_createdAtDate>2024-03-04T15:16:41.9270533+02:00</_createdAtDate>
-    <_requiredEffortTime>P5D</_requiredEffortTime>
-    <_isMilestone>false</_isMilestone>
-    <_alias>Theoretical analysis of the engine</_alias>
-    <_description>Conducting a detailed examination of the theoretical principles underlying the design and functionality of the rocket's propulsion system to ensure optimal performance and efficiency.</_description>
-    <_scheduledDate>2024-03-04T00:00:00+02:00</_scheduledDate>
-    <_complexity>Beginner</_complexity>
-    <_isActive>true</_isActive>
-  </Task>
-  <Task>
     <_id>4</_id>
     <_createdAtDate>2024-03-04T15:16:41.9753311+02:00</_createdAtDate>
     <_requiredEffortTime>P12D</_requiredEffortTime>
@@ -20,28 +9,6 @@
     <_description>Developing a preliminary conceptual framework for the rocket's propulsion system to guide the subsequent engineering and construction phases.</_description>
     <_scheduledDate>2024-03-09T00:00:00+02:00</_scheduledDate>
     <_complexity>Expert</_complexity>
-    <_isActive>true</_isActive>
-  </Task>
-  <Task>
-    <_id>2</_id>
-    <_createdAtDate>2024-03-04T15:16:41.9360542+02:00</_createdAtDate>
-    <_requiredEffortTime>P5D</_requiredEffortTime>
-    <_isMilestone>false</_isMilestone>
-    <_alias>Theoretical analysis of aerodynamics</_alias>
-    <_description>Evaluating the theoretical aspects of airflow and forces acting on the rocket to design a streamlined shape that minimizes air resistance and enhances stability during flight.</_description>
-    <_scheduledDate>2024-03-04T00:00:00+02:00</_scheduledDate>
-    <_complexity>BetterBeginner</_complexity>
-    <_isActive>true</_isActive>
-  </Task>
-  <Task>
-    <_id>3</_id>
-    <_createdAtDate>2024-03-04T15:16:41.9545519+02:00</_createdAtDate>
-    <_requiredEffortTime>P9D</_requiredEffortTime>
-    <_isMilestone>false</_isMilestone>
-    <_alias>Theoretical analysis of the structure</_alias>
-    <_description>Examining the theoretical foundations of the rocket's structural design to ensure it can withstand the stresses and forces experienced during launch and flight.</_description>
-    <_scheduledDate>2024-03-04T00:00:00+02:00</_scheduledDate>
-    <_complexity>Advanced</_complexity>
     <_isActive>true</_isActive>
   </Task>
   <Task>
@@ -240,6 +207,48 @@
     <_description>Performing comprehensive tests to ensure the rocket's software operates as intended under various conditions.</_description>
     <_scheduledDate>2024-04-24T00:00:00+03:00</_scheduledDate>
     <_complexity>Advanced</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>3</_id>
+    <_createdAtDate>2024-03-04T15:16:41.9545519+02:00</_createdAtDate>
+    <_requiredEffortTime>P9D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Theoretical analysis of the structure</_alias>
+    <_description>Examining the theoretical foundations of the rocket's structural design to ensure it can withstand the stresses and forces experienced during launch and flight.</_description>
+    <_scheduledDate>2024-03-04T00:00:00+02:00</_scheduledDate>
+    <_startDate>2024-03-04T00:00:00+02:00</_startDate>
+    <_completeDate>2024-03-04T00:00:00+02:00</_completeDate>
+    <_complexity>Advanced</_complexity>
+    <_engineerId>201162782</_engineerId>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>2</_id>
+    <_createdAtDate>2024-03-04T15:16:41.9360542+02:00</_createdAtDate>
+    <_requiredEffortTime>P5D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Theoretical analysis of aerodynamics</_alias>
+    <_description>Evaluating the theoretical aspects of airflow and forces acting on the rocket to design a streamlined shape that minimizes air resistance and enhances stability during flight.</_description>
+    <_scheduledDate>2024-03-04T00:00:00+02:00</_scheduledDate>
+    <_startDate>2024-04-04T00:00:00+03:00</_startDate>
+    <_completeDate>2024-04-04T00:00:00+03:00</_completeDate>
+    <_complexity>BetterBeginner</_complexity>
+    <_engineerId>336795168</_engineerId>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>1</_id>
+    <_createdAtDate>2024-03-04T15:16:41.9270533+02:00</_createdAtDate>
+    <_requiredEffortTime>P5D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Theoretical analysis of the engine</_alias>
+    <_description>Conducting a detailed examination of the theoretical principles underlying the design and functionality of the rocket's propulsion system to ensure optimal performance and efficiency.</_description>
+    <_scheduledDate>2024-03-04T00:00:00+02:00</_scheduledDate>
+    <_startDate>2024-03-11T00:00:00+02:00</_startDate>
+    <_completeDate>2024-03-11T00:00:00+02:00</_completeDate>
+    <_complexity>Beginner</_complexity>
+    <_engineerId>357052856</_engineerId>
     <_isActive>true</_isActive>
   </Task>
 </ArrayOfTask>
