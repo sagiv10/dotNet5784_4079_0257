@@ -18,13 +18,19 @@
     <None Remove="Engineer\Photos\3820241.png" />
     <None Remove="Engineer\Photos\cost.png" />
     <None Remove="Engineer\Photos\email.png" />
+    <None Remove="Engineer\Photos\engineerList.png" />
+    <None Remove="Engineer\Photos\ganttIcon.png" />
     <None Remove="Engineer\Photos\here.png" />
     <None Remove="Engineer\Photos\id.png" />
+    <None Remove="Engineer\Photos\initialize.png" />
     <None Remove="Engineer\Photos\money-bag-and-dollar-coin-icon-vector-26836619-removebg-preview.png" />
     <None Remove="Engineer\Photos\name.png" />
+    <None Remove="Engineer\Photos\open.jpg" />
+    <None Remove="Engineer\Photos\resetData.png" />
+    <None Remove="Engineer\Photos\schedule.png" />
     <None Remove="Engineer\Photos\sign.jpg" />
-    <None Remove="Images\BTech-Mechanical-Engineering-Robotics-AI.jpg" />
-    <None Remove="Images\IconImage.png" />
+    <None Remove="Engineer\Photos\startSchedule.png" />
+    <None Remove="Engineer\Photos\taskList.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +41,30 @@
     <Resource Include="Engineer\Photos\here.png" />
     <Resource Include="Engineer\Photos\id.png" />
     <Resource Include="Engineer\Photos\name.png" />
+    <Content Include="Engineer\Photos\engineerList.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engineer\Photos\ganttIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engineer\Photos\initialize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engineer\Photos\open.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engineer\Photos\resetData.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engineer\Photos\schedule.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engineer\Photos\startSchedule.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engineer\Photos\taskList.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Engineer\Photos\sign.jpg" />
     <Resource Include="Images\BTech-Mechanical-Engineering-Robotics-AI.jpg" />
     <Resource Include="Images\IconImage.png" />

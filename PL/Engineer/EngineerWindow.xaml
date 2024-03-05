@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Background="#2391DC"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="EngineerWindow" Height="350" Width="500">
     <Window.Resources>
@@ -36,6 +36,61 @@
             <Setter Property="Margin" Value="0,10,0,10"></Setter>
         </Style>
 
+        <Style x:Key="CircleButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#2335DC" />
+            <Setter Property="Foreground" Value="#79E9DF" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CircleLabelStyle" BasedOn="{StaticResource labelStyle}" TargetType="Label">
+            <Setter Property="Background" Value="#2335DC" />
+            <Setter Property="Foreground" Value="#79E9DF" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Label">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontWeight" Value="Bold"  />
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="0" Color="Black" Opacity="0.5" BlurRadius="10"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -52,11 +107,11 @@
             <ColumnDefinition Width="40*"/>
         </Grid.ColumnDefinitions>
         <!--Description:-->
-        <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource labelStyle}" >id:</Label>
-        <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource labelStyle}" >name:</Label>
-        <Label Grid.Column="0" Grid.Row="2" Style="{StaticResource labelStyle}" >email:</Label>
-        <Label Grid.Column="0" Grid.Row="3" Style="{StaticResource labelStyle}" >level:</Label>
-        <Label Grid.Column="0"  Grid.Row="4" Style="{StaticResource labelStyle}" >cost:</Label>
+        <Label Grid.Column="0" Grid.Row="0" Style="{StaticResource CircleLabelStyle}" Width="100">id:</Label>
+        <Label Grid.Column="0" Grid.Row="1" Style="{StaticResource CircleLabelStyle}" Width="100">name:</Label>
+        <Label Grid.Column="0" Grid.Row="2" Style="{StaticResource CircleLabelStyle}" Width="100">email:</Label>
+        <Label Grid.Column="0" Grid.Row="3" Style="{StaticResource CircleLabelStyle}" Width="100">level:</Label>
+        <Label Grid.Column="0" Grid.Row="4" Style="{StaticResource CircleLabelStyle}" Width="100">cost:</Label>
 
 
         <!--Content:-->
@@ -81,6 +136,6 @@
         <Image Source="\Engineer\Photos\cost.png"       Grid.Row="3" Grid.ColumnSpan="2" Margin="12,51,-12,5" Grid.RowSpan="2"/>
         <Image Source="\Engineer\Photos\3820241.png"  Margin="156,10,55,10"   Grid.Row="5"/>
         <!--Buttons:-->
-        <Button Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="200,10,200,10" Content="{Binding Engineer.Id,Mode=OneTime, Converter={StaticResource ConvertIdToContentKey}}" Click="btnAddUpdate_Click"/>
+        <Button Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Margin="200,10,200,10" Content="{Binding Engineer.Id,Mode=OneTime, Converter={StaticResource ConvertIdToContentKey}}" Style="{StaticResource CircleButtonStyle}" Click="btnAddUpdate_Click"/>
     </Grid>
 </Window>
