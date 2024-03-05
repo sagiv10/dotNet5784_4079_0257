@@ -5,6 +5,7 @@ using DalApi;
 using DO;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Security;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -15,6 +16,25 @@ internal class TaskImplementation : BlApi.ITask
     internal TaskImplementation(IBl bl) => _bl = bl;
 
     private DalApi.IDal _dal = DalApi.Factory.Get;//with this field we can access to the methods of task in dal. the way to use the method is being chosen inside factory.
+
+    /// <summary>
+    /// reset the scheduleDate of a task and all the tasks that depends on it
+    /// </summary>
+    /// <param name="taskId"></param>
+    private void resetScheduleTask(int taskId)
+    {
+        DO.Task theTask = _dal.Task.Read(taskId)!;
+        DO.Task newTask = theTask with { _scheduledDate = null };
+        _dal.Task.Update(newTask);
+        foreach(var d in _dal.Dependency.ReadAll(d => d._dependsOnTask == taskId)) //go through all the tasks that depends on it
+        {
+            if(_dal.Task.Read((int)d._dependentTask!)!._scheduledDate != null) //if gthis task's scheduled date is not null - then continue erase that way
+            {
+                resetScheduleTask((int)d._dependentTask!);
+            }
+        }
+    }
+
     /// <summary>
     /// helping method to create new taskInList
     /// </summary>
@@ -33,7 +53,7 @@ internal class TaskImplementation : BlApi.ITask
     private void autoSceduleTask(int taskId, DateTime formerForcastDate)
     {
         DO.Task theTask = _dal.Task.Read(taskId)!;
-        if (theTask._scheduledDate == null || formerForcastDate >= theTask._scheduledDate) 
+        if (theTask._scheduledDate == null || formerForcastDate > theTask._scheduledDate ) 
         {
             DO.Task sceduledTask;
             sceduledTask = theTask with { _scheduledDate = formerForcastDate}; //when the new suggested date is later the previous one or when there is no previous one
@@ -334,6 +354,10 @@ internal class TaskImplementation : BlApi.ITask
                                       where !((_dal.Dependency.ReadAll(d => d._dependentTask == task._id)).Any()) //all the task that nothing depends on them
                                       select task._id; //all their ids
 
+        foreach (var task in basicTasks) //first of all - erase all any previous scheduled date fron the tasks
+        {
+            resetScheduleTask(task);
+        }
         foreach (int taskId in basicTasks)
         {
             autoSceduleTask(taskId, startingDate);
