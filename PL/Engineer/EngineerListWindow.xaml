@@ -104,6 +104,11 @@
             </Setter>
         </Style>
         <Style x:Key="CircleButtonStyle" TargetType="Button">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="False">
+                    <Setter Property="Background" Value="#D3D3E0"/>
+                </DataTrigger>
+            </Style.Triggers>
             <Setter Property="Background" Value="#7AA0E3" />
             <Setter Property="Foreground" Value="Black" />
                 <Setter Property="Template">
