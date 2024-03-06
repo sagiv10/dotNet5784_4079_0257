@@ -6,6 +6,8 @@ public interface IBl
 
     public ITask Task { get; }
 
+    public IConfig Config { get; }
+
     #region
     public DateTime Clock { get; }
     public void AddDay();

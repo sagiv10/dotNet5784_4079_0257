@@ -36,7 +36,14 @@ namespace PL.Manager
 
         public ManagerChoose()
         {
-            Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
+            try
+            {
+                Stage = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             InitializeComponent();
         }
 
@@ -52,57 +59,98 @@ namespace PL.Manager
 
         private void InitializeButton(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("are you sure you want to initialize the data base?", //the messege
+            try
+            {
+                if (MessageBox.Show("are you sure you want to initialize the data base?", //the messege
                 "Initialization confirm", //title
                 MessageBoxButton.YesNo) == MessageBoxResult.Yes) //if the user answered 'yes'
+                {
+                    DalTest.Initialization.Do();
+                    Stage = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
+                    s_bl.ResetClock();
+                }
+            }
+            catch (Exception ex)
             {
-                DalTest.Initialization.Do();
-                Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
-                s_bl.ResetClock();
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void Reset(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("are you sure you want to reset the data base?", //the messege
+            try
+            {
+                if (MessageBox.Show("are you sure you want to reset the data base?", //the messege
                 "Reset confirm", //title
                 MessageBoxButton.YesNo) == MessageBoxResult.Yes) //if the user answered 'yes'
+                {
+                    DalTest.Initialization.Reset();
+                    Stage = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
+                    s_bl.ResetClock();
+                }
+            }
+            catch (Exception ex)
             {
-                DalTest.Initialization.Reset();
-                Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
-                s_bl.ResetClock();
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void Schedile_Button(object sender, RoutedEventArgs e)
         {
-            if (Stage == BO.ProjectStatus.Sceduling)
+            try
             {
-                new ScheduleWindow().ShowDialog();
-                Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
-            }
+                if (Stage == BO.ProjectStatus.Sceduling)
+                {
+                    new ScheduleWindow().ShowDialog();
+                    Stage = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
+                }
 
-            if (Stage == BO.ProjectStatus.Planning)
+                if (Stage == BO.ProjectStatus.Planning)
+                {
+                    new StartScheduleWindow().ShowDialog();
+                    Stage = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
+                }
+            }
+            catch (Exception ex)
             {
-                new StartScheduleWindow().ShowDialog();
-                Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         //three different buttons in the same place:
         private void OpenGanttWindowClick(object sender, RoutedEventArgs e)
         {
-            new ganttChart().ShowDialog();
-            Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
+            try
+            {
+                new ganttChart().ShowDialog();
+                Stage = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void OpenScheduleClick(object sender, RoutedEventArgs e)
         {
-            new ScheduleWindow().ShowDialog();
-            Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
+            try
+            {
+                new ScheduleWindow().ShowDialog();
+                Stage = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void OpenStartScheduleClick(object sender, RoutedEventArgs e)
         {
-            new StartScheduleWindow().ShowDialog();
-            Stage = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
-
+            try
+            {
+                new StartScheduleWindow().ShowDialog();
+                Stage = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

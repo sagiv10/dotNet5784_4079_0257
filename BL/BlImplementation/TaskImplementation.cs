@@ -18,6 +18,45 @@ internal class TaskImplementation : BlApi.ITask
     private DalApi.IDal _dal = DalApi.Factory.Get;//with this field we can access to the methods of task in dal. the way to use the method is being chosen inside factory.
 
     /// <summary>
+    /// tihs method help us to add dependencies of new task that just been created 
+    /// </summary>
+    /// <param name="dependentTask"></param>
+    /// <param name="dependsOnTask"></param>
+    /// <exception cref="BO.BLWrongStageException"></exception>
+    /// <exception cref="BO.BLCannotAddCircularDependencyException"></exception>
+    /// <exception cref="BO.BLNotFoundException"></exception>
+    /// <exception cref="BO.BLAlreadyExistException"></exception>
+    private void AddDependency(int dependentTask, int dependsOnTask)
+    {
+        if (dependsOnTask == dependentTask)
+        {
+            throw new BLCannotAddTheIdentityDependency();
+        }
+        if (_dal.Task.Read(dependsOnTask) == null)
+        {
+            throw new BLNotFoundException("task", dependsOnTask);
+        }
+        if (_dal.Task.Read(dependentTask) == null)
+        {
+            throw new BLNotFoundException("task", dependentTask);
+
+        }
+        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
+        {
+            throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 1);
+        }
+        if (checkCircularDependency(dependentTask, dependsOnTask) == true)
+        {
+            throw new BLCannotAddCircularDependencyException(dependentTask, dependsOnTask);
+        }
+        if (_dal.Dependency.Read(d => d._dependsOnTask == dependsOnTask && d._dependentTask == dependentTask) != null)
+        {
+            throw new BLAlreadyExistException("dependency", _dal.Dependency.Read(d => d._dependsOnTask == dependsOnTask && d._dependentTask == dependentTask)!._id);
+        }
+        _dal.Dependency.Create(new DO.Dependency(0, dependentTask, dependsOnTask));
+    }
+
+    /// <summary>
     /// reset the scheduleDate of a task and all the tasks that depends on it
     /// </summary>
     /// <param name="taskId"></param>
@@ -89,38 +128,6 @@ internal class TaskImplementation : BlApi.ITask
         }
         return false;
 
-    }
-
-    public int Create(BO.Task newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
-    {
-        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
-        {
-            throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 1);
-        }
-
-        if (newTask.Alias == "")
-        {
-            throw new BLWrongAliasException();
-        }
-        DO.Task? doTaskToCheck = _dal.Task.Read(newTask.Id);//get task to check if exist
-        if(doTaskToCheck != null)
-            throw new NotImplementedException();
-        DO.Task? doTaskToCreate = BOToDOTask(newTask);
-        int newId = _dal.Task.Create(doTaskToCreate!);
-        try
-        { //try to insert all the dependencies
-            foreach (var dep in newTask.Dependencies!) { AddDependency(newId, dep!.Id); }
-        }
-        catch(Exception ex) //we couldn't add the dependency - so now we will erase all the dependencied we added and delete the new task
-        {
-            foreach (var dep in _dal.Dependency.ReadAll(d => d._dependsOnTask == newId)!) //delete all the dependencied we added
-            {
-                _dal.Dependency.Delete(dep._id);
-            }
-            _dal.Dependency.Delete(newId); //delete the new Task
-            throw ex;
-        }
-        return newId;
     }
 
     /// <summary>
@@ -265,6 +272,39 @@ internal class TaskImplementation : BlApi.ITask
         }
         return formerDates.Max();
     }
+
+    public int Create(BO.Task newTask)//Check all input, add dependencies to ,cast to DO,then use do.create
+    {
+        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
+        {
+            throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 1);
+        }
+
+        if (newTask.Alias == "")
+        {
+            throw new BLWrongAliasException();
+        }
+        DO.Task? doTaskToCheck = _dal.Task.Read(newTask.Id);//get task to check if exist
+        if (doTaskToCheck != null)
+            throw new NotImplementedException();
+        DO.Task? doTaskToCreate = BOToDOTask(newTask);
+        int newId = _dal.Task.Create(doTaskToCreate!);
+        try
+        { //try to insert all the dependencies
+            foreach (var dep in newTask.Dependencies!) { AddDependency(newId, dep!.Id); }
+        }
+        catch (Exception ex) //we couldn't add the dependency - so now we will erase all the dependencied we added and delete the new task
+        {
+            foreach (var dep in _dal.Dependency.ReadAll(d => d._dependsOnTask == newId)!) //delete all the dependencied we added
+            {
+                _dal.Dependency.Delete(dep._id);
+            }
+            _dal.Dependency.Delete(newId); //delete the new Task
+            throw ex;
+        }
+        return newId;
+    }
+
     public void Delete(int idOfTaskToDelete)
     {
         DO.Task? check = _dal.Task.Read(idOfTaskToDelete);
@@ -350,9 +390,10 @@ internal class TaskImplementation : BlApi.ITask
             throw new BO.BLWrongStageException(_dal.Project.getProjectStatus(), (int)BO.ProjectStatus.Sceduling);
         }
         DateTime startingDate = (DateTime)_dal.Project.getStartingDate()!;
-        IEnumerable<int> basicTasks = from task in _dal.Task.ReadAll()     //all the task
+
+        IEnumerable<int> basicTasks = (from task in _dal.Task.ReadAll()     //all the task
                                       where !((_dal.Dependency.ReadAll(d => d._dependentTask == task._id)).Any()) //all the task that nothing depends on them
-                                      select task._id; //all their ids
+                                      select task._id).ToList(); //all their ids
 
         foreach (var task in basicTasks) //first of all - erase all any previous scheduled date fron the tasks
         {
@@ -364,58 +405,6 @@ internal class TaskImplementation : BlApi.ITask
         }
 
         _dal.Project.setProjectStatus((int)BO.ProjectStatus.Execution); //we are now at the Execution stage
-    }
-    public void AddDependency(int dependentTask, int dependsOnTask)
-    {
-        if(dependsOnTask == dependentTask)
-        {
-            throw new BLCannotAddTheIdentityDependency();
-        }
-        if(_dal.Task.Read(dependsOnTask) == null)
-        {
-            throw new BLNotFoundException("task", dependsOnTask);
-        }
-        if (_dal.Task.Read(dependentTask) == null)
-        {
-            throw new BLNotFoundException("task", dependentTask);
-
-        }
-        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
-        {
-            throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 1);
-        }
-        if(checkCircularDependency(dependentTask, dependsOnTask) == true)
-        {
-            throw new BLCannotAddCircularDependencyException(dependentTask, dependsOnTask);
-        }
-        if(_dal.Dependency.Read(d=> d._dependsOnTask == dependsOnTask && d._dependentTask == dependentTask) != null)
-        {
-            throw new BLAlreadyExistException("dependency", _dal.Dependency.Read(d => d._dependsOnTask == dependsOnTask && d._dependentTask == dependentTask)!._id);
-        }
-        _dal.Dependency.Create(new DO.Dependency(0,dependentTask, dependsOnTask));
-    }
-
-    public void DeleteDependency(int dependentTask, int dependsOnTask)
-    {
-        if (_dal.Task.Read(dependsOnTask) == null)
-        {
-            throw new BLNotFoundException("task", dependsOnTask);
-        }
-        if (_dal.Task.Read(dependentTask) == null)
-        {
-            throw new BLNotFoundException("task", dependentTask);
-
-        }
-        if ((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)
-        {
-            throw new BLWrongStageException((int)_dal.Project.getProjectStatus(), 1);
-        }
-        DO.Dependency? dep = _dal.Dependency.Read(d => d._dependsOnTask == dependsOnTask && d._dependentTask == dependentTask);
-        if (dep == null)
-        {
-            throw new BLNotFoundException("dependency", -1);
-        }
-        _dal.Dependency.Delete(dep._id);
     }
 
 
@@ -438,25 +427,7 @@ internal class TaskImplementation : BlApi.ITask
             _dal.Project.setProjectStatus((int)BO.ProjectStatus.Execution);
         }
     }
-    public void StartSchedule(DateTime StartingDateOfProject)
-    {
-        if((BO.ProjectStatus)_dal.Project.getProjectStatus() != BO.ProjectStatus.Planning)// this method can be acceced only in the planning stage
-        {
-            throw new BLWrongStageException(_dal.Project.getProjectStatus(), (int)BO.ProjectStatus.Planning);
-        }
-        _dal.Project.setProjectStatus((int)BO.ProjectStatus.Sceduling);
-        _dal.Project.setStartingDate(StartingDateOfProject);
-    }
 
-    public int getProjectStatus()
-    {
-        return _dal.Project.getProjectStatus();
-    }
-
-    public DateTime? getStartingDate()
-    {
-        return _dal.Project.getStartingDate();
-    }
     /// <summary>
     /// this method helps us to handle with dependencies in the pl stage.
     /// </summary>
@@ -471,42 +442,6 @@ internal class TaskImplementation : BlApi.ITask
             idList.Add(_task._id);
         }
         return idList;
-    }
-
-
-    public int AddDependencies(List<int> dependendsOns, int dependentId, int endIndex)
-    {
-        int i = 0;
-        for (; i < endIndex; i++)
-        {
-            try
-            {
-                AddDependency(dependentId, dependendsOns[i]);
-            }
-            catch (Exception)
-            {
-                return i;
-            }
-        }
-        return i;
-    }
-
-
-    public int DeleteDependencies(List<int> dependendsOns, int dependentId, int endIndex)
-    {
-        int i = 0;
-        for (; i < endIndex; i++)
-        {
-            try
-            {
-                DeleteDependency(dependentId, dependendsOns[i]);
-            }
-            catch (Exception)
-            {
-                return i;
-            }
-        }
-        return i;
     }
 
     public void CheckPreviousTasks(int taskId)
@@ -578,12 +513,6 @@ internal class TaskImplementation : BlApi.ITask
             }
         }
         return sortedList;
-    }
-
-    public int ParseToInt(string integer, string field)
-    {
-        int finalNum;
-        return int.TryParse(integer, out finalNum ) ? finalNum : throw new BO.BLWrongInputException("you entered wrong input when number should be entered to " + field + "!");
     }
 }
 

@@ -12,11 +12,11 @@ internal static class DataSource
     {
         internal const int startTaskId = 1;
         private static int nextTaskId = startTaskId;
-        internal static int NextTaskId { get => nextTaskId++; }
+        internal static int NextTaskId { get => nextTaskId++; set { nextTaskId = value; } }
 
         internal const int startDependencyId = 1;
         private static int nextDependencyId = startDependencyId;
-        internal static int NextDependencyId { get => nextDependencyId++; }
+        internal static int NextDependencyId { get => nextDependencyId++; set { nextDependencyId = value; } }
 
         internal static DateTime? startingDate = null;  
 

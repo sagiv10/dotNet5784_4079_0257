@@ -32,16 +32,30 @@ namespace PL.Schedule
             DependencyProperty.Register("ChosenDate", typeof(DateTime), typeof(StartScheduleWindow), new PropertyMetadata(null));
         public StartScheduleWindow()
         {
-            ChosenDate = s_bl.Clock; //the default value will be the clock time
+            try
+            {
+                ChosenDate = s_bl.Clock; //the default value will be the clock time
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             InitializeComponent();
         }
 
         private void StartSchedule(object sender, RoutedEventArgs e)
         {
-            if(MessageBox.Show("are you shure this is the date that you want?", "Date confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            try
             {
-                s_bl.Task.StartSchedule(ChosenDate);
-                this.Close();
+                if (MessageBox.Show("are you shure this is the date that you want?", "Date confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    s_bl.Config.StartSchedule(ChosenDate);
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

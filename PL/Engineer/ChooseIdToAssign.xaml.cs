@@ -44,21 +44,35 @@ namespace PL.Engineer
 
         public ChooseIdToAssign(BO.Engineer? eng)
         {
-            List<BO.TaskInList> tempList = s_bl.Engineer.GetPotentialTasks(eng!.Id);
-            ListOfAllTasksIDWithoutEngineer = (from TaskInListEngineer in tempList
-                                              select TaskInListEngineer.Id).ToList();
-            engFromEngineerList = eng;
+            try
+            {
+                List<BO.TaskInList> tempList = s_bl.Engineer.GetPotentialTasks(eng!.Id);
+                ListOfAllTasksIDWithoutEngineer = (from TaskInListEngineer in tempList
+                                                   select TaskInListEngineer.Id).ToList();
+                engFromEngineerList = eng;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             InitializeComponent();
         }
         private void AssignClick(object sender, RoutedEventArgs e)
         {
-            if (IdToAssign == 0)
-                MessageBox.Show("you didn't choose an id of task to assign...");
-            else
+            try
             {
-                s_bl.Engineer.AssignTask(engFromEngineerList!.Id, IdToAssign);
-                MessageBox.Show($"task {IdToAssign} has been assigned to engineer with id:{engFromEngineerList!.Id} succesfully!");
-                this.Close();
+                if (IdToAssign == 0)
+                    MessageBox.Show("you didn't choose an id of task to assign...");
+                else
+                {
+                    s_bl.Engineer.AssignTask(engFromEngineerList!.Id, IdToAssign);
+                    MessageBox.Show($"task {IdToAssign} has been assigned to engineer with id:{engFromEngineerList!.Id} succesfully!");
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

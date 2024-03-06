@@ -42,8 +42,14 @@ namespace PL
 
         public MainWindow()
         {
-
-            ProjectCurrentDate = s_bl.Clock; //now the starting date will always exist
+            try
+            {
+                ProjectCurrentDate = s_bl.Clock; //now the starting date will always exist
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             InitializeComponent();
         }
 
@@ -54,33 +60,75 @@ namespace PL
         }
         private void ManagerPicked(object sender, RoutedEventArgs e)
         {
-            new ManagerChoose().ShowDialog();
-            ProjectCurrentDate = s_bl.Clock;
+            try
+            {
+                new ManagerChoose().ShowDialog();
+                ProjectCurrentDate = s_bl.Clock;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void EngineerPicked(object sender, RoutedEventArgs e)
         {
-            new EngineerIdEntering().ShowDialog();
+            try
+            {
+                new EngineerIdEntering().ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ResetClock(object sender, RoutedEventArgs e)
         {
-            ProjectCurrentDate = DateTime.Now; //reset the clock to now
-            s_bl.ResetClock(); //get the new time we got from the init function
+            try
+            {
+                ProjectCurrentDate = DateTime.Now; //reset the clock to now
+                s_bl.ResetClock(); //get the new time we got from the init function
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void AddWeekClick(object sender, RoutedEventArgs e)
         {
-            ProjectCurrentDate = ProjectCurrentDate.AddDays(7); //add 7 days - week
-            s_bl.AddWeek();
+            try
+            {
+                ProjectCurrentDate = ProjectCurrentDate.AddDays(7); //add 7 days - week
+                s_bl.AddWeek();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void AddDayClick(object sender, RoutedEventArgs e)
         {
-            ProjectCurrentDate = ProjectCurrentDate.AddDays(1); //add 1 day
-            s_bl.AddDay();
+            try
+            {
+                ProjectCurrentDate = ProjectCurrentDate.AddDays(1); //add 1 day
+                s_bl.AddDay();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void AddMonthClick(object sender, RoutedEventArgs e)
         {
-            ProjectCurrentDate = ProjectCurrentDate.AddMonths(1); //add 1 month
-            s_bl.AddMonth();
+            try
+            {
+                ProjectCurrentDate = ProjectCurrentDate.AddMonths(1); //add 1 month
+                s_bl.AddMonth();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

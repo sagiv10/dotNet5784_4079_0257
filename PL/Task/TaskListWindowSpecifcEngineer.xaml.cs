@@ -38,23 +38,37 @@ namespace PL.Task
         DependencyProperty.Register("IsTakenProperty", typeof(bool), typeof(TaskListWindowSpecifcEngineer), new PropertyMetadata(true));
         public TaskListWindowSpecifcEngineer(int _id)
         {
-            TaskInList_List = s_bl.Engineer.GetPotentialTasks(_id);
-            IsNotTaken = (s_bl.Engineer.ReadEngineer(_id).Task == null);
-            idOfThisEngineer = _id;
-            InitializeComponent();
+            try
+            {
+                TaskInList_List = s_bl.Engineer.GetPotentialTasks(_id);
+                IsNotTaken = (s_bl.Engineer.ReadEngineer(_id).Task == null);
+                idOfThisEngineer = _id;
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void AssignMeToThisTaskClick(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
-            BO.TaskInList SpecificTaskFromList = button?.CommandParameter as BO.TaskInList;
-            if (SpecificTaskFromList != null)
+            try
             {
-                s_bl.Engineer.AssignTask(idOfThisEngineer, SpecificTaskFromList.Id);
-                IsNotTaken = false;
-                TaskInList_List = s_bl.Engineer.GetPotentialTasks(idOfThisEngineer);
-                MessageBox.Show($"assign of engineer with id:{idOfThisEngineer} to task:{SpecificTaskFromList.Alias} has succeeded!");
-                this.Close();
+                Button button = sender as Button;
+                BO.TaskInList SpecificTaskFromList = button?.CommandParameter as BO.TaskInList;
+                if (SpecificTaskFromList != null)
+                {
+                    s_bl.Engineer.AssignTask(idOfThisEngineer, SpecificTaskFromList.Id);
+                    IsNotTaken = false;
+                    TaskInList_List = s_bl.Engineer.GetPotentialTasks(idOfThisEngineer);
+                    MessageBox.Show($"assign of engineer with id:{idOfThisEngineer} to task:{SpecificTaskFromList.Alias} has succeeded!");
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

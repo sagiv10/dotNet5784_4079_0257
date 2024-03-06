@@ -73,12 +73,12 @@ namespace PL.Task
             {
                 if (IsAdd)//if we in add mode
                 {
-                    s_bl.Task.AddDependency(IdOfDependentTask,IdOfDependsOnTask);
+                    s_bl.Config.AddDependency(IdOfDependentTask,IdOfDependsOnTask);
                     MessageBox.Show("dependency created succesfully!");
                 }
                 else     //if we in remove mode
                 {
-                    s_bl.Task.DeleteDependency(IdOfDependentTask,IdOfDependsOnTask);
+                    s_bl.Config.DeleteDependency(IdOfDependentTask,IdOfDependsOnTask);
                     MessageBox.Show("dependency removed succesfully!");
                 }
             }

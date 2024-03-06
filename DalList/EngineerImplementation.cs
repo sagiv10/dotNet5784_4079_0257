@@ -90,12 +90,12 @@ internal class EngineerImplementation : IEngineer
     {
         if (filter == null)
         {
-            IEnumerable<Engineer> newList = DataSource.Engineers.Select(item => item);
+            IEnumerable<Engineer> newList = DataSource.Engineers.Where(item => item._isActive == true);
             return newList;
         }
         else
         {
-            IEnumerable<Engineer> newList = DataSource.Engineers.Where(item => filter(item!));
+            IEnumerable<Engineer> newList = DataSource.Engineers.Where(item => filter(item!) && item._isActive == true);
             return newList;
         }
     }

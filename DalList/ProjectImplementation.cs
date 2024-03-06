@@ -10,6 +10,11 @@ internal class ProjectImplementation : Iproject
         return DataSource.Config.startingDate;
     }
 
+    public void ResetRunningNumbers()
+    {
+        DataSource.Config.NextDependencyId = 1;
+        DataSource.Config.NextTaskId = 1;
+    }
 
     public void setStartingDate(DateTime? start)
     {

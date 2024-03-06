@@ -93,8 +93,8 @@ namespace PL.Engineer
             {
                 try
                 {
-                    Engineer.Cost = s_bl.Task.ParseToInt(Cost, "cost");
-                    Engineer.Id = s_bl.Task.ParseToInt(Id, "id");
+                    Engineer.Cost = s_bl.Config.ParseToDouble(Cost, "cost");
+                    Engineer.Id = s_bl.Config.ParseToInt(Id, "id");
                     if (Engineer.Task!.Id == 0)
                     {
                         s_bl.Engineer.CreateEngineer(Engineer);
@@ -119,7 +119,7 @@ namespace PL.Engineer
             {
                 try
                 {
-                    Engineer.Cost = s_bl.Task.ParseToInt(Cost, "cost");
+                    Engineer.Cost = s_bl.Config.ParseToDouble(Cost, "cost");
                     s_bl.Engineer.UpdateEngineer(Engineer);
                     MessageBox.Show("engineer updated succesfully!");
                     this.Close();

@@ -42,7 +42,7 @@ namespace PL.Engineer
         {
             try
             {
-                int realId = s_bl.Task.ParseToInt(Id, "Id");
+                int realId = s_bl.Config.ParseToInt(Id, "Id");
                 s_bl.Engineer.ReadEngineer(realId);
                 new EngineerMenu(realId).Show();
                 this.Close();

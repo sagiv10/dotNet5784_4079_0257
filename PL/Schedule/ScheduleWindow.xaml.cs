@@ -33,8 +33,15 @@ namespace PL.Schedule
             DependencyProperty.Register("Tasks", typeof(List<int>), typeof(ScheduleWindow), new PropertyMetadata(null));
         public ScheduleWindow()
         {
-            Tasks = (from BO.TaskInList task in s_bl.Task.ReadAll(t => t.ScheduledDate == null)
-                     select task.Id).ToList();
+            try
+            {
+                Tasks = (from BO.TaskInList task in s_bl.Task.ReadAll(t => t.ScheduledDate == null)
+                         select task.Id).ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             InitializeComponent();
         }
 
@@ -56,10 +63,17 @@ namespace PL.Schedule
 
         private void AutoScheduleAll(object sender, RoutedEventArgs e)
         {
-            if(MessageBox.Show("this action will schedule automatically all your tasks, even those you alredy scheduled. proceed anyway?", "auto schedule confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            try
             {
-                s_bl.Task.AutoScedule();
-                this.Close();
+                if (MessageBox.Show("this action will schedule automatically all your tasks, even those you alredy scheduled. proceed anyway?", "auto schedule confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    s_bl.Task.AutoScedule();
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

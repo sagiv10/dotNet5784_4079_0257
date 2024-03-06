@@ -53,7 +53,7 @@ namespace PL.Engineer
                 MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
                 this.Close(); //close this window
             }
-            CurrentStatus = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
+            CurrentStatus = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
             InitializeComponent();
         }
 

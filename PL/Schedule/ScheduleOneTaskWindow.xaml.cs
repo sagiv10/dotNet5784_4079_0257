@@ -57,9 +57,16 @@ namespace PL.Schedule
 
         public ScheduleOneTaskWindow(int taskId)
         {
-            Task = taskId;
-            FirstOptionalDate = s_bl.Task.findOptionalDate(taskId);
-            ChosenDate = FirstOptionalDate;
+            try
+            {
+                Task = taskId;
+                FirstOptionalDate = s_bl.Task.findOptionalDate(taskId);
+                ChosenDate = FirstOptionalDate;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             InitializeComponent();
         }
 

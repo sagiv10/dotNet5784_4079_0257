@@ -61,4 +61,10 @@ internal class ProjectImplementation : Iproject
 
         configRoot.Save(@"..\xml\data-config.xml"); //save it
     }
+
+    public void ResetRunningNumbers()
+    {
+        XElement newNumbers = new XElement("config", new XElement("NextDependencyId", 1), new XElement("NextTaskId", 1));
+        XMLTools.SaveListToXMLElement(newNumbers, "data-config");//save new running numberwhen they equal to 0 now
+    }
 }

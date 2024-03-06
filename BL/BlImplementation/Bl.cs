@@ -12,6 +12,9 @@ namespace BlImplementation
     {
         public IEngineer Engineer => new EngineerImplementation(this);
         public ITask Task => new TaskImplementation(this);//we dont use clock there
+
+        public IConfig Config => new ConfigImplementation(this);
+
         #region
         private static DateTime s_Clock = DateTime.Now.Date;
         public DateTime Clock { get { return s_Clock; } private set { s_Clock = value; } }

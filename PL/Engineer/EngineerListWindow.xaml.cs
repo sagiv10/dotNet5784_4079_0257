@@ -44,95 +44,140 @@ namespace PL.Engineer
 
         public EngineerListWindow()
         {
-            EngineerList = s_bl?.Engineer.ReadAllEngineers()!;
-            Stage = (BO.ProjectStatus)s_bl!.Task.getProjectStatus();
+            try
+            {
+                EngineerList = s_bl?.Engineer.ReadAllEngineers()!;
+                Stage = (BO.ProjectStatus)s_bl!.Config.getProjectStatus();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             InitializeComponent();
         }
 
         private void readListAgain(object sender, SelectionChangedEventArgs e)
         {
-            EngineerList = s_bl.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All);
+            try
+            {
+                EngineerList = s_bl.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void OpenCreateWindow(object sender, RoutedEventArgs e)
         {
-            new EngineerWindow().ShowDialog();
-            EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
+            try
+            {
+                new EngineerWindow().ShowDialog();
+                EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            BO.Engineer? SpecificEngineerFromList = (sender as ListView)?.SelectedItem as BO.Engineer;
-            if (SpecificEngineerFromList== null)//for case someone taps on the blank spaces in the window that doesnt have value in their line. 
-                return;
-            new EngineerWindow(SpecificEngineerFromList!.Id).ShowDialog();
-            //this third line is happananing only after the user pushes the add/update button and closes the mini window! :
-            EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
+            try
+            {
+                BO.Engineer? SpecificEngineerFromList = (sender as ListView)?.SelectedItem as BO.Engineer;
+                if (SpecificEngineerFromList == null)//for case someone taps on the blank spaces in the window that doesnt have value in their line. 
+                    return;
+                new EngineerWindow(SpecificEngineerFromList!.Id).ShowDialog();
+                //this third line is happananing only after the user pushes the add/update button and closes the mini window! :
+                EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void AssignTaskClick(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
-            BO.Engineer SpecificEngineerFromList = button?.CommandParameter as BO.Engineer;
-            if (SpecificEngineerFromList != null)
+            try
             {
-                new ChooseIdToAssign(SpecificEngineerFromList).ShowDialog();
-                EngineerList  = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
+                Button button = sender as Button;
+                BO.Engineer SpecificEngineerFromList = button?.CommandParameter as BO.Engineer;
+                if (SpecificEngineerFromList != null)
+                {
+                    new ChooseIdToAssign(SpecificEngineerFromList).ShowDialog();
+                    EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
 
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void DeAssignTaskClick(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
-            BO.Engineer SpecificEngineerFromList = button?.CommandParameter as BO.Engineer;
-            if (SpecificEngineerFromList != null)
+            try
             {
-                try
+                Button button = sender as Button;
+                BO.Engineer SpecificEngineerFromList = button?.CommandParameter as BO.Engineer;
+                if (SpecificEngineerFromList != null)
                 {
                     s_bl.Engineer.DeAssignTask(SpecificEngineerFromList.Id);
                     MessageBox.Show("the task has be de-assgined succesfully!");
                     EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
 
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void FinishTaskClick(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
-            BO.Engineer SpecificEngineerFromList = button?.CommandParameter as BO.Engineer;
-            if (SpecificEngineerFromList != null)
+            try
             {
-                try
+                Button button = sender as Button;
+                BO.Engineer SpecificEngineerFromList = button?.CommandParameter as BO.Engineer;
+                if (SpecificEngineerFromList != null)
                 {
                     s_bl.Engineer.FinishTask(SpecificEngineerFromList.Id);
                     MessageBox.Show("the task has been finished succesfully!");
                     EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
                 }
-                catch(Exception ex) { MessageBox.Show(ex.Message);}
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void DeleteTaskClick(object sender, RoutedEventArgs e)
         {
-            Button button = (sender as Button)!;
-            BO.Engineer SpecificEngineerFromList = (button!.CommandParameter as BO.Engineer)!;
-            if (SpecificEngineerFromList != null)
+            try
             {
-                try
+                Button button = (sender as Button)!;
+                BO.Engineer SpecificEngineerFromList = (button!.CommandParameter as BO.Engineer)!;
+                if (SpecificEngineerFromList != null)
                 {
                     s_bl.Engineer.DeleteEngineer(SpecificEngineerFromList.Id);
                     MessageBox.Show("the task has been finished succesfully!");
                     EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
                 }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

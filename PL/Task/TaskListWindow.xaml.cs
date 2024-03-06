@@ -62,52 +62,94 @@ namespace PL.Task
         //-------------------------------------------------------------------------------------
         public TaskListWindow()
         {
-            chosenComplexity = EngineerExperience.All;
-            chosenStatus = BO.Status.All;
-            Status = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
-            TaskInList_List = s_bl.Task.ReadAll();
+            try
+            {
+                chosenComplexity = EngineerExperience.All;
+                chosenStatus = BO.Status.All;
+                Status = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
+                TaskInList_List = s_bl.Task.ReadAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             InitializeComponent();
         }
 
         private void ShowSpecificTask(object sender, MouseButtonEventArgs e)//sender has the details of which task we been sent from. 
         {
-            BO.TaskInList? SpecificTaskFromList = (sender as ListView)!.SelectedItem as BO.TaskInList; //get inside "SpecificTaskFromList" the details from the sender about which task we clicked on.
-            if (SpecificTaskFromList == null)
-                return;
-            new TaskWindow(true, SpecificTaskFromList!.Id).ShowDialog();//open the window of showing specifc task with the details from last line.
-            TaskInList_List = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All)&&(e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
+            try
+            {
+                BO.TaskInList? SpecificTaskFromList = (sender as ListView)!.SelectedItem as BO.TaskInList; //get inside "SpecificTaskFromList" the details from the sender about which task we clicked on.
+                if (SpecificTaskFromList == null)
+                    return;
+                new TaskWindow(true, SpecificTaskFromList!.Id).ShowDialog();//open the window of showing specifc task with the details from last line.
+                TaskInList_List = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void ReadListAgain(object sender, SelectionChangedEventArgs e)//this method happans after everytime we change the combobox. (to update the view of the shown list) 
         {
-            IEnumerable <BO.TaskInList> tempList = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
-            TaskInList_List = tempList;
+            try
+            {
+                IEnumerable<BO.TaskInList> tempList = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
+                TaskInList_List = tempList;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void AddTaskClick(object sender, RoutedEventArgs e)
         {
-            new TaskWindow(true, 0).ShowDialog();//open the window of showing specifc task without details. (because we want to add new task)
-            TaskInList_List = s_bl.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All));
+            try
+            {
+                new TaskWindow(true, 0).ShowDialog();//open the window of showing specifc task without details. (because we want to add new task)
+                TaskInList_List = s_bl.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void addDependencyClick(object sender, RoutedEventArgs e) 
         {
-            if (TaskInList_List.Count() == 0) //if there is no tasks in the database
+            try
             {
-                MessageBox.Show("there is no tasks to create dependencies for!", "no task error", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (TaskInList_List.Count() == 0) //if there is no tasks in the database
+                {
+                    MessageBox.Show("there is no tasks to create dependencies for!", "no task error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    new AddRemoveDependency(true/*indicates we are in add mode*/).ShowDialog();//open the window of the add of dependency
+                }
             }
-            else
+            catch (Exception ex)
             {
-                new AddRemoveDependency(true/*indicates we are in add mode*/).ShowDialog();//open the window of the add of dependency
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void removeDependencyClick(object sender, RoutedEventArgs e)
         {
-            if(TaskInList_List.Count() == 0) //if there is no tasks in the database
+            try
             {
-                MessageBox.Show("there is no tasks to delete their dependencies!", "no task error", MessageBoxButton.OK, MessageBoxImage.Error);  
+                if (TaskInList_List.Count() == 0) //if there is no tasks in the database
+                {
+                    MessageBox.Show("there is no tasks to delete their dependencies!", "no task error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    new AddRemoveDependency(false/*indicates we are in remove mode*/).ShowDialog();//open the window of the remove of dependency
+                }
             }
-            else
+            catch (Exception ex)
             {
-                new AddRemoveDependency(false/*indicates we are in remove mode*/).ShowDialog();//open the window of the remove of dependency
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

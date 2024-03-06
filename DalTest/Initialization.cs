@@ -171,8 +171,7 @@ public static class Initialization
     public static void Reset()
     {
         s_dal = Factory.Get; //choose the data source by the xml file - 'dal - config'
-        XElement newNumbers = new XElement("config", new XElement("NextDependencyId", 1), new XElement("NextTaskId", 1));
-        XMLTools.SaveListToXMLElement(newNumbers, "data-config");//save new running numberwhen they equal to 0 now
+        s_dal.Project.ResetRunningNumbers();
         s_dal.Project.setStartingDate(null); //there is no starting date now
         s_dal.Project.setProjectStatus(1); //going back to the planning stage
         s_dal.Engineer.DeleteAll(); //reset the engineer xml file

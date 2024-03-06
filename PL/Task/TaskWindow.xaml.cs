@@ -146,103 +146,108 @@ public partial class TaskWindow : Window
 
     public TaskWindow(bool isManager, int id = 0)
     {
-        Status = (BO.ProjectStatus)s_bl.Task.getProjectStatus();
-        DaysRange = Enumerable.Range(0, 7).ToList();
-        WeeksRange = Enumerable.Range(0, 4).ToList();
-        NumDays = 7;
-        NumMonths = "0";
-        NumWeeks = 0;
-        if (id == 0)
+        try
         {
-            Stage = true;
-            Task = new BO.Task(0, "", "", s_bl.Clock ,BO.Status.Unscheduled,new List<BO.TaskInList>(),null, TimeSpan.FromDays(7), null,null,null,null,null,"","",null,BO.EngineerExperience.Beginner);
-        }
-        else
-        {
-            Stage=false;
-            try
+            Status = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
+            DaysRange = Enumerable.Range(0, 7).ToList();
+            WeeksRange = Enumerable.Range(0, 4).ToList();
+            NumDays = 7;
+            NumMonths = "0";
+            NumWeeks = 0;
+            if (id == 0)
             {
+                Stage = true;
+                Task = new BO.Task(0, "", "", s_bl.Clock, BO.Status.Unscheduled, new List<BO.TaskInList>(), null, TimeSpan.FromDays(7), null, null, null, null, null, "", "", null, BO.EngineerExperience.Beginner);
+            }
+            else
+            {
+                Stage = false;
                 Task = s_bl.Task.Read(id);
             }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
-                this.Close();
-            }
+            DepensOnTasks = Task.Dependencies!.Select(d => d.Id).ToList();
+
+            PotentialTasks = (from BO.TaskInList task in s_bl.Task.ReadAll() //from all the tasks
+                              where Task.Dependencies!.FirstOrDefault(d => d.Id == task.Id) == null //take all the tasks that do not depends on our task - they will be potential to add them as a dependens
+                              select task.Id).ToList();
+
+            DeletedDependencies = new List<int>();
+            NewDependsOnTasks = new List<int>();
+
+            InitializeComponent();
         }
-        DepensOnTasks = Task.Dependencies!.Select(d => d.Id).ToList();
-
-        PotentialTasks = (from BO.TaskInList task in s_bl.Task.ReadAll() //from all the tasks
-                          where Task.Dependencies!.FirstOrDefault(d => d.Id == task.Id) == null //take all the tasks that do not depends on our task - they will be potential to add them as a dependens
-                          select task.Id).ToList();
-
-        DeletedDependencies = new List<int>();
-        NewDependsOnTasks = new List<int>();
-
-        InitializeComponent();
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     private void Add_Update_Button(object sender, RoutedEventArgs e)
     {
-        if(Stage) //if we are in the adding event
+        try
         {
-            try
+            if (Stage) //if we are in the adding event
             {
-                int RealNumMonths = -1; //the number the month will be
-
-                Task.RequiredEffortTime = TimeSpan.FromDays(NumDays + s_bl.Task.ParseToInt(NumMonths, "month number") * 30 + NumWeeks * 7);
-                int newId = s_bl.Task.Create(Task);
-
-                int ifAdded = s_bl.Task.AddDependencies(NewDependsOnTasks, newId, NewDependsOnTasks.Count);
-                if(ifAdded != NewDependsOnTasks.Count) //if not all the dependencies has added, that's means that an error accured and all the proccess failed 
+                try
                 {
-                    s_bl.Task.DeleteDependencies(NewDependsOnTasks, newId, ifAdded); //delete all the dependencies we did added
+                    Task.RequiredEffortTime = TimeSpan.FromDays(NumDays + s_bl.Config.ParseToInt(NumMonths, "month number") * 30 + NumWeeks * 7);
+                    int newId = s_bl.Task.Create(Task);
+
+                    int ifAdded = s_bl.Config.AddDependencies(NewDependsOnTasks, newId, NewDependsOnTasks.Count);
+                    if (ifAdded != NewDependsOnTasks.Count) //if not all the dependencies has added, that's means that an error accured and all the proccess failed 
+                    {
+                        s_bl.Config.DeleteDependencies(NewDependsOnTasks, newId, ifAdded); //delete all the dependencies we did added
+                        MessageBox.Show("could not add your dependencies due to circular dependency", "Dependencies add problem", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                MessageBox.Show("the task created seccesfully!", "amazing!", MessageBoxButton.OK);
+                this.Close();
+            }
+            else //then we are updating
+            {
+                int ifAdded = s_bl.Config.AddDependencies(NewDependsOnTasks, Task.Id, NewDependsOnTasks.Count);
+                if (ifAdded != NewDependsOnTasks.Count) //if not all the dependencies has added, that's means that an error accured and all the proccess failed 
+                {
+                    s_bl.Config.DeleteDependencies(NewDependsOnTasks, Task.Id, ifAdded);//delete all the dependencies we did added
                     MessageBox.Show("could not add your dependencies due to circular dependency", "Dependencies add problem", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
 
-            MessageBox.Show("the task created seccesfully!", "amazing!", MessageBoxButton.OK);
-            this.Close();
+                int ifDeleted = s_bl.Config.DeleteDependencies(DeletedDependencies, Task.Id, DeletedDependencies.Count);
+                if (ifDeleted != DeletedDependencies.Count)
+                {
+                    s_bl.Config.DeleteDependencies(NewDependsOnTasks, Task.Id, ifAdded);//delete all the dependencies we did added
+                    s_bl.Config.AddDependencies(DeletedDependencies, Task.Id, DeletedDependencies.Count); //add all the dependencies we deleted
+                    MessageBox.Show("could not add your dependencies due to circular dependency", "Dependencies add problem", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                try
+                {
+                    s_bl.Task.Update(Task);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error); //update our task
+                    s_bl.Config.DeleteDependencies(NewDependsOnTasks, Task.Id, ifAdded);//delete all the dependencies we did added
+                    s_bl.Config.AddDependencies(DeletedDependencies, Task.Id, DeletedDependencies.Count); //add all the dependencies we deleted
+                    return;
+                }
+                MessageBox.Show("the task updated seccesfully!", " you are amazing!", MessageBoxButton.OK);
+                this.Close();
+            }
         }
-        else //then we are updating
+        catch (Exception ex)
         {
-            int ifAdded = s_bl.Task.AddDependencies(NewDependsOnTasks, Task.Id, NewDependsOnTasks.Count);
-            if (ifAdded != NewDependsOnTasks.Count) //if not all the dependencies has added, that's means that an error accured and all the proccess failed 
-            {
-                s_bl.Task.DeleteDependencies(NewDependsOnTasks, Task.Id, ifAdded);//delete all the dependencies we did added
-                MessageBox.Show("could not add your dependencies due to circular dependency", "Dependencies add problem", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            int ifDeleted = s_bl.Task.DeleteDependencies(DeletedDependencies, Task.Id, DeletedDependencies.Count);
-            if(ifDeleted != DeletedDependencies.Count)
-            {
-                s_bl.Task.DeleteDependencies(NewDependsOnTasks, Task.Id, ifAdded);//delete all the dependencies we did added
-                s_bl.Task.AddDependencies(DeletedDependencies, Task.Id, DeletedDependencies.Count); //add all the dependencies we deleted
-                MessageBox.Show("could not add your dependencies due to circular dependency", "Dependencies add problem", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            try
-            {
-                s_bl.Task.Update(Task);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error); //update our task
-                s_bl.Task.DeleteDependencies(NewDependsOnTasks, Task.Id, ifAdded);//delete all the dependencies we did added
-                s_bl.Task.AddDependencies(DeletedDependencies, Task.Id, DeletedDependencies.Count); //add all the dependencies we deleted
-                return;
-            }
-            MessageBox.Show("the task updated seccesfully!", " you are amazing!", MessageBoxButton.OK);
-            this.Close();
+            MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error); //update our task
         }
+ 
     }
 
 

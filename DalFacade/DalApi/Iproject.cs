@@ -23,4 +23,9 @@ public interface Iproject
     /// </summary>
     public DateTime? getStartingDate();
 
+    /// <summary>
+    /// resets the running numbers for task and dependency in the database
+    /// </summary>
+    public void ResetRunningNumbers();
+
  }

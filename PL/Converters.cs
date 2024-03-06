@@ -176,7 +176,7 @@ class ConvertMultiplyAndFindStartTime : IValueConverter
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        DateTime startDate = (DateTime)s_bl.Task.getStartingDate()!;
+        DateTime startDate = (DateTime)s_bl.Config.getStartingDate()!;
         DateTime currentScheduled = (DateTime)value;
         return ((currentScheduled-startDate).Days*15)!;//value=scheduledTime;
     }
@@ -668,7 +668,7 @@ class ConvertDateToMargin : IValueConverter
     /// <returns> the margin </returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        DateTime startDate = (DateTime)s_bl.Task.getStartingDate()!;
+        DateTime startDate = (DateTime)s_bl.Config.getStartingDate()!;
         DateTime? theDate = (DateTime?)value; //the time is not null because we are in the execution stage
         if (theDate == null)
         {
@@ -698,7 +698,7 @@ class ConvertDateToMarginUpdate : IValueConverter
     /// <returns> the margin </returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        DateTime startDate = (DateTime)s_bl.Task.getStartingDate()!;
+        DateTime startDate = (DateTime)s_bl.Config.getStartingDate()!;
         DateTime? theDate = (DateTime?)value; //the time is not null because we are in the execution stage
         if (theDate == null)
         {
