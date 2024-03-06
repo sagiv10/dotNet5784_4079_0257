@@ -24,7 +24,6 @@ namespace PL.Manager
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-
         public BO.ProjectStatus Stage
         {
             get { return (BO.ProjectStatus)GetValue(StageProperty); }

@@ -40,4 +40,12 @@
     <_level>Master</_level>
     <_isActive>true</_isActive>
   </Engineer>
+  <Engineer>
+    <_id>370889896</_id>
+    <_cost>27207.62</_cost>
+    <_email>levi@gmail.com</_email>
+    <_name>Levi</_name>
+    <_level>Advanced</_level>
+    <_isActive>false</_isActive>
+  </Engineer>
 </ArrayOfEngineer>

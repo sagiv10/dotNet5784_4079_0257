@@ -8,6 +8,11 @@
         Title="ManagerChoose" Height="450" Width="800">
     <Window.Resources>
         <Style x:Key="CircleButtonStyle" TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Red"/>
+                </Trigger>
+            </Style.Triggers>
             <Setter Property="Background" Value="#2335DC" />
             <Setter Property="Foreground" Value="#79E9DF" />
             <Setter Property="Template">

@@ -37,9 +37,9 @@
         </Style>
 
         <Style x:Key="CircleButtonStyle" TargetType="Button">
+            
             <Setter Property="Background" Value="#2335DC" />
             <Setter Property="Foreground" Value="#79E9DF" />
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">

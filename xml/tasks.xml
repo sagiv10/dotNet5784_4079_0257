@@ -242,4 +242,16 @@
     <_complexity>Advanced</_complexity>
     <_isActive>true</_isActive>
   </Task>
+  <Task>
+    <_id>2</_id>
+    <_createdAtDate>2024-03-05T21:35:40.9968959+02:00</_createdAtDate>
+    <_requiredEffortTime>P10D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Theoretical analysis of aerodynamics</_alias>
+    <_description>Evaluating the theoretical aspects of airflow and forces acting on the rocket to design a streamlined shape that minimizes air resistance and enhances stability during flight.</_description>
+    <_scheduledDate>2024-03-28T00:00:00</_scheduledDate>
+    <_startDate>2024-03-06T00:00:00+02:00</_startDate>
+    <_complexity>BetterBeginner</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
 </ArrayOfTask>
