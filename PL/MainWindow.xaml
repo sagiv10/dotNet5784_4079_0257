@@ -8,6 +8,25 @@
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         Icon="Images\IconImage.png"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="BasadKey" TargetType="Button">
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <!-- Fade only the opacity of the background -->
+                            <DoubleAnimation Storyboard.TargetProperty="(Button.Background).(Opacity)"
+                                             From="0.0" To="1.0"
+                                             Duration="0:0:1.5"/>
+                            <DoubleAnimation Storyboard.TargetProperty="(Button.Background).(Opacity)"
+                                             From="1.0" To="0.0"
+                                             Duration="0:0:1.5"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70*" />
@@ -26,19 +45,21 @@
             <LineBreak/>
             <Run Text="{Binding ProjectCurrentDate, StringFormat='hh:mm:ss'}"/>
         </TextBlock>
-        <Button Content="Add week" Height="30" Click="AddWeekClick" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Grid.RowSpan="2" Width="80" Margin="100,0,180,162"/>
-        <Button Content="ResetClock" Height="30" Click="ResetClock" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Margin="285,0,0,162" Width="75" Grid.RowSpan="2" />
-        <Button Content="Add Day" Height="30" Click="AddDayClick" Grid.Row="1" VerticalAlignment="Bottom" Margin="0,0,285,162" Grid.RowSpan="2" Grid.Column="1" Width="75"/>
-        <Button Content="Add Month" Height="30" Click="AddMonthClick" Grid.Row="1" VerticalAlignment="Bottom" Margin="189,0,96,162" Grid.RowSpan="2" Grid.Column="1" Width="75" />
+        <Button Content="Add week" Height="60" Click="AddWeekClick" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Grid.RowSpan="2" Margin="10,0,250,132"/>
+        <Button Content="ResetClock" Height="60" Click="ResetClock" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Margin="223,0,37,132" Grid.RowSpan="2" />
+        <Button Content="Add Day" Height="60" Click="AddDayClick" Grid.Row="2" VerticalAlignment="Bottom" Margin="10,0,250,32" Grid.Column="1"/>
+        <Button Content="Add Month" Height="60" Click="AddMonthClick" Grid.Row="2" VerticalAlignment="Bottom" Margin="223,0,37,32" Grid.Column="1" />
 
         <StackPanel Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="50" >
             <Label HorizontalAlignment="Center">what would you like to do?</Label>
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <Button Width="105" Click="ManagerPicked">Manager</Button>
-                <Button Content="Engineer" Width="105" Click="EngineerPicked"/>
-            </StackPanel>
+            <Button Width="128" Margin="0,20,0,0" Click="ManagerPicked">Manager</Button>
+            <Button Content="Engineer" Margin="0,20,0,0" Width="128" Click="EngineerPicked"/>
         </StackPanel>
 
-        <Button Grid.Row="0" Grid.Column="3" Click="baruchHashem" Background="White" BorderThickness="0" >בס"ד</Button>
+        <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource BasadKey}" Click="baruchHashem" BorderThickness="0">
+            <Button.Background>
+                <ImageBrush ImageSource="C:\Users\sagiv\OneDrive\שולחן העבודה\minip\dotNet5784_4079_0257\PL\Images\The_Rebbay_Kook.png" Opacity ="0.0"/> 
+            </Button.Background>
+            בס"ד</Button>
     </Grid>
 </Window>

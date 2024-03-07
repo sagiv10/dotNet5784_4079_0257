@@ -14,11 +14,13 @@ internal class TaskImplementation : ITask
     /// <returns> the new id</returns>
     public int Create(DO.Task item)
     {
+        //it is not possible to add task that alredy exists because each task has a uniqe running number - therefore we dont even checking if this ntask is alredy existing or if it existed and been deleted
         int newId = DataSource.Config.NextTaskId;
         DO.Task newItem = item with { _id = newId };
         DataSource.Tasks.Add(newItem);
         return newId;
     }
+
     /// <summary>
     /// this program deletes the task that has the id we got. if not found-throw. if found so set isActive to false (by using new one and add him and remove the old one)
     /// </summary>
@@ -44,7 +46,7 @@ internal class TaskImplementation : ITask
     {
         foreach (DO.Task? task in DataSource.Tasks)
         {
-            if (task!._id == requestedId &&task!._isActive==true)
+            if (task!._id == requestedId && task!._isActive==true)
             {
                 return task;
             }
@@ -62,6 +64,7 @@ internal class TaskImplementation : ITask
         ////////////////////////////////////////////////////////////////////////////
         return DataSource.Tasks.FirstOrDefault(filter!);
     }
+
     /// <summary>
     /// this method creates a new task list, copy the whole old list to the new one and returns the new.
     /// </summary>

@@ -22,8 +22,8 @@ internal class ConfigImplementation : IConfig
     /// <returns></returns>
     public bool checkCircularDependency(int dependent, int dependOn)
     {
-        IEnumerable<int> dependents = from dep in _dal.Dependency.ReadAll(d => d._dependsOnTask == dependent) //get all the tasks that depends on our dependent task
-                                      select (int)dep._dependentTask!;
+        IEnumerable<int> dependents = (from dep in _dal.Dependency.ReadAll(d => d._dependsOnTask == dependent) //get all the tasks that depends on our dependent task
+                                      select (int)dep._dependentTask!).ToList();
         if (dependents.Count(id => id == dependOn) != 0) //if our dependent on task is in there - then wev'e got circular  dependency
         {
             return true;
