@@ -83,17 +83,17 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Label">
                         <Border Background="{TemplateBinding Background}"
-                BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}"
-                CornerRadius="20">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <ContentPresenter.Resources>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="FontWeight" Value="Bold"  />
-                                    </Style>
-                                </ContentPresenter.Resources>
-                            </ContentPresenter>
-                        </Border>
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="20">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <ContentPresenter.Resources>
+                                           <Style TargetType="TextBlock">
+                                           <Setter Property="FontWeight" Value="Bold"  />
+                                           </Style>
+                                        </ContentPresenter.Resources>
+                                    </ContentPresenter>
+                       </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
