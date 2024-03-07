@@ -18,6 +18,7 @@ internal class DependencyImplementation : IDependency
         return newId;
     }
 
+
     /// <summary>
     /// this method removes a dependency from the list by a given id. if we didnt find the id in the list so throw 
     /// </summary>
@@ -75,7 +76,7 @@ internal class DependencyImplementation : IDependency
         }
         else
         {
-            IEnumerable<Dependency> newList = DataSource.Dependencies.Where(item => filter(item!));
+            IEnumerable<Dependency> newList = (DataSource.Dependencies.Where(item => filter(item!))).ToList();
             return newList;
         }
     }

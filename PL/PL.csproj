@@ -33,6 +33,7 @@
     <None Remove="Engineer\Photos\sign.jpg" />
     <None Remove="Engineer\Photos\startSchedule.png" />
     <None Remove="Engineer\Photos\taskList.png" />
+    <None Remove="Images\The_Rebbay_Kook.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,6 +77,7 @@
     <Resource Include="Engineer\Photos\sign.jpg" />
     <Resource Include="Images\BTech-Mechanical-Engineering-Robotics-AI.jpg" />
     <Resource Include="Images\IconImage.png" />
+    <Resource Include="Images\The_Rebbay_Kook.png" />
   </ItemGroup>
 
   <ItemGroup>

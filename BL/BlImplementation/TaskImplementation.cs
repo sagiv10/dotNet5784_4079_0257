@@ -65,7 +65,7 @@ internal class TaskImplementation : BlApi.ITask
         DO.Task theTask = _dal.Task.Read(taskId)!;
         DO.Task newTask = theTask with { _scheduledDate = null };
         _dal.Task.Update(newTask);
-        foreach(var d in _dal.Dependency.ReadAll(d => d._dependsOnTask == taskId)) //go through all the tasks that depends on it
+        foreach(var d in (_dal.Dependency.ReadAll(d => d._dependsOnTask == taskId)).ToList()) //go through all the tasks that depends on it
         {
             if(_dal.Task.Read((int)d._dependentTask!)!._scheduledDate != null) //if gthis task's scheduled date is not null - then continue erase that way
             {
@@ -97,7 +97,7 @@ internal class TaskImplementation : BlApi.ITask
             DO.Task sceduledTask;
             sceduledTask = theTask with { _scheduledDate = formerForcastDate}; //when the new suggested date is later the previous one or when there is no previous one
             _dal.Task.Update(sceduledTask);
-            foreach (var dep in _dal.Dependency.ReadAll(d => d._dependsOnTask == taskId)) //change all the task that depends on him
+            foreach (var dep in (_dal.Dependency.ReadAll(d => d._dependsOnTask == taskId)).ToList()) //change all the task that depends on him
             {
                 autoSceduleTask((int)dep!._dependentTask!, (DateTime)(sceduledTask._scheduledDate + sceduledTask._requiredEffortTime!));
             }
@@ -113,8 +113,8 @@ internal class TaskImplementation : BlApi.ITask
     /// <returns></returns>
     public bool checkCircularDependency(int dependent, int dependOn)
     {
-        IEnumerable<int> dependents = from dep in _dal.Dependency.ReadAll(d => d._dependsOnTask == dependent) //get all the tasks that depends on our dependent task
-                                      select (int)dep._dependentTask!;
+        IEnumerable<int> dependents = (from dep in _dal.Dependency.ReadAll(d => d._dependsOnTask == dependent) //get all the tasks that depends on our dependent task
+                                      select (int)dep._dependentTask!).ToList();
         if(dependents.Count(id => id==dependOn) != 0) //if our dependent on task is in there - then wev'e got circular  dependency
         {
             return true;
@@ -446,10 +446,10 @@ internal class TaskImplementation : BlApi.ITask
 
     public void CheckPreviousTasks(int taskId)
     {
-        IEnumerable<int> nullDates = from dep in _dal.Dependency.ReadAll(d => d._dependentTask == taskId)
+        IEnumerable<int> nullDates = (from dep in _dal.Dependency.ReadAll(d => d._dependentTask == taskId)
                                      let hisTask = _dal.Task.Read((int)dep._dependsOnTask!)
                                      where hisTask._scheduledDate == null
-                                     select hisTask._id;
+                                     select hisTask._id).ToList();
         if (nullDates.Count() >= 1) //if the other task didn't even scheduled:
         {
             string ids = "";
