@@ -9,6 +9,7 @@
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         Title="ChooseIdToAssign" Height="500" Width="500">
     <Window.Resources>
+        <!--style for the buttons-->
         <Style x:Key="CircleButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#2335DC" />
             <Setter Property="Foreground" Value="#79E9DF" />
@@ -43,9 +44,16 @@
 
         </Grid.RowDefinitions>
         <!--ComboBoxOfIdToAssign:-->
-        <ComboBox Grid.Column="0" Grid.Row="0" 
+        <ComboBox Grid.Column="0" Grid.Row="0" Margin="50,100" FontSize="30"
                   ItemsSource="{Binding ListOfAllTasksIDWithoutEngineer, RelativeSource={RelativeSource AncestorType={x:Type local:ChooseIdToAssign}}}" 
-                  SelectedValue="{Binding IdToAssign , RelativeSource={RelativeSource AncestorType={x:Type local:ChooseIdToAssign}}, Mode=TwoWay, NotifyOnValidationError=true,ValidatesOnExceptions=true}"  />
-        <Button Grid.Row="1" Grid.Column="0" Click="AssignClick" Style="{StaticResource CircleButtonStyle}"></Button>
+                  SelectedValue="{Binding IdToAssign , RelativeSource={RelativeSource AncestorType={x:Type local:ChooseIdToAssign}}, Mode=TwoWay, NotifyOnValidationError=true,ValidatesOnExceptions=true}" >
+            <ComboBox.ItemContainerStyle>
+                <Style TargetType="ComboBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </ComboBox.ItemContainerStyle>
+        </ComboBox>
+        <!--the button to assign the task-->
+        <Button Grid.Row="1" Grid.Column="0" Click="AssignClick" Style="{StaticResource CircleButtonStyle}" Content="Assign" FontSize="40"></Button>
     </Grid>
 </Window>
