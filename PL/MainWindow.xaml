@@ -58,7 +58,7 @@
 
         <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource BasadKey}" Click="baruchHashem" BorderThickness="0">
             <Button.Background>
-                <ImageBrush ImageSource="C:\Users\sagiv\OneDrive\שולחן העבודה\minip\dotNet5784_4079_0257\PL\Images\The_Rebbay_Kook.png" Opacity ="0.0"/> 
+                <ImageBrush ImageSource="Images\The_Rebbay_Kook.png" Opacity="0.0"/>
             </Button.Background>
             בס"ד</Button>
     </Grid>
