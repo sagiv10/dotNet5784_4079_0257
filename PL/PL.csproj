@@ -16,15 +16,18 @@
   <ItemGroup>
     <None Remove="Engineer\Photos\2163271.png" />
     <None Remove="Engineer\Photos\3820241.png" />
+    <None Remove="Engineer\Photos\BackgoundEngineer.jpg" />
     <None Remove="Engineer\Photos\cost.png" />
     <None Remove="Engineer\Photos\email.png" />
     <None Remove="Engineer\Photos\engineerList.png" />
     <None Remove="Engineer\Photos\ganttIcon.png" />
     <None Remove="Engineer\Photos\here.png" />
+    <None Remove="Engineer\Photos\IconImage.png" />
     <None Remove="Engineer\Photos\id.png" />
     <None Remove="Engineer\Photos\initialize.png" />
     <None Remove="Engineer\Photos\insideList.jpg" />
     <None Remove="Engineer\Photos\list.jpg" />
+    <None Remove="Engineer\Photos\menuBackground.jpg" />
     <None Remove="Engineer\Photos\money-bag-and-dollar-coin-icon-vector-26836619-removebg-preview.png" />
     <None Remove="Engineer\Photos\name.png" />
     <None Remove="Engineer\Photos\open.jpg" />
@@ -33,16 +36,23 @@
     <None Remove="Engineer\Photos\sign.jpg" />
     <None Remove="Engineer\Photos\startSchedule.png" />
     <None Remove="Engineer\Photos\taskList.png" />
+    <None Remove="Images\TheCottel.jpg" />
     <None Remove="Images\The_Rebbay_Kook.png" />
+    <None Remove="Manager\Photos\IconImage.png" />
+    <None Remove="Schedule\Photos\IconImage.png" />
+    <None Remove="Task\Photos\IconImage.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Engineer\Photos\2163271.png" />
     <Resource Include="Engineer\Photos\3820241.png" />
+    <Resource Include="Engineer\Photos\BackgoundEngineer.jpg" />
     <Resource Include="Engineer\Photos\cost.png" />
     <Resource Include="Engineer\Photos\email.png" />
     <Resource Include="Engineer\Photos\here.png" />
+    <Resource Include="Engineer\Photos\IconImage.png" />
     <Resource Include="Engineer\Photos\id.png" />
+    <Resource Include="Engineer\Photos\menuBackground.jpg" />
     <Resource Include="Engineer\Photos\name.png" />
     <Content Include="Engineer\Photos\engineerList.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -77,7 +87,11 @@
     <Resource Include="Engineer\Photos\sign.jpg" />
     <Resource Include="Images\BTech-Mechanical-Engineering-Robotics-AI.jpg" />
     <Resource Include="Images\IconImage.png" />
+    <Resource Include="Images\TheCottel.jpg" />
     <Resource Include="Images\The_Rebbay_Kook.png" />
+    <Resource Include="Manager\Photos\IconImage.png" />
+    <Resource Include="Schedule\Photos\IconImage.png" />
+    <Resource Include="Task\Photos\IconImage.png" />
   </ItemGroup>
 
   <ItemGroup>

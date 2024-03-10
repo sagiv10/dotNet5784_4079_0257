@@ -11,13 +11,13 @@
     <Window.Resources>
         <Style x:Key="BasadKey" TargetType="Button">
             <Style.Triggers>
-                <EventTrigger RoutedEvent="Button.MouseEnter">
+                <EventTrigger RoutedEvent="Button.MouseLeave">
                     <BeginStoryboard>
                         <Storyboard>
                             <!-- Fade only the opacity of the background -->
                             <DoubleAnimation Storyboard.TargetProperty="(Button.Background).(Opacity)"
                                              From="0.0" To="1.0"
-                                             Duration="0:0:1.5"/>
+                                             Duration="0:0:2"/>
                             <DoubleAnimation Storyboard.TargetProperty="(Button.Background).(Opacity)"
                                              From="1.0" To="0.0"
                                              Duration="0:0:1.5"/>
@@ -40,11 +40,14 @@
             <ColumnDefinition Width="40"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <!--the clock-->
-        <TextBlock Grid.Column="1" FontSize="30" Margin="103,44,315,55" TextWrapping="Wrap" Grid.Row="1" Grid.ColumnSpan="2">
+        <TextBlock  Grid.Column="1" Grid.Row="1" FontSize="30"   HorizontalAlignment="Center" VerticalAlignment="Top">
             <Run Text="{Binding ProjectCurrentDate, StringFormat='yyyy.MM.dd'}"/>
             <LineBreak/>
             <Run Text="{Binding ProjectCurrentDate, StringFormat='hh:mm:ss'}"/>
-        </TextBlock>
+            </TextBlock>
+            <Grid>
+            
+        </Grid>
         <Button Content="Add week" Height="60" Click="AddWeekClick" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Grid.RowSpan="2" Margin="10,0,250,132"/>
         <Button Content="ResetClock" Height="60" Click="ResetClock" Grid.Column="1" Grid.Row="1" VerticalAlignment="Bottom" Margin="223,0,37,132" Grid.RowSpan="2" />
         <Button Content="Add Day" Height="60" Click="AddDayClick" Grid.Row="2" VerticalAlignment="Bottom" Margin="10,0,250,32" Grid.Column="1"/>
@@ -55,11 +58,13 @@
             <Button Width="128" Margin="0,20,0,0" Click="ManagerPicked">Manager</Button>
             <Button Content="Engineer" Margin="0,20,0,0" Width="128" Click="EngineerPicked"/>
         </StackPanel>
-
         <Button Grid.Row="0" Grid.Column="3" Style="{StaticResource BasadKey}" Click="baruchHashem" BorderThickness="0">
             <Button.Background>
-                <ImageBrush ImageSource="C:\Users\sagiv\OneDrive\שולחן העבודה\minip\dotNet5784_4079_0257\PL\Images\The_Rebbay_Kook.png" Opacity ="0.0"/> 
+                <ImageBrush ImageSource="Images\TheCottel.jpg" Opacity ="0.0"/>
             </Button.Background>
-            בס"ד</Button>
+            בס"ד
+        </Button>
+        <Polygon  Grid.Row="0" Grid.Column="3" Points="0,-15 7.854,-4.878 25,-5.454 12.5,7.854 17.364,25 0,15 -17.364,25 -12.5,7.854 -25,-5.454 -7.854,-4.878" Margin="10,20,-10,224" Grid.RowSpan="2" />
+        
     </Grid>
 </Window>

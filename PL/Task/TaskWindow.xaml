@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:PL.Task"
         xmlns:local2="clr-namespace:PL"
         mc:Ignorable="d"
+        Icon="Photos\IconImage.png"
+        Background="#2391DC"
         ResizeMode="NoResize"
         DataContext="{Binding Task, RelativeSource={RelativeSource Self}, Mode=TwoWay}"
 
@@ -14,8 +16,8 @@
         <!--for the enum of the level combo box-->
         <local2:RealComplexityLevelCollection x:Key="ComplexityLevelCollectionKey" />
     </Window.Resources>
-    <ScrollViewer>
-        <ListView>
+    <ScrollViewer >
+        <ListView Background="#2391DC">
             <!--the id field-->
             <ListViewItem>
                 <StackPanel Orientation="Horizontal">

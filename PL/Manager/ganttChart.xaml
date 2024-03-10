@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:PL"
         xmlns:ganttBehind="clr-namespace:PL.Manager"
         mc:Ignorable="d"
+        Icon="Photos\IconImage.png"
         Title="ganttChart" Height="450" Width="800"
         WindowState="Maximized"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">

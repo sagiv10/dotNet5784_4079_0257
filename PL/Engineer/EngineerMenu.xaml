@@ -5,8 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
+        Icon="Photos\IconImage.png"
         DataContext="{Binding Engineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}"
         Title="EngineerMenu" Height="450" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="Photos\menuBackground.jpg"/>
+    </Window.Background>
+    <Window.Resources>
+        <Style x:Key="CircleButtonStyle" TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Gold"/>
+                </Trigger>
+            </Style.Triggers>
+            <Setter Property="Background" Value="Goldenrod" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                     BorderBrush="{TemplateBinding BorderBrush}"
+                     BorderThickness="{TemplateBinding BorderThickness}"
+                     CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -29,9 +62,9 @@
             <TextBlock Margin="27,45,10,-15" Grid.Row="1" Grid.Column="1" FontSize="15" Text="{Binding Task, Converter={StaticResource InnerTaskAliasKey}}" TextWrapping="Wrap"></TextBlock>
         </Grid>
 
-        <Button Content="{Binding Task, Converter={StaticResource InnerTaskContentKey}}" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="69" Width="241" Margin="0,48,0,0" Click="Assign_ShowTask" Visibility="{Binding CurrentStatus, Mode=OneWay, Converter={StaticResource ExequtionStageVisibilityKey}, RelativeSource={RelativeSource AncestorType={x:Type local:EngineerMenu}}}"/>
+        <Button Style="{StaticResource CircleButtonStyle}" Content="{Binding Task, Converter={StaticResource InnerTaskContentKey}}" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Top" Height="69" Width="241" Margin="0,48,0,0" Click="Assign_ShowTask" Visibility="{Binding CurrentStatus, Mode=OneWay, Converter={StaticResource ExequtionStageVisibilityKey}, RelativeSource={RelativeSource AncestorType={x:Type local:EngineerMenu}}}"/>
         <TextBlock HorizontalAlignment="Center" Height="80" Margin="0,70,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Cannot assign or show tasks in this current stage!" VerticalAlignment="Top" Width="392" TextAlignment="Center" FontSize="30" Visibility="{Binding CurrentStatus, Mode=OneWay, Converter={StaticResource ExequtionStageinVisibilityKey}, RelativeSource={RelativeSource AncestorType={x:Type local:EngineerMenu}}}"/>
-        <Button Content="give up on your task" VerticalAlignment="Top" Height="69" Width="241" HorizontalAlignment="Left" Margin="20,48,0,0" Grid.Row="2" Visibility="{Binding Task, Converter={StaticResource TaskVisibilityKey}}" Click="DeAssignClick"/>
-        <Button Content="finish your task" VerticalAlignment="Top" Height="69" Width="241" HorizontalAlignment="Right" Margin="0,48,20,0" Grid.Row="2" Visibility="{Binding Task, Converter={StaticResource TaskVisibilityKey}}" Click="FinishClick" />
+        <Button Style="{StaticResource CircleButtonStyle}" Content="give up on your task" VerticalAlignment="Top" Height="69" Width="241" HorizontalAlignment="Left" Margin="20,48,0,0" Grid.Row="2" Visibility="{Binding Task, Converter={StaticResource TaskVisibilityKey}}" Click="DeAssignClick"/>
+        <Button Style="{StaticResource CircleButtonStyle}" Content="finish your task" VerticalAlignment="Top" Height="69" Width="241" HorizontalAlignment="Right" Margin="0,48,20,0" Grid.Row="2" Visibility="{Binding Task, Converter={StaticResource TaskVisibilityKey}}" Click="FinishClick" />
     </Grid>
 </Window>

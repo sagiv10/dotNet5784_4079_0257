@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Schedule"
         mc:Ignorable="d"
+        Icon="Photos\IconImage.png"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         ResizeMode="NoResize"
         Title="StartScheduleWindow" Height="139" Width="325">
