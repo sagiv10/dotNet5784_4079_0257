@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
+        Icon="Photos\IconImage.png"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         Title="ChooseIdToAssign" Height="500" Width="500">
     <Window.Resources>

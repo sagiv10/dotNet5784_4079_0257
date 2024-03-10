@@ -23,7 +23,16 @@ public static class Initialization
             "Levi",
             "Yehuda",
             "Yisachar"
-        };
+        }; 
+        //create another engineer for better debuging
+        Engineer debugEngineer = new Engineer(123, s_rand.Next(10000, 40001) + (((double)s_rand.Next(100)) / 100), "check" + "@gmail.com", "checked", (DO.ComplexityLvls)4, true);
+        try
+        {
+            s_dal!.Engineer.Create(debugEngineer);//throw if id we wrote in the create method already exist.
+        }
+        catch (DalAlreadyExistsException problem)
+        {
+        }
         for (int i = 0; i < NamesOfEngineers.Length; i++)
         {
             Engineer newEngineer = new Engineer(s_rand.Next(200000000, 400000001), s_rand.Next(10000, 40001) + (((double)s_rand.Next(100)) / 100), NamesOfEngineers[i].ToLower() + "@gmail.com", NamesOfEngineers[i], _arrOfCmplx[i], true);

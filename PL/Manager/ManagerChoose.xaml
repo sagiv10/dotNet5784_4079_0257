@@ -4,8 +4,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        Icon="Photos\IconImage.png"
         DataContext="{Binding Stage, RelativeSource={RelativeSource Mode=Self}}"
-        Title="ManagerChoose" Height="450" Width="800">
+        Title="ManagerChoose" Height="600" Width="900"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="CircleButtonStyle" TargetType="Button">
             <Style.Triggers>
@@ -38,29 +41,39 @@
     <Window.Background>
         <ImageBrush ImageSource="\Engineer\Photos\open.jpg" Stretch="UniformToFill"/>
     </Window.Background>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="240*"/>
-            <RowDefinition Height="120*"/>
+            <RowDefinition Height="*"/>
+
         </Grid.RowDefinitions>
-        <Button Grid.Column="0" Margin="162,217,421,20" Click="ShowEngineerList"  Style="{StaticResource CircleButtonStyle}">EngineerListWindow</Button>
-        <Image Source="\Engineer\Photos\engineerList.png" Margin="91,201,643,18" Grid.Column="0"/>
-        <Button Margin="560,217,97,32" Click="ShowTaskList" Style="{StaticResource CircleButtonStyle}">TaskListWindow</Button>
-        <Image Source="\Engineer\Photos\taskList.png" Margin="486,203,240,18"/>
-        <Button  Grid.Row="0" Grid.Column="0" Content="Initialize Data" Margin="560,111,120,135" Click="InitializeButton" Style="{StaticResource CircleButtonStyle}" ></Button>
-        <Image Source="\Engineer\Photos\initialize.png" Margin="136,94,608,132"  Grid.Row="0" Grid.Column="0"/>
-        <Button  Grid.Row="0" Content="Reset Data" Margin="197,106,464,144" Click="Reset"  Style="{StaticResource CircleButtonStyle}"/>
-        <Image Source="\Engineer\Photos\resetData.png" Margin="502,55,245,79"  Grid.Row="0"/>
-        <Button  Grid.Row="1" Grid.Column="0" Content="start schedule" Visibility="{Binding Converter={StaticResource PlanningStageVisibilityKey}}" Margin="367,49,314,58" Click="OpenStartScheduleClick" Style="{StaticResource CircleButtonStyle}" ></Button>
-        <Image Source="\Engineer\Photos\schedule.png" Margin="292,35,421,45"  Grid.Row="1" Visibility="{Binding Converter={StaticResource PlanningStageVisibilityKey}}"/>
-        <Button  Grid.Row="1" Grid.Column="0" Content="schedule" Visibility="{Binding Converter={StaticResource ExequtionStageinVisibilityKey}}" Margin="367,49,314,58" Click="OpenScheduleClick" Style="{StaticResource CircleButtonStyle}"  ></Button>
-        <Image Source="\Engineer\Photos\startSchedule.png" Margin="292,35,421,45"  Grid.Row="1" Visibility="{Binding Converter={StaticResource ExequtionStageinVisibilityKey}}"/>
-        <Button  Grid.Row="1" Grid.Column="0" Content="Gantt Chart" Visibility="{Binding Converter={StaticResource ExequtionStageVisibilityKey}}" Margin="367,48,314,53" Click="OpenGanttWindowClick" Style="{StaticResource CircleButtonStyle}" ></Button>
-        <Image Source="\Engineer\Photos\ganttIcon.png" Margin="292,35,421,45"  Grid.Row="1" Visibility="{Binding Converter={StaticResource ExequtionStageVisibilityKey}}"/>
+        <!--the main choose buttons:-->
+        <Button  Margin="153,276,487,235" Click="ShowEngineerList" Style="{StaticResource CircleButtonStyle}">EngineerListWindow</Button>
+        <Image Source="\Engineer\Photos\engineerList.png" Margin="58,268,752,226" Width="90" Grid.Column="0" RenderTransformOrigin="0.567,0.388"/>
+        <Button Margin="571,275,72,234" Click="ShowTaskList" Style="{StaticResource CircleButtonStyle}">TaskListWindow</Button>
+        <Image Source="\Engineer\Photos\taskList.png" Width="90" Margin="476,262,334,225"/>
+        <Button   Grid.Column="0" Content="Initialize Data" Margin="571,119,72,390" Click="InitializeButton" Style="{StaticResource CircleButtonStyle}" />
+        <Image Source="\Engineer\Photos\initialize.png" Width="90" Margin="58,117,752,373"  Grid.Row="0" Grid.Column="0"/>
+        <Button   Content="Reset Data" Margin="153,119,487,390" Click="Reset" Style="{StaticResource CircleButtonStyle}"/>
+        <Image Source="\Engineer\Photos\resetData.png" Width="90" Margin="476,117,334,373"  Grid.Row="0"/>
+        <Button  Content="start schedule" Visibility="{Binding Converter={StaticResource PlanningStageVisibilityKey}}" Margin="340,409,296,96" Click="OpenStartScheduleClick" Style="{StaticResource CircleButtonStyle}" />
+        <Image Source="\Engineer\Photos\schedule.png" Margin="221,403,585,90" Visibility="{Binding Converter={StaticResource PlanningStageVisibilityKey}}" RenderTransformOrigin="-0.094,0.795"/>
+        <Button  Content="schedule" Visibility="{Binding Converter={StaticResource ExequtionStageinVisibilityKey}}" Margin="340,409,296,96" Click="OpenScheduleClick" Style="{StaticResource CircleButtonStyle}"  />
+        <Image Source="\Engineer\Photos\startSchedule.png" Margin="225,405,589,85" Visibility="{Binding Converter={StaticResource ExequtionStageinVisibilityKey}}" RenderTransformOrigin="-0.294,0.839"/>
+        <Button  Content="Gantt Chart" Visibility="{Binding Converter={StaticResource ExequtionStageVisibilityKey}}" Margin="340,409,296,96" Click="OpenGanttWindowClick" Style="{StaticResource CircleButtonStyle}" />
+        <Image Source="\Engineer\Photos\ganttIcon.png" Margin="202,392,563,75" Visibility="{Binding Converter={StaticResource ExequtionStageVisibilityKey}}" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.403"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="-0.493"/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
 
     </Grid>
 </Window>
