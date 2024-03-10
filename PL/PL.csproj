@@ -35,6 +35,7 @@
     <None Remove="Engineer\Photos\schedule.png" />
     <None Remove="Engineer\Photos\sign.jpg" />
     <None Remove="Engineer\Photos\startSchedule.png" />
+    <None Remove="Engineer\Photos\TagImageBackGround.png" />
     <None Remove="Engineer\Photos\taskList.png" />
     <None Remove="Images\TheCottel.jpg" />
     <None Remove="Images\The_Rebbay_Kook.png" />
@@ -85,6 +86,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Engineer\Photos\sign.jpg" />
+    <Resource Include="Engineer\Photos\TagImageBackGround.png" />
     <Resource Include="Images\BTech-Mechanical-Engineering-Robotics-AI.jpg" />
     <Resource Include="Images\IconImage.png" />
     <Resource Include="Images\TheCottel.jpg" />

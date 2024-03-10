@@ -23,17 +23,6 @@
     <_isActive>true</_isActive>
   </Task>
   <Task>
-    <_id>2</_id>
-    <_createdAtDate>2024-03-11T00:41:05.0684544+02:00</_createdAtDate>
-    <_requiredEffortTime>P5D</_requiredEffortTime>
-    <_isMilestone>false</_isMilestone>
-    <_alias>Theoretical analysis of aerodynamics</_alias>
-    <_description>Evaluating the theoretical aspects of airflow and forces acting on the rocket to design a streamlined shape that minimizes air resistance and enhances stability during flight.</_description>
-    <_scheduledDate>2024-03-11T00:00:00</_scheduledDate>
-    <_complexity>BetterBeginner</_complexity>
-    <_isActive>true</_isActive>
-  </Task>
-  <Task>
     <_id>3</_id>
     <_createdAtDate>2024-03-11T00:41:05.07669+02:00</_createdAtDate>
     <_requiredEffortTime>P12D</_requiredEffortTime>
@@ -240,6 +229,19 @@
     <_description>Performing comprehensive tests to ensure the rocket's software operates as intended under various conditions.</_description>
     <_scheduledDate>2024-04-20T00:00:00</_scheduledDate>
     <_complexity>Advanced</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>2</_id>
+    <_createdAtDate>2024-03-11T00:41:05.0684544+02:00</_createdAtDate>
+    <_requiredEffortTime>P5D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Theoretical analysis of aerodynamics</_alias>
+    <_description>Evaluating the theoretical aspects of airflow and forces acting on the rocket to design a streamlined shape that minimizes air resistance and enhances stability during flight.</_description>
+    <_scheduledDate>2024-03-11T00:00:00</_scheduledDate>
+    <_startDate>2024-03-11T00:00:00+02:00</_startDate>
+    <_complexity>BetterBeginner</_complexity>
+    <_engineerId>123</_engineerId>
     <_isActive>true</_isActive>
   </Task>
 </ArrayOfTask>
