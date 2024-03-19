@@ -171,6 +171,22 @@ class ConvertMultiplyToWidth : IValueConverter
         throw new NotImplementedException();
     }
 }
+public class IsNumericConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is string text)
+        {
+            return int.TryParse(text, out _);
+        }
+        return false;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 class ConvertMultiplyAndFindStartTime : IValueConverter
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();

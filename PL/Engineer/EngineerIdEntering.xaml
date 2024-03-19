@@ -12,7 +12,6 @@
         Title="EngineerIdEntering" Height="128" Width="254">
     <Window.Resources>
         <Style x:Key="CircleButtonStyle" TargetType="Button">
-
             <Setter Property="Background" Value="#3333CC" />
             <Setter Property="Foreground" Value="#79E9DF" />
             <Setter Property="Template">
@@ -47,7 +46,21 @@
             <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
         <Label HorizontalAlignment="Center" Grid.Row="0" Content="enter the engineer's id:"></Label>
-        <TextBox HorizontalAlignment="Center" Width="230" Grid.Row="1" Text="{Binding Id}"></TextBox>
+        <TextBox HorizontalAlignment="Center" Width="230" Grid.Row="1" Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Background" Value="White" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=Text, RelativeSource={RelativeSource Self}}" Value="">
+                            <Setter Property="Background" Value="Red" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=Text, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNumericConverter}}" Value="False">
+                            <Setter Property="Background" Value="Red" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
         <Grid Grid.Row="2" Margin="0,20,0,0" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition ></ColumnDefinition>

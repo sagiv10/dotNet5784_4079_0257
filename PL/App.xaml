@@ -39,5 +39,6 @@
         <local:ConvertDateToMargin x:Key="DateToMarginKey"/>
         <local:ConvertDateToMarginUpdate x:Key="DateToMarginUpdateKey"/>
         <local:ConvertDataToMessage x:Key="AliasDatesStringKey"/>
+        <local:IsNumericConverter x:Key="IsNumericConverter"/>
     </Application.Resources>
 </Application>
