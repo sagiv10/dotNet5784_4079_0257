@@ -51,9 +51,11 @@
                 <Style TargetType="TextBox">
                     <Setter Property="Background" Value="White" />
                     <Style.Triggers>
+                        <!--make red when empty-->
                         <DataTrigger Binding="{Binding Path=Text, RelativeSource={RelativeSource Self}}" Value="">
                             <Setter Property="Background" Value="Red" />
                         </DataTrigger>
+                        <!--make red when not int-->
                         <DataTrigger Binding="{Binding Path=Text, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNumericConverter}}" Value="False">
                             <Setter Property="Background" Value="Red" />
                         </DataTrigger>
