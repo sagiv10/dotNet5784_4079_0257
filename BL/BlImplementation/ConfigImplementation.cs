@@ -156,5 +156,13 @@ internal class ConfigImplementation : IConfig
         double finalNum;
         return double.TryParse(number, out finalNum) ? finalNum : throw new BO.BLWrongInputException("you entered wrong input when number should be entered to " + field + "!");
     }
+    public void SaveProjectCurrentDateIntoXml(DateTime ProjectCurrentDate)
+    {
+        _dal.Project.SaveProjectCurrentDateIntoXml(ProjectCurrentDate);
+    }
+    public DateTime? getProjectCurrentDateIntoXml()
+    {
+        return _dal.Project.getProjectCurrentDateIntoXml();
+    }
 
 }

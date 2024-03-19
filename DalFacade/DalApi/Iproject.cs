@@ -27,5 +27,12 @@ public interface Iproject
     /// resets the running numbers for task and dependency in the database
     /// </summary>
     public void ResetRunningNumbers();
+    /// <summary>
+    /// Save the Project CurrentDate Into Xml file
+    /// </summary>
+    /// <param name="ProjectCurrentDate"></param>
+    public void SaveProjectCurrentDateIntoXml(DateTime ProjectCurrentDate);
+    public DateTime? getProjectCurrentDateIntoXml();
 
- }
+
+}
