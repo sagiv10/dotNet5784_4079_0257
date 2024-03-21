@@ -1,4 +1,7 @@
-﻿namespace BlApi;
+﻿using Dal;
+using DalApi;
+
+namespace BlApi;
 
 /// <summary>
 /// the engineers access interface for the buissness layer
@@ -113,5 +116,15 @@ public interface IEngineer
     /// <exception cref="BO.BLNotFoundException"></exception>
     /// <exception cref="BO.BLWrongStageException"></exception>
     public void FinishTask(int engineerId);
-   
+    /// <summary>
+    /// get us a list of all the removed engineers
+    /// </summary>
+    /// <returns></returns>
+    public List<BO.Engineer> getDeleted();
+    /// <summary>
+    /// make engineer _isActive to be true again.
+    /// </summary>
+    /// <param name="id"></param>
+    public void GetEngineerToActive(int id);
+    
 }

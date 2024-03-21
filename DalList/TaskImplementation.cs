@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 
 internal class TaskImplementation : ITask
 {
+    public List<DO.Task> getDeleted()
+    {
+        IEnumerable<DO.Task> newList = from DO.Task t in DataSource.Tasks
+                                       where !t._isActive
+                                       select t;
+        return newList.ToList();
+    }
+
     /// <summary>
     /// this method takes the info of the task the user wrote us as a given parameter and changes the id by the static property and adds it to the tasks list.
     /// </summary>
@@ -104,4 +112,12 @@ internal class TaskImplementation : ITask
     }
     public void DeleteAll() { DataSource.Tasks.Clear(); }
 
+    public void GetTaskToActive(int id)
+    {
+        DO.Task ifExists = DataSource.Config.FindTask(id);
+        DO.Task updatedTask = ifExists with { _isActive = true };
+        int theIndex = DataSource.Config.FindIndexTasks(ifExists._id);
+        DataSource.Tasks.RemoveAt(theIndex);
+        DataSource.Tasks.Add(updatedTask);
+    }
 }

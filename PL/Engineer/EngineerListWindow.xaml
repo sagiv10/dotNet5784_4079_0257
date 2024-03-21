@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d" 
         Icon="Photos\IconImage.png"
-        Title="EngineerListWindow" Height="640" Width="800"
+        Title="EngineerListWindow" Height="600" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
         <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
@@ -87,14 +87,14 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="20">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <ContentPresenter.Resources>
-                                           <Style TargetType="TextBlock">
-                                           <Setter Property="FontWeight" Value="Bold"  />
-                                           </Style>
-                                        </ContentPresenter.Resources>
-                                    </ContentPresenter>
-                       </Border>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontWeight" Value="Bold"  />
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -112,25 +112,25 @@
             </Style.Triggers>
             <Setter Property="Background" Value="#7AA0E3" />
             <Setter Property="Foreground" Value="Black" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}"
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
                              CornerRadius="20">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <ContentPresenter.Resources>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="FontWeight" Value="Bold" />
-                                        </Style>
-                                    </ContentPresenter.Resources>
-                                </ContentPresenter>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="ComboBoxItemStyle" TargetType="ComboBoxItem">
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
@@ -150,6 +150,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
             </Grid.ColumnDefinitions>
             <!--SelectionOfEngineerExpirience-->
             <Label Grid.Column="0" Style="{StaticResource CircleLabelStyle}" Width="316" Margin="0,5,0,0" >select engineer experience level:</Label>
@@ -159,7 +160,7 @@
                       ItemContainerStyle="{StaticResource ComboBoxItemStyle}">
 
             </ComboBox>
-           
+
         </Grid>
         <!--UpdateButtonByList-->
         <ListView MouseDoubleClick="ListView_MouseDoubleClick" Margin="5" Grid.Row="1" ItemsSource="{Binding Path=EngineerList, UpdateSourceTrigger=PropertyChanged}" >
@@ -250,13 +251,14 @@
                                         Width="65"
                                         Height="45"
                                 CommandParameter="{Binding}" />
-                            </DataTemplate>         
+                            </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
         <!--AddButton-->
-        <Button Content="Add" Background="Gray" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="OpenCreateWindow" Style="{StaticResource CircleButtonStyle}"/>
+        <Button Content="Add" Background="Gray" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="50" Width="100" Click="OpenCreateWindow" Style="{StaticResource CircleButtonStyle}" Margin="246,455,0,0"/>
+        <Button Content="Restore" Background="Gray" Grid.Row="1" HorizontalAlignment="Left" Height="50" Width="100" Click="OpenRestoreWindow" Style="{StaticResource CircleButtonStyle}" Margin="478,455,0,0"/>
     </Grid>
 </Window>

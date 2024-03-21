@@ -181,5 +181,18 @@ namespace PL.Engineer
                 MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void OpenRestoreWindow(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                new RestoreWindow().ShowDialog();
+                EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

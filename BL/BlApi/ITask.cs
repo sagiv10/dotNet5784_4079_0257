@@ -1,4 +1,6 @@
-﻿namespace BlApi;
+﻿using DalApi;
+
+namespace BlApi;
 
 /// <summary>
 /// the tasks access interface for the buissness layer
@@ -102,6 +104,19 @@ public interface ITask
     /// </summary>
     /// <returns> the 'sorted' array</returns>
     public List<BO.TaskInList> ReadAllByDependencies();
+    /// <summary>
+    /// get us a list of all the deleted tasks
+    /// </summary>
+    /// <returns></returns>
+    public List<BO.TaskInList> getDeleted();
+    /// <summary>
+    /// makes some task to be with _isActive true again.
+    /// </summary>
+    /// <param name="id"></param>
+    public void GetTaskToActive(int id);
+    
 
-  
+
+
+
 }

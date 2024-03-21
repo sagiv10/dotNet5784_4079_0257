@@ -107,4 +107,19 @@ internal class TaskImplementation : ITask
         XElement emptyRoot = new XElement("ArrayOfTask");//get the list from the xml file to work with it
         XMLTools.SaveListToXMLElement(emptyRoot, s_tasks_xml);//save the changes we did in the list we got in the start
     }
+
+    public List<Task> getDeleted()
+    {
+        List<Task> ListToWorkWith = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);//get the list from the xml file to work with it
+        IEnumerable<DO.Task> newList = ListToWorkWith.Where(item => !item._isActive);
+        return newList.ToList();
+    }
+    public void GetTaskToActive(int id)
+    {
+        List<Task>? tasks = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml); //get the list from the xml file
+        Task updatedTask = tasks[id] with { _isActive = true };
+        tasks.RemoveAt(id);
+        tasks.Add(updatedTask);
+        XMLTools.SaveListToXMLSerializer(tasks, s_tasks_xml); //save the new list in the xml file
+    }
 }
