@@ -41,5 +41,6 @@
         <local:ConvertDataToMessage x:Key="AliasDatesStringKey"/>
         <local:IsNumericConverter x:Key="IsNumericConverter"/>
         <local:IsNumericDoubleConverter x:Key="IsNumericDoubleConverter"/>
+        <local:ConvertBoolToColor x:Key="ConvertBoolToColorKey"/>
     </Application.Resources>
 </Application>

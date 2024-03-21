@@ -24,6 +24,15 @@ namespace PL.Task
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         //------------------------------------------------------------------------------------
         //Dependency Properties:
+        public bool isThereItemsToRestore
+        {
+            get { return (bool)GetValue(isThereItemsToRestoreProperty); }
+            set { SetValue(isThereItemsToRestoreProperty, value); }
+        }
+
+        public static readonly DependencyProperty isThereItemsToRestoreProperty/*how to call me in the xaml code */ =
+            DependencyProperty.Register("isThereItemsToRestore", typeof(bool), typeof(TaskListWindow), new PropertyMetadata(null));
+
         public BO.Status chosenStatus
         {
             get { return (BO.Status)GetValue(chosenStatusProperty); }
@@ -64,6 +73,12 @@ namespace PL.Task
         {
             try
             {
+                if (s_bl?.Task.getDeleted().Count() == 0)
+                {
+                    isThereItemsToRestore = false;
+                }
+                else
+                    isThereItemsToRestore = true;
                 chosenComplexity = EngineerExperience.All;
                 chosenStatus = BO.Status.All;
                 Status = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
@@ -161,6 +176,12 @@ namespace PL.Task
                 s_bl.Task.Delete(((BO.TaskInList)((Button)sender).CommandParameter).Id); //delete him
                 MessageBox.Show("Task seccessfully deleted!");
                 TaskInList_List = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
+                if (s_bl?.Engineer.getDeleted().Count() == 0)
+                {
+                    isThereItemsToRestore = false;
+                }
+                else
+                    isThereItemsToRestore = true;
             }
             catch(Exception ex)
             {
@@ -174,6 +195,12 @@ namespace PL.Task
             {
                 new RestoreTaskWindow().ShowDialog();
                 TaskInList_List = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
+                if (s_bl?.Engineer.getDeleted().Count() == 0)
+                {
+                    isThereItemsToRestore = false;
+                }
+                else
+                    isThereItemsToRestore = true;
             }
             catch (Exception ex)
             {

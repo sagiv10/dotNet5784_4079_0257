@@ -259,6 +259,8 @@
         </ListView>
         <!--AddButton-->
         <Button Content="Add" Background="Gray" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Height="50" Width="100" Click="OpenCreateWindow" Style="{StaticResource CircleButtonStyle}" Margin="246,455,0,0"/>
-        <Button Content="Restore" Background="Gray" Grid.Row="1" HorizontalAlignment="Left" Height="50" Width="100" Click="OpenRestoreWindow" Style="{StaticResource CircleButtonStyle}" Margin="478,455,0,0"/>
+        <!--restoreButton-->
+        <Button Content="Restore" Background="{Binding isThereItemsToRestore, Converter={StaticResource ConvertBoolToColorKey}}"  Grid.Row="1" HorizontalAlignment="Left" Height="50" Width="100" Click="OpenRestoreWindow" Style="{StaticResource CircleButtonStyle}" Margin="478,455,0,0" IsEnabled="{Binding isThereItemsToRestore}" 
+/>
     </Grid>
 </Window>

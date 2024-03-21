@@ -143,8 +143,9 @@ internal class EngineerImplementation : IEngineer
     public void GetEngineerToActive(int id)
     {
         List<Engineer>? engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml); //get the list from the xml file
-        Engineer updatedEngineer = engineers[id] with { _isActive = true };
-        engineers.RemoveAt(id);
+        int idRestore = engineers.FindIndex(temp => temp._id == id);
+        Engineer updatedEngineer = engineers[idRestore] with { _isActive = true };
+        engineers.RemoveAt(idRestore);
         engineers.Add(updatedEngineer);
         XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml); //save the new list in the xml file
     }

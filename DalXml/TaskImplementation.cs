@@ -117,8 +117,9 @@ internal class TaskImplementation : ITask
     public void GetTaskToActive(int id)
     {
         List<Task>? tasks = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml); //get the list from the xml file
-        Task updatedTask = tasks[id] with { _isActive = true };
-        tasks.RemoveAt(id);
+        int indexToRestore = tasks.FindIndex(itemOfTheLoop => itemOfTheLoop._id == id );
+        Task updatedTask = tasks[indexToRestore] with { _isActive = true };
+        tasks.RemoveAt(indexToRestore);
         tasks.Add(updatedTask);
         XMLTools.SaveListToXMLSerializer(tasks, s_tasks_xml); //save the new list in the xml file
     }

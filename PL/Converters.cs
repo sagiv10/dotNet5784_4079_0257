@@ -46,7 +46,27 @@ class ConvertTimeSpanToNumDays : IValueConverter
         throw new NotImplementedException();
     }
 }
-class DateToStringConverter : IValueConverter
+
+public class ConvertBoolToColor : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if ((bool)value)
+        {
+          return new SolidColorBrush(Colors.Gray);
+        }
+        else
+        {
+          return new SolidColorBrush(Colors.LightPink); // Using LightRed for better visibility
+        }
+    }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    class DateToStringConverter : IValueConverter
 {
     /// <summary>
     /// converts the number of days of timeSpan to string describe its amount of days
