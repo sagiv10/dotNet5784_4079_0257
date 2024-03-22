@@ -241,7 +241,6 @@
     <_scheduledDate>2024-03-11T00:00:00</_scheduledDate>
     <_startDate>2024-03-11T00:00:00+02:00</_startDate>
     <_complexity>BetterBeginner</_complexity>
-    <_engineerId>123</_engineerId>
     <_isActive>true</_isActive>
   </Task>
 </ArrayOfTask>
