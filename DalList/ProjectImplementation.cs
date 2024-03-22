@@ -30,4 +30,15 @@ internal class ProjectImplementation : Iproject
     {
         DataSource.Config.projectStatus = newStatus;
     }
+    public void SaveProjectCurrentDateIntoXml(DateTime ProjectCurrentDate)
+    {
+        DataSource.Config.currentDate = ProjectCurrentDate;
+
+    }
+    public DateTime? getProjectCurrentDateIntoXml()
+    {
+        return DataSource.Config.currentDate;
+    }
+
+
 }

@@ -81,6 +81,11 @@ namespace BlApi
         /// <returns> the right double</returns>
         /// <exception cref="BO.BLWrongIdException"></exception>
         public double ParseToDouble(string number, string field);
-
+        /// <summary>
+        /// saves the time of the probjet from the main window to xml 
+        /// </summary>
+        /// <param name="ProjectCurrentDate"></param>
+        public void SaveProjectCurrentDateIntoXml(DateTime ProjectCurrentDate);
+        public DateTime? getProjectCurrentDateIntoXml();
     }
 }

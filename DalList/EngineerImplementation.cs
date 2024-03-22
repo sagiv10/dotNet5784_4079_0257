@@ -116,6 +116,21 @@ internal class EngineerImplementation : IEngineer
         DataSource.Engineers[theIndex] = item;
     }
     public void DeleteAll() { DataSource.Engineers.Clear(); }
+    public List<DO.Engineer> getDeleted()
+    {
+        IEnumerable<DO.Engineer> newList = from DO.Engineer t in DataSource.Engineers
+                                           where !t._isActive
+                                           select t;
+        return newList.ToList();
+    }
+    public void GetEngineerToActive(int id)
+    {
+        Engineer? ifExists = DataSource.Config.FindEngineer(id);
+        Engineer updatedEngineer = ifExists with { _isActive = true };
+        int theIndex = DataSource.Config.FindIndexEngineer(ifExists._id);
+        DataSource.Engineers.RemoveAt(theIndex);
+        DataSource.Engineers.Add(updatedEngineer);
+    }
 
 }
 

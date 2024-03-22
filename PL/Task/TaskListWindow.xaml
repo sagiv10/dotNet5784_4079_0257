@@ -19,13 +19,13 @@
 
                 <!-- Upper part with ComboBox -->
                 <RowDefinition Height="50"/>
-                
+
                 <!-- Middle part with ListView -->
                 <RowDefinition Height="300"/>
-                
+
                 <!-- Lower part with Add, Add Dependency and Delete Dependency Buttons -->
                 <RowDefinition Height="50"/>
-                
+
             </Grid.RowDefinitions>
 
             <!--AddButton:-->
@@ -69,9 +69,12 @@
             </ListView>
             <!--AddButton:-->
             <Button Content="Add new task" Click="AddTaskClick"
-                    Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" IsEnabled="{Binding Status, Converter={StaticResource ConvertPlanningToEnabledKey}}" Height="30">
+                    Grid.Row="2"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" IsEnabled="{Binding Status, Converter={StaticResource ConvertPlanningToEnabledKey}}" Height="30" Margin="430,0,0,0">
             </Button>
-            
+            <Button Content="Restore task" Click="RestoreTaskClick"
+                  Grid.Row="2"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" IsEnabled="{Binding isThereItemsToRestore}" Height="30" Margin="273,0,0,0">
+            </Button>
+
         </Grid>
     </Grid>
 </Window>

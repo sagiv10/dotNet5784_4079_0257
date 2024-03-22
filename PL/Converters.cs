@@ -46,7 +46,27 @@ class ConvertTimeSpanToNumDays : IValueConverter
         throw new NotImplementedException();
     }
 }
-class DateToStringConverter : IValueConverter
+
+public class ConvertBoolToColor : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if ((bool)value)
+        {
+          return new SolidColorBrush(Colors.Gray);
+        }
+        else
+        {
+          return new SolidColorBrush(Colors.LightPink); // Using LightRed for better visibility
+        }
+    }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    class DateToStringConverter : IValueConverter
 {
     /// <summary>
     /// converts the number of days of timeSpan to string describe its amount of days
@@ -166,6 +186,38 @@ class ConvertMultiplyToWidth : IValueConverter
     {
         return (int)value*15;
     }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+public class IsNumericConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is string text)
+        {
+            return int.TryParse(text, out _);
+        }
+        return false;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+public class IsNumericDoubleConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is string text)
+        {
+            return double.TryParse(text, out _);
+        }
+        return false;
+    }
+
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();

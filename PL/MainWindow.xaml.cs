@@ -44,6 +44,7 @@ namespace PL
         {
             try
             {
+                s_bl.initializeClock();//critic for setting from xml
                 ProjectCurrentDate = s_bl.Clock; //now the starting date will always exist
             }
             catch (Exception ex)
@@ -129,6 +130,11 @@ namespace PL
             {
                 MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            s_bl.Config.SaveProjectCurrentDateIntoXml(ProjectCurrentDate);
         }
     }
 }

@@ -15,5 +15,7 @@ public interface IBl
     public void AddMonth();
     public void AddYear();
     public void ResetClock();
+    public void initializeClock();
+
     #endregion
 }

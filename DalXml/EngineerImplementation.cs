@@ -1,6 +1,7 @@
 ﻿namespace Dal;
 using DalApi;
 using DO;
+using System.Data.Common;
 using System.Xml.Linq;
 
 internal class EngineerImplementation : IEngineer
@@ -15,12 +16,12 @@ internal class EngineerImplementation : IEngineer
     public int Create(Engineer item)
     {
         List<Engineer>? engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml); //get the list from the xml file
-        int isExists = engineers.FindIndex(temp=>temp._id==item._id);
-        if (isExists!=-1 && engineers[isExists]._isActive==true)
+        int isExists = engineers.FindIndex(temp => temp._id == item._id);
+        if (isExists != -1 && engineers[isExists]._isActive == true)
         {
             throw new DalAlreadyExistsException($"Engineer with ID={item._id} already exists");
         }
-        if(isExists != -1 && engineers[isExists]._isActive == false)
+        if (isExists != -1 && engineers[isExists]._isActive == false)
         {
             engineers.RemoveAt(isExists);
         }
@@ -37,8 +38,8 @@ internal class EngineerImplementation : IEngineer
     public void Delete(int id)
     {
         List<Engineer>? engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml); //get the list from the xml file
-        int isExists = engineers.FindIndex(temp => temp._id == id && temp._isActive==true);
-        if (isExists ==-1)
+        int isExists = engineers.FindIndex(temp => temp._id == id && temp._isActive == true);
+        if (isExists == -1)
         {
             throw new DalNotFoundException($"Engineer with ID={id} does Not exist");
         }
@@ -74,7 +75,7 @@ internal class EngineerImplementation : IEngineer
     public Engineer? Read(Func<Engineer, bool> filter)
     {
         List<Engineer>? engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml); //get the list from the xml file
-        int isExists = engineers.FindIndex(temp=> filter(temp)&&temp._isActive==true);
+        int isExists = engineers.FindIndex(temp => filter(temp) && temp._isActive == true);
         if (isExists == -1)
         {
             //XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml); //save the new list in the xml file
@@ -130,7 +131,22 @@ internal class EngineerImplementation : IEngineer
     /// </summary>
     public void DeleteAll()
     {
-        XElement emptyRoot=new XElement("ArrayOfEngineer");//get the list from the xml file to work with it
+        XElement emptyRoot = new XElement("ArrayOfEngineer");//get the list from the xml file to work with it
         XMLTools.SaveListToXMLElement(emptyRoot, s_engineers_xml);//save the changes we did in the list we got in the start
+    }
+    public List<Engineer> getDeleted()
+    {
+        List<Engineer> ListToWorkWith = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);//get the list from the xml file to work with it
+        IEnumerable<DO.Engineer> newList = ListToWorkWith.Where(item => !item._isActive);
+        return newList.ToList();
+    }
+    public void GetEngineerToActive(int id)
+    {
+        List<Engineer>? engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml); //get the list from the xml file
+        int idRestore = engineers.FindIndex(temp => temp._id == id);
+        Engineer updatedEngineer = engineers[idRestore] with { _isActive = true };
+        engineers.RemoveAt(idRestore);
+        engineers.Add(updatedEngineer);
+        XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml); //save the new list in the xml file
     }
 }

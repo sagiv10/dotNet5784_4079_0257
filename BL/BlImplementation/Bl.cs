@@ -16,9 +16,14 @@ namespace BlImplementation
         public IConfig Config => new ConfigImplementation(this);
 
         #region
-        private static DateTime s_Clock = DateTime.Now.Date;
+
+        private static DateTime s_Clock = DateTime.Now.Date ;
         public DateTime Clock { get { return s_Clock; } private set { s_Clock = value; } }
 
+        public void initializeClock()
+        {
+            s_Clock=(DateTime)Config.getProjectCurrentDateIntoXml()!;
+        }
         public void AddDay()
         {
             s_Clock = Clock.AddDays(1);
@@ -42,6 +47,7 @@ namespace BlImplementation
         {
             s_Clock = DateTime.Now;
         }
+
         #endregion
     }
 }

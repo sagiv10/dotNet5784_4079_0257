@@ -32,6 +32,14 @@ namespace PL.Engineer
 
         public static readonly DependencyProperty EngineerListProperty/*how to call me in the xaml code */ = 
             DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
+        public bool isThereItemsToRestore
+        {
+            get { return (bool)GetValue(isThereItemsToRestoreProperty); }
+            set { SetValue(isThereItemsToRestoreProperty, value); }
+        }
+
+        public static readonly DependencyProperty isThereItemsToRestoreProperty/*how to call me in the xaml code */ =
+            DependencyProperty.Register("isThereItemsToRestore", typeof(bool), typeof(EngineerListWindow), new PropertyMetadata(null));
 
         //the stage of the project
         public BO.ProjectStatus Stage
@@ -45,6 +53,12 @@ namespace PL.Engineer
 
         public EngineerListWindow()
         {
+            if(s_bl?.Engineer.getDeleted().Count()==0)
+            {
+                isThereItemsToRestore=false;
+            }
+            else
+                isThereItemsToRestore= true;
             try
             {
                 EngineerList = s_bl?.Engineer.ReadAllEngineers()!;
@@ -173,11 +187,36 @@ namespace PL.Engineer
                     s_bl.Engineer.DeleteEngineer(SpecificEngineerFromList.Id);
                     MessageBox.Show("the task has been finished succesfully!");
                     EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
+                    if (s_bl?.Engineer.getDeleted().Count() == 0)
+                    {
+                        isThereItemsToRestore = false;
+                    }
+                    else
+                        isThereItemsToRestore = true;
                 }
             }
             catch (Exception ex)
             {
 
+                MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void OpenRestoreWindow(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                new RestoreWindow().ShowDialog();
+                EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
+                if (s_bl?.Engineer.getDeleted().Count() == 0)
+                {
+                    isThereItemsToRestore = false;
+                }
+                else
+                    isThereItemsToRestore = true;
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

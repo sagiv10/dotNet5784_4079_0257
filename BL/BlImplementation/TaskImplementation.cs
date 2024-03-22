@@ -514,6 +514,17 @@ internal class TaskImplementation : BlApi.ITask
         }
         return sortedList;
     }
+    public List<BO.TaskInList> getDeleted()
+    {
+        List<BO.Task> firstList = (from task in _dal.Task.getDeleted()
+                                 select MakeBOFromDoTASK(task)).OrderBy(e => e.Id).ToList();
+        IEnumerable <TaskInList> TasksInList = firstList.Select((BOtaskInList => new TaskInList(BOtaskInList!.Id, BOtaskInList.Description, BOtaskInList.Alias, BOtaskInList.Status)));//make to task in list to return properly
+        return TasksInList.ToList();
+    }
+    public void GetTaskToActive(int id)
+    {
+        _dal.Task.GetTaskToActive(id);
+    }
 }
 
 

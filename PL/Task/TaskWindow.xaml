@@ -63,7 +63,23 @@
                     <!--choose num of weeks-->
                     <ComboBox ItemsSource="{Binding WeeksRange, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" SelectedItem="{Binding NumWeeks, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Mode=OneWayToSource}" Width="55" Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource PlanningStageVisibilityKey}}" ></ComboBox>
                     <!--choose num of months-->
-                    <TextBox Text="{Binding NumMonths, RelativeSource={RelativeSource AncestorType={x:Type  local:TaskWindow}}, Mode=TwoWay}" Width="55" Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource PlanningStageVisibilityKey}}"></TextBox>
+                    <TextBox Text="{Binding NumMonths, RelativeSource={RelativeSource AncestorType={x:Type  local:TaskWindow}}, Mode=TwoWay}" Width="55" Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource PlanningStageVisibilityKey}}">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="Background" Value="White" />
+                                <Style.Triggers>
+                                    <!--make red when empty-->
+                                    <DataTrigger Binding="{Binding Path=Text, RelativeSource={RelativeSource Self}}" Value="">
+                                        <Setter Property="Background" Value="Red" />
+                                    </DataTrigger>
+                                    <!--make red when not int-->
+                                    <DataTrigger Binding="{Binding Path=Text, RelativeSource={RelativeSource Self}, Converter={StaticResource IsNumericConverter}}" Value="False">
+                                        <Setter Property="Background" Value="Red" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
                     <!--in case we are not in the planning stage-->
                     <TextBox Text="{Binding RequiredEffortTime, Converter={StaticResource ConvertTimeSpanToStringDaysKey} }" IsEnabled="False" Visibility="{Binding Status, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}, Converter={StaticResource PlanningStageinVisibilityKey}}" Height="21" Width="200" Margin="-165,0,0,0"></TextBox>
                 </StackPanel>
