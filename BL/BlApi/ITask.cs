@@ -1,4 +1,5 @@
-﻿using DalApi;
+﻿using BO;
+using DalApi;
 
 namespace BlApi;
 
@@ -114,9 +115,13 @@ public interface ITask
     /// </summary>
     /// <param name="id"></param>
     public void GetTaskToActive(int id);
-    
 
-
+    /// <summary>
+    /// gets all the task in way that no task is before the tasks that he depends on it,
+    /// and also calculate their color in the gantt
+    /// </summary>
+    /// <returns> the ordered tasks list </returns>
+    public List<TaskInList> GetTasksByDependenciesUpdateDict();
 
 
 }

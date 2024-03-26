@@ -207,7 +207,7 @@
                                 <Button Content="delete"
                                         Width="65"
                                         Height="45"
-                        Click="DeleteTaskClick"
+                        Click="DeleteEngineerClick"
                         CommandParameter="{Binding}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

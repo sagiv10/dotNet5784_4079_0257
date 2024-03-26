@@ -17,6 +17,8 @@ internal class TaskImplementation : BlApi.ITask
 
     private DalApi.IDal _dal = DalApi.Factory.Get;//with this field we can access to the methods of task in dal. the way to use the method is being chosen inside factory.
 
+    static Dictionary<int, double> precentages;
+
     /// <summary>
     /// tihs method help us to add dependencies of new task that just been created 
     /// </summary>
@@ -461,25 +463,8 @@ internal class TaskImplementation : BlApi.ITask
     }
 
     public double GetPrecentage(int TaskId)
-    { 
-        DateTime currentTime = _bl.Clock!; //the time is not null right now because this function will be called only in the execution stage
-        DO.Task theTask = _dal.Task.Read(TaskId)!;
-        if (theTask._completeDate != null) //then it finished
-        {
-            return 2;
-        }
-        DateTime scheduledTime = (DateTime)theTask._scheduledDate!;//the scheduled time is not null right now because this function will be called only in the execution stage
-        if (currentTime < scheduledTime) //if the task was nott supposed to start
-        {
-            return -1;
-        }
-        DateTime forcastTime = scheduledTime + theTask._requiredEffortTime;
-        if (currentTime > forcastTime) //the task was supposed to end
-        {
-            return 1;
-        }
-        double requiredDays = (theTask._requiredEffortTime).Days, passedDays = (currentTime - scheduledTime).Days;
-        return passedDays / requiredDays;  //days that has past / days that the task has
+    {
+        return precentages[TaskId];
     }
 
     public List<BO.TaskInList> ReadAllByDependencies()
@@ -524,6 +509,61 @@ internal class TaskImplementation : BlApi.ITask
     public void GetTaskToActive(int id)
     {
         _dal.Task.GetTaskToActive(id);
+    }
+
+    public List<TaskInList> GetTasksByDependenciesUpdateDict()
+    {
+        precentages = new Dictionary<int, double>(); //reset the dictionary so new colors could get into it (new tasks and colors)
+
+        List<BO.TaskInList> returnedList = ReadAllByDependencies(); //all the tasks ordered like the dependencies - we need it to the gantt and to ensure that a task's color will be calculated only after all the prev calculated also
+
+        foreach (var task in returnedList) //for each task: calculate color and save it on the colors dictionary
+        {
+            bool isRedFlag = false; //checks if one of the prev tasks is red
+
+            List<int> previous = (from BO.TaskInList t in GetDependenciesFromDal(task.Id) //get all the depends on tasks
+                                 select t.Id).ToList();
+
+            foreach (var dep in previous)
+            {
+                if (precentages[dep] == 1) //if one of its previous is red
+                {
+                    precentages[task.Id] = 1; //then my task should be red too
+                    isRedFlag = true;
+                    break;
+                }
+            }
+
+            if(isRedFlag == false) //if the color hasn't found yet
+            {
+                DateTime currentTime = _bl.Clock!; //the time is not null right now because this function will be called only in the execution stage
+                DO.Task theTask = _dal.Task.Read(task.Id)!;
+                if (theTask._completeDate != null) //then it finished
+                {
+                    precentages[task.Id] = 2;
+                    continue;
+                }
+                DateTime scheduledTime = (DateTime)theTask._scheduledDate!;//the scheduled time is not null right now because this function will be called only in the execution stage
+                if (currentTime < scheduledTime) //if the task was nott supposed to start
+                {
+                    precentages[task.Id] = -1;
+                    continue;
+                }
+                DateTime forcastTime = scheduledTime + theTask._requiredEffortTime;
+                if (currentTime > forcastTime) //the task was supposed to end
+                {
+                    precentages[task.Id] = 1;
+                    continue;
+                }
+                double requiredDays = (theTask._requiredEffortTime).Days, passedDays = (currentTime - scheduledTime).Days;
+                precentages[task.Id] = passedDays / requiredDays;  //days that has past / days that the task has
+                continue;
+            }
+
+        }
+
+        return returnedList;
+
     }
 }
 

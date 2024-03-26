@@ -190,4 +190,14 @@
     <_dependentTask>21</_dependentTask>
     <_dependsOnTask>19</_dependsOnTask>
   </Dependency>
+  <Dependency>
+    <_id>39</_id>
+    <_dependentTask>22</_dependentTask>
+    <_dependsOnTask>20</_dependsOnTask>
+  </Dependency>
+  <Dependency>
+    <_id>40</_id>
+    <_dependentTask>22</_dependentTask>
+    <_dependsOnTask>21</_dependsOnTask>
+  </Dependency>
 </ArrayOfDependency>

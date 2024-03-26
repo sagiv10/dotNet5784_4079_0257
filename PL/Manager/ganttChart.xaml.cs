@@ -58,7 +58,7 @@ namespace PL.Manager
                 CurrentDate = s_bl.Clock; 
                 StartDateOfProject = (DateTime)s_bl.Config.getStartingDate()!;
                 //the making of taskList from list of TaskInList:
-                List<BO.TaskInList> TasksInList_Tasks = s_bl.Task.ReadAllByDependencies();
+                List<BO.TaskInList> TasksInList_Tasks = s_bl.Task.GetTasksByDependenciesUpdateDict();
                 TasksList = (from tempTaskInList in TasksInList_Tasks
                              select s_bl.Task.Read(tempTaskInList.Id)).ToList();
             }

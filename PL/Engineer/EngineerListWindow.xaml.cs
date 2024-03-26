@@ -176,7 +176,7 @@ namespace PL.Engineer
                 MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void DeleteTaskClick(object sender, RoutedEventArgs e)
+        private void DeleteEngineerClick(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -185,7 +185,7 @@ namespace PL.Engineer
                 if (SpecificEngineerFromList != null)
                 {
                     s_bl.Engineer.DeleteEngineer(SpecificEngineerFromList.Id);
-                    MessageBox.Show("the task has been finished succesfully!");
+                    MessageBox.Show("goodbye " + SpecificEngineerFromList.Name + " :(");
                     EngineerList = s_bl?.Engineer.ReadAllEngineers(e => e.Level == chosenLevel || chosenLevel == BO.EngineerExperience.All)!;
                     if (s_bl?.Engineer.getDeleted().Count() == 0)
                     {

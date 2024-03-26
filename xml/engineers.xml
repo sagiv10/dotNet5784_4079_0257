@@ -2,50 +2,50 @@
 <ArrayOfEngineer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Engineer>
     <_id>123</_id>
-    <_cost>15841.95</_cost>
+    <_cost>35824.57</_cost>
     <_email>check@gmail.com</_email>
     <_name>checked</_name>
     <_level>Master</_level>
     <_isActive>true</_isActive>
   </Engineer>
   <Engineer>
-    <_id>233301719</_id>
-    <_cost>17919.58</_cost>
-    <_email>yisachar@gmail.com</_email>
-    <_name>Yisachar</_name>
-    <_level>Master</_level>
-    <_isActive>true</_isActive>
-  </Engineer>
-  <Engineer>
-    <_id>308909244</_id>
-    <_cost>35664.73</_cost>
-    <_email>yehuda@gmail.com</_email>
-    <_name>Yehuda</_name>
-    <_level>Expert</_level>
-    <_isActive>true</_isActive>
-  </Engineer>
-  <Engineer>
-    <_id>289213062</_id>
-    <_cost>10766.37</_cost>
-    <_email>shimon@gmail.com</_email>
-    <_name>Shimon</_name>
-    <_level>BetterBeginner</_level>
-    <_isActive>true</_isActive>
-  </Engineer>
-  <Engineer>
-    <_id>281069079</_id>
-    <_cost>16973.23</_cost>
+    <_id>392390127</_id>
+    <_cost>35165.91</_cost>
     <_email>reuven@gmail.com</_email>
     <_name>Reuven</_name>
     <_level>Beginner</_level>
     <_isActive>true</_isActive>
   </Engineer>
   <Engineer>
-    <_id>352807037</_id>
-    <_cost>18979.91</_cost>
+    <_id>360454327</_id>
+    <_cost>27831.45</_cost>
+    <_email>shimon@gmail.com</_email>
+    <_name>Shimon</_name>
+    <_level>BetterBeginner</_level>
+    <_isActive>true</_isActive>
+  </Engineer>
+  <Engineer>
+    <_id>343969991</_id>
+    <_cost>24586.71</_cost>
     <_email>levi@gmail.com</_email>
     <_name>Levi</_name>
     <_level>Advanced</_level>
+    <_isActive>true</_isActive>
+  </Engineer>
+  <Engineer>
+    <_id>230320274</_id>
+    <_cost>32721.59</_cost>
+    <_email>yehuda@gmail.com</_email>
+    <_name>Yehuda</_name>
+    <_level>Expert</_level>
+    <_isActive>true</_isActive>
+  </Engineer>
+  <Engineer>
+    <_id>236396489</_id>
+    <_cost>33325.38</_cost>
+    <_email>yisachar@gmail.com</_email>
+    <_name>Yisachar</_name>
+    <_level>Master</_level>
     <_isActive>true</_isActive>
   </Engineer>
 </ArrayOfEngineer>
