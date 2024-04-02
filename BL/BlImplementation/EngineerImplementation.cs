@@ -87,7 +87,9 @@ internal class EngineerImplementation : BlApi.IEngineer
 
     /// <summary>
     /// helping method that checks if all the previous task to one task has been done or not *only in the execution stage!*
-    /// input is alredy valid
+    /// input is al
+    /// 
+    /// y valid
     /// </summary>
     /// <param name="task"> the task </param>
     /// <returns> inducation if the task is available </returns>

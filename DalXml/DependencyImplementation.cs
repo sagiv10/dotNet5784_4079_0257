@@ -122,7 +122,8 @@ internal class DependencyImplementation : IDependency
     /// <summary>
     /// this method returns the dependency that answering the filter requirments.
     /// </summary>
-    /// <param name="filter"> predicat that determine wich dependency we want to return</param>
+    /// <param name="filter"> p
+    ///icat that determine wich dependency we want to return</param>
     /// <returns> the requested id or null if there is not any Dependency with that id</returns>
     public Dependency? Read(Func<Dependency, bool> filter)
     {
