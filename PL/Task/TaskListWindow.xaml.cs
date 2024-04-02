@@ -33,6 +33,15 @@ namespace PL.Task
         public static readonly DependencyProperty isThereItemsToRestoreProperty/*how to call me in the xaml code */ =
             DependencyProperty.Register("isThereItemsToRestore", typeof(bool), typeof(TaskListWindow), new PropertyMetadata(null));
 
+        public String SearchString
+        {
+            get { return (String)GetValue(SearchStringProperty); }
+            set { SetValue(SearchStringProperty, value); }
+        }
+
+        public static readonly DependencyProperty SearchStringProperty/*how to call me in the xaml code */ =
+            DependencyProperty.Register("SearchString", typeof(String), typeof(TaskListWindow), new PropertyMetadata(null));
+
         public BO.Status chosenStatus
         {
             get { return (BO.Status)GetValue(chosenStatusProperty); }
@@ -79,6 +88,7 @@ namespace PL.Task
                 }
                 else
                     isThereItemsToRestore = true;
+                SearchString = "";
                 chosenComplexity = EngineerExperience.All;
                 chosenStatus = BO.Status.All;
                 Status = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
@@ -99,7 +109,7 @@ namespace PL.Task
                 if (SpecificTaskFromList == null)
                     return;
                 new TaskWindow(true, SpecificTaskFromList!.Id).ShowDialog();//open the window of showing specifc task with the details from last line.
-                TaskInList_List = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
+                TaskInList_List = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All) && (SearchString == "" || e.Alias.StartsWith(SearchString)))!;
             }
             catch (Exception ex)
             {
@@ -111,7 +121,7 @@ namespace PL.Task
         {
             try
             {
-                IEnumerable<BO.TaskInList> tempList = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
+                IEnumerable<BO.TaskInList> tempList = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All) && (SearchString == "" || e.Alias.StartsWith(SearchString)))!;
                 TaskInList_List = tempList;
             }
             catch (Exception ex)
@@ -124,7 +134,7 @@ namespace PL.Task
             try
             {
                 new TaskWindow(true, 0).ShowDialog();//open the window of showing specifc task without details. (because we want to add new task)
-                TaskInList_List = s_bl.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All));
+                TaskInList_List = s_bl.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All) && (SearchString == "" || e.Alias.StartsWith(SearchString)));
             }
             catch (Exception ex)
             {
@@ -175,7 +185,7 @@ namespace PL.Task
             {
                 s_bl.Task.Delete(((BO.TaskInList)((Button)sender).CommandParameter).Id); //delete him
                 MessageBox.Show("Task seccessfully deleted!");
-                TaskInList_List = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
+                TaskInList_List = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All) && (SearchString == "" || e.Alias.StartsWith(SearchString)))!;
                 if (s_bl?.Engineer.getDeleted().Count() == 0)
                 {
                     isThereItemsToRestore = false;
@@ -194,7 +204,7 @@ namespace PL.Task
             try
             {
                 new RestoreTaskWindow().ShowDialog();
-                TaskInList_List = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All))!;
+                TaskInList_List = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All) && (SearchString == "" || e.Alias.StartsWith(SearchString)))!;
                 if (s_bl?.Engineer.getDeleted().Count() == 0)
                 {
                     isThereItemsToRestore = false;
@@ -206,6 +216,11 @@ namespace PL.Task
             {
                 MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void SearchPrefix(object sender, RoutedEventArgs e)
+        {
+            TaskInList_List = s_bl?.Task.ReadAll(t => (t.Status == chosenStatus || chosenStatus == BO.Status.All) && (t.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All) && (SearchString == "" || t.Alias.StartsWith(SearchString)))!;
         }
     }
 }

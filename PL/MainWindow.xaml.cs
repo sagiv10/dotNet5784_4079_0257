@@ -4,6 +4,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using PL.Manager;
 using PL.Schedule;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace PL
 {

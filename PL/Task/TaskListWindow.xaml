@@ -46,6 +46,10 @@
                     ItemsSource="{Binding Source={StaticResource ComplexityCollectionKey}}"
                     SelectedValue="{Binding Path=chosenComplexity , Mode=TwoWay}" SelectionChanged="ReadListAgain"
                     Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="200"/>
+
+            <!--for search option-->
+            <TextBox Grid.Row="0" Text="{Binding Path=SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,15" TextChanged="SearchPrefix"  HorizontalAlignment="Center" Width="100" ></TextBox>
+
             <!--ListView:-->
             <!--ListView:-->
             <ListView MouseDoubleClick="ShowSpecificTask" 
