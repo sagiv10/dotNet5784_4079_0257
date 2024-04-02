@@ -23,7 +23,7 @@ public class BlTest
             int choice = 1;
             while (!(choice == 0))
             {
-                Console.WriteLine($"We are currently in the {(BO.ProjectStatus)s_bl.Task.getProjectStatus()} state.\nSelect an entity you want to check:\n0. exit from the menu.\n1. Engineer.\n2. Task.\n3. go on to the scheduling stage");
+                Console.WriteLine($"We are currently in the {(BO.ProjectStatus)s_bl.Config.getProjectStatus()} state.\nSelect an entity you want to check:\n0. exit from the menu.\n1. Engineer.\n2. Task.\n3. go on to the scheduling stage");
                 choice = CheckIntInput(int.TryParse(Console.ReadLine(), out choice), choice); //gets int from the user + validation
 
                 switch (choice)
@@ -40,7 +40,7 @@ public class BlTest
                         startingTime = CheckDateTimeInput(DateTime.TryParse(Console.ReadLine(), out startingTime), startingTime);
                         try
                         {
-                            s_bl.Task.StartSchedule(startingTime);
+                            s_bl.Config.StartSchedule(startingTime);
 
                         }
                         catch (BLWrongStageException problem)
@@ -336,7 +336,7 @@ public class BlTest
             int dependsOn;
             dependsOn = CheckIntInput(int.TryParse(Console.ReadLine(), out dependsOn), dependsOn); //request an int from the user and checks if it valid
 
-            s_bl.Task.DeleteDependency(dependent, dependsOn);
+            s_bl.Config.DeleteDependency(dependent, dependsOn);
         }
         catch (BLNotFoundException problem)
         {
@@ -490,7 +490,7 @@ public class BlTest
         dependensOn = CheckIntInput(int.TryParse(Console.ReadLine(), out dependensOn), dependensOn);//sends to another method that gets the id from the user and  checks if the input is correct.
         try
         {
-            s_bl.Task.AddDependency(dependent, dependensOn);
+            s_bl.Config.AddDependency(dependent, dependensOn);
         }
         catch(BLNotFoundException ex)
         {

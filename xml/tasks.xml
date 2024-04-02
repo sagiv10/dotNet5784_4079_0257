@@ -34,6 +34,16 @@
     <_isActive>true</_isActive>
   </Task>
   <Task>
+    <_id>4</_id>
+    <_createdAtDate>2024-04-03T00:26:24.7296473+03:00</_createdAtDate>
+    <_requiredEffortTime>P6D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Building a theoretical skeleton of the engine</_alias>
+    <_description>Developing a preliminary conceptual framework for the rocket's propulsion system to guide the subsequent engineering and construction phases.</_description>
+    <_complexity>Expert</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
     <_id>5</_id>
     <_createdAtDate>2024-03-28T13:31:07.3878682+02:00</_createdAtDate>
     <_requiredEffortTime>P13D</_requiredEffortTime>
@@ -199,13 +209,22 @@
     <_isActive>true</_isActive>
   </Task>
   <Task>
+    <_id>15</_id>
+    <_createdAtDate>2024-04-03T00:26:25.3453699+03:00</_createdAtDate>
+    <_requiredEffortTime>P8D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>Building a communication component</_alias>
+    <_description>Constructing the communication subsystem that enables the rocket to send and receive data during its mission.</_description>
+    <_complexity>Master</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
     <_id>16</_id>
     <_createdAtDate>2024-03-28T13:31:07.5361713+02:00</_createdAtDate>
     <_requiredEffortTime>P11D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>A test for the missile software</_alias>
     <_description>Conducting a preliminary evaluation to verify the functionality and reliability of the rocket's software systems.</_description>
-    <_scheduledDate>2024-04-29T00:00:00</_scheduledDate>
     <_complexity>Beginner</_complexity>
     <_isActive>true</_isActive>
   </Task>
@@ -216,7 +235,6 @@
     <_isMilestone>false</_isMilestone>
     <_alias>Refactoring</_alias>
     <_description>Iteratively improving and optimizing the rocket's design, software, or components based on testing and feedback.</_description>
-    <_scheduledDate>2024-05-10T00:00:00</_scheduledDate>
     <_complexity>BetterBeginner</_complexity>
     <_isActive>true</_isActive>
   </Task>

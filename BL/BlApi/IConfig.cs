@@ -87,5 +87,15 @@ namespace BlApi
         /// <param name="ProjectCurrentDate"></param>
         public void SaveProjectCurrentDateIntoXml(DateTime ProjectCurrentDate);
         public DateTime? getProjectCurrentDateIntoXml();
+
+        /// <summary>
+        ///init the database
+        /// </summary>
+        public void InitializeData();
+
+        /// <summary>
+        /// resets the database
+        /// </summary>
+        public void ResetData();
     }
 }

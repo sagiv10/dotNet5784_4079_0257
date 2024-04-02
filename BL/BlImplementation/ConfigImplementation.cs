@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 internal class ConfigImplementation : IConfig
 {
     private readonly IBl _bl;
@@ -165,4 +164,13 @@ internal class ConfigImplementation : IConfig
         return _dal.Project.getProjectCurrentDateIntoXml();
     }
 
+    public void InitializeData()
+    {
+        DalTest.Initialization.Do();
+    }
+
+    public void ResetData()
+    {
+        DalTest.Initialization.Reset();
+    }
 }

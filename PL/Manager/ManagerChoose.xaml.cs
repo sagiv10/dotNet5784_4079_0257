@@ -71,7 +71,7 @@ namespace PL.Manager
                                                                  //
                                                                  //'yes'
                 {
-                    DalTest.Initialization.Do();
+                    s_bl.Config.InitializeData();
                     Stage = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
                     s_bl.ResetClock();
                 }
@@ -89,7 +89,7 @@ namespace PL.Manager
                 "Reset confirm", //title
                 MessageBoxButton.YesNo) == MessageBoxResult.Yes) //if the user answered 'yes'
                 {
-                    DalTest.Initialization.Reset();
+                    s_bl.Config.ResetData();
                     Stage = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
                     s_bl.ResetClock();
                 }
