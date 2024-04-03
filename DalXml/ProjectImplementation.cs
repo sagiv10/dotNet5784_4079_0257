@@ -67,11 +67,11 @@ internal class ProjectImplementation : Iproject
         XElement newNumbers = new XElement("config", new XElement("NextDependencyId", 1), new XElement("NextTaskId", 1));
         XMLTools.SaveListToXMLElement(newNumbers, "data-config");//save new running numberwhen they equal to 0 now
     }
-    public void SaveProjectCurrentDateIntoXml(DateTime ProjectCurrentDate)
+    public void SaveProjectCurrentDateIntoXml(DateTime projectCurrentDate)
     {
         XElement configRoot = XElement.Load(@"..\xml\data-config.xml"); //get the previous root
         XElement? theTime = configRoot.Element("project-currently-date");
-        if (ProjectCurrentDate == null) //then we  want to delete the starting time
+        if (projectCurrentDate == null) //then we  want to delete the starting time
         {
             if (theTime != null)
             {
@@ -83,11 +83,11 @@ internal class ProjectImplementation : Iproject
         {
             if (theTime != null)
             {
-                configRoot.Element("project-currently-date")?.SetValue(ProjectCurrentDate);
+                configRoot.Element("project-currently-date")?.SetValue(projectCurrentDate);
             }
             else
             {
-                XElement newTime = new XElement("project-currently-date", ProjectCurrentDate); //create new tag of the starting date
+                XElement newTime = new XElement("project-currently-date", projectCurrentDate); //create new tag of the starting date
                 configRoot.Add(newTime); //create the field of the starting date (he did not exist untill now)
             }
         }
@@ -96,7 +96,7 @@ internal class ProjectImplementation : Iproject
     public DateTime? getProjectCurrentDateIntoXml()
     {
         XElement configRoot = XElement.Load(@"..\xml\data-config.xml");
-        return configRoot.Element("project-currently-date") != null ? DateTime.Parse(configRoot.Element("project-currently-date")!.Value) : null;
+        return configRoot.Element("project-currently-date") != null ? DateTime.Parse(configRoot.Element("project-currently-date")!.Value) :  DateTime.Now;
     }
 
 }
