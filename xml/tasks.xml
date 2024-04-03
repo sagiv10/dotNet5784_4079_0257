@@ -2,8 +2,8 @@
 <ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Task>
     <_id>1</_id>
-    <_createdAtDate>2024-04-03T11:35:28.4567476+03:00</_createdAtDate>
-    <_requiredEffortTime>P6D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.6586406+03:00</_createdAtDate>
+    <_requiredEffortTime>P11D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Theoretical analysis of the engine</_alias>
     <_description>Conducting a detailed examination of the theoretical principles underlying the design and functionality of the rocket's propulsion system to ensure optimal performance and efficiency.</_description>
@@ -12,7 +12,7 @@
   </Task>
   <Task>
     <_id>2</_id>
-    <_createdAtDate>2024-04-03T11:35:28.4674918+03:00</_createdAtDate>
+    <_createdAtDate>2024-04-03T11:37:29.6717737+03:00</_createdAtDate>
     <_requiredEffortTime>P6D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Theoretical analysis of aerodynamics</_alias>
@@ -22,8 +22,8 @@
   </Task>
   <Task>
     <_id>3</_id>
-    <_createdAtDate>2024-04-03T11:35:28.4990133+03:00</_createdAtDate>
-    <_requiredEffortTime>P6D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.6934974+03:00</_createdAtDate>
+    <_requiredEffortTime>P9D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Theoretical analysis of the structure</_alias>
     <_description>Examining the theoretical foundations of the rocket's structural design to ensure it can withstand the stresses and forces experienced during launch and flight.</_description>
@@ -32,8 +32,8 @@
   </Task>
   <Task>
     <_id>4</_id>
-    <_createdAtDate>2024-04-03T11:35:28.5209466+03:00</_createdAtDate>
-    <_requiredEffortTime>P9D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.7106476+03:00</_createdAtDate>
+    <_requiredEffortTime>P13D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Building a theoretical skeleton of the engine</_alias>
     <_description>Developing a preliminary conceptual framework for the rocket's propulsion system to guide the subsequent engineering and construction phases.</_description>
@@ -42,8 +42,8 @@
   </Task>
   <Task>
     <_id>5</_id>
-    <_createdAtDate>2024-04-03T11:35:28.5420424+03:00</_createdAtDate>
-    <_requiredEffortTime>P10D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.7294691+03:00</_createdAtDate>
+    <_requiredEffortTime>P5D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Building a general theoretical skeleton</_alias>
     <_description>Creating an overarching conceptual framework that outlines the fundamental elements and connections within the entire rocket design.</_description>
@@ -52,8 +52,8 @@
   </Task>
   <Task>
     <_id>6</_id>
-    <_createdAtDate>2024-04-03T11:35:28.5592615+03:00</_createdAtDate>
-    <_requiredEffortTime>P10D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.749359+03:00</_createdAtDate>
+    <_requiredEffortTime>P8D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Finding suitable components</_alias>
     <_description>Identifying and selecting appropriate materials and parts required for the construction of the rocket, taking into account factors such as durability, weight, and compatibility.</_description>
@@ -62,8 +62,8 @@
   </Task>
   <Task>
     <_id>7</_id>
-    <_createdAtDate>2024-04-03T11:35:28.5751698+03:00</_createdAtDate>
-    <_requiredEffortTime>P9D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.7688929+03:00</_createdAtDate>
+    <_requiredEffortTime>P13D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Component cost calculation</_alias>
     <_description>Estimating the financial investment required for acquiring all the necessary components for the rocket, considering factors such as manufacturing, transportation, and assembly costs.</_description>
@@ -72,8 +72,8 @@
   </Task>
   <Task>
     <_id>8</_id>
-    <_createdAtDate>2024-04-03T11:35:28.593726+03:00</_createdAtDate>
-    <_requiredEffortTime>P11D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.790206+03:00</_createdAtDate>
+    <_requiredEffortTime>P6D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Ordering components</_alias>
     <_description>Initiating the procurement process to acquire the identified components and materials, ensuring timely delivery for the construction phase.</_description>
@@ -82,8 +82,8 @@
   </Task>
   <Task>
     <_id>9</_id>
-    <_createdAtDate>2024-04-03T11:35:28.613416+03:00</_createdAtDate>
-    <_requiredEffortTime>P5D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.8086925+03:00</_createdAtDate>
+    <_requiredEffortTime>P10D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Construction of a warhead</_alias>
     <_description>Assembling the explosive payload component of the rocket, ensuring precision and safety in handling and integration.</_description>
@@ -92,8 +92,8 @@
   </Task>
   <Task>
     <_id>10</_id>
-    <_createdAtDate>2024-04-03T11:35:28.6316317+03:00</_createdAtDate>
-    <_requiredEffortTime>P7D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.8235253+03:00</_createdAtDate>
+    <_requiredEffortTime>P13D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Construction of an exoskeleton</_alias>
     <_description>Building the outer protective structure of the rocket, providing support and shielding for internal components during launch and flight.</_description>
@@ -102,8 +102,8 @@
   </Task>
   <Task>
     <_id>11</_id>
-    <_createdAtDate>2024-04-03T11:35:28.6477411+03:00</_createdAtDate>
-    <_requiredEffortTime>P11D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.8412547+03:00</_createdAtDate>
+    <_requiredEffortTime>P6D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Engine construction</_alias>
     <_description>Physically assembling and integrating the propulsion system components to create a functional rocket engine.</_description>
@@ -112,8 +112,8 @@
   </Task>
   <Task>
     <_id>12</_id>
-    <_createdAtDate>2024-04-03T11:35:28.6649919+03:00</_createdAtDate>
-    <_requiredEffortTime>P12D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.8577766+03:00</_createdAtDate>
+    <_requiredEffortTime>P7D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Construction of a fuel tank</_alias>
     <_description>Building the container that holds the rocket's fuel, ensuring proper storage, stability, and controlled release during launch.</_description>
@@ -122,8 +122,8 @@
   </Task>
   <Task>
     <_id>13</_id>
-    <_createdAtDate>2024-04-03T11:35:28.6831544+03:00</_createdAtDate>
-    <_requiredEffortTime>P8D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.8735523+03:00</_createdAtDate>
+    <_requiredEffortTime>P13D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Building the software skeleton of the missile</_alias>
     <_description>Developing the initial framework for the software that controls and coordinates various functions of the rocket.</_description>
@@ -132,8 +132,8 @@
   </Task>
   <Task>
     <_id>14</_id>
-    <_createdAtDate>2024-04-03T11:35:28.7016605+03:00</_createdAtDate>
-    <_requiredEffortTime>P5D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.8888782+03:00</_createdAtDate>
+    <_requiredEffortTime>P11D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Writing the missile software</_alias>
     <_description>Creating and programming the software that governs the rocket's navigation, guidance, and communication systems.</_description>
@@ -142,8 +142,8 @@
   </Task>
   <Task>
     <_id>15</_id>
-    <_createdAtDate>2024-04-03T11:35:28.7189798+03:00</_createdAtDate>
-    <_requiredEffortTime>P6D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.9044697+03:00</_createdAtDate>
+    <_requiredEffortTime>P8D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Building a communication component</_alias>
     <_description>Constructing the communication subsystem that enables the rocket to send and receive data during its mission.</_description>
@@ -152,8 +152,8 @@
   </Task>
   <Task>
     <_id>16</_id>
-    <_createdAtDate>2024-04-03T11:35:28.7364145+03:00</_createdAtDate>
-    <_requiredEffortTime>P7D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.9224217+03:00</_createdAtDate>
+    <_requiredEffortTime>P8D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>A test for the missile software</_alias>
     <_description>Conducting a preliminary evaluation to verify the functionality and reliability of the rocket's software systems.</_description>
@@ -162,8 +162,8 @@
   </Task>
   <Task>
     <_id>17</_id>
-    <_createdAtDate>2024-04-03T11:35:28.7517491+03:00</_createdAtDate>
-    <_requiredEffortTime>P13D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.9398767+03:00</_createdAtDate>
+    <_requiredEffortTime>P8D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Refactoring</_alias>
     <_description>Iteratively improving and optimizing the rocket's design, software, or components based on testing and feedback.</_description>
@@ -172,8 +172,8 @@
   </Task>
   <Task>
     <_id>18</_id>
-    <_createdAtDate>2024-04-03T11:35:28.7670947+03:00</_createdAtDate>
-    <_requiredEffortTime>P5D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.9557977+03:00</_createdAtDate>
+    <_requiredEffortTime>P9D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Final testing of the software</_alias>
     <_description>Performing comprehensive tests to ensure the rocket's software operates as intended under various conditions.</_description>
@@ -182,8 +182,8 @@
   </Task>
   <Task>
     <_id>19</_id>
-    <_createdAtDate>2024-04-03T11:35:28.7788146+03:00</_createdAtDate>
-    <_requiredEffortTime>P11D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.9712621+03:00</_createdAtDate>
+    <_requiredEffortTime>P13D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Final assembly of the missile</_alias>
     <_description>Integrating all components, including the structural, propulsion, software, and payload systems, to create the complete and functional rocket.</_description>
@@ -192,8 +192,8 @@
   </Task>
   <Task>
     <_id>20</_id>
-    <_createdAtDate>2024-04-03T11:35:28.7922861+03:00</_createdAtDate>
-    <_requiredEffortTime>P10D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:29.986932+03:00</_createdAtDate>
+    <_requiredEffortTime>P6D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Dry test of the operation of the components</_alias>
     <_description>Conducting a thorough examination and simulation of the rocket's systems without using actual propellants to identify and address any potential issues.</_description>
@@ -202,8 +202,8 @@
   </Task>
   <Task>
     <_id>21</_id>
-    <_createdAtDate>2024-04-03T11:35:28.8071084+03:00</_createdAtDate>
-    <_requiredEffortTime>P9D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:30.0031961+03:00</_createdAtDate>
+    <_requiredEffortTime>P13D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Wet inspection of the components</_alias>
     <_description>Verifying the rocket's systems and components under realistic conditions, often involving the use of actual propellants in a controlled environment.</_description>
@@ -212,11 +212,23 @@
   </Task>
   <Task>
     <_id>22</_id>
-    <_createdAtDate>2024-04-03T11:35:28.8212516+03:00</_createdAtDate>
-    <_requiredEffortTime>P10D</_requiredEffortTime>
+    <_createdAtDate>2024-04-03T11:37:30.0187982+03:00</_createdAtDate>
+    <_requiredEffortTime>P13D</_requiredEffortTime>
     <_isMilestone>false</_isMilestone>
     <_alias>Dispatch</_alias>
     <_description>Launching the rocket into its intended trajectory or mission, marking the conclusion of the manufacturing and preparation phases.</_description>
+    <_complexity>BetterBeginner</_complexity>
+    <_isActive>true</_isActive>
+  </Task>
+  <Task>
+    <_id>23</_id>
+    <_createdAtDate>2024-04-03T11:37:30.2708419+03:00</_createdAtDate>
+    <_requiredEffortTime>P14D</_requiredEffortTime>
+    <_isMilestone>false</_isMilestone>
+    <_alias>bololo</_alias>
+    <_description>bololooooo</_description>
+    <_deliverables>bolo</_deliverables>
+    <_remarks>lo</_remarks>
     <_complexity>BetterBeginner</_complexity>
     <_isActive>true</_isActive>
   </Task>

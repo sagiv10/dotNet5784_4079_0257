@@ -82,7 +82,7 @@ namespace PL.Task
         {
             try
             {
-                if (s_bl?.Task.getDeleted().Count() == 0 || (BO.ProjectStatus)s_bl.Config.getProjectStatus() != BO.ProjectStatus.Planning)
+                if (s_bl?.Task.getDeleted().Count() == 0 || (BO.ProjectStatus)s_bl.Config.getProjectStatus() != BO.ProjectStatus.Planning)//when to enable restore button
                 {
                     isThereItemsToRestore = false;
                 }
