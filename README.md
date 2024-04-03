@@ -42,5 +42,7 @@ PropertyTrigger- [place](https://github.com/sagiv10/dotNet5784_4079_0257/blob/1a
 11. Using controlTemplate
 location: [place](https://github.com/sagiv10/dotNet5784_4079_0257/blob/1a4631793377610c8095ece4ea469d0d68315cc6/PL/Engineer/EngineerIdEntering.xaml#L19)
 
+12. Automatic filtering of a list (by substring) while typing in an input box in the same window
+location: [place](https://github.com/sagiv10/dotNet5784_4079_0257/blob/877e4d6152071b171f0d034e1692c283615e2574/PL/Task/TaskListWindow.xaml.cs#L221)
 
 
