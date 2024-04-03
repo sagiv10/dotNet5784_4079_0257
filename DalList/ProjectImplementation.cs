@@ -32,11 +32,12 @@ internal class ProjectImplementation : Iproject
     }
     public void SaveProjectCurrentDateIntoXml(DateTime ProjectCurrentDate)
     {
-        DataSource.Config.currentDate = ProjectCurrentDate;
+        //no implementation here because if we in list implementation then we cannot save the clock from running to running
 
     }
     public DateTime? getProjectCurrentDateIntoXml()
     {
+        DataSource.Config.currentDate = DateTime.Now; //initialize the clock to be now date 
         return DataSource.Config.currentDate;
     }
 
