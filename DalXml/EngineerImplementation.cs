@@ -70,7 +70,10 @@ internal class EngineerImplementation : IEngineer
     /// <summary>
     /// this method gets id and returns the engineer in the xml file that has this id, if not exists so return null.
     /// </summary>
-    /// <param name="filter"> predicat that determine wich engineer we want to print</param>
+    /// <param name="filter"> p
+    /// 
+    /// 
+    /// icat that determine wich engineer we want to print</param>
     /// <returns></returns>
     public Engineer? Read(Func<Engineer, bool> filter)
     {

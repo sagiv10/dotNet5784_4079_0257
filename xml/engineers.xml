@@ -2,50 +2,50 @@
 <ArrayOfEngineer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Engineer>
     <_id>123</_id>
-    <_cost>25185.4</_cost>
+    <_cost>24961.42</_cost>
     <_email>check@gmail.com</_email>
     <_name>checked</_name>
     <_level>Master</_level>
     <_isActive>true</_isActive>
   </Engineer>
   <Engineer>
-    <_id>271796380</_id>
-    <_cost>37599.3</_cost>
-    <_email>reuven@gmail.com</_email>
-    <_name>Reuven</_name>
-    <_level>Beginner</_level>
-    <_isActive>true</_isActive>
-  </Engineer>
-  <Engineer>
-    <_id>225896311</_id>
-    <_cost>18356.78</_cost>
+    <_id>295204483</_id>
+    <_cost>16574.95</_cost>
     <_email>shimon@gmail.com</_email>
     <_name>Shimon</_name>
     <_level>BetterBeginner</_level>
     <_isActive>true</_isActive>
   </Engineer>
   <Engineer>
-    <_id>241410012</_id>
-    <_cost>32665.86</_cost>
+    <_id>267998655</_id>
+    <_cost>29096.78</_cost>
     <_email>levi@gmail.com</_email>
     <_name>Levi</_name>
     <_level>Advanced</_level>
     <_isActive>true</_isActive>
   </Engineer>
   <Engineer>
-    <_id>233336125</_id>
-    <_cost>22616.15</_cost>
+    <_id>248615429</_id>
+    <_cost>17286.58</_cost>
     <_email>yehuda@gmail.com</_email>
     <_name>Yehuda</_name>
     <_level>Expert</_level>
     <_isActive>true</_isActive>
   </Engineer>
   <Engineer>
-    <_id>213599942</_id>
-    <_cost>14931.3</_cost>
+    <_id>274730940</_id>
+    <_cost>29070.81</_cost>
     <_email>yisachar@gmail.com</_email>
     <_name>Yisachar</_name>
     <_level>Master</_level>
+    <_isActive>true</_isActive>
+  </Engineer>
+  <Engineer>
+    <_id>372479163</_id>
+    <_cost>10537.55</_cost>
+    <_email>reuven@gmail.com</_email>
+    <_name>Reuven</_name>
+    <_level>Beginner</_level>
     <_isActive>true</_isActive>
   </Engineer>
 </ArrayOfEngineer>

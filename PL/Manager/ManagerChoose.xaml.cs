@@ -62,7 +62,14 @@ namespace PL.Manager
             {
                 if (MessageBox.Show("are you sure you want to initialize the data base?", //the messege
                 "Initialization confirm", //title
-                MessageBoxButton.YesNo) == MessageBoxResult.Yes) //if the user answered 'yes'
+                MessageBoxButton.YesNo) == MessageBoxResult.Yes) //if the user answe
+                                                                 //
+                                                                 //
+                                                                 //
+                                                                 //
+                                                                 //
+                                                                 //
+                                                                 //'yes'
                 {
                     s_bl.Config.InitializeData();
                     Stage = (BO.ProjectStatus)s_bl.Config.getProjectStatus();
