@@ -185,9 +185,4 @@
     <_dependentTask>20</_dependentTask>
     <_dependsOnTask>19</_dependsOnTask>
   </Dependency>
-  <Dependency>
-    <_id>38</_id>
-    <_dependentTask>21</_dependentTask>
-    <_dependsOnTask>19</_dependsOnTask>
-  </Dependency>
 </ArrayOfDependency>

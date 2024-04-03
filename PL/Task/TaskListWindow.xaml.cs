@@ -82,7 +82,7 @@ namespace PL.Task
         {
             try
             {
-                if (s_bl?.Task.getDeleted().Count() == 0)
+                if (s_bl?.Task.getDeleted().Count() == 0 || (BO.ProjectStatus)s_bl.Config.getProjectStatus() != BO.ProjectStatus.Planning)
                 {
                     isThereItemsToRestore = false;
                 }
@@ -186,7 +186,7 @@ namespace PL.Task
                 s_bl.Task.Delete(((BO.TaskInList)((Button)sender).CommandParameter).Id); //delete him
                 MessageBox.Show("Task seccessfully deleted!");
                 TaskInList_List = s_bl?.Task.ReadAll(e => (e.Status == chosenStatus || chosenStatus == BO.Status.All) && (e.Complexity == chosenComplexity || chosenComplexity == BO.EngineerExperience.All) && (SearchString == "" || e.Alias.StartsWith(SearchString)))!;
-                if (s_bl?.Engineer.getDeleted().Count() == 0)
+                if (s_bl?.Task.getDeleted().Count() == 0)
                 {
                     isThereItemsToRestore = false;
                 }
